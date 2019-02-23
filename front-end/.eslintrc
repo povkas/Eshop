@@ -1,4 +1,8 @@
 {
     "rules": {
+    },
+    "globals": {
+      "fetch": "readable",
+      "document": "writeable"
     }
 }
