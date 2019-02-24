@@ -1,3 +1,5 @@
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   entry: './src/index.js',
   module: {
@@ -29,5 +31,11 @@ module.exports = {
     historyApiFallback: true,
     compress: true,
     port: 3000
-  }
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      filename: './index.html',
+      template: './src/template.html'
+    })
+  ]
 };
