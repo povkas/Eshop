@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshop", "Eshop\Eshop.csproj", "{D004A074-D9E5-452D-A8E4-306449090B2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestEshop", "NUnitTestEshop\NUnitTestEshop.csproj", "{C2B7EEAF-2D47-466A-9483-CDD38E31FB81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D004A074-D9E5-452D-A8E4-306449090B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D004A074-D9E5-452D-A8E4-306449090B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D004A074-D9E5-452D-A8E4-306449090B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D004A074-D9E5-452D-A8E4-306449090B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B7EEAF-2D47-466A-9483-CDD38E31FB81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B7EEAF-2D47-466A-9483-CDD38E31FB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B7EEAF-2D47-466A-9483-CDD38E31FB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B7EEAF-2D47-466A-9483-CDD38E31FB81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29B410F9-EA65-4464-A2E3-11F8F2E111D7}
+	EndGlobalSection
+EndGlobal
