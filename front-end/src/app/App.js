@@ -1,15 +1,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import NavBar from '../components/Navbar/Login';
-import store from '../utils/redux/store';
+import { BrowserRouter, Route } from 'react-router-dom';
+import LoginButton from '../components/Navbar/Login';
 
+import Store from '../utils/redux/store';
+
+const a = () => <div />;
 export default () => (
-  <Provider store={store}>
+  <Provider store={Store}>
+    <LoginButton />
     <BrowserRouter>
-      <div>
-        <NavBar />
-      </div>
+      <Route path="/" component={a} />
     </BrowserRouter>
   </Provider>
 );
