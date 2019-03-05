@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Eshop.Models
 {
-    public class User
+    public class User : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]

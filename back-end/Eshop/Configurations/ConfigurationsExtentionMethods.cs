@@ -24,7 +24,7 @@ namespace Eshop.Configurations
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<Context>();
                 context.Database.Migrate();
-                //SeedData.Seed(context);
+                SeedData.Seed(context);
             }
         }
     }
