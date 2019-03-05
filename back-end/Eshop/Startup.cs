@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ehop.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Eshop.Configurations;
+using Eshop.Data.Repositories;
+using Eshop.Models;
 
 namespace Eshop
 {
@@ -25,6 +29,8 @@ namespace Eshop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRepository<User>, UsersRepository>();
+            services.SetUpDatabase(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -42,6 +48,7 @@ namespace Eshop
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.InitializeDatabase();
         }
     }
 }
