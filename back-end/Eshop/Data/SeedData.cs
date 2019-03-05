@@ -14,12 +14,10 @@ namespace Eshop.Data
             //            if (context.Users.Any())
             //                return;
 
-            context.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
-
             var users = new List<User>
             {
-                new User{Email = "admin@gmail.com", Password= "admin", Role = "ADMIN"},
-                new User{Email = "user@gmail.com", Password= "user", Role = "NORMAL"}
+                new User{Email = "admin@gmail.com", Password= "root1234", Role = "ADMIN", Address = "Address"},
+                new User{Email = "user@gmail.com", Password= "root1234", Role = "NORMAL", Address = "Address"}
             };
 
             users.ForEach(t => context.Users.Add(t));

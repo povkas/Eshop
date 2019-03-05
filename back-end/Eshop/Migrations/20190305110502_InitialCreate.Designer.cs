@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20190305092052_InitialCreate")]
+    [Migration("20190305110502_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,11 +26,20 @@ namespace Eshop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Role");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Role")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

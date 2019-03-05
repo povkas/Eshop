@@ -24,11 +24,20 @@ namespace Eshop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Role");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Role")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
