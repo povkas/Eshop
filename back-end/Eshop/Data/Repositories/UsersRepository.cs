@@ -15,7 +15,6 @@ namespace Eshop.Data.Repositories
         {
             ItemSet = context.Users;
         }
-
         protected override IQueryable<User> IncludeDependencies(IQueryable<User> queryable)
         {
             return queryable;

@@ -11,18 +11,41 @@ namespace Eshop.Data
     {
         public static void Seed(Context context)
         {
-            //            if (context.Users.Any())
-            //                return;
+                        if (context.Users.Any())
+                           return;
 
-            var users = new List<User>
+            /* var users = new List<User>
+             {
+                 new User{Email = "admin@gmail.com", Password= "root1234", Role = "ADMIN", Address = "Address"},
+                 new User{Email = "user@gmail.com", Password= "root1234", Role = "NORMAL", Address = "Address"}
+             };
+
+             users.ForEach(t => context.Users.Add(t));
+
+             context.SaveChanges();*/
+            //context.Users.Single(emp => emp.Email == aa);
+
+            
+        }
+
+        public static User UserExists(string email)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<Context>();
+            optionsBuilder.UseSqlServer("Data Source=localhost\\SQLEXPRESS;Initial Catalog=E-shopDb;Integrated Security=true");
+
+            using (var context = new Context(optionsBuilder.Options))
             {
-                new User{Email = "admin@gmail.com", Password= "root1234", Role = "ADMIN", Address = "Address"},
-                new User{Email = "user@gmail.com", Password= "root1234", Role = "NORMAL", Address = "Address"}
-            };
+                var users = context.Users.ToList();
 
-            users.ForEach(t => context.Users.Add(t));
-
-            context.SaveChanges();
+                foreach (var user in users)
+                {
+                   if(user.Email == email)
+                    {
+                        return user;
+                    }
+                }
+            }
+            return null;
         }
     }
 }
