@@ -1,7 +1,11 @@
 import React from 'react';
+import Login from '../components/login/Login';
 
-export default () => (
-  <div>
-    <h1>E-shop</h1>
-  </div>
-);
+export default () => {
+  return (
+    <div>
+      <h1>Hello, welcome to our Eshop project BimBam ;)</h1>
+      <Login />
+    </div>
+  );
+};
