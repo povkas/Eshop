@@ -6,30 +6,23 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
-const styles = {
-  grow: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginRight: 20
-  },
-  leftButtons: {
-    marginLeft: 20
-  }
-};
+import Menu from '@material-ui/icons/Menu';
+import { Link, BrowserRouter } from 'react-router-dom';
+import Styles from './Styles';
 
 function NavBar(props) {
   const { classes } = props;
   return (
-    <div>
+    <BrowserRouter>
       <AppBar position="static">
         <Toolbar>
           <IconButton className={classes.menuButton}>
-            <Person />
+            <Menu />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            BimBam連合
+            <Link to="/" className={classes.shopName}>
+              BimBam連合
+            </Link>
           </Typography>
           <IconButton className={classes.menuButton}>
             <Person />
@@ -40,8 +33,8 @@ function NavBar(props) {
           </IconButton>
         </Toolbar>
       </AppBar>
-    </div>
+    </BrowserRouter>
   );
 }
 
-export default withStyles(styles)(NavBar);
+export default withStyles(Styles)(NavBar);

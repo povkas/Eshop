@@ -11,7 +11,8 @@ module.exports = {
     'react/prop-types': 'off',
     'comma-dangle': 'off',
     'prettier/prettier': ['error'],
-    'linebreak-style': 0
+    'linebreak-style': 0,
+    'import/no-unresolved': 'off'
   },
   globals: {
     fetch: 'writeable',

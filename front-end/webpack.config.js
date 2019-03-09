@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   entry: './src/app/index.js',
@@ -20,7 +21,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
+    alias: {
+      Components: path.resolve(__dirname, 'src/components'),
+      Utils: path.resolve(__dirname, 'src/utils')
+    }
   },
   output: {
     path: `${__dirname}/dist`,
