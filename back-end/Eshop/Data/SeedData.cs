@@ -21,7 +21,6 @@ namespace Eshop.Data
             };
 
             users.ForEach(t => context.Users.Add(t));
-
             context.SaveChanges();
         }
     }
