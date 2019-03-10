@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import Form from './Form';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -31,22 +32,34 @@ const styles = theme => ({
   }
 });
 
-class Login extends React.Component {
-  state = {
-    open: false
-  };
+class LoginModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openModal: false,
+      email: '',
+      password: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    // must use because showAlert uses this keyword in body
+  }
 
   handleOpen = () => {
-    this.setState({ open: true });
+    this.setState({ openModal: true });
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ openModal: false });
+  };
+
+  handleSubmit = () => {
+    const { email, password } = this.state;
+    this.setState({ email, password });
   };
 
   render() {
     const { classes } = this.props;
-    const { open } = this.state;
+    const { openModal } = this.state;
 
     return (
       <div>
@@ -54,17 +67,16 @@ class Login extends React.Component {
         <Button variant="outlined" onClick={this.handleOpen}>
           Log in
         </Button>
-        <Modal aria-describedby="simple-modal-description" open={open} onClose={this.handleClose}>
+        <Modal
+          aria-describedby="simple-modal-description"
+          open={openModal}
+          onClose={this.handleClose}
+        >
           <div style={getModalStyle()} className={classes.paper}>
             <Typography variant="h5" id="modal-title">
               Log in to the Shop
             </Typography>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-            <Button variant="outlined" onClick={this.handleClose}>
-              Log in
-            </Button>
+            <Form handleSubmit={this.handleSubmit} />
           </div>
         </Modal>
       </div>
@@ -72,11 +84,11 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+LoginModal.propTypes = {
   classes: PropTypes.shape().isRequired
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const LoginWrapped = withStyles(styles)(Login);
+const LoginWrapped = withStyles(styles)(LoginModal);
 
 export default LoginWrapped;
