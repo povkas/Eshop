@@ -4,6 +4,8 @@ using System.Linq;
 using Eshop.Data;
 using Eshop.Data.Repositories;
 using Eshop.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Eshop.Data.Repositories
 {
@@ -15,6 +17,7 @@ namespace Eshop.Data.Repositories
         {
             ItemSet = context.Users;
         }
+
         protected override IQueryable<User> IncludeDependencies(IQueryable<User> queryable)
         {
             return queryable;

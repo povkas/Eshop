@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Eshop.Configurations;
 using Eshop.Data.Repositories;
 using Eshop.Models;
+using Eshop.Services;
 
 namespace Eshop
 {
@@ -30,10 +31,10 @@ namespace Eshop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IRepository<User>, UsersRepository>();
+            services.AddTransient<ILoginService, LoginService>();
             services.SetUpDatabase(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

@@ -16,7 +16,6 @@ namespace Eshop.Migrations
                     Email = table.Column<string>(maxLength: 255, nullable: false),
                     Password = table.Column<string>(maxLength: 128, nullable: false),
                     Role = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {

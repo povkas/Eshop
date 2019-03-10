@@ -21,10 +21,5 @@ namespace Eshop.Models
 
         [Required(ErrorMessage = "Role is required")]
         public string Role { get; set; }
-
-        [Required(ErrorMessage = "Address is required")]
-        [MinLength(8, ErrorMessage = "Address must be at least 8 characters long")]
-        [StringLength(128, ErrorMessage = "Address cannot exceed 255 characters")]
-        public string Address { get; set; }
     }
 }
