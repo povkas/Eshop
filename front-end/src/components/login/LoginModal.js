@@ -39,11 +39,8 @@ class LoginModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openModal: false,
-      email: '',
-      password: ''
+      openModal: false
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleOpen = () => {
@@ -52,11 +49,6 @@ class LoginModal extends React.Component {
 
   handleClose = () => {
     this.setState({ openModal: false });
-  };
-
-  handleSubmit = () => {
-    const { email, password } = this.state;
-    this.setState({ email, password });
   };
 
   render() {
@@ -70,7 +62,7 @@ class LoginModal extends React.Component {
         </Button>
         <Modal open={openModal} onClose={this.handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
-            <Form handleSubmit={this.handleSubmit} />
+            <Form />
             <Link href=" " className={classes.link}>
               Sign up
             </Link>

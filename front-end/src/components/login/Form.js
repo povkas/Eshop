@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 
 class Form extends Component {
   constructor(props) {
-    super(props); // receives parent props lol -_-
+    super(props);
     this.initialstate = {
       email: '',
       password: ''
@@ -12,29 +12,56 @@ class Form extends Component {
     this.state = this.initialstate;
 
     this.handleChange = this.handleChange.bind(this);
-    this.submitForm = this.submitForm.bind(this);
+    // this.submitForm = this.submitForm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  // neveikia @tania
+  // submitForm = () => {
+  //   const { props } = this.props;
+  //   props.handleSubmit(this.state);
+  //   this.setState(this.initialState);
+  // };
+
+  // neveikia @tania
+  // handleChange = event => {
+  //   const { email, password } = event.target;
+  //   this.setState({ email, password });
+  // };
+
+  handleChange(e) {
+    const { target } = e;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { name } = target;
+
+    this.setState({
+      [name]: value
+    });
   }
 
-  handleChange = event => {
-    const { email, password } = event.target;
+  // handleSubmit(e) {
+  //   e.preventDefault();
+
+  //   const { email, password } = this.state;
+  //   console.log('The form was submitted with the following data:');
+  //   console.log(email);
+  //   console.log(password);
+  // }
+
+  handleSubmit() {
+    const { email, password } = this.state;
     this.setState({ email, password });
-  };
-
-  submitForm = () => {
-    const { props } = this.props;
-
-    props.handleSubmit(this.state);
-    this.setState(this.initialState);
-  };
+  }
 
   render() {
     const { email, password } = this.state;
 
     return (
       <div>
-        <form onSubmit={this.submitForm}>
+        {/* <form onSubmit={this.handleSubmit}> */}
+        <form>
           <Input
             autoFocus
+            name="email"
             value={email}
             onChange={this.handleChange}
             placeholder="Email"
@@ -42,6 +69,7 @@ class Form extends Component {
           />
           <br />
           <Input
+            name="password"
             value={password}
             onChange={this.handleChange}
             placeholder="Password"
@@ -49,7 +77,8 @@ class Form extends Component {
           />
         </form>
         <br />
-        <Button variant="outlined" onClick={this.submitForm} type="submit">
+        {/* <Button variant="outlined" onClick={this.submitForm} type="submit"> */}
+        <Button variant="outlined" onClick={this.handleSubmit} type="submit">
           Log in
         </Button>
       </div>
