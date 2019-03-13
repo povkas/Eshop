@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 import Form from './Form';
 
 function rand() {
@@ -29,6 +29,9 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none'
+  },
+  link: {
+    margin: theme.spacing.unit
   }
 });
 
@@ -41,7 +44,6 @@ class LoginModal extends React.Component {
       password: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    // must use because showAlert uses this keyword in body
   }
 
   handleOpen = () => {
@@ -63,20 +65,18 @@ class LoginModal extends React.Component {
 
     return (
       <div>
-        <Typography gutterBottom>Please, click below to Log in!</Typography>
         <Button variant="outlined" onClick={this.handleOpen}>
           Log in
         </Button>
-        <Modal
-          aria-describedby="simple-modal-description"
-          open={openModal}
-          onClose={this.handleClose}
-        >
+        <Modal open={openModal} onClose={this.handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="h5" id="modal-title">
-              Log in to the Shop
-            </Typography>
             <Form handleSubmit={this.handleSubmit} />
+            <Link href=" " className={classes.link}>
+              Sign up
+            </Link>
+            <Link href=" " className={classes.link}>
+              Forgot password?
+            </Link>
           </div>
         </Modal>
       </div>
@@ -89,6 +89,5 @@ LoginModal.propTypes = {
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const LoginWrapped = withStyles(styles)(LoginModal);
 
-export default LoginWrapped;
+export default withStyles(styles)(LoginModal);

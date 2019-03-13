@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginModal from '../components/login/LoginModal';
+import { LoginModal } from '../components/login';
 
 export default () => {
   return (
