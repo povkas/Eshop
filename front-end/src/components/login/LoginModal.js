@@ -24,7 +24,7 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: 'absolute',
-    width: theme.spacing.unit * 70,
+    width: theme.spacing.unit * 20,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
@@ -74,6 +74,7 @@ class LoginModal extends React.Component {
             <Link href=" " className={classes.link}>
               Sign up
             </Link>
+            <br />
             <Link href=" " className={classes.link}>
               Forgot password?
             </Link>
