@@ -10,6 +10,9 @@ class Form extends Component {
       password: ''
     };
     this.state = this.initialstate;
+
+    this.handleChange = this.handleChange.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   handleChange = event => {
@@ -19,6 +22,7 @@ class Form extends Component {
 
   submitForm = () => {
     const { props } = this.props;
+
     props.handleSubmit(this.state);
     this.setState(this.initialState);
   };
@@ -28,7 +32,7 @@ class Form extends Component {
 
     return (
       <div>
-        <form>
+        <form onSubmit={this.submitForm}>
           <Input
             autoFocus
             value={email}

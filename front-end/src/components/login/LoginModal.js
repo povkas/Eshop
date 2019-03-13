@@ -78,6 +78,11 @@ class LoginModal extends React.Component {
             <Link href=" " className={classes.link}>
               Forgot password?
             </Link>
+
+            {/* <br />
+            <Button variant="outlined" onClick={submitForm} type="submit">
+              Log in
+            </Button> */}
           </div>
         </Modal>
       </div>
