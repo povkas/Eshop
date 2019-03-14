@@ -32,7 +32,7 @@ const styles = theme => ({
   }
 });
 
-class LoginModal extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,6 +40,7 @@ class LoginModal extends React.Component {
     };
   }
 
+  // arrows do not need bind(this), they use this. of the outside
   handleOpen = () => {
     this.setState({ openModal: true });
   };
@@ -59,7 +60,7 @@ class LoginModal extends React.Component {
         </Button>
         <Modal open={openModal} onClose={this.handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
-            <Form />
+            <Form passClose={this.handleClose} />
             <Link href=" ">Sign up</Link>
             <br />
             <Link href=" ">Forgot password?</Link>
@@ -70,8 +71,8 @@ class LoginModal extends React.Component {
   }
 }
 
-LoginModal.propTypes = {
+LoginForm.propTypes = {
   classes: PropTypes.shape().isRequired
 };
 
-export default withStyles(styles)(LoginModal);
+export default withStyles(styles)(LoginForm);

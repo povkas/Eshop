@@ -9,12 +9,14 @@ class Form extends Component {
       email: '',
       password: '',
       emailError: '',
+      isEmailError: false,
       passwordError: ''
     };
     this.state = this.initialstate;
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.mergedSubmitClose = this.mergedSubmitClose.bind(this);
   }
 
   validate = () => {
@@ -22,12 +24,14 @@ class Form extends Component {
     const { email } = this.state;
     const errors = {
       emailError: '',
-      passwordError: ''
+      passwordError: '',
+      isEmailError: false
     };
 
     if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
       isError = true;
       errors.emailError = 'Requires valid email';
+      errors.isEmailError = true;
     }
 
     this.setState({ ...errors });
@@ -54,11 +58,18 @@ class Form extends Component {
     }
   }
 
-  render() {
-    const { email, password, emailError, passwordError } = this.state;
+  mergedSubmitClose() {
+    const { passClose } = this.props;
+    this.handleSubmit();
+    passClose();
+  }
 
+  render() {
+    const { email, password, emailError, isEmailError, passwordError } = this.state;
     return (
       <div>
+        {/* <form handleSubmit={this.handleSubmit}> */}
+        {/* errora meta */}
         <form>
           <TextField
             autoFocus
@@ -67,7 +78,7 @@ class Form extends Component {
             type="email"
             value={email}
             onChange={this.handleChange}
-            error={emailError}
+            error={isEmailError}
             helperText={emailError}
           />
           <br />
@@ -77,12 +88,12 @@ class Form extends Component {
             type="password"
             value={password}
             onChange={this.handleChange}
-            error={passwordError}
+            // error={passwordError}
             helperText={passwordError}
           />
         </form>
         <br />
-        <Button variant="outlined" onClick={this.handleSubmit}>
+        <Button variant="outlined" type="submit" onClick={this.mergedSubmitClose}>
           Log in
         </Button>
       </div>
