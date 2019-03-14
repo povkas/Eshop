@@ -51,9 +51,8 @@ class Form extends Component {
 
   handleSubmit() {
     const { email, password } = this.state;
-    const err = this.validate();
 
-    if (!err) {
+    if (!this.validate()) {
       this.setState({ email, password });
     }
   }
@@ -61,16 +60,17 @@ class Form extends Component {
   mergedSubmitClose() {
     const { passClose } = this.props;
     this.handleSubmit();
-    passClose();
+    if (!this.validate()) passClose();
   }
 
   render() {
     const { email, password, emailError, isEmailError, passwordError } = this.state;
+
     return (
       <div>
-        {/* <form handleSubmit={this.handleSubmit}> */}
-        {/* errora meta */}
         <form>
+          {/* <form onSubmit={this.handleSubmit}> */}
+          {/* tada email Textfield rodo notificationa hoverinus be red */}
           <TextField
             autoFocus
             name="email"
@@ -80,6 +80,8 @@ class Form extends Component {
             onChange={this.handleChange}
             error={isEmailError}
             helperText={emailError}
+            // this.validate or this.handleSubmit
+            onBlur={this.validate}
           />
           <br />
           <TextField
@@ -91,9 +93,11 @@ class Form extends Component {
             // error={passwordError}
             helperText={passwordError}
           />
+          {/* <Button variant="outlined" type="submit">
+            Log in
+          </Button> */}
         </form>
-        <br />
-        <Button variant="outlined" type="submit" onClick={this.mergedSubmitClose}>
+        <Button variant="outlined" onClick={this.mergedSubmitClose}>
           Log in
         </Button>
       </div>
