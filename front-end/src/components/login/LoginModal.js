@@ -29,9 +29,6 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none'
-  },
-  link: {
-    margin: theme.spacing.unit
   }
 });
 
@@ -63,18 +60,9 @@ class LoginModal extends React.Component {
         <Modal open={openModal} onClose={this.handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
             <Form />
-            <Link href=" " className={classes.link}>
-              Sign up
-            </Link>
+            <Link href=" ">Sign up</Link>
             <br />
-            <Link href=" " className={classes.link}>
-              Forgot password?
-            </Link>
-
-            {/* <br />
-            <Button variant="outlined" onClick={submitForm} type="submit">
-              Log in
-            </Button> */}
+            <Link href=" ">Forgot password?</Link>
           </div>
         </Modal>
       </div>
@@ -85,7 +73,5 @@ class LoginModal extends React.Component {
 LoginModal.propTypes = {
   classes: PropTypes.shape().isRequired
 };
-
-// We need an intermediary variable for handling the recursive nesting.
 
 export default withStyles(styles)(LoginModal);

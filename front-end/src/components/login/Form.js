@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class Form extends Component {
   constructor(props) {
     super(props);
     this.initialstate = {
       email: '',
-      password: ''
+      password: '',
+      emailError: '',
+      passwordError: ''
     };
     this.state = this.initialstate;
 
     this.handleChange = this.handleChange.bind(this);
-    // this.submitForm = this.submitForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // neveikia @tania
-  // submitForm = () => {
-  //   const { props } = this.props;
-  //   props.handleSubmit(this.state);
-  //   this.setState(this.initialState);
-  // };
 
-  // neveikia @tania
-  // handleChange = event => {
-  //   const { email, password } = event.target;
-  //   this.setState({ email, password });
-  // };
+  validate = () => {
+    let isError = false;
+    const { email } = this.state;
+    const errors = {
+      emailError: '',
+      passwordError: ''
+    };
+
+    if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+      isError = true;
+      errors.emailError = 'Requires valid email';
+    }
+
+    this.setState({ ...errors });
+
+    return isError;
+  };
 
   handleChange(e) {
     const { target } = e;
@@ -38,47 +45,44 @@ class Form extends Component {
     });
   }
 
-  // handleSubmit(e) {
-  //   e.preventDefault();
-
-  //   const { email, password } = this.state;
-  //   console.log('The form was submitted with the following data:');
-  //   console.log(email);
-  //   console.log(password);
-  // }
-
   handleSubmit() {
     const { email, password } = this.state;
-    this.setState({ email, password });
+    const err = this.validate();
+
+    if (!err) {
+      this.setState({ email, password });
+    }
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, emailError, passwordError } = this.state;
 
     return (
       <div>
-        {/* <form onSubmit={this.handleSubmit}> */}
         <form>
-          <Input
+          <TextField
             autoFocus
             name="email"
+            label="Email"
+            type="email"
             value={email}
             onChange={this.handleChange}
-            placeholder="Email"
-            type="email"
+            error={emailError}
+            helperText={emailError}
           />
           <br />
-          <Input
+          <TextField
             name="password"
+            label="Password"
+            type="password"
             value={password}
             onChange={this.handleChange}
-            placeholder="Password"
-            type="password"
+            error={passwordError}
+            helperText={passwordError}
           />
         </form>
         <br />
-        {/* <Button variant="outlined" onClick={this.submitForm} type="submit"> */}
-        <Button variant="outlined" onClick={this.handleSubmit} type="submit">
+        <Button variant="outlined" onClick={this.handleSubmit}>
           Log in
         </Button>
       </div>
