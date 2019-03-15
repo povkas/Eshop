@@ -54,6 +54,7 @@ class Form extends Component {
 
     if (!this.validate()) {
       this.setState({ email, password });
+      // console.log(`${email} & ${password} have been submitted`);
     }
   }
 
@@ -68,8 +69,8 @@ class Form extends Component {
 
     return (
       <div>
-        <form>
-          {/* <form onSubmit={this.handleSubmit}> */}
+        {/* <form> */}
+        <form onSubmit={this.mergedSubmitClose}>
           {/* tada email Textfield rodo notificationa hoverinus be red */}
           <TextField
             autoFocus
@@ -93,13 +94,13 @@ class Form extends Component {
             // error={passwordError}
             helperText={passwordError}
           />
-          {/* <Button variant="outlined" type="submit">
+          <Button variant="outlined" type="submit">
             Log in
-          </Button> */}
+          </Button>
         </form>
-        <Button variant="outlined" onClick={this.mergedSubmitClose}>
+        {/* <Button variant="outlined" onClick={this.mergedSubmitClose}>
           Log in
-        </Button>
+        </Button> */}
       </div>
     );
   }
