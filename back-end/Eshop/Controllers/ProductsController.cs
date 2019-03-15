@@ -28,7 +28,7 @@ namespace EShop.Controllers
             return Ok(products);
         }
 
-        //[HttpGet("{id}", Name = nameof(RoutingEnum.GetProduct))]
+        [HttpGet("{id}")]
         [Produces(typeof(ProductDto))]
         public async Task<IActionResult> Get(int id)
         {
@@ -46,9 +46,7 @@ namespace EShop.Controllers
         public async Task<IActionResult> Post([FromBody] NewProductDto newProduct)
         {
             var createdProduct = await _productsService.Create(newProduct);
-            //var productUri = CreateResourceUri(createdProduct.Id);
-
-            //return Created(productUri, createdProduct);
+            
             return Ok(createdProduct);
         }
 
@@ -75,11 +73,5 @@ namespace EShop.Controllers
 
             return NoContent();
         }
-
-//        private Uri CreateResourceUri(int id)
-//        {
-//            // ReSharper disable once RedundantAnonymousTypePropertyName
-//            return new Uri(Url.Link(nameof(RoutingEnum.GetProduct), new { id = id }));
-//        }
     }
 }
