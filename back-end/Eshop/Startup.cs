@@ -31,6 +31,7 @@ namespace Eshop
         {
             services.AddScoped<IRepository<User>, UsersRepository>();
             services.SetUpDatabase(Configuration);
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -46,6 +47,7 @@ namespace Eshop
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:3000"));
             app.UseHttpsRedirection();
             app.UseMvc();
             app.InitializeDatabase();
