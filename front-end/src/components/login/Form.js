@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import axios from 'axios';
 
 class Form extends Component {
   constructor(props) {
@@ -49,12 +50,22 @@ class Form extends Component {
     });
   }
 
-  handleSubmit() {
-    const { email, password } = this.state;
+  handleSubmit(e) {
+    e.preventDefault(); // stopping browser to reload the page
+    // const { email, password } = this.state;
+    // const user = {
+    //   email,
+    //   password
+    // };
 
     if (!this.validate()) {
-      this.setState({ email, password });
+      // this.setState({ email, password });
       // console.log(`${email} & ${password} have been submitted`);
+      axios.get(`http://localhost:5000/api/values`);
+      //   .then(res => {
+      //   console.log(res);
+      //   console.log(res.data);
+      // });
     }
   }
 
@@ -70,7 +81,8 @@ class Form extends Component {
     return (
       <div>
         {/* <form> */}
-        <form onSubmit={this.mergedSubmitClose}>
+        {/* <form onSubmit={this.mergedSubmitClose}> */}
+        <form onSubmit={this.handleSubmit}>
           {/* tada email Textfield rodo notificationa hoverinus be red */}
           <TextField
             autoFocus
