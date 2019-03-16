@@ -34,7 +34,7 @@
 					"response": []
 				},
 				{
-					"name": "[GET] Product",
+					"name": "[GET] Products",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -84,6 +84,26 @@
 								"api",
 								"products"
 							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product categories",
+			"item": [
+				{
+					"name": "[GET] Product categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
