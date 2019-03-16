@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Eshop.Controllers
 {
-    [Route("api/productCategories")]
+    [Route("api/product-categories")]
     public class ProductCategoriesController : ControllerBase
     {
         private readonly ILogger _logger;

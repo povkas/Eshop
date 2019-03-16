@@ -1,6 +1,4 @@
-﻿using Eshop.Temp;
-
-namespace EShop.DTOs.Products
+﻿namespace EShop.DTOs.Products
 {
     public class NewProductDto
     {
