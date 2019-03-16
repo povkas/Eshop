@@ -80,7 +80,6 @@ class Form extends Component {
 
     return (
       <div>
-        {/* <form> */}
         {/* <form onSubmit={this.mergedSubmitClose}> */}
         <form onSubmit={this.handleSubmit}>
           {/* tada email Textfield rodo notificationa hoverinus be red */}
@@ -96,7 +95,6 @@ class Form extends Component {
             // this.validate or this.handleSubmit
             onBlur={this.validate}
           />
-          <br />
           <TextField
             name="password"
             label="Password"
@@ -106,13 +104,11 @@ class Form extends Component {
             // error={passwordError}
             helperText={passwordError}
           />
+          {/* <Button variant="outlined" onClick={this.mergedSubmitClose}></Button> */}
           <Button variant="outlined" type="submit">
             Log in
           </Button>
         </form>
-        {/* <Button variant="outlined" onClick={this.mergedSubmitClose}>
-          Log in
-        </Button> */}
       </div>
     );
   }

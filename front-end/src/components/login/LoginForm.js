@@ -2,17 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import Person from '@material-ui/icons/Person';
 import Form from './Form';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+function getModalPlace() {
+  const top = 28;
+  const left = 80;
 
   return {
     top: `${top}%`,
@@ -21,7 +17,7 @@ function getModalStyle() {
   };
 }
 
-const styles = theme => ({
+const modalStyles = theme => ({
   paper: {
     position: 'absolute',
     width: theme.spacing.unit * 20,
@@ -55,11 +51,9 @@ class LoginForm extends React.Component {
 
     return (
       <div>
-        <Button variant="outlined" onClick={this.handleOpen}>
-          Log in
-        </Button>
+        <Person onClick={this.handleOpen}>Log in</Person>
         <Modal open={openModal} onClose={this.handleClose}>
-          <div style={getModalStyle()} className={classes.paper}>
+          <div style={getModalPlace()} className={classes.paper}>
             <Form passClose={this.handleClose} />
             <Link href=" ">Sign up</Link>
             <br />
@@ -75,4 +69,4 @@ LoginForm.propTypes = {
   classes: PropTypes.shape().isRequired
 };
 
-export default withStyles(styles)(LoginForm);
+export default withStyles(modalStyles)(LoginForm);
