@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Eshop.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Eshop.Models;
 
 namespace Ehop.Data.Repositories
 {

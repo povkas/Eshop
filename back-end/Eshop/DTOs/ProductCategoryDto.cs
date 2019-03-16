@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Eshop.DTOs
+﻿namespace Eshop.DTOs
 {
     public class ProductCategoryDto
     {
+        public string Category { get; set; }
     }
 }

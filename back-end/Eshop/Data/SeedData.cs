@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Eshop.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Eshop.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Data
 {

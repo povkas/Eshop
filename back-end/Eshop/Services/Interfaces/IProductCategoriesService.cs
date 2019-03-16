@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Eshop.DTOs;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Eshop.DTOs;
-using Eshop.Models;
 
 namespace Eshop.Services.Interfaces
 {

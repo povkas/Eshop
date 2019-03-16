@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Ehop.Data.Repositories;
+using Eshop.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Ehop.Data.Repositories;
-using Eshop.Models;
 
 namespace Eshop.Data.Repositories
 {

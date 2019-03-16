@@ -1,9 +1,6 @@
-﻿
+﻿using Eshop.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Eshop.Data;
-using Eshop.Data.Repositories;
-using Eshop.Models;
 
 namespace Eshop.Data.Repositories
 {
