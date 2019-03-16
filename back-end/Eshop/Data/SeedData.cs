@@ -1,6 +1,13 @@
 ﻿using Eshop.Models;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< HEAD
+=======
+using System.Net.Mime;
+using System.Threading.Tasks;
+using Eshop.Models;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> master
 
 namespace Eshop.Data
 {
@@ -8,7 +15,7 @@ namespace Eshop.Data
     {
         public static void Seed(Context context)
         {
-            if (context.Users.Any())
+            if (context.Users.Any() && context.Products.Any())
                 return;
 
             var users = new List<User>
@@ -18,6 +25,13 @@ namespace Eshop.Data
             };
 
             users.ForEach(t => context.Users.Add(t));
+
+            var products = new List<Product>
+            {
+                new Product{Title= "Shovel", Description= "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now}
+            };
+
+            products.ForEach(t => context.Products.Add(t));
 
             context.SaveChanges();
         }
