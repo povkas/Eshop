@@ -71,7 +71,6 @@ namespace EShop.Services
                 throw new InvalidOperationException($"Product {id} was not found");
             }
 
-            // this is recomended way from microsoft if you don't have domain model
             var updateData = _mapper.Map<NewProductDto>(itemToUpdate);
             itemPatch.ApplyTo(updateData);
             _mapper.Map(updateData, itemToUpdate);
@@ -94,6 +93,7 @@ namespace EShop.Services
         private Product CreateProductPoco(NewProductDto newItem)
         {
             var product = _mapper.Map<Product>(newItem);
+            product.Created = DateTime.Now;
             return product;
         }
     }

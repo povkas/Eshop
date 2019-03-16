@@ -11,7 +11,7 @@ namespace Eshop.Configurations
 {
     public class AutoMapperConfiguration : Profile
     {
-        public AutoMapperConfiguration()
+        public AutoMapperConfiguration() : this("E-shop")
         {
 
         }
