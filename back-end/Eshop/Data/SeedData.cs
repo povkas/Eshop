@@ -1,13 +1,7 @@
-﻿using Eshop.Models;
+﻿using System;
+using Eshop.Models;
 using System.Collections.Generic;
 using System.Linq;
-<<<<<<< HEAD
-=======
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Eshop.Models;
-using Microsoft.EntityFrameworkCore;
->>>>>>> master
 
 namespace Eshop.Data
 {
