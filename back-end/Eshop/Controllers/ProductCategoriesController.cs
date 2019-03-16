@@ -8,12 +8,13 @@ using Microsoft.Extensions.Logging;
 namespace Eshop.Controllers
 {
     [Route("api/product-categories")]
+    [ApiController]
     public class ProductCategoriesController : ControllerBase
     {
         private readonly ILogger _logger;
         private readonly IProductCategoriesService _service;
 
-        ProductCategoriesController(IProductCategoriesService service,
+        public ProductCategoriesController(IProductCategoriesService service,
             ILogger<ProductCategoriesController> logger)
         {
             _service = service;

@@ -16,7 +16,8 @@ namespace EShop.Controllers
         private readonly ILogger _logger;
         private readonly IProductsService _productsService;
 
-        public ProductsController(IProductsService productsService, ILogger<ProductsController> logger)
+        public ProductsController(IProductsService productsService,
+            ILogger<ProductsController> logger)
         {
             _productsService = productsService;
             _logger = logger;
