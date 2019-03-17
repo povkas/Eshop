@@ -12,15 +12,20 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "api/products",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Eshop": {
       "commandName": "Project",
+<<<<<<< HEAD
       "launchBrowser": true,
       "launchUrl": "api/login/",
+=======
+      "launchBrowser": false,
+      "launchUrl": "api/products",
+>>>>>>> master
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -29,7 +34,11 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
+<<<<<<< HEAD
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/login/"
+=======
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/products"
+>>>>>>> master
     }
   }
 }
