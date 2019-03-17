@@ -10,6 +10,7 @@ using Eshop.Services;
 using System.Net;
 using System.Net.Http;
 using Ehop.Data.Repositories;
+using Eshop.Validation;
 //using System.Web.Http;
 
 namespace Eshop.Controllers
@@ -18,8 +19,9 @@ namespace Eshop.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+        
         private readonly ILoginService _service;
-
+        
         public LoginController(ILoginService service)
         {
             _service = service;
@@ -27,26 +29,24 @@ namespace Eshop.Controllers
 
         [HttpPost]
         public async Task<ActionResult> Login([FromBody]User user)
-        {
-            User u = await _service.UserExist(user.Email);
-            if (u == null) 
-                return BadRequest("The user was not found.");
-            bool credentials = u.Password.Equals(user.Password);
-            if (!credentials) return BadRequest("The username/password combination was wrong.");
-            return Ok(TokenManager.GenerateToken(user.Email));
+        {  
+            User u = await _service.DoesUserExist(user.Email, user.Password);
+            if (u == null)
+                return BadRequest("Your username or password is incorrect.");       
+               return Ok(TokenManager.GenerateToken(user.Email));          
         }
 
 
         [HttpGet]
         public async Task<ActionResult> Validate(string token, string email)
-        {
-            if (await _service.UserExist(email) == null)
-                return BadRequest("The user was not found.");
-            string tokenUsername = TokenManager.ValidateToken(token);
-            if (email.Equals(tokenUsername))
+        {           
+            string tokenEmail = await TokenManager.ValidateToken(token);
+            if (email == tokenEmail)
                 return Ok();
             return BadRequest();
         }
+
+
     }
     
 }

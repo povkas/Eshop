@@ -10,7 +10,7 @@ using Ehop.Data.Repositories;
 using System.Data.Entity;
 using EntityModel = Eshop.Data;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-
+using System.Web.Mvc;
 
 namespace Eshop.Services
 {
@@ -23,12 +23,12 @@ namespace Eshop.Services
             this.repository = repository;
         }
 
-        public async Task<User> UserExist(string email)
+        public async Task<User> DoesUserExist(string email, string password)
         {
             List<User> Db = repository.GetAll().Result.ToList();
             foreach (User a in Db)
             {
-                if (a.Email == email)
+                if (a.Email == email && a.Password == password)
                 {
                     return a;
                 }

@@ -8,6 +8,6 @@ namespace Eshop.Services
     public interface ILoginService
     {
         // bool CreateUser(User user);
-        Task<User> UserExist(string email);       
+        Task<User> DoesUserExist(string email, string password);       
     }
 }

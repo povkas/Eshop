@@ -2,6 +2,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Eshop.Models
 {
@@ -53,8 +54,7 @@ namespace Eshop.Models
                 return null;
             }
         }
-
-        public static string ValidateToken(string token)
+        public static async Task<string> ValidateToken(string token)
         {
             string email = null;
             ClaimsPrincipal principal = GetPrincipal(token);
@@ -73,6 +73,25 @@ namespace Eshop.Models
             email = emailClaim.Value;
             return email;
         }
+       /* public static string ValidateToken(string token)
+        {
+            string email = null;
+            ClaimsPrincipal principal = GetPrincipal(token);
+            if (principal == null)
+                return null;
+            ClaimsIdentity identity = null;
+            try
+            {
+                identity = (ClaimsIdentity)principal.Identity;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+            Claim emailClaim = identity.FindFirst(ClaimTypes.Name);
+            email = emailClaim.Value;
+            return email;
+        }*/
 
     }
 }

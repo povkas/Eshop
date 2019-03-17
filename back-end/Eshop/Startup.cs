@@ -15,6 +15,8 @@ using Eshop.Configurations;
 using Eshop.Data.Repositories;
 using Eshop.Models;
 using Eshop.Services;
+using FluentValidation.AspNetCore;
+using Eshop.Validation;
 
 namespace Eshop
 {
@@ -34,6 +36,11 @@ namespace Eshop
             services.AddTransient<ILoginService, LoginService>();
             services.SetUpDatabase(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                   
+           /* services.AddMvc()
+            .AddFluentValidation(fvc =>
+                fvc.RegisterValidatorsFromAssemblyContaining<Startup>());*/
+
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
