@@ -32,15 +32,9 @@ namespace Eshop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-<<<<<<< HEAD
             services.AddScoped<IRepository<User>, UsersRepository>();
             services.AddTransient<ILoginService, LoginService>();
-=======
-            services.SetUpAutoMapper();
-            services.AddAllDependencies();
->>>>>>> master
             services.SetUpDatabase(Configuration);
-            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
                    
            /* services.AddMvc()
