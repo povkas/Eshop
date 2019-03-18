@@ -16,7 +16,6 @@ using Eshop.Data.Repositories;
 using Eshop.Models;
 using Eshop.Services;
 using FluentValidation.AspNetCore;
-using Eshop.Validation;
 
 namespace Eshop
 {
@@ -34,12 +33,11 @@ namespace Eshop
         {
             services.AddScoped<IRepository<User>, UsersRepository>();
             services.AddTransient<ILoginService, LoginService>();
+            services.SetUpAutoMapper();
+            services.AddAllDependencies();
             services.SetUpDatabase(Configuration);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-                   
-           /* services.AddMvc()
-            .AddFluentValidation(fvc =>
-                fvc.RegisterValidatorsFromAssemblyContaining<Startup>());*/
+            services.AddCors();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);                  
 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +52,7 @@ namespace Eshop
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:3000"));
             app.UseHttpsRedirection();
             app.UseMvc();
             app.InitializeDatabase();

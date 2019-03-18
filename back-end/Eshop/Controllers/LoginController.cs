@@ -10,7 +10,6 @@ using Eshop.Services;
 using System.Net;
 using System.Net.Http;
 using Ehop.Data.Repositories;
-using Eshop.Validation;
 //using System.Web.Http;
 
 namespace Eshop.Controllers
