@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Eshop.DTOs.Products;
+using Eshop.ExceptionHandling;
 using EShop.DTOs.Products;
 using EShop.Services.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -42,7 +43,7 @@ namespace EShop.Controllers
             if (product == null)
             {
                 _logger.LogWarning("GetById({ID}) NOT FOUND", id);
-                return NotFound();
+                throw new NotFoundCustomException("A product with id " + id + " was not found");
             }
 
             return Ok(product);

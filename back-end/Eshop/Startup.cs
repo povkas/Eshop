@@ -7,6 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Eshop.Configurations;
+using Eshop.Data.Repositories;
+using Eshop.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Eshop
 {
@@ -41,10 +47,21 @@ namespace Eshop
                 app.UseHsts();
             }
 
-            app.UseCors(builder => builder.WithOrigins("http://localhost:3000"));
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMiddleware<CustomExceptionMiddleware>()
+                .UseCors(builder => builder.WithOrigins("http://localhost:3000"))
+                .UseHttpsRedirection()
+                .UseMvc()
+                .Run(_notFoundHandler);
             app.InitializeDatabase();
+
+
         }
+
+        private readonly RequestDelegate _notFoundHandler =
+            async ctx =>
+            {
+                ctx.Response.StatusCode = 404;
+                await ctx.Response.WriteAsync("Page not found.");
+            };
     }
 }
