@@ -1,39 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Eshop.Data;
 using Eshop.Models;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 using Ehop.Data.Repositories;
-using System.Data.Entity;
-using EntityModel = Eshop.Data;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Web.Mvc;
+using AutoMapper;
+using Eshop.DTOs.Products;
 
 namespace Eshop.Services
 {
     public class LoginService : ILoginService
     {
-        private IRepository<User> repository;
+        private readonly IRepository<User> _repository;
+        private readonly IMapper _mapper;
 
-        public LoginService(IRepository<User> repository)
+
+        public LoginService(IRepository<User> repository, IMapper mapper)
         {
-            this.repository = repository;
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<User> DoesUserExist(string email, string password)
+        public async Task<bool> DoesUserExist(UserDto user)
         {
-            List<User> Db = repository.GetAll().Result.ToList();
-            foreach (User a in Db)
+            var products = _repository.GetAll().Result.ToList();        
+          
+            foreach (User a in products)
             {
-                if (a.Email == email && a.Password == password)
+                if (a.Email == user.Email && a.Password == user.Password)
                 {
-                    return a;
+                    return true;
                 }
             }
-            return null;
+            return false;
         }
 
     }

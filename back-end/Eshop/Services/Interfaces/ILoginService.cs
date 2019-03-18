@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eshop.Models;
+using Eshop.DTOs.Products;
 namespace Eshop.Services
 {
     public interface ILoginService
     {
-        // bool CreateUser(User user);
-        Task<User> DoesUserExist(string email, string password);       
+        Task<bool> DoesUserExist(UserDto user);
     }
 }

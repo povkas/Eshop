@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Eshop.Models;
-using Eshop.Data;
 using Eshop.Services;
-using System.Net;
-using System.Net.Http;
-using Ehop.Data.Repositories;
-//using System.Web.Http;
+using Eshop.DTOs.Products;
+
 
 namespace Eshop.Controllers
 {
@@ -27,10 +20,11 @@ namespace Eshop.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login([FromBody]User user)
-        {  
-            User u = await _service.DoesUserExist(user.Email, user.Password);
-            if (u == null)
+        public async Task<ActionResult> Login([FromBody] UserDto user)
+        {
+
+            //var result = await _service.DoesUserExist(user);
+            if (await _service.DoesUserExist(user))
                 return BadRequest("Your username or password is incorrect.");       
                return Ok(TokenManager.GenerateToken(user.Email));          
         }

@@ -14,28 +14,25 @@ namespace Eshop.Data
         {
             if (context.Users.Any() && context.Products.Any())
                 return;
+          
+            var users = new List<User>
+            {
+                new User{Name = "Alechandro", Surname = "Barbosa", Email = "sexy@gmail.com", Country = "USA", City = "Siaule", Address = "Address", Password= "sexius", ConfirmPassword = "sexius"},
 
-            /* var users = new List<User>
-             {
-                 new User{Email = "admin@gmail.com", Password= "root1234", Role = "ADMIN", Address = "Address"},
-                 new User{Email = "user@gmail.com", Password= "root1234", Role = "NORMAL", Address = "Address"}
-             };
+            };
 
-             users.ForEach(t => context.Users.Add(t));
+            users.ForEach(t => context.Users.Add(t));
+            context.SaveChanges();
 
-             context.SaveChanges();*/
-            //context.Users.Single(emp => emp.Email == aa);
 
-            
-             
-             var products = new List<Product>
+            /*var products = new List<Product>
             {
                 new Product{Title= "Shovel", Description= "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now}
             };
 
             products.ForEach(t => context.Products.Add(t));
 
-            context.SaveChanges();
+            context.SaveChanges();*/
         }
     }
 }

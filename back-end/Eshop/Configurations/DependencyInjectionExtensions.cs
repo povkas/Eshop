@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Ehop.Data.Repositories;
 using Eshop.Data.Repositories;
 using Eshop.Models;
+using Eshop.Services;
 using EShop.Services;
 using EShop.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,13 +24,15 @@ namespace Eshop.Configurations
         public static IServiceCollection AddDataLayerDependencies(this IServiceCollection service)
         {
             return service
-                .AddScoped<IRepository<Product>, ProductsRepository>();
+                .AddScoped<IRepository<Product>, ProductsRepository>()
+                .AddScoped<IRepository<User>, UsersRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
             return service
-                .AddScoped<IProductsService, ProductsService>();
+                .AddScoped<IProductsService, ProductsService>()
+                .AddScoped<ILoginService, LoginService>();
         }
     }
 }
