@@ -17,7 +17,7 @@ namespace Eshop.Data
           
             var users = new List<User>
             {
-                new User{Name = "Alechandro", Surname = "Barbosa", Email = "sexy@gmail.com", Country = "USA", City = "Siaule", Address = "Address", Password= "sexius", ConfirmPassword = "sexius"},
+                new User{Name = "Alechandro", Surname = "Barbosa", Email = "papa@gmail.com", Country = "USA", City = "Siaule", Address = "Address", Password= "sexius123", ConfirmPassword = "sexius"},
 
             };
 
