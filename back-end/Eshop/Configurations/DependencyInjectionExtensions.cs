@@ -25,7 +25,9 @@ namespace Eshop.Configurations
         public static IServiceCollection AddDataLayerDependencies(this IServiceCollection service)
         {
             return service
-                .AddScoped<IRepository<Product>, ProductsRepository>();
+                .AddScoped<IRepository<Product>, ProductsRepository>()
+                .AddScoped<IRepository<User>, UsersRepository>();
+
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)

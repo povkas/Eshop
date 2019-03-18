@@ -1,4 +1,5 @@
-﻿using Ehop.Data.Repositories;
+﻿using AutoMapper;
+using Ehop.Data.Repositories;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -11,20 +12,45 @@ namespace Eshop.Services
 {
     public class RegistrationService : Controller, IRegistrationService
     {
-        private IRepository<User> repo;
-        public RegistrationService(IRepository<User> repo)
+        private readonly IRepository<User> repo;     
+        private readonly IMapper _mapper;       
+        public RegistrationService(IRepository<User> repo, IMapper mapper)
         {
             this.repo = repo;
+            _mapper = mapper;
+        }
+        public async Task<User> GetById(int id)
+        {
+            var product = await repo.GetById(id);
+            var productDto = _mapper.Map<User>(product);
+            return productDto;
         }
         public async Task<User> CreateUser(User user)
         {
             await repo.Create(user);
             return user;
         }
+        public async Task<ICollection<User>> GetAll()
+        {
+            var users = await repo.GetAll();
+            var allUsers = _mapper.Map<User[]>(users);
+            return allUsers;
+        }
+        public async Task<bool> Delete(int id)
+        {
+            var item = await repo.GetById(id);
+            if (item == null)
+            {
+                return false;
+            }
+
+            var deleted = await repo.Delete(item);
+            return deleted;
+        }
         public async Task<bool> CheckUserExistence(User newbie)
         {
             List<User> allUsers = repo.GetAll().Result.ToList();
-            foreach (User user in allUsers)//pervadinti normaliai
+            foreach (User user in allUsers)
             {
                 if (user.Email == newbie.Email)
                     return false;
