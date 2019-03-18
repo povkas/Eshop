@@ -23,14 +23,14 @@ namespace Eshop.Data
 
             users.ForEach(t => context.Users.Add(t));
 
-            var products = new List<Product>
-            {
-                new Product{Title= "Shovel", Description= "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now}
-            };
+            //var products = new List<Product>
+            //{
+            //    new Product{Title= "Shovel", Description= "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now}
+            //};
 
-            products.ForEach(t => context.Products.Add(t));
+            //products.ForEach(t => context.Products.Add(t));
 
-            context.SaveChanges();
+            //context.SaveChanges();
         }
     }
 }

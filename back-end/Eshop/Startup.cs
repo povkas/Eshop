@@ -14,6 +14,8 @@ using Microsoft.Extensions.Options;
 using Eshop.Configurations;
 using Eshop.Data.Repositories;
 using Eshop.Models;
+using Eshop.Services;
+using Eshop.Services.Interfaces;
 
 namespace Eshop
 {
@@ -33,6 +35,10 @@ namespace Eshop
             services.AddAllDependencies();
             services.SetUpDatabase(Configuration);
             services.AddCors();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.SetUpDatabase(Configuration);
+            services.AddScoped<IRepository<User>, UsersRepository>();
+            //services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
