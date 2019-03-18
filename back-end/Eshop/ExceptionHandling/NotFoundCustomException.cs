@@ -8,7 +8,7 @@ namespace Eshop.ExceptionHandling
 {
     public class NotFoundCustomException : BaseCustomException
     {
-        public NotFoundCustomException(string message, string description) : base(message, description, (int)HttpStatusCode.NotFound)
+        public NotFoundCustomException(string message) : base(message, HttpStatusCode.NotFound)
         {
         }
     }

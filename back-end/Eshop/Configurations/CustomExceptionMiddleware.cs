@@ -36,12 +36,11 @@ namespace Eshop.Configurations
             var customException = exception as BaseCustomException;
             var statusCode = (int)HttpStatusCode.InternalServerError;
             var message = "Unexpected error";
-            var description = "Unexpected error";
-
+            var status = HttpStatusCode.InternalServerError.ToString();
             if (null != customException)
             {
                 message = customException.Message;
-                description = customException.Description;
+                status = customException.Status;
                 statusCode = customException.Code;
             }
 
@@ -50,7 +49,7 @@ namespace Eshop.Configurations
             await response.WriteAsync(JsonConvert.SerializeObject(new CustomErrorResponse
             {
                 Message = message,
-                Description = description
+                Status = status
             }));
         }
     }
