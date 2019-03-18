@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2c521668-d068-41f0-a215-987ad6e4717b",
+		"_postman_id": "037bab9a-9a98-44b2-a8fd-644b11bfbc0c",
 		"name": "E-shop",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -85,6 +85,100 @@
 								"products"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "[LOGIN] user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"papa@gmail.com\",\n    \"password\":\"sexius123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/login/?email=sexy@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNleHlAZ21haWwuY29tIiwibmJmIjoxNTUyOTQzNDYxLCJleHAiOjE1NTI5NDUyNjEsImlhdCI6MTU1Mjk0MzQ2MX0.GllAJxEAr5QkcD_XeYmG7owyw0BKptwzjV6nwtgXw_Q",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"login",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "sexy@gmail.com"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNleHlAZ21haWwuY29tIiwibmJmIjoxNTUyOTQzNDYxLCJleHAiOjE1NTI5NDUyNjEsImlhdCI6MTU1Mjk0MzQ2MX0.GllAJxEAr5QkcD_XeYmG7owyw0BKptwzjV6nwtgXw_Q"
+								}
+							]
+						},
+						"description": "sending post login request with UserTdo body "
+					},
+					"response": []
+				},
+				{
+					"name": "[GET] user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"papa@gmail.com\",\n    \"password\":\"sexius123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/login/?email=papa@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InBhcGFAZ21haWwuY29tIiwibmJmIjoxNTUyOTQ2NTg5LCJleHAiOjE1NTI5NDgzODksImlhdCI6MTU1Mjk0NjU4OX0.ilAa2xUAFrWHJpljHXM_L2rzAUxbrSiwkxnRLooULbg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"login",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "papa@gmail.com"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InBhcGFAZ21haWwuY29tIiwibmJmIjoxNTUyOTQ2NTg5LCJleHAiOjE1NTI5NDgzODksImlhdCI6MTU1Mjk0NjU4OX0.ilAa2xUAFrWHJpljHXM_L2rzAUxbrSiwkxnRLooULbg"
+								}
+							]
+						},
+						"description": "Checks if JWT token works return 200 code if token is good or 400 if it bad"
 					},
 					"response": []
 				}
