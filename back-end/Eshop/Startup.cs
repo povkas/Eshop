@@ -35,9 +35,7 @@ namespace Eshop
             services.AddAllDependencies();
             services.SetUpDatabase(Configuration);
             services.AddCors();
-            services.SetUpDatabase(Configuration);
             services.AddScoped<IRepository<User>, UsersRepository>();
-            //services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

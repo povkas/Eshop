@@ -19,19 +19,6 @@ namespace Eshop.Data.Repositories
         protected override IQueryable<User> IncludeDependencies(IQueryable<User> queryable)
         {
             return queryable;
-        }
-        public bool CreateUser(User user)
-        {
-            try
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        }     
     }
 }

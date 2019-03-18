@@ -47,12 +47,12 @@ namespace Eshop.Services
             var deleted = await repo.Delete(item);
             return deleted;
         }
-        public async Task<bool> CheckUserExistence(User newbie)
+        public async Task<bool> CheckUserExistence(User newUser)
         {
             List<User> allUsers = repo.GetAll().Result.ToList();
             foreach (User user in allUsers)
             {
-                if (user.Email == newbie.Email)
+                if (user.Email == newUser.Email)
                     return false;
             }
             return true;
