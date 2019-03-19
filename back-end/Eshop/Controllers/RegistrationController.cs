@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Eshop.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/registration")]
     [ApiController]
     public class RegistrationController : Controller
     {
@@ -27,8 +27,8 @@ namespace Eshop.Controllers
         {
            if (await _service.CheckUserExistence(user))
            {
-               await _service.CreateUser(user);
-               return Created("Index", user);
+               var consumer =  await _service.CreateUser(user);
+               return Ok(consumer);
            }
            return BadRequest("The user email is already exist");
         }

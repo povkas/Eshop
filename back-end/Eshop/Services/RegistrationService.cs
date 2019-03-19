@@ -12,44 +12,44 @@ namespace Eshop.Services
 {
     public class RegistrationService : Controller, IRegistrationService
     {
-        private readonly IRepository<User> repo;     
+        private readonly IRepository<User> _repository;     
         private readonly IMapper _mapper;       
-        public RegistrationService(IRepository<User> repo, IMapper mapper)
+        public RegistrationService(IRepository<User> repository, IMapper mapper)
         {
-            this.repo = repo;
+            this._repository = repository;
             _mapper = mapper;
         }
         public async Task<User> GetById(int id)
         {
-            var product = await repo.GetById(id);
+            var product = await _repository.GetById(id);
             var productDto = _mapper.Map<User>(product);
             return productDto;
         }
         public async Task<User> CreateUser(User user)
         {
-            await repo.Create(user);
+            await _repository.Create(user);
             return user;
-        }
+        } 
         public async Task<ICollection<User>> GetAll()
         {
-            var users = await repo.GetAll();
+            var users = await _repository.GetAll();
             var allUsers = _mapper.Map<User[]>(users);
             return allUsers;
         }
         public async Task<bool> Delete(int id)
         {
-            var item = await repo.GetById(id);
+            var item = await _repository.GetById(id);
             if (item == null)
             {
                 return false;
             }
 
-            var deleted = await repo.Delete(item);
+            var deleted = await _repository.Delete(item);
             return deleted;
         }
         public async Task<bool> CheckUserExistence(User newUser)
         {
-            List<User> allUsers = repo.GetAll().Result.ToList();
+            List<User> allUsers = _repository.GetAll().Result.ToList();
             foreach (User user in allUsers)
             {
                 if (user.Email == newUser.Email)
