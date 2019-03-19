@@ -4,23 +4,25 @@ import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Link from '@material-ui/core/Link';
 import Person from '@material-ui/icons/Person';
+import IconButton from '@material-ui/core/IconButton';
 import Form from './Form';
 
 function getModalPlace() {
-  const top = 28;
-  const left = 80;
+  const top = 35;
+  const left = 76;
 
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    transform: `translate(-${top}%, -${left}%)`,
+    height: '30vh'
   };
 }
 
 const modalStyles = theme => ({
   paper: {
     position: 'absolute',
-    width: theme.spacing.unit * 20,
+    width: theme.spacing.unit * 28,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
@@ -36,7 +38,6 @@ class LoginForm extends React.Component {
     };
   }
 
-  // arrows do not need bind(this), they use this. of the outside
   handleOpen = () => {
     this.setState({ openModal: true });
   };
@@ -46,21 +47,25 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, className } = this.props;
     const { openModal } = this.state;
 
     return (
-      <div>
-        <Person onClick={this.handleOpen}>Log in</Person>
+      <IconButton className={className.menuButton}>
+        <Person onClick={this.handleOpen} />
+
+        {/* FIX place onClick={this.handleOpen} to IconButton */}
+
         <Modal open={openModal} onClose={this.handleClose}>
           <div style={getModalPlace()} className={classes.paper}>
             <Form passClose={this.handleClose} />
-            <Link href=" ">Sign up</Link>
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
+            <Link href=" ">Don't have an account? Click to register</Link>
             <br />
             <Link href=" ">Forgot password?</Link>
           </div>
         </Modal>
-      </div>
+      </IconButton>
     );
   }
 }

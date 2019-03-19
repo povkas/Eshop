@@ -24,9 +24,8 @@ function NavBar(props) {
               BimBam連合
             </Link>
           </Typography>
-          <IconButton className={classes.menuButton}>
-            <LoginForm />
-          </IconButton>
+
+          <LoginForm className={classes} />
 
           <IconButton className={classes.menuButton}>
             <ShoppingCart />

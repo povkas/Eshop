@@ -9,38 +9,44 @@ class Form extends Component {
     this.initialstate = {
       email: '',
       password: '',
-      emailError: '',
+      emailErrorText: ' ',
       isEmailError: false,
-      passwordError: ''
+      passwordErrorText: ' ',
+      isPasswordError: false
     };
     this.state = this.initialstate;
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.mergedSubmitClose = this.mergedSubmitClose.bind(this);
   }
 
   validate = () => {
     let isError = false;
-    const { email } = this.state;
+    const { email, password } = this.state;
     const errors = {
-      emailError: '',
-      passwordError: '',
-      isEmailError: false
+      emailErrorText: ' ',
+      passwordErrorText: ' ',
+      isEmailError: false,
+      isPasswordError: false
     };
 
-    if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
-      isError = true;
-      errors.emailError = 'Requires valid email';
-      errors.isEmailError = true;
+    if (email.length !== 0) {
+      if (email.indexOf('@') === -1 || email.indexOf('.') === -1 || email.length > 128) {
+        isError = true;
+        errors.emailErrorText = 'Requires valid email';
+        errors.isEmailError = true;
+      }
     }
-
+    if (password.length !== 0) {
+      if (password.length < 8 || password.length > 255) {
+        isError = true;
+        errors.passwordErrorText = 'Password must contain at least 8 symbols';
+        errors.isPasswordError = true;
+      }
+    }
     this.setState({ ...errors });
 
     return isError;
   };
 
-  handleChange(e) {
+  handleChange = e => {
     const { target } = e;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const { name } = target;
@@ -48,17 +54,17 @@ class Form extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
-  handleSubmit(e) {
-    e.preventDefault(); // stopping browser to reload the page
-    // const { email, password } = this.state;
+  handleSubmit = e => {
+    e.preventDefault(); // preventing browser to reload
+    const { email, password } = this.state;
     // const user = {
     //   email,
     //   password
     // };
 
-    if (!this.validate()) {
+    if (!this.validate() && (email.length && password.length) !== 0) {
       // this.setState({ email, password });
       // console.log(`${email} & ${password} have been submitted`);
       axios.get(`http://localhost:5000/api/values`);
@@ -67,44 +73,53 @@ class Form extends Component {
       //   console.log(res.data);
       // });
     }
-  }
+  };
 
-  mergedSubmitClose() {
+  mergedSubmitClose = () => {
     const { passClose } = this.props;
     this.handleSubmit();
     if (!this.validate()) passClose();
-  }
+  };
 
   render() {
-    const { email, password, emailError, isEmailError, passwordError } = this.state;
+    const {
+      email,
+      password,
+      emailErrorText,
+      isEmailError,
+      passwordErrorText,
+      isPasswordError
+    } = this.state;
 
     return (
       <div>
         {/* <form onSubmit={this.mergedSubmitClose}> */}
         <form onSubmit={this.handleSubmit}>
-          {/* tada email Textfield rodo notificationa hoverinus be red */}
           <TextField
             autoFocus
             name="email"
             label="Email"
             type="email"
             value={email}
+            required
             onChange={this.handleChange}
             error={isEmailError}
-            helperText={emailError}
-            // this.validate or this.handleSubmit
+            helperText={emailErrorText}
             onBlur={this.validate}
+            margin="normal"
           />
           <TextField
             name="password"
             label="Password"
             type="password"
             value={password}
+            required
             onChange={this.handleChange}
-            // error={passwordError}
-            helperText={passwordError}
+            error={isPasswordError}
+            onBlur={this.validate}
+            helperText={passwordErrorText}
+            margin="normal"
           />
-          {/* <Button variant="outlined" onClick={this.mergedSubmitClose}></Button> */}
           <Button variant="outlined" type="submit">
             Log in
           </Button>
