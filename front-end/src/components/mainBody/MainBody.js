@@ -6,13 +6,13 @@ import { withStyles } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 import ProductTable from '../productTable/ProductTable';
 
-const color = grey[500];
+const color = grey[100];
 
 const Styles = () => ({
   paper: {
     flexGrow: 1,
     backgroundColor: color,
-    minWidth: '50vw',
+    width: '50vw',
     minHeight: '90vh',
     margin: '2vh'
   }
