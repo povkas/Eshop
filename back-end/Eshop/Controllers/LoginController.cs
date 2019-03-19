@@ -32,10 +32,13 @@ namespace Eshop.Controllers
 
         [HttpGet]
         public async Task<ActionResult> Validate(string token, string email)
-        {           
-            string tokenEmail = await TokenManager.ValidateToken(token);
-            if (email == tokenEmail)
-                return Ok();
+        { 
+            if(token != null && email != null)
+            {
+                string tokenEmail = await TokenManager.ValidateToken(token);
+                if (email == tokenEmail)
+                    return Ok();
+            }         
             return BadRequest();
         }
 
