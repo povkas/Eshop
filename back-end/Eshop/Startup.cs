@@ -14,7 +14,12 @@ using Microsoft.Extensions.Options;
 using Eshop.Configurations;
 using Eshop.Data.Repositories;
 using Eshop.Models;
+
+using Eshop.Services;
+using Eshop.Services.Interfaces;
+
 using Microsoft.AspNetCore.Http;
+
 
 namespace Eshop
 {
@@ -34,6 +39,7 @@ namespace Eshop
             services.AddAllDependencies();
             services.SetUpDatabase(Configuration);
             services.AddCors();
+            services.AddScoped<IRepository<User>, UsersRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -52,7 +58,7 @@ namespace Eshop
             app.UseMiddleware<CustomExceptionMiddleware>()
                 .UseCors(builder => builder.WithOrigins("http://localhost:3000"))
                 .UseHttpsRedirection()
-                .UseMvc()
+                .UseMvc()   
                 .Run(_notFoundHandler);
             app.InitializeDatabase();
 
