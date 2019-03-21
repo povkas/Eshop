@@ -12,12 +12,12 @@ namespace Eshop.Controllers
 {
     [Route("api/registration")]
     [ApiController]
-    public class RegistrationController : Controller
+    public class UserController : Controller
     {
         private readonly IRegistrationService _service;
         private readonly ILogger _logger;        
 
-        public RegistrationController(IRegistrationService usersService, ILogger<RegistrationController> logger)
+        public UserController(IRegistrationService usersService, ILogger<UserController> logger)
         {
             _service = usersService;
             _logger = logger;
@@ -30,7 +30,7 @@ namespace Eshop.Controllers
                var consumer =  await _service.CreateUser(user);
                return Ok(consumer);
            }
-           return BadRequest("The user email is already exist");
+           return BadRequest("This email already exists");
         }
         [HttpGet("{id}")]
         [Produces(typeof(User))]
