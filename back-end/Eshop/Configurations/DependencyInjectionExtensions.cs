@@ -35,7 +35,7 @@ namespace Eshop.Configurations
         {
             return service
                 .AddScoped<IProductsService, ProductsService>()
-                .AddScoped<ILoginService, LoginService>();
+                .AddScoped<ILoginService, LoginService>()
                 .AddScoped<IRegistrationService, RegistrationService>();
         }
         

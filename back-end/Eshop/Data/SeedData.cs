@@ -32,7 +32,7 @@ namespace Eshop.Data
             };
             products.ForEach(t => context.Products.Add(t));
 
-            context.SaveChanges();
+            context.SaveChanges();*/
 
         }
     }
