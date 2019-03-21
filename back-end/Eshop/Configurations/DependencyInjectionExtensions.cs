@@ -6,6 +6,8 @@ using Ehop.Data.Repositories;
 using Eshop.Data.Repositories;
 using Eshop.Models;
 using Eshop.Services;
+
+using Eshop.Services.Interfaces;
 using EShop.Services;
 using EShop.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,7 @@ namespace Eshop.Configurations
             return service
                 .AddScoped<IRepository<Product>, ProductsRepository>()
                 .AddScoped<IRepository<User>, UsersRepository>();
+
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
@@ -33,6 +36,8 @@ namespace Eshop.Configurations
             return service
                 .AddScoped<IProductsService, ProductsService>()
                 .AddScoped<ILoginService, LoginService>();
+                .AddScoped<IRegistrationService, RegistrationService>();
         }
+        
     }
 }

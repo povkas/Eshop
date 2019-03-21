@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Eshop.Configurations;
 using Microsoft.AspNetCore.Http;
 
+
 namespace Eshop
 {
     public class Startup
@@ -25,7 +26,6 @@ namespace Eshop
             services.SetUpDatabase(Configuration);
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);                  
-
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -42,7 +42,7 @@ namespace Eshop
             app.UseMiddleware<CustomExceptionMiddleware>()
                 .UseCors(builder => builder.WithOrigins("http://localhost:3000"))
                 .UseHttpsRedirection()
-                .UseMvc()
+                .UseMvc()   
                 .Run(_notFoundHandler);
             app.InitializeDatabase();
 

@@ -9,10 +9,11 @@ namespace Eshop.Models
 {
     public class User : BaseEntity
     {
-        //[Required(AllowEmptyStrings = false, ErrorMessage = " Name required! ")]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = " Name required ")]
         public string Name { get; set; }
 
-       // [Required(AllowEmptyStrings = false, ErrorMessage = " Surname required! ")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = " Surname required ")]
         public string Surname { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
@@ -21,14 +22,15 @@ namespace Eshop.Models
         public string Email { get; set; }
 
         [Display(Name = "Country")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Country required! ")]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Country required ")]
         public string Country { get; set; }
 
         [Display(Name = "City")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "City required! ")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "City required ")]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "Address is required")]
+        [Required(ErrorMessage = "Address is required \n")]
         [MinLength(8, ErrorMessage = "Address must be at least 8 characters long")]
         [StringLength(128, ErrorMessage = "Address cannot exceed 255 characters")]
         public string Address { get; set; }

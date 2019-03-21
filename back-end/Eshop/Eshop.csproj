@@ -24,7 +24,10 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.4.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.2105168" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+<<<<<<< HEAD
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
+=======
+>>>>>>> 290b99595b60edeeca8267f9d3f0e47a1efd7e4a
   </ItemGroup>
 
   <ItemGroup>
