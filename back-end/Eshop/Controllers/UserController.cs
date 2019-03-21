@@ -30,7 +30,7 @@ namespace Eshop.Controllers
                var consumer =  await _service.CreateUser(user);
                return Ok(consumer);
            }
-           return BadRequest("The user email is already exist");
+           return BadRequest("This email already exists");
         }
         [HttpGet("{id}")]
         [Produces(typeof(User))]
