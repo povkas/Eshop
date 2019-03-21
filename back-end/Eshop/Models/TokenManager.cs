@@ -73,25 +73,7 @@ namespace Eshop.Models
             email = emailClaim.Value;
             return email;
         }
-       /* public static string ValidateToken(string token)
-        {
-            string email = null;
-            ClaimsPrincipal principal = GetPrincipal(token);
-            if (principal == null)
-                return null;
-            ClaimsIdentity identity = null;
-            try
-            {
-                identity = (ClaimsIdentity)principal.Identity;
-            }
-            catch (NullReferenceException)
-            {
-                return null;
-            }
-            Claim emailClaim = identity.FindFirst(ClaimTypes.Name);
-            email = emailClaim.Value;
-            return email;
-        }*/
+
 
     }
 }
