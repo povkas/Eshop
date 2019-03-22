@@ -26,14 +26,17 @@ namespace Eshop.Configurations
         {
             return service
                 .AddScoped<IRepository<Product>, ProductsRepository>()
-                .AddScoped<IRepository<ProductCategory>, ProductCategoriesRepository>();
+                .AddScoped<IRepository<ProductCategory>, ProductCategoriesRepository>()
+                .AddScoped<IRepository<User>, UsersRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
             return service
                 .AddScoped<IProductsService, ProductsService>()
-                .AddScoped<IProductCategoriesService, ProductCategoriesService>();
+                .AddScoped<IProductCategoriesService, ProductCategoriesService>()
+                .AddScoped<IRegistrationService, RegistrationService>();
         }
+        
     }
 }

@@ -14,18 +14,19 @@ namespace Eshop.Data
 
             var users = new List<User>
             {
-                new User{Email = "admin@gmail.com", Password= "root1234", Role = "ADMIN", Address = "Address"},
-                new User{Email = "user@gmail.com", Password= "root1234", Role = "NORMAL", Address = "Address"}
+                 new User{Name = "Alechandro", Surname = "Barbosa", Email = "sexy@gmail.com", Country = "USA", City = "Siaule",
+                     Address = "Address", Password= "sexius", ConfirmPassword = "sexius"}
             };
 
             users.ForEach(t => context.Users.Add(t));
+            context.SaveChanges();
 
             var products = new List<Product>
             {
-                new Product{Title= "Shovel", Description= "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now}
+                new Product{Title = "Shovel", Description = "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now }
             };
-
             products.ForEach(t => context.Products.Add(t));
+<<<<<<< HEAD
 
             var productCategories = new List<ProductCategory>
             {
@@ -40,7 +41,10 @@ namespace Eshop.Data
 
             productCategories.ForEach(t => context.ProductCategories.Add(t));
 
+=======
+>>>>>>> master
             context.SaveChanges();
+
         }
     }
 }
