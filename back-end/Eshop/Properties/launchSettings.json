@@ -20,7 +20,7 @@
     "Eshop": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/login/",    
+      "launchUrl": "api/products",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

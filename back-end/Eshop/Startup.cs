@@ -45,8 +45,6 @@ namespace Eshop
                 .UseMvc()   
                 .Run(_notFoundHandler);
             app.InitializeDatabase();
-
-
         }
 
         private readonly RequestDelegate _notFoundHandler =

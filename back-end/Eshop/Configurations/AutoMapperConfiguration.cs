@@ -13,7 +13,6 @@ namespace Eshop.Configurations
     {
         public AutoMapperConfiguration() : this("E-shop")
         {
-
         }
 
         protected AutoMapperConfiguration(string name) : base(name)

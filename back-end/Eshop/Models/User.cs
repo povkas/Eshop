@@ -9,7 +9,6 @@ namespace Eshop.Models
 {
     public class User : BaseEntity
     {
-
         [Required(AllowEmptyStrings = false, ErrorMessage = " Name required ")]
         public string Name { get; set; }
 
@@ -22,7 +21,6 @@ namespace Eshop.Models
         public string Email { get; set; }
 
         [Display(Name = "Country")]
-
         [Required(AllowEmptyStrings = false, ErrorMessage = "Country required ")]
         public string Country { get; set; }
 
