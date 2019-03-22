@@ -26,7 +26,6 @@ namespace Eshop.Data
                 new Product{Title = "Shovel", Description = "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now }
             };
             products.ForEach(t => context.Products.Add(t));
-<<<<<<< HEAD
 
             var productCategories = new List<ProductCategory>
             {
@@ -41,8 +40,6 @@ namespace Eshop.Data
 
             productCategories.ForEach(t => context.ProductCategories.Add(t));
 
-=======
->>>>>>> master
             context.SaveChanges();
 
         }

@@ -49,7 +49,7 @@ namespace Eshop.Services
         }
         public async Task<bool> CheckUserExistence(User newUser)
         {
-            List<User> allUsers = _repository.GetAll().Result.ToList();
+            var allUsers = await _repository.GetAll();
             foreach (User user in allUsers)
             {
                 if (user.Email == newUser.Email)
@@ -60,9 +60,9 @@ namespace Eshop.Services
         public string ValidateUser(User user)
         {
             string errorMessage = "";
-            foreach (var error in ViewData.ModelState.Values.SelectMany(ModelState => ModelState.Errors))
+            foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
             {
-                errorMessage = errorMessage + (error.ErrorMessage);
+                errorMessage = errorMessage + error.ErrorMessage;
             };
             return errorMessage;
         }

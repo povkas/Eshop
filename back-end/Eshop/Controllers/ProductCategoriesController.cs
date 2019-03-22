@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Eshop.DTOs;
-using Eshop.Services;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

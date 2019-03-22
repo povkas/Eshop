@@ -7,14 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Eshop.Configurations;
-using Eshop.Data.Repositories;
-using Eshop.Models;
-
-using Eshop.Services;
-using Eshop.Services.Interfaces;
 
 using Microsoft.AspNetCore.Http;
 
