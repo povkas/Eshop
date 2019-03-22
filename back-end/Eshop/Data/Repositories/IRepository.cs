@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Ehop.Data.Repositories
+namespace Eshop.Data.Repositories
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {

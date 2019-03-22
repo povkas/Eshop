@@ -1,5 +1,5 @@
-﻿using System;
-using Eshop.Models;
+﻿using Eshop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,7 +41,6 @@ namespace Eshop.Data
             productCategories.ForEach(t => context.ProductCategories.Add(t));
 
             context.SaveChanges();
-
         }
     }
 }

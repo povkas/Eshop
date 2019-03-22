@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using Eshop.DTOs.Products;
+﻿using Eshop.DTOs.Products;
 using Eshop.ExceptionHandling;
 using EShop.DTOs.Products;
 using EShop.Services.Interfaces;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace EShop.Controllers
 {
@@ -55,7 +54,7 @@ namespace EShop.Controllers
         {
             _logger.LogInformation("Posting product {}", newProduct);
             var createdProduct = await _productsService.Create(newProduct);
-            
+
             return Ok(createdProduct);
         }
 

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Ehop.Data.Repositories;
 using Eshop.DTOs;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Eshop.Data.Repositories;
 
 namespace Eshop.Services
 {

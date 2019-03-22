@@ -1,5 +1,4 @@
-﻿using Ehop.Data.Repositories;
-using Eshop.Models;
+﻿using Eshop.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;

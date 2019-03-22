@@ -1,15 +1,12 @@
-﻿using Ehop.Data.Repositories;
-using Eshop.Configurations;
+﻿using Eshop.Configurations;
 using Eshop.Data.Repositories;
 using Eshop.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-using Microsoft.AspNetCore.Http;
-
 
 namespace Eshop
 {
@@ -48,11 +45,9 @@ namespace Eshop
             app.UseMiddleware<CustomExceptionMiddleware>()
                 .UseCors(builder => builder.WithOrigins("http://localhost:3000"))
                 .UseHttpsRedirection()
-                .UseMvc()   
+                .UseMvc()
                 .Run(_notFoundHandler);
             app.InitializeDatabase();
-
-
         }
 
         private readonly RequestDelegate _notFoundHandler =

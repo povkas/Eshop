@@ -1,8 +1,4 @@
-﻿using System;
-using AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Eshop.DTOs;
 using Eshop.DTOs.Products;
 using Eshop.Models;
@@ -14,7 +10,6 @@ namespace Eshop.Configurations
     {
         public AutoMapperConfiguration() : this("E-shop")
         {
-
         }
 
         protected AutoMapperConfiguration(string name) : base(name)

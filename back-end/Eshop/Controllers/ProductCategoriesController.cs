@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Eshop.DTOs;
+﻿using Eshop.DTOs;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Eshop.Controllers
 {
