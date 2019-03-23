@@ -19,6 +19,7 @@ namespace Eshop.Configurations
             CreateMap<Product, ProductDto>(MemberList.Destination);
 
             CreateMap<ProductCategory, ProductCategoryDto>(MemberList.Destination);
+            CreateMap<User, UserDto>(MemberList.None);
         }
     }
 }

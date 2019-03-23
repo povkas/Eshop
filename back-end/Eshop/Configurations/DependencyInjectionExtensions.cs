@@ -1,6 +1,7 @@
 ﻿using Eshop.Data.Repositories;
 using Eshop.Models;
 using Eshop.Services;
+
 using Eshop.Services.Interfaces;
 using EShop.Services;
 using EShop.Services.Interfaces;
@@ -30,6 +31,7 @@ namespace Eshop.Configurations
             return service
                 .AddScoped<IProductsService, ProductsService>()
                 .AddScoped<IProductCategoriesService, ProductCategoriesService>()
+                .AddScoped<ILoginService, LoginService>()
                 .AddScoped<IRegistrationService, RegistrationService>();
         }
     }

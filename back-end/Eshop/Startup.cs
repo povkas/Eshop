@@ -1,4 +1,4 @@
-﻿using Eshop.Configurations;
+using Eshop.Configurations;
 using Eshop.Data.Repositories;
 using Eshop.Models;
 using Microsoft.AspNetCore.Builder;
@@ -21,15 +21,13 @@ namespace Eshop
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {          
             services.SetUpAutoMapper();
             services.AddAllDependencies();
             services.SetUpDatabase(Configuration);
             services.AddCors();
-            services.AddScoped<IRepository<User>, UsersRepository>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);                  
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
