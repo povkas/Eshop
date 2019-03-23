@@ -107,7 +107,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"papa@gmail.com\",\n    \"password\":\"sexius123\"\n}"
+							"raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"paswword123\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/api/user/login",
@@ -143,10 +143,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"papa@gmail.com\",\n    \"password\":\"sexius123\"\n}"
+							"raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"paswword123\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/user/validate?email=papa@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InBhcGFAZ21haWwuY29tIiwibmJmIjoxNTUzMzQ0NDI3LCJleHAiOjE1NTMzNDYyMjcsImlhdCI6MTU1MzM0NDQyN30.uMVmDNjhgx4poV_QU4qDH3rBQUvgOpHmsBufdxbmnGk",
+							"raw": "http://localhost:5000/api/user/validate?email=user@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzUxNDA3LCJleHAiOjE1NTMzNTMyMDcsImlhdCI6MTU1MzM1MTQwN30.Lc1L__Xp9jWI2BawIpExQE0uspyBTLwKzlau5PoK9js",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -160,11 +160,11 @@
 							"query": [
 								{
 									"key": "email",
-									"value": "papa@gmail.com"
+									"value": "user@gmail.com"
 								},
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InBhcGFAZ21haWwuY29tIiwibmJmIjoxNTUzMzQ0NDI3LCJleHAiOjE1NTMzNDYyMjcsImlhdCI6MTU1MzM0NDQyN30.uMVmDNjhgx4poV_QU4qDH3rBQUvgOpHmsBufdxbmnGk"
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzUxNDA3LCJleHAiOjE1NTMzNTMyMDcsImlhdCI6MTU1MzM1MTQwN30.Lc1L__Xp9jWI2BawIpExQE0uspyBTLwKzlau5PoK9js"
 								}
 							]
 						},

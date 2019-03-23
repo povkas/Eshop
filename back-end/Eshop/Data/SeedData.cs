@@ -12,14 +12,14 @@ namespace Eshop.Data
     {
         public static void Seed(Context context)
         {
-            if (context.Users.Any() && context.Products.Any())
+           if (context.Users.Any() && context.Products.Any())
                 return;
           
             var users = new List<User>
             {
 
-                 new User{Name = "Alechandro", Surname = "Barbosa", Email = "sexy@gmail.com", Country = "USA", City = "Siaule",
-                     Address = "Address", Password= "sexius", ConfirmPassword = "sexius"}
+                 new User{Name = "Alechandro", Surname = "Barbosa", Email = "user@gmail.com", Country = "USA", City = "Siaule",
+                     Address = "Address", Password= "paswword123", ConfirmPassword = "tralala"}
             };
 
             users.ForEach(t => context.Users.Add(t));

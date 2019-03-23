@@ -7,7 +7,6 @@ namespace Eshop.Data.Repositories
     public class UsersRepository : RepositoryBase<User>
     {
         protected override DbSet<User> ItemSet { get; }
-        private Context db = new Context();
         public UsersRepository(Context context) : base(context)
         {
             ItemSet = context.Users;
