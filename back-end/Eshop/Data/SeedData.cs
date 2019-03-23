@@ -14,22 +14,18 @@ namespace Eshop.Data
         {
            if (context.Users.Any() && context.Products.Any())
                 return;
-          
-            var users1 = new List<User>
+
+            var users = new List<User>
             {
 
                  new User{Name = "Alechandro", Surname = "Barbosa", Email = "user@gmail.com", Country = "USA", City = "Siaule",
-                     Address = "Address", Password= "password123", ConfirmPassword = "tralala"}
-            };
-            var users2 = new List<User>
-            {
-
+                     Address = "Address", Password= "password123", ConfirmPassword = "tralala"},
                  new User{Name = "Alechandro", Surname = "Barbosa", Email = "admin@gmail.com", Country = "USA", City = "Siaule",
                      Address = "Address", Password= "password123", ConfirmPassword = "tralala"}
             };
+           
 
-            users1.ForEach(t => context.Users.Add(t));
-            users2.ForEach(t => context.Users.Add(t));
+            users.ForEach(t => context.Users.Add(t));         
             context.SaveChanges();
 
             var products = new List<Product>
