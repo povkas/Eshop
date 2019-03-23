@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Eshop.DTOs.Products;
+using Eshop.DTOs.Users;
 
 namespace Eshop.Services.Interfaces
 {
@@ -9,9 +10,9 @@ namespace Eshop.Services.Interfaces
     {
         Task<User> GetById(int id);
 
-        Task<User> CreateUser(User user);
+        Task<NewUserDto> CreateUser(NewUserDto user);
 
-        Task<bool> CheckUserExistence(User newbie);
+        Task<bool> CheckUserExistence(NewUserDto user);
 
         string ValidateUser(User user);
 

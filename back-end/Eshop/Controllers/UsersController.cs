@@ -5,6 +5,7 @@ using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Eshop.DTOs.Users;
 
 namespace Eshop.Controllers
 {
@@ -22,7 +23,7 @@ namespace Eshop.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody]User user)
+        public async Task<ActionResult> Create([FromBody]NewUserDto user)
         {
             if (await _userService.CheckUserExistence(user))
             {
