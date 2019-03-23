@@ -37,7 +37,7 @@ namespace Eshop.Controllers
            return BadRequest("This email already exists");
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id")]
         [Produces(typeof(User))]
         public async Task<IActionResult> GetById(int id)
         {
@@ -60,8 +60,7 @@ namespace Eshop.Controllers
             return Ok(TokenManager.GenerateToken(user.Email));
         }
 
-
-        [HttpGet]
+        [HttpGet("{validate}")]
         public async Task<ActionResult> Validate(string token, string email)
         {
             if (token != null && email != null)
