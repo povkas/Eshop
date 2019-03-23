@@ -1,8 +1,5 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Eshop.Data;
-using Eshop.Data.Repositories;
 using Eshop.Models;
 
 namespace Eshop.Data.Repositories
@@ -10,7 +7,6 @@ namespace Eshop.Data.Repositories
     public class UsersRepository : RepositoryBase<User>
     {
         protected override DbSet<User> ItemSet { get; }
-        private Context db = new Context();
         public UsersRepository(Context context) : base(context)
         {
             ItemSet = context.Users;

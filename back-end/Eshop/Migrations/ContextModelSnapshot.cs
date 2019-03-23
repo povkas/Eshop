@@ -47,9 +47,9 @@ namespace Eshop.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(128);
-
+                    .IsRequired()
+                    .HasMaxLength(128);
+                    
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(255);

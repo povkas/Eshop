@@ -13,7 +13,6 @@ namespace Eshop.Configurations
     {
         public AutoMapperConfiguration() : this("E-shop")
         {
-
         }
 
         protected AutoMapperConfiguration(string name) : base(name)
@@ -21,6 +20,7 @@ namespace Eshop.Configurations
             CreateMap<NewProductDto, Product>(MemberList.None);
             CreateMap<ProductDto, Product>(MemberList.None);
             CreateMap<Product, ProductDto>(MemberList.Destination);
+            CreateMap<User, UserDto>(MemberList.None);
         }
     }
 }
