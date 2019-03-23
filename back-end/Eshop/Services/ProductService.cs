@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace EShop.Services
 {
-    public class ProductsService : IProductsService
+    public class ProductService : IProductsService
     {
         private readonly IRepository<Product> _repository;
         private readonly IMapper _mapper;
 
-        public ProductsService(IRepository<Product> repository, IMapper mapper)
+        public ProductService(IRepository<Product> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

@@ -1,10 +1,11 @@
 ﻿using Eshop.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Eshop.DTOs.Products;
 
 namespace Eshop.Services.Interfaces
 {
-    public interface IRegistrationService
+    public interface IUserService
     {
         Task<User> GetById(int id);
 
@@ -17,5 +18,7 @@ namespace Eshop.Services.Interfaces
         Task<bool> Delete(int id);
 
         Task<ICollection<User>> GetAll();
+
+        Task<bool> CheckIfUserExists(UserDto user);
     }
 }

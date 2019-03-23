@@ -10,25 +10,23 @@ namespace Eshop.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
-        private readonly IRegistrationService _service;
-        private readonly ILoginService _loginService;
+        private readonly IUserService _userService;
         private readonly ILogger _logger;
 
-        public UserController(IRegistrationService usersService, ILogger<UserController> logger, ILoginService loginService)
+        public UsersController(IUserService userService, ILogger<UsersController> logger)
         {
-            _service = usersService;
+            _userService = userService;
             _logger = logger;
-            _loginService = loginService;
         }
 
         [HttpPost]
         public async Task<ActionResult> Create([FromBody]User user)
         {
-            if (await _service.CheckUserExistence(user))
+            if (await _userService.CheckUserExistence(user))
             {
-                var consumer = await _service.CreateUser(user);
+                var consumer = await _userService.CreateUser(user);
                 return Ok(consumer);
             }
             return BadRequest("This email already exists");
@@ -39,7 +37,7 @@ namespace Eshop.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             _logger.LogInformation("Getting user's {ID}", id);
-            var user = await _service.GetById(id);
+            var user = await _userService.GetById(id);
             if (user == null)
             {
                 _logger.LogWarning("GetById({ID}) NOT FOUND", id);
@@ -52,7 +50,7 @@ namespace Eshop.Controllers
         [HttpPost("{login}")]
         public async Task<ActionResult> Login([FromBody] UserDto user)
         {
-            if (!await _loginService.CheckIfUserExists(user))
+            if (!await _userService.CheckIfUserExists(user))
                 return BadRequest("Incorrect username or password");
             return Ok(TokenManager.GenerateToken(user.Email));
         }

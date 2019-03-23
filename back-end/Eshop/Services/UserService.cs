@@ -10,12 +10,12 @@ using Eshop.DTOs.Products;
 
 namespace Eshop.Services
 {
-    public class UsersService : Controller, IUserService
+    public class UserService : Controller, IUserService
     {
         private readonly IRepository<User> _repository;
         private readonly IMapper _mapper;
 
-        public UsersService(IRepository<User> repository, IMapper mapper)
+        public UserService(IRepository<User> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

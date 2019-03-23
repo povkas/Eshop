@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Eshop.Services
 {
-    public class ProductCategoriesService : IProductCategoriesService
+    public class ProductCategoryService : IProductCategoriesService
     {
         private readonly IRepository<ProductCategory> _repository;
         private readonly IMapper _mapper;
 
-        public ProductCategoriesService(IRepository<ProductCategory> repository,
+        public ProductCategoryService(IRepository<ProductCategory> repository,
             IMapper mapper)
         {
             _mapper = mapper;
