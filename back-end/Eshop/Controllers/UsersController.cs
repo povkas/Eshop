@@ -23,12 +23,12 @@ namespace Eshop.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody]NewUserDto user)
+        public async Task<ActionResult> Create([FromBody] NewUserDto newUser)
         {
-            if (await _userService.CheckUserExistence(user))
+            if (await _userService.CheckUserExistence(newUser))
             {
-                var consumer = await _userService.CreateUser(user);
-                return Ok(consumer);
+                var consumer = await _userService.CreateUser(newUser);
+                return Created("user", consumer);
             }
             return BadRequest("This email already exists");
         }
@@ -49,23 +49,11 @@ namespace Eshop.Controllers
         }
 
         [HttpPost("{login}")]
-        public async Task<ActionResult> Login([FromBody] UserDto user)
+        public async Task<ActionResult> CreateJwtToken([FromBody] UserDto user)
         {
             if (!await _userService.CheckIfUserExists(user))
                 return BadRequest("Incorrect username or password");
-            return Ok(TokenManager.GenerateToken(user.Email));
-        }
-
-        [HttpGet("{validate}")]
-        public async Task<ActionResult> Validate(string token, string email)
-        {
-            if (token != null && email != null)
-            {
-                string tokenEmail = await TokenManager.ValidateToken(token);
-                if (email == tokenEmail)
-                    return Ok();
-            }
-            return BadRequest();
+            return Created("jwt", TokenManager.GenerateToken(user.Email));
         }
     }
 }

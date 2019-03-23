@@ -8,7 +8,7 @@ namespace Eshop.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetById(int id);
+        Task<UserDto> GetById(int id);
 
         Task<NewUserDto> CreateUser(NewUserDto user);
 
@@ -18,7 +18,7 @@ namespace Eshop.Services.Interfaces
 
         Task<bool> Delete(int id);
 
-        Task<ICollection<User>> GetAll();
+        Task<ICollection<UserDto>> GetAll();
 
         Task<bool> CheckIfUserExists(UserDto user);
     }

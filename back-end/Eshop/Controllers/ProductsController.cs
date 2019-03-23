@@ -55,7 +55,7 @@ namespace EShop.Controllers
             _logger.LogInformation("Posting product {}", newProduct);
             var createdProduct = await _productsService.Create(newProduct);
 
-            return Ok(createdProduct);
+            return Created("product", createdProduct);
         }
 
         [HttpPut("{id}")]
