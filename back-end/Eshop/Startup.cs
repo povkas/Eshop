@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ehop.Data.Repositories;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Eshop.Configurations;
-using Eshop.Data.Repositories;
-using Eshop.Models;
+using Microsoft.AspNetCore.Http;
+
 
 namespace Eshop
 {
@@ -28,12 +20,13 @@ namespace Eshop
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddScoped<IRepository<User>, UsersRepository>();
+        {          
+            services.SetUpAutoMapper();
+            services.AddAllDependencies();
             services.SetUpDatabase(Configuration);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);                  
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -46,9 +39,19 @@ namespace Eshop
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMiddleware<CustomExceptionMiddleware>()
+                .UseCors(builder => builder.WithOrigins("http://localhost:3000"))
+                .UseHttpsRedirection()
+                .UseMvc()   
+                .Run(_notFoundHandler);
             app.InitializeDatabase();
         }
+
+        private readonly RequestDelegate _notFoundHandler =
+            async ctx =>
+            {
+                ctx.Response.StatusCode = 404;
+                await ctx.Response.WriteAsync("Page not found.");
+            };
     }
 }
