@@ -107,7 +107,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"paswword123\"\n}"
+							"raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"password123\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/api/user/login",
@@ -143,7 +143,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"paswword123\"\n}"
+							"raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"password123\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/api/user/validate?email=user@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzUxNDA3LCJleHAiOjE1NTMzNTMyMDcsImlhdCI6MTU1MzM1MTQwN30.Lc1L__Xp9jWI2BawIpExQE0uspyBTLwKzlau5PoK9js",
