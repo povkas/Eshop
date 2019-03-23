@@ -29,13 +29,13 @@ namespace Eshop.Data
 
             var productCategories = new List<ProductCategory>
             {
-                new ProductCategory(){Category = "Electronics"},
-                new ProductCategory(){Category = "Sports"},
-                new ProductCategory(){Category = "Fashion"},
-                new ProductCategory(){Category = "Books"},
-                new ProductCategory(){Category = "Video Games"},
-                new ProductCategory(){Category = "Health"},
-                new ProductCategory(){Category = "Movies & TV"}
+                new ProductCategory{Category = "Electronics"},
+                new ProductCategory{Category = "Sports"},
+                new ProductCategory{Category = "Fashion"},
+                new ProductCategory{Category = "Books"},
+                new ProductCategory{Category = "Video Games"},
+                new ProductCategory{Category = "Health"},
+                new ProductCategory{Category = "Movies & TV"}
             };
 
             productCategories.ForEach(t => context.ProductCategories.Add(t));

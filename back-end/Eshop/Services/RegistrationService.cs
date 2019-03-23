@@ -16,7 +16,7 @@ namespace Eshop.Services
 
         public RegistrationService(IRepository<User> repository, IMapper mapper)
         {
-            this._repository = repository;
+            _repository = repository;
             _mapper = mapper;
         }
 
