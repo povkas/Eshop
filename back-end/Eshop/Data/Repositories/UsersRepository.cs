@@ -10,7 +10,7 @@ namespace Eshop.Data.Repositories
     public class UsersRepository : RepositoryBase<User>
     {
         protected override DbSet<User> ItemSet { get; }
-
+        private Context db = new Context();
         public UsersRepository(Context context) : base(context)
         {
             ItemSet = context.Users;
@@ -19,6 +19,6 @@ namespace Eshop.Data.Repositories
         protected override IQueryable<User> IncludeDependencies(IQueryable<User> queryable)
         {
             return queryable;
-        }
+        }     
     }
 }
