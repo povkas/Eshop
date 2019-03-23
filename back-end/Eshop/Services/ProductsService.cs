@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ehop.Data.Repositories;
+using Eshop.Data.Repositories;
 using Eshop.DTOs.Products;
 using Eshop.Models;
 using EShop.DTOs.Products;
 using EShop.Services.Interfaces;
+using Microsoft.AspNetCore.JsonPatch;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EShop.Services
 {

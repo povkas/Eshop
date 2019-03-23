@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Eshop.Configurations
 {
-    public static class ConfigurationsExtentionMethods
+    public static class ConfigurationsExtensionMethods
     {
         public static void SetUpDatabase(this IServiceCollection service, IConfiguration configuration)
         {

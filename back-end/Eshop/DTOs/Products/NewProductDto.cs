@@ -1,10 +1,7 @@
-﻿using Eshop.Temp;
-
-namespace EShop.DTOs.Products
+﻿namespace EShop.DTOs.Products
 {
     public class NewProductDto
     {
-
         public string Title { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
@@ -12,4 +9,3 @@ namespace EShop.DTOs.Products
         //public ProductCategory Category { get; set; }
     }
 }
-

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Eshop.Models
 {
@@ -28,7 +23,7 @@ namespace Eshop.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "City required ")]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "Address is required \n")]
+        [Required(ErrorMessage = "Address is required")]
         [MinLength(8, ErrorMessage = "Address must be at least 8 characters long")]
         [StringLength(128, ErrorMessage = "Address cannot exceed 255 characters")]
         public string Address { get; set; }
@@ -38,8 +33,6 @@ namespace Eshop.Models
         [StringLength(128, ErrorMessage = "Password cannot exceed 128 characters")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Confirm password and password do not match")]
-        public string ConfirmPassword { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
