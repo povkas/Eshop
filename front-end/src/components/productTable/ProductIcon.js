@@ -25,7 +25,7 @@ const styles = theme => ({
 });
 
 function ProductIcon(props) {
-  const { classes } = props;
+  const { classes, product } = props;
   return (
     <Grid item>
       <Paper className={classes.paper}>
@@ -37,8 +37,9 @@ function ProductIcon(props) {
         />
         <br />
         <b>
-          Toilet paper
-          <span className={classes.price}>5e</span>
+          {product.title}
+          {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+          <span className={classes.price}> {product.price}€ </span>
         </b>
       </Paper>
     </Grid>
