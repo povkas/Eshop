@@ -15,9 +15,9 @@ namespace Eshop.Data
             var users = new List<User>
             {
                  new User{Name = "Dave", Surname = "Smith", Email = "user@email.com", Country = "Lithuania", City = "Kaunas",
-                     Address = "Studentų g. 50-201", Password= "user", IsAdmin = false},
+                     Address = "Studentų g. 50-201", Password= "user1234", IsAdmin = false},
                 new User{Name = "Dave", Surname = "Smith", Email = "admin@email.com", Country = "Lithuania", City = "Kaunas",
-                    Address = "Studentų g. 50-201", Password= "admin", IsAdmin = true}
+                    Address = "Studentų g. 50-201", Password= "admin1234", IsAdmin = true}
             };
 
             users.ForEach(t => context.Users.Add(t));
