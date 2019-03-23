@@ -32,9 +32,5 @@ namespace Eshop.Models
         [MinLength(8, ErrorMessage = "Password must be at least 8 characters long")]
         [StringLength(128, ErrorMessage = "Password cannot exceed 128 characters")]
         public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Confirm password and password do not match")]
-        public string ConfirmPassword { get; set; }
     }
 }

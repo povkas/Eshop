@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
+using Eshop.Data.Repositories;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Eshop.Data.Repositories;
 
 namespace Eshop.Services
 {
@@ -29,6 +29,7 @@ namespace Eshop.Services
 
         public async Task<User> CreateUser(User user)
         {
+            user.IsAdmin = false;
             await _repository.Create(user);
             return user;
         }

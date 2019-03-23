@@ -58,7 +58,7 @@ namespace Eshop.Controllers
         public async Task<ActionResult> Login([FromBody] UserDto user)
         {
             if (!await _loginService.DoesUserExist(user))
-                return BadRequest("Your username or password is incorrect.");
+                return BadRequest("Incorrect username or password");
             return Ok(TokenManager.GenerateToken(user.Email));
         }
 

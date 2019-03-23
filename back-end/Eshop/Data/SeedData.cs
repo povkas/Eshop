@@ -14,14 +14,13 @@ namespace Eshop.Data
 
             var users = new List<User>
             {
-
-                 new User{Name = "Alechandro", Surname = "Barbosa", Email = "user@gmail.com", Country = "USA", City = "Siaule",
-                     Address = "Address", Password= "password123", ConfirmPassword = "tralala"},
-                 new User{Name = "Alechandro", Surname = "Barbosa", Email = "admin@gmail.com", Country = "USA", City = "Siaule",
-                     Address = "Address", Password= "password123", ConfirmPassword = "tralala"}
+                 new User{Name = "Dave", Surname = "Smith", Email = "user@email.com", Country = "Lithuania", City = "Kaunas",
+                     Address = "Studentų g. 50-201", Password= "user", IsAdmin = false},
+                new User{Name = "Dave", Surname = "Smith", Email = "admin@email.com", Country = "Lithuania", City = "Kaunas",
+                    Address = "Studentų g. 50-201", Password= "admin", IsAdmin = true}
             };
-           
-            users.ForEach(t => context.Users.Add(t));         
+
+            users.ForEach(t => context.Users.Add(t));
 
             var products = new List<Product>
             {
