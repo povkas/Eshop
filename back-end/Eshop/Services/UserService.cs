@@ -6,15 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Eshop.DTOs.Products;
 
 namespace Eshop.Services
 {
-    public class RegistrationService : Controller, IRegistrationService
+    public class UsersService : Controller, IUserService
     {
         private readonly IRepository<User> _repository;
         private readonly IMapper _mapper;
 
-        public RegistrationService(IRepository<User> repository, IMapper mapper)
+        public UsersService(IRepository<User> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -62,6 +63,20 @@ namespace Eshop.Services
                     return false;
             }
             return true;
+        }
+
+        public async Task<bool> CheckIfUserExists(UserDto user)
+        {
+            var products = await _repository.GetAll();
+
+            foreach (User a in products)
+            {
+                if (a.Email == user.Email && a.Password == user.Password)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public string ValidateUser(User user)
