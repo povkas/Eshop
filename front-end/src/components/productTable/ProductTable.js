@@ -2,8 +2,8 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Axios from 'axios';
-import ProductIcon from './ProductIcon';
-// import { ProductModal } from '../product';
+// import ProductIcon from './ProductIcon';
+import { ProductModal } from '../product';
 
 const styles = () => ({
   root: {
@@ -39,7 +39,7 @@ class ProductTable extends React.Component {
       <div className={classes.root}>
         <Grid container justify="space-evenly" alignItems="center" className={classes.container}>
           {products.map(product => (
-            <ProductIcon product={product} key={product.key} />
+            <ProductModal product={product} key={product.key} />
           ))}
         </Grid>
       </div>

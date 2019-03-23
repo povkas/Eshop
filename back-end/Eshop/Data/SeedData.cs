@@ -12,16 +12,20 @@ namespace Eshop.Data
     {
         public static void Seed(Context context)
         {
-            if (context.Users.Any() && context.Products.Any())
+           if (context.Users.Any() && context.Products.Any())
                 return;
 
             var users = new List<User>
             {
-                 new User{Name = "Alechandro", Surname = "Barbosa", Email = "sexy@gmail.com", Country = "USA", City = "Siaule",
-                     Address = "Address", Password= "sexius", ConfirmPassword = "sexius"}
-            };
 
-            users.ForEach(t => context.Users.Add(t));
+                 new User{Name = "Alechandro", Surname = "Barbosa", Email = "user@gmail.com", Country = "USA", City = "Siaule",
+                     Address = "Address", Password= "password123", ConfirmPassword = "tralala"},
+                 new User{Name = "Alechandro", Surname = "Barbosa", Email = "admin@gmail.com", Country = "USA", City = "Siaule",
+                     Address = "Address", Password= "password123", ConfirmPassword = "tralala"}
+            };
+           
+
+            users.ForEach(t => context.Users.Add(t));         
             context.SaveChanges();
 
             var products = new List<Product>
@@ -29,6 +33,7 @@ namespace Eshop.Data
                 new Product{Title = "Shovel", Description = "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now }
             };
             products.ForEach(t => context.Products.Add(t));
+
             context.SaveChanges();
 
         }

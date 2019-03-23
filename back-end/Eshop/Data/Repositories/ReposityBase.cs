@@ -12,7 +12,7 @@ namespace Eshop.Data.Repositories
         protected readonly Context Context;
 
         protected abstract DbSet<TEntity> ItemSet { get; }
-
+        
         protected RepositoryBase(Context context)
         {
             Context = context;
@@ -36,7 +36,7 @@ namespace Eshop.Data.Repositories
 
             return item;
         }
-
+      
         public virtual async Task<int> Create(TEntity entity)
         {
             ItemSet.Add(entity);

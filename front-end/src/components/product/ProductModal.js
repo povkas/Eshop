@@ -75,15 +75,13 @@ class ProductModal extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, product, key } = this.props;
     const { openModal } = this.state;
 
     return (
       <div>
-        {/* <Button onClick={this.handleOpen} variant="outlined">
-          Open Modal
-        </Button> */}
-        <ProductIcon passOpen={this.handleOpen} />
+        {/* <ProductIcon passOpen={this.handleOpen} /> */}
+        <ProductIcon product={product} key={key} passOpen={this.handleOpen} />
         <Modal open={openModal} onClose={this.handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
             <Grid container direction="row" justify="space-evenly" alignItems="center">
