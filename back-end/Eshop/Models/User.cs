@@ -23,7 +23,7 @@ namespace Eshop.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "City required ")]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "Address is required \n")]
+        [Required(ErrorMessage = "Address is required")]
         [MinLength(8, ErrorMessage = "Address must be at least 8 characters long")]
         [StringLength(128, ErrorMessage = "Address cannot exceed 255 characters")]
         public string Address { get; set; }
@@ -32,5 +32,7 @@ namespace Eshop.Models
         [MinLength(8, ErrorMessage = "Password must be at least 8 characters long")]
         [StringLength(128, ErrorMessage = "Password cannot exceed 128 characters")]
         public string Password { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

@@ -54,6 +54,7 @@ namespace Eshop.Models
                 return null;
             }
         }
+
         public static async Task<string> ValidateToken(string token)
         {
             ClaimsPrincipal principal = GetPrincipal(token);
@@ -72,7 +73,5 @@ namespace Eshop.Models
             var email = emailClaim.Value;
             return email;
         }
-
-
     }
 }

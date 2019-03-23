@@ -1,10 +1,5 @@
-
-﻿using Eshop.Models;
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Eshop.DTOs.Products;
+using Eshop.Models;
 using Eshop.Services;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -19,15 +14,15 @@ namespace Eshop.Controllers
     {
         private readonly IRegistrationService _service;
         private readonly ILoginService _loginService;
-        private readonly ILogger _logger;        
+        private readonly ILogger _logger;
 
         public UserController(IRegistrationService usersService, ILogger<UserController> logger, ILoginService loginService)
         {
             _service = usersService;
             _logger = logger;
             _loginService = loginService;
-        }    
-        
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create([FromBody]User user)
         {
@@ -53,11 +48,11 @@ namespace Eshop.Controllers
 
             return Ok(user);
         }
-       
+
         [HttpPost("{login}")]
         public async Task<ActionResult> Login([FromBody] UserDto user)
         {
-            if (!await _loginService.DoesUserExist(user))
+            if (!await _loginService.CheckIfUserExists(user))
                 return BadRequest("Incorrect username or password");
             return Ok(TokenManager.GenerateToken(user.Email));
         }

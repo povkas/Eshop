@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Eshop.Data.Repositories;
 using Eshop.DTOs.Products;
 using Eshop.Models;
 using EShop.DTOs.Products;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Eshop.Data.Repositories;
 
 namespace EShop.Services
 {
