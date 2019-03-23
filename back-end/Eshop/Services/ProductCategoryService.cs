@@ -16,8 +16,8 @@ namespace Eshop.Services
         public ProductCategoryService(IRepository<ProductCategory> repository,
             IMapper mapper)
         {
-            _mapper = mapper;
             _repository = repository;
+            _mapper = mapper;
         }
 
         public async Task<ICollection<ProductCategoryDto>> GetAll()

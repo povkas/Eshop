@@ -4,9 +4,7 @@ using Eshop.Models;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Eshop.DTOs.Products;
 using Eshop.DTOs.Users;
 
 namespace Eshop.Services
@@ -68,10 +66,9 @@ namespace Eshop.Services
             return true;
         }
 
-        public async Task<bool> CheckIfUserExists(UserDto user)
+        public async Task<bool> CheckIfUserExists(LoginRequestDto user)
         {
             var products = await _repository.GetAll();
-
             foreach (User a in products)
             {
                 if (a.Email == user.Email && a.Password == user.Password)
@@ -79,17 +76,8 @@ namespace Eshop.Services
                     return true;
                 }
             }
-            return false;
-        }
 
-        public string ValidateUser(User user)
-        {
-            string errorMessage = "";
-            foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
-            {
-                errorMessage = errorMessage + error.ErrorMessage;
-            };
-            return errorMessage;
+            return false;
         }
     }
 }

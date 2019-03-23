@@ -1,11 +1,9 @@
-using Eshop.DTOs.Products;
+using Eshop.DTOs.Users;
 using Eshop.Models;
-using Eshop.Services;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using Eshop.DTOs.Users;
 
 namespace Eshop.Controllers
 {
@@ -49,7 +47,7 @@ namespace Eshop.Controllers
         }
 
         [HttpPost("{login}")]
-        public async Task<ActionResult> CreateJwtToken([FromBody] UserDto user)
+        public async Task<ActionResult> CreateJwtToken([FromBody] LoginRequestDto user)
         {
             if (!await _userService.CheckIfUserExists(user))
                 return BadRequest("Incorrect username or password");
