@@ -67,11 +67,11 @@ class Form extends Component {
     if (!this.validate() && (email.length && password.length) !== 0) {
       // this.setState({ email, password });
       // console.log(`${email} & ${password} have been submitted`);
-      axios.get(`http://localhost:5000/api/values`);
-      //   .then(res => {
-      //   console.log(res);
-      //   console.log(res.data);
-      // });
+      // axios.get(`http://localhost:5000/api/values`);
+      axios.post(`http://localhost:5000/api/user/login`).then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
     }
   };
 
