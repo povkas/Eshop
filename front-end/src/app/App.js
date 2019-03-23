@@ -1,17 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import MainBody from '../components/mainBody/MainBody';
 import { NavBarContainer } from '../components/Navbar';
-import { Product } from '../components/product';
 import Store from '../utils/redux/store';
 
-const a = () => <div />;
 export default () => (
   <Provider store={Store}>
     <NavBarContainer />
-    <BrowserRouter>
-      <Route path="/" component={a} />
-    </BrowserRouter>
-    <Product />
+    <MainBody />
   </Provider>
 );

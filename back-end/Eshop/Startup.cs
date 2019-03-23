@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Eshop.Configurations;
 using Eshop.Data.Repositories;
 using Eshop.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Eshop
 {
@@ -29,8 +30,10 @@ namespace Eshop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IRepository<User>, UsersRepository>();
+            services.SetUpAutoMapper();
+            services.AddAllDependencies();
             services.SetUpDatabase(Configuration);
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -46,9 +49,21 @@ namespace Eshop
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMiddleware<CustomExceptionMiddleware>()
+                .UseCors(builder => builder.WithOrigins("http://localhost:3000"))
+                .UseHttpsRedirection()
+                .UseMvc()
+                .Run(_notFoundHandler);
             app.InitializeDatabase();
+
+
         }
+
+        private readonly RequestDelegate _notFoundHandler =
+            async ctx =>
+            {
+                ctx.Response.StatusCode = 404;
+                await ctx.Response.WriteAsync("Page not found.");
+            };
     }
 }
