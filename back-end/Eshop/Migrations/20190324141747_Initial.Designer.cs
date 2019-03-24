@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20190323182250_Initial")]
+    [Migration("20190324141747_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,13 @@ namespace Eshop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Category");
+
                     b.Property<DateTime>("Created");
 
                     b.Property<string>("Description");
+
+                    b.Property<byte[]>("Image");
 
                     b.Property<decimal>("Price");
 

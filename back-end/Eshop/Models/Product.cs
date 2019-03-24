@@ -9,7 +9,7 @@ namespace Eshop.Models
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public DateTime Created { get; set; }
-
-        //public ProductCategory Category { get; set; }
+        public string Category { get; set; }
+        public byte[] Image { get; set; }
     }
 }

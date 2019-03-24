@@ -1,6 +1,7 @@
 ﻿using Eshop.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Eshop.Data
@@ -22,12 +23,6 @@ namespace Eshop.Data
 
             users.ForEach(t => context.Users.Add(t));
 
-            var products = new List<Product>
-            {
-                new Product{Title = "Shovel", Description = "Firm stainless steel frame", Price = 15, Quantity = 1, Created = DateTime.Now }
-            };
-            products.ForEach(t => context.Products.Add(t));
-
             var productCategories = new List<ProductCategory>
             {
                 new ProductCategory{Category = "Electronics"},
@@ -36,11 +31,35 @@ namespace Eshop.Data
                 new ProductCategory{Category = "Books"},
                 new ProductCategory{Category = "Video Games"},
                 new ProductCategory{Category = "Health"},
+                new ProductCategory{Category = "Gardening"},
                 new ProductCategory{Category = "Movies & TV"}
             };
 
             productCategories.ForEach(t => context.ProductCategories.Add(t));
 
+            FileInfo fileInfo = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(),
+                "wwwroot", "Images", "shovel.jpg"));
+            byte[] data = new byte[fileInfo.Length];
+            using (FileStream fs = fileInfo.OpenRead())
+            {
+                fs.Read(data, 0, data.Length);
+            }
+
+            var products = new List<Product>
+            {
+                new Product
+                {
+                    Title = "Shovel",
+                    Description = "Firm stainless steel frame",
+                    Price = 15,
+                    Quantity = 1,
+                    Created = DateTime.Now,
+                    Image = data,
+                    Category = "Gardening"
+                }
+            };
+
+            products.ForEach(t => context.Products.Add(t));
             context.SaveChanges();
         }
     }
