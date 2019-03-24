@@ -1,9 +1,12 @@
+using System.Security.Authentication;
 using Eshop.DTOs.Users;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Eshop.ExceptionHandling;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Eshop.Controllers
 {
@@ -21,36 +24,41 @@ namespace Eshop.Controllers
         }
 
         [HttpPost]
+        [Produces(typeof(NewUserDto))]
         public async Task<ActionResult> Create([FromBody] NewUserDto newUser)
         {
             if (await _userService.CheckUserExistence(newUser))
             {
-                var consumer = await _userService.CreateUser(newUser);
-                return Created("user", consumer);
+                throw new FailedToCreateUserException("This email is already taken");
             }
-            return BadRequest("This email already exists");
+
+            var user = await _userService.CreateUser(newUser);
+            return Created("user", user);
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(User))]
+        [Produces(typeof(UserDto))]
         public async Task<IActionResult> GetById(int id)
         {
             _logger.LogInformation("Getting user's {ID}", id);
             var user = await _userService.GetById(id);
             if (user == null)
             {
-                _logger.LogWarning("GetById({ID}) NOT FOUND", id);
-                return NotFound();
+                throw new NotFoundCustomException("User with id "+ id +" was not found");
             }
 
             return Ok(user);
         }
 
         [HttpPost("{login}")]
+        [Produces(typeof(JsonWebToken))]
         public async Task<ActionResult> CreateJwtToken([FromBody] LoginRequestDto user)
         {
             if (!await _userService.CheckIfUserExists(user))
-                return BadRequest("Incorrect username or password");
+            {
+                throw new InvalidCredentialsException("Incorrect username or password");
+            }
+
             return Created("jwt", TokenManager.GenerateToken(user.Email));
         }
     }

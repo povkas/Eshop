@@ -66,17 +66,16 @@ namespace Eshop.Services
             return true;
         }
 
-        public async Task<bool> CheckIfUserExists(LoginRequestDto user)
+        public async Task<bool> CheckIfUserExists(LoginRequestDto userLogin)
         {
-            var products = await _repository.GetAll();
-            foreach (User a in products)
+            var users = await _repository.GetAll();
+            foreach (User user in users)
             {
-                if (a.Email == user.Email && a.Password == user.Password)
+                if (userLogin.Email == user.Email && userLogin.Password == user.Password)
                 {
                     return true;
                 }
             }
-
             return false;
         }
     }

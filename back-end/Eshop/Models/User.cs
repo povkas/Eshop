@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Eshop.Models
+﻿namespace Eshop.Models
 {
     public class User : BaseEntity
     {
