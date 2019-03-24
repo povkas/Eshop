@@ -54,13 +54,13 @@ namespace Eshop.Models
                 return null;
             }
         }
+
         public static async Task<string> ValidateToken(string token)
         {
-            string email = null;
             ClaimsPrincipal principal = GetPrincipal(token);
             if (principal == null)
                 return null;
-            ClaimsIdentity identity = null;
+            ClaimsIdentity identity;
             try
             {
                 identity = (ClaimsIdentity)principal.Identity;
@@ -70,10 +70,8 @@ namespace Eshop.Models
                 return null;
             }
             Claim emailClaim = identity.FindFirst(ClaimTypes.Name);
-            email = emailClaim.Value;
+            var email = emailClaim.Value;
             return email;
         }
-
-
     }
 }

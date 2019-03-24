@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Eshop.Configurations;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Eshop.Configurations;
-using Microsoft.AspNetCore.Http;
-
 
 namespace Eshop
 {
@@ -18,16 +17,15 @@ namespace Eshop
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {          
+        {
             services.SetUpAutoMapper();
             services.AddAllDependencies();
             services.SetUpDatabase(Configuration);
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);                  
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -39,10 +37,11 @@ namespace Eshop
                 app.UseHsts();
             }
 
-            app.UseMiddleware<CustomExceptionMiddleware>()
+            app.UseStaticFiles()
+                .UseMiddleware<CustomExceptionMiddleware>()
                 .UseCors(builder => builder.WithOrigins("http://localhost:3000"))
                 .UseHttpsRedirection()
-                .UseMvc()   
+                .UseMvc()
                 .Run(_notFoundHandler);
             app.InitializeDatabase();
         }

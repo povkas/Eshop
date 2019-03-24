@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Eshop.DTOs.Products;
 using Eshop.Models;
 using Eshop.Services;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Eshop.Controllers
 {
@@ -17,27 +14,27 @@ namespace Eshop.Controllers
     {
         private readonly IRegistrationService _service;
         private readonly ILoginService _loginService;
-        private readonly ILogger _logger;        
+        private readonly ILogger _logger;
 
         public UserController(IRegistrationService usersService, ILogger<UserController> logger, ILoginService loginService)
         {
             _service = usersService;
             _logger = logger;
             _loginService = loginService;
-        }    
-        
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create([FromBody]User user)
         {
-           if (await _service.CheckUserExistence(user))
-           {
-               var consumer =  await _service.CreateUser(user);
-               return Ok(consumer);
-           }
-           return BadRequest("This email already exists");
+            if (await _service.CheckUserExistence(user))
+            {
+                var consumer = await _service.CreateUser(user);
+                return Ok(consumer);
+            }
+            return BadRequest("This email already exists");
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         [Produces(typeof(User))]
         public async Task<IActionResult> GetById(int id)
         {
@@ -51,12 +48,12 @@ namespace Eshop.Controllers
 
             return Ok(user);
         }
-       
+
         [HttpPost("{login}")]
         public async Task<ActionResult> Login([FromBody] UserDto user)
         {
-            if (!await _loginService.DoesUserExist(user))
-                return BadRequest("Your username or password is incorrect.");
+            if (!await _loginService.CheckIfUserExists(user))
+                return BadRequest("Incorrect username or password");
             return Ok(TokenManager.GenerateToken(user.Email));
         }
 

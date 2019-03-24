@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ehop.Data.Repositories;
-using Eshop.Data.Repositories;
+﻿using Eshop.Data.Repositories;
 using Eshop.Models;
 using Eshop.Services;
 
@@ -27,6 +22,7 @@ namespace Eshop.Configurations
         {
             return service
                 .AddScoped<IRepository<Product>, ProductsRepository>()
+                .AddScoped<IRepository<ProductCategory>, ProductCategoriesRepository>()
                 .AddScoped<IRepository<User>, UsersRepository>();
         }
 
@@ -34,9 +30,9 @@ namespace Eshop.Configurations
         {
             return service
                 .AddScoped<IProductsService, ProductsService>()
+                .AddScoped<IProductCategoriesService, ProductCategoriesService>()
                 .AddScoped<ILoginService, LoginService>()
                 .AddScoped<IRegistrationService, RegistrationService>();
         }
-        
     }
 }

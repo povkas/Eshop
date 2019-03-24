@@ -1,8 +1,5 @@
-﻿using System;
-using AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using Eshop.DTOs;
 using Eshop.DTOs.Products;
 using Eshop.Models;
 using EShop.DTOs.Products;
@@ -20,6 +17,8 @@ namespace Eshop.Configurations
             CreateMap<NewProductDto, Product>(MemberList.None);
             CreateMap<ProductDto, Product>(MemberList.None);
             CreateMap<Product, ProductDto>(MemberList.Destination);
+
+            CreateMap<ProductCategory, ProductCategoryDto>(MemberList.Destination);
             CreateMap<User, UserDto>(MemberList.None);
         }
     }
