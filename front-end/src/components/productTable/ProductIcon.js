@@ -12,7 +12,7 @@ function ProductIcon(props) {
       <Paper className={classes.paper} component="div">
         {/* eslint-disable-next-line no-octal-escape */}
         <img
-          src="https://previews.123rf.com/images/burntime555/burntime5551602/burntime555160200242/51593574-shovel-white-flat-simple-vector-icon-on-black-background.jpg"
+          src={`data:image/png;base64,${product.image}`}
           alt={product.title}
           className={classes.image}
         />

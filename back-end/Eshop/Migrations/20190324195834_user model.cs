@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Eshop.Migrations
 {
-    public partial class Initial : Migration
+    public partial class usermodel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,13 +46,13 @@ namespace Eshop.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
-                    Surname = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(maxLength: 255, nullable: false),
-                    Country = table.Column<string>(nullable: false),
-                    City = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(maxLength: 128, nullable: false),
-                    Password = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Country = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
                     IsAdmin = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
