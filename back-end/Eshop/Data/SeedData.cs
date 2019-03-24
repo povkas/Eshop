@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 
 namespace Eshop.Data
 {
@@ -11,8 +10,8 @@ namespace Eshop.Data
     {
         public static void Seed(Context context)
         {
-//            if (context.Users.Any() && context.Products.Any() && context.ProductCategories.Any())
-//                return;
+            if (context.Users.Any() && context.Products.Any() && context.ProductCategories.Any())
+                return;
 
             var users = new List<User>
             {
@@ -32,6 +31,7 @@ namespace Eshop.Data
                 new ProductCategory{Category = "Books"},
                 new ProductCategory{Category = "Video Games"},
                 new ProductCategory{Category = "Health"},
+                new ProductCategory{Category = "Gardening"},
                 new ProductCategory{Category = "Movies & TV"}
             };
 
@@ -39,12 +39,10 @@ namespace Eshop.Data
 
             FileInfo fileInfo = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(),
                 "wwwroot", "Images", "shovel.jpg"));
-            //FileInfo fileInfo2 = new FileInfo("~/Images/shovel.jpg");
             byte[] data = new byte[fileInfo.Length];
             using (FileStream fs = fileInfo.OpenRead())
             {
                 fs.Read(data, 0, data.Length);
-                ;
             }
 
             var products = new List<Product>
@@ -56,8 +54,8 @@ namespace Eshop.Data
                     Price = 15,
                     Quantity = 1,
                     Created = DateTime.Now,
-                    Image = data
-                    //ContentType = uploadedImage.ContentType
+                    Image = data,
+                    Category = "Gardening"
                 }
             };
 
