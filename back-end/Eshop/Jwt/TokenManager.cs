@@ -51,7 +51,7 @@ namespace Eshop.Models
             }
             catch (Exception e)
             {
-                return null;
+                throw new Exception("JSON Web Token has expired");
             }
         }
 

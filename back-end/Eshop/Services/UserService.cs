@@ -4,40 +4,42 @@ using Eshop.Models;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Eshop.DTOs.Users;
 
 namespace Eshop.Services
 {
-    public class RegistrationService : Controller, IRegistrationService
+    public class UserService : Controller, IUserService
     {
         private readonly IRepository<User> _repository;
         private readonly IMapper _mapper;
 
-        public RegistrationService(IRepository<User> repository, IMapper mapper)
+        public UserService(IRepository<User> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<UserDto> GetById(int id)
         {
             var product = await _repository.GetById(id);
-            var productDto = _mapper.Map<User>(product);
+            var productDto = _mapper.Map<UserDto>(product);
             return productDto;
         }
 
-        public async Task<User> CreateUser(User user)
+        public async Task<NewUserDto> CreateUser(NewUserDto newItem)
         {
+            var user = _mapper.Map<User>(newItem);
             user.IsAdmin = false;
             await _repository.Create(user);
-            return user;
+            var userDto = _mapper.Map<NewUserDto>(user);
+            return userDto;
         }
 
-        public async Task<ICollection<User>> GetAll()
+        public async Task<ICollection<UserDto>> GetAll()
         {
             var users = await _repository.GetAll();
-            var allUsers = _mapper.Map<User[]>(users);
+            var allUsers = _mapper.Map<UserDto[]>(users);
             return allUsers;
         }
 
@@ -53,25 +55,28 @@ namespace Eshop.Services
             return deleted;
         }
 
-        public async Task<bool> CheckUserExistence(User newUser)
+        public async Task<bool> CheckUserExistence(NewUserDto newItem)
         {
             var allUsers = await _repository.GetAll();
             foreach (User user in allUsers)
             {
-                if (user.Email == newUser.Email)
+                if (user.Email == newItem.Email)
                     return false;
             }
             return true;
         }
 
-        public string ValidateUser(User user)
+        public async Task<bool> CheckIfUserExists(LoginRequestDto userLogin)
         {
-            string errorMessage = "";
-            foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
+            var users = await _repository.GetAll();
+            foreach (User user in users)
             {
-                errorMessage = errorMessage + error.ErrorMessage;
-            };
-            return errorMessage;
+                if (userLogin.Email == user.Email && userLogin.Password == user.Password)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

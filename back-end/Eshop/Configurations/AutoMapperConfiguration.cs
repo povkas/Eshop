@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Eshop.DTOs;
 using Eshop.DTOs.Products;
+using Eshop.DTOs.Users;
 using Eshop.Models;
 using EShop.DTOs.Products;
 
@@ -14,12 +15,15 @@ namespace Eshop.Configurations
 
         protected AutoMapperConfiguration(string name) : base(name)
         {
-            CreateMap<NewProductDto, Product>(MemberList.None);
-            CreateMap<ProductDto, Product>(MemberList.None);
+            CreateMap<NewProductDto, Product>(MemberList.Source);
+            CreateMap<ProductDto, Product>(MemberList.Source);
             CreateMap<Product, ProductDto>(MemberList.Destination);
 
             CreateMap<ProductCategory, ProductCategoryDto>(MemberList.Destination);
-            CreateMap<User, UserDto>(MemberList.None);
+
+            CreateMap<NewUserDto, User>(MemberList.Source);
+            CreateMap<UserDto, User>(MemberList.Source);
+            CreateMap<User, UserDto>(MemberList.Destination);
         }
     }
 }

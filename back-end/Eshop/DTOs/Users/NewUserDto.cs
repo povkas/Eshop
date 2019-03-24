@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eshop.DTOs.Users
 {
-    public class UserDto
+    public class NewUserDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = " Name required ")]
         public string Name { get; set; }

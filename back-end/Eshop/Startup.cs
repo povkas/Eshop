@@ -1,3 +1,4 @@
+using System.Net;
 using Eshop.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +50,7 @@ namespace Eshop
         private readonly RequestDelegate _notFoundHandler =
             async ctx =>
             {
-                ctx.Response.StatusCode = 404;
+                ctx.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 await ctx.Response.WriteAsync("Page not found.");
             };
     }
