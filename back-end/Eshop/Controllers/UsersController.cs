@@ -56,7 +56,7 @@ namespace Eshop.Controllers
         {
             if (!await _userService.CheckIfUserExists(user))
             {
-                throw new InvalidCredentialsException("Incorrect username or password");
+                throw new InvalidCredentialsException("Incorrect email or password");
             }
 
             return Created("jwt", TokenManager.GenerateToken(user.Email));
