@@ -39,7 +39,8 @@ namespace Eshop
                 app.UseHsts();
             }
 
-            app.UseMiddleware<CustomExceptionMiddleware>()
+            app.UseStaticFiles()
+                .UseMiddleware<CustomExceptionMiddleware>()
                 .UseCors(builder => builder.WithOrigins("http://localhost:3000"))
                 .UseHttpsRedirection()
                 .UseMvc()
