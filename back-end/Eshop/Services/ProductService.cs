@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ehop.Data.Repositories;
+using Eshop.Data.Repositories;
 using Eshop.DTOs.Products;
 using Eshop.Models;
 using EShop.DTOs.Products;
 using EShop.Services.Interfaces;
+using Microsoft.AspNetCore.JsonPatch;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EShop.Services
 {
-    public class ProductsService : IProductsService
+    public class ProductService : IProductsService
     {
         private readonly IRepository<Product> _repository;
         private readonly IMapper _mapper;
 
-        public ProductsService(IRepository<Product> repository, IMapper mapper)
+        public ProductService(IRepository<Product> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

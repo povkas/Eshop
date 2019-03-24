@@ -18,7 +18,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/products/1",
+							"raw": "http://localhost:5000/api/products/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -27,14 +27,14 @@
 							"path": [
 								"api",
 								"products",
-								"1"
+								"2"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "[GET] Product",
+					"name": "[GET] Products",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -85,6 +85,64 @@
 								"products"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product categories",
+			"item": [
+				{
+					"name": "[GET] Product categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "[LOGIN] user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"papa@gmail.com\",\n    \"password\":\"sexius123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						},
+						"description": "sending post login request with UserTdo body "
 					},
 					"response": []
 				}
