@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import MainBody from '../components/mainBody/MainBody';
+import { MainBody } from '../containers';
 import { NavBarContainer } from '../components/Navbar';
 import Store from '../utils/redux/store';
 

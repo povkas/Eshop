@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
-import ProductTable from '../productTable/ProductTable';
+import ProductTable from '../components/productTable/ProductTable';
 
 const color = grey[100];
 
