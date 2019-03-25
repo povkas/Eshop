@@ -21,7 +21,7 @@ function NavBar(props) {
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <Link to="/" className={classes.shopName}>
-              BimBam連合
+              BimBam
             </Link>
           </Typography>
           <IconButton className={classes.menuButton}>
