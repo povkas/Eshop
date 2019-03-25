@@ -12,7 +12,8 @@ module.exports = {
     'comma-dangle': 'off',
     'prettier/prettier': ['error'],
     'linebreak-style': 0,
-    'import/no-unresolved': 'off'
+    'import/no-unresolved': 'off',
+    'react/jsx-one-expression-per-line': 'off'
   },
   globals: {
     fetch: 'writeable',

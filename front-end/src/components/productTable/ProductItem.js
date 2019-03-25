@@ -10,7 +10,6 @@ function ProductItem(props) {
   return (
     <Grid item>
       <Paper className={classes.paper} component="div">
-        {/* eslint-disable-next-line no-octal-escape */}
         <img
           src={`data:image/png;base64,${product.image}`}
           alt={product.title}
@@ -19,8 +18,7 @@ function ProductItem(props) {
         <Divider />
         <b>
           {product.title}
-          {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-          <span className={classes.price}> {product.price}€ </span>
+          <span className={classes.price}>{product.price}€</span>
         </b>
       </Paper>
     </Grid>
