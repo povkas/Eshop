@@ -59,20 +59,23 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault(); // preventing browser to reload
     const { email, password } = this.state;
-    // const user = {
-    //   email,
-    //   password
-    // };
 
-    if (!this.validate() && (email.length && password.length) !== 0) {
-      // this.setState({ email, password });
-      // console.log(`${email} & ${password} have been submitted`);
-      // axios.get(`http://localhost:5000/api/values`);
-      axios.post(`http://localhost:5000/api/user/login`).then(res => {
-        console.log(res);
+    const url = `http://localhost:5000/api/user/login`;
+
+    const data = JSON.stringify({
+      email,
+      password
+    });
+
+    axios
+      .post(url, data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => {
         console.log(res.data);
       });
-    }
   };
 
   mergedSubmitClose = () => {
