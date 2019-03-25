@@ -1,2 +1,2 @@
-export { default as ProductIcon } from './ProductIcon';
+export { default as ProductItem } from './ProductItem';
 export { default as ProductTable } from './ProductTable';

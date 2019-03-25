@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Axios from 'axios';
-import { ProductIcon } from '.';
+import { ProductItem } from '.';
+import * as productActions from '../../actions/productActions';
 
 class ProductTable extends React.Component {
   constructor(props) {
@@ -13,8 +13,8 @@ class ProductTable extends React.Component {
   }
 
   componentDidMount() {
-    Axios.get('http://localhost:5000/api/products').then(res => {
-      this.setState({ products: res.data });
+    productActions.getProducts().then(res => {
+      this.setState({ products: res });
     });
   }
 
@@ -24,7 +24,7 @@ class ProductTable extends React.Component {
       <div>
         <Grid container justify="space-evenly" alignItems="center">
           {products.map(product => (
-            <ProductIcon product={product} key={product.key} />
+            <ProductItem product={product} key={product.key} />
           ))}
         </Grid>
       </div>

@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Styles from './Styles';
 
-function ProductIcon(props) {
+function ProductItem(props) {
   const { classes, product } = props;
   return (
     <Grid item>
@@ -27,4 +27,4 @@ function ProductIcon(props) {
   );
 }
 
-export default withStyles(Styles)(ProductIcon);
+export default withStyles(Styles)(ProductItem);
