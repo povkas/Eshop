@@ -1,193 +1,150 @@
 {
-	"info": {
-		"_postman_id": "037bab9a-9a98-44b2-a8fd-644b11bfbc0c",
-		"name": "E-shop",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Products",
-			"item": [
-				{
-					"name": "[DELETE] Product",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/products/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"products",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "[GET] Products",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/products",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "[POST] Product",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"title\": \"shovel\",\n\t\"price\": 10,\n    \"description\": \"Steel frame\",\n    \"quantity\": 1\n}"
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/products",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"products"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-<<<<<<< HEAD
-			"name": "Product categories",
-			"item": [
-				{
-					"name": "[GET] Product categories",
-					"request": {
-						"method": "GET",
-						"header": [],
-=======
-			"name": "User",
-			"item": [
-				{
-					"name": "[LOGIN] user",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"password123\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/user/login",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"user",
-								"login"
-							]
-						},
-						"description": "sending post login request with UserTdo body "
-					},
-					"response": []
-				},
-				{
-					"name": "[GET] user",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
->>>>>>> master
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-<<<<<<< HEAD
-							"raw": ""
-						}
-=======
-							"raw": "http://localhost:5000/api/user/validate?email=user@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzU1MjIyLCJleHAiOjE1NTMzNTcwMjIsImlhdCI6MTU1MzM1NTIyMn0.hyqwIg_b10EKpaYXbIwEfE-cDGSwOw3hTFVqZh97zwo",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"user",
-								"validate"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": "user@gmail.com"
-								},
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzU1MjIyLCJleHAiOjE1NTMzNTcwMjIsImlhdCI6MTU1MzM1NTIyMn0.hyqwIg_b10EKpaYXbIwEfE-cDGSwOw3hTFVqZh97zwo"
-								}
-							]
-						},
-						"description": "Checks if JWT token works return 200 code if token is good or 400 if it bad"
->>>>>>> master
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "037bab9a-9a98-44b2-a8fd-644b11bfbc0c",
+    "name": "E-shop",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "[DELETE] Product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/products/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "products", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[GET] Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/products",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[POST] Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"title\": \"shovel\",\n\t\"price\": 10,\n    \"description\": \"Steel frame\",\n    \"quantity\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/products",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "products"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "[LOGIN] user",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "login"]
+            },
+            "description": "sending post login request with UserTdo body "
+          },
+          "response": []
+        },
+        {
+          "name": "[GET] user",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/validate?email=user@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzU1MjIyLCJleHAiOjE1NTMzNTcwMjIsImlhdCI6MTU1MzM1NTIyMn0.hyqwIg_b10EKpaYXbIwEfE-cDGSwOw3hTFVqZh97zwo",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "validate"],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "user@gmail.com"
+                },
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzU1MjIyLCJleHAiOjE1NTMzNTcwMjIsImlhdCI6MTU1MzM1NTIyMn0.hyqwIg_b10EKpaYXbIwEfE-cDGSwOw3hTFVqZh97zwo"
+                }
+              ]
+            },
+            "description": "Checks if JWT token works return 200 code if token is good or 400 if it bad"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }
