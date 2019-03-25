@@ -13,7 +13,8 @@ module.exports = {
     'prettier/prettier': ['error'],
     'linebreak-style': 0,
     'import/no-unresolved': 'off',
-    'react/jsx-one-expression-per-line': 'off'
+    'react/jsx-one-expression-per-line': 'off',
+    'import/prefer-default-export': 'off'
   },
   globals: {
     fetch: 'writeable',
