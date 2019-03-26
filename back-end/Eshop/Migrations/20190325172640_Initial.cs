@@ -4,10 +4,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Eshop.Migrations
 {
-    public partial class usermodel : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ProductCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Category = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
@@ -18,7 +31,9 @@ namespace Eshop.Migrations
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false)
+                    Created = table.Column<DateTime>(nullable: false),
+                    Category = table.Column<string>(nullable: true),
+                    Image = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,14 +46,14 @@ namespace Eshop.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
-                    Surname = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(maxLength: 255, nullable: false),
-                    Country = table.Column<string>(nullable: false),
-                    City = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(maxLength: 128, nullable: false),
-                    Password = table.Column<string>(maxLength: 128, nullable: false),
-                    ConfirmPassword = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Country = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    IsAdmin = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,6 +63,9 @@ namespace Eshop.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ProductCategories");
+
             migrationBuilder.DropTable(
                 name: "Products");
 

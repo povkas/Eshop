@@ -1,21 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-import Axios from 'axios';
-// import ProductIcon from './ProductIcon';
-import { ProductModal } from '../product';
-
-const styles = () => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden'
-  },
-  container: {
-    flexWrap: 'wrap'
-  }
-});
+import { ProductItem } from '.';
+import * as productActions from '../../actions/productActions';
 
 class ProductTable extends React.Component {
   constructor(props) {
@@ -27,19 +13,20 @@ class ProductTable extends React.Component {
   }
 
   componentDidMount() {
-    Axios.get('http://localhost:5000/api/products').then(res => {
-      this.setState({ products: res.data });
+    productActions.getProducts().then(res => {
+      this.setState({ products: res });
     });
   }
 
   render() {
-    const { classes } = this.props;
     const { products } = this.state;
+    const { handleModal } = this.props;
+
     return (
-      <div className={classes.root}>
-        <Grid container justify="space-evenly" alignItems="center" className={classes.container}>
+      <div>
+        <Grid container justify="space-evenly" alignItems="center">
           {products.map(product => (
-            <ProductModal product={product} key={product.key} />
+            <ProductItem product={product} key={product.id} handleModalOpen={handleModal} />
           ))}
         </Grid>
       </div>
@@ -47,4 +34,4 @@ class ProductTable extends React.Component {
   }
 }
 
-export default withStyles(styles)(ProductTable);
+export default ProductTable;

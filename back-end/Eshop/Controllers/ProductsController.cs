@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using Eshop.DTOs.Products;
+﻿using Eshop.DTOs.Products;
 using Eshop.ExceptionHandling;
 using EShop.DTOs.Products;
 using EShop.Services.Interfaces;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace EShop.Controllers
 {
@@ -17,7 +16,8 @@ namespace EShop.Controllers
         private readonly ILogger _logger;
         private readonly IProductsService _productsService;
 
-        public ProductsController(IProductsService productsService, ILogger<ProductsController> logger)
+        public ProductsController(IProductsService productsService,
+            ILogger<ProductsController> logger)
         {
             _productsService = productsService;
             _logger = logger;
@@ -41,7 +41,6 @@ namespace EShop.Controllers
             var product = await _productsService.GetById(id);
             if (product == null)
             {
-                _logger.LogWarning("GetById({ID}) NOT FOUND", id);
                 throw new NotFoundCustomException("A product with id " + id + " was not found");
             }
 
@@ -54,8 +53,8 @@ namespace EShop.Controllers
         {
             _logger.LogInformation("Posting product {}", newProduct);
             var createdProduct = await _productsService.Create(newProduct);
-            
-            return Ok(createdProduct);
+
+            return Created("product", createdProduct);
         }
 
         [HttpPut("{id}")]

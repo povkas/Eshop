@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Eshop.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Ehop.Data.Repositories;
-using Eshop.Models;
 
 namespace Eshop.Data.Repositories
 {
@@ -12,7 +11,7 @@ namespace Eshop.Data.Repositories
         protected readonly Context Context;
 
         protected abstract DbSet<TEntity> ItemSet { get; }
-        
+
         protected RepositoryBase(Context context)
         {
             Context = context;
@@ -36,7 +35,7 @@ namespace Eshop.Data.Repositories
 
             return item;
         }
-      
+
         public virtual async Task<int> Create(TEntity entity)
         {
             ItemSet.Add(entity);

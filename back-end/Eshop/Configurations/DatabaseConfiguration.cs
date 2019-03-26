@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Eshop.Configurations
 {
-    public static class ConfigurationsExtentionMethods
+    public static class ConfigurationsExtensionMethods
     {
         public static void SetUpDatabase(this IServiceCollection service, IConfiguration configuration)
         {
@@ -19,6 +19,7 @@ namespace Eshop.Configurations
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<Context>();
+                context.Database.EnsureDeleted();
                 context.Database.Migrate();
                 SeedData.Seed(context);
             }

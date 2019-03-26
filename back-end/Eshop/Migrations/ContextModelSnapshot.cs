@@ -25,9 +25,13 @@ namespace Eshop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Category");
+
                     b.Property<DateTime>("Created");
 
                     b.Property<string>("Description");
+
+                    b.Property<byte[]>("Image");
 
                     b.Property<decimal>("Price");
 
@@ -40,28 +44,39 @@ namespace Eshop.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Eshop.Models.User", b =>
+            modelBuilder.Entity("Eshop.Models.ProductCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                    .IsRequired()
-                    .HasMaxLength(128);
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Category");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.HasKey("Id");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(128);
+                    b.ToTable("ProductCategories");
+                });
 
-                    b.Property<string>("Surname")
-                        .IsRequired();
+            modelBuilder.Entity("Eshop.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Address");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("IsAdmin");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Surname");
 
                     b.HasKey("Id");
 

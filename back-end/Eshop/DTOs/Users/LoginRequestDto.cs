@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Eshop.DTOs.Products
+namespace Eshop.DTOs.Users
 {
-    public class UserDto
+    public class LoginRequestDto
     {
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]

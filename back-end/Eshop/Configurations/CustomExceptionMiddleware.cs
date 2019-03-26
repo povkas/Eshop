@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Eshop.ExceptionHandling;
+﻿using Eshop.ExceptionHandling;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Eshop.Configurations
 {
