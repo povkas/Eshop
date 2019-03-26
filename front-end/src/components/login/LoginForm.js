@@ -51,11 +51,10 @@ class LoginForm extends React.Component {
     const { openModal } = this.state;
 
     return (
-      <IconButton className={className.menuButton}>
-        <Person onClick={this.handleOpen} />
-
-        {/* FIX place onClick={this.handleOpen} to IconButton */}
-
+      <div>
+        <IconButton className={className.menuButton} onClick={this.handleOpen}>
+          <Person />
+        </IconButton>
         <Modal open={openModal} onClose={this.handleClose}>
           <div style={getModalPlace()} className={classes.paper}>
             <Form passClose={this.handleClose} />
@@ -65,7 +64,7 @@ class LoginForm extends React.Component {
             <Link href=" ">Forgot password?</Link>
           </div>
         </Modal>
-      </IconButton>
+      </div>
     );
   }
 }
