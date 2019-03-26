@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import axios from 'axios';
+// import axios from 'axios';
+// import * as jwtDecode from 'jwt-decode';
+// import setAuthToken from './setAuthToken';
+import { loginUser } from '../../utils/redux/actions/authentication';
 
 class Form extends Component {
   constructor(props) {
@@ -60,22 +63,34 @@ class Form extends Component {
     e.preventDefault(); // preventing browser to reload
     const { email, password } = this.state;
 
-    const url = `http://localhost:5000/api/user/login`;
+    // const url = `http://localhost:5000/api/user/login`;
 
     const data = JSON.stringify({
       email,
       password
     });
 
-    axios
-      .post(url, data, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => {
-        console.log(res.data);
-      });
+    // https://appdividend.com/2018/07/18/react-redux-node-mongodb-jwt-authentication/#18_Set_the_Auth_token
+    loginUser(data);
+
+    // axios
+    //   .post(url, data, {
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   })
+    //   .then(res => {
+    //     // eslint-disable-next-line no-console
+    //     console.log(`Res.Data:\n${res.data}`);
+    //     const jwttoken = res.data;
+    //     localStorage.clear();
+    //     localStorage.setItem('jwtToken', jwttoken); // adds token to browser's local storage
+    //     setAuthToken(jwttoken); // adds token to all axios headers
+
+    //     const decoded = jwtDecode(jwttoken);
+    //     // eslint-disable-next-line no-console
+    //     console.log(`Decoded:\n${JSON.stringify(decoded)}`);
+    //   });
   };
 
   mergedSubmitClose = () => {
@@ -131,5 +146,12 @@ class Form extends Component {
     );
   }
 }
+
+// export const setCurrentUser = decoded => {
+//   return {
+//     type: SET_CURRENT_USER,
+//     payload: decoded
+//   };
+// };
 
 export default Form;
