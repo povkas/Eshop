@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { ProductItem } from '.';
+import ProductItem from './ProductItem';
 import * as productActions from '../../actions/productActions';
 
 class ProductTable extends React.Component {

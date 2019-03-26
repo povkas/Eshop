@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Divider, Typography, Grid } from '@material-ui/core';
 import Star from '@material-ui/icons/Star';
 import ColorSelect from './ColorSelect';
-import ProductIcon from '../productTable/ProductIcon';
 
 function getModalStyle() {
   const top = 42;
@@ -48,18 +47,9 @@ class ProductModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openModal: false,
       color: ''
     };
   }
-
-  handleOpen = () => {
-    this.setState({ openModal: true });
-  };
-
-  handleClose = () => {
-    this.setState({ openModal: false });
-  };
 
   getColor = childColor => {
     // eslint-disable-next-line no-unused-vars
@@ -75,14 +65,14 @@ class ProductModal extends React.Component {
   };
 
   render() {
-    const { classes, product, key } = this.props;
-    const { openModal } = this.state;
+    const { classes, openModal2 } = this.props;
 
     return (
       <div>
         {/* <ProductIcon passOpen={this.handleOpen} /> */}
-        <ProductIcon product={product} key={key} passOpen={this.handleOpen} />
-        <Modal open={openModal} onClose={this.handleClose}>
+        {/* <ProductIcon product={product} key={key} passOpen={this.handleOpen} /> */}
+        <Button onClick={this.handleOpen}>Open</Button>
+        <Modal open={openModal2} onClose={this.handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
             <Grid container direction="row" justify="space-evenly" alignItems="center">
               <img
