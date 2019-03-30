@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Styles from './Styles';
 
@@ -17,9 +18,8 @@ function ProductItem(props) {
           className={classes.image}
         />
         <Divider />
-        <b>
+        <b onClick={handleModalOpen}>
           {product.title}
-          <Button onClick={handleModalOpen}>Open</Button>
           <span className={classes.price}>{product.price}€</span>
         </b>
       </Paper>
