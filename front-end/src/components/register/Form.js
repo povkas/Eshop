@@ -3,6 +3,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
+function hasNumber(myString) {
+  return /\d/.test(myString);
+}
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -14,13 +17,13 @@ class Form extends Component {
       confirmPassword: '',
       country: '',
       city: '',
-      adress: '',
+      address: '',
       confirmPasswordErrorText: ' ',
       nameErrorText: ' ',
       surnameErrorText: ' ',
       countryErrorText: ' ',
       cityErrorText: ' ',
-      adressErrorText: ' ',
+      addressErrorText: ' ',
       emailErrorText: ' ',
       passwordErrorText: ' ',
       isEmailError: false,
@@ -29,7 +32,7 @@ class Form extends Component {
       isSurnameError: false,
       isCountryError: false,
       isCityError: false,
-      isAdressError: false,
+      isAddressError: false,
       isConfirmPassword: false
     };
     this.state = this.initialstate;
@@ -37,14 +40,14 @@ class Form extends Component {
 
   validate = () => {
     let isError = false;
-    const { name, surname, country, city, email, password, confirmPassword } = this.state;
+    const { name, surname, country, city, email, password, confirmPassword, address } = this.state;
     const errors = {
       confirmPasswordErrorText: ' ',
       nameErrorText: ' ',
       surnameErrorText: ' ',
       countryErrorText: ' ',
       cityErrorText: ' ',
-      adressErrorText: ' ',
+      addressErrorText: ' ',
       emailErrorText: ' ',
       passwordErrorText: ' ',
       isEmailError: false,
@@ -53,7 +56,7 @@ class Form extends Component {
       isSurnameError: false,
       isCountryError: false,
       isCityError: false,
-      isAdressError: false,
+      isAddressError: false,
       isConfirmPassword: false
     };
 
@@ -72,31 +75,40 @@ class Form extends Component {
       }
     }
     if (name.length !== 0) {
-      if (name.length > 30) {
+      if (name.length > 30 || hasNumber[name] !== null) {
         isError = true;
-        errors.nameErrorText = 'Name must contain less then 30 symbols';
+        errors.nameErrorText = 'Name must contain less then 30 symbols and cant have any numbers';
         errors.isNameError = true;
       }
     }
     if (surname.length !== 0) {
-      if (surname.length > 30) {
+      if (surname.length > 30 || hasNumber[surname] !== null) {
         isError = true;
-        errors.surnameErrorText = 'Surname must contain less then 30 symbols';
+        errors.surnameErrorText =
+          'Surname must contain less then 30 symbols and cant have any numbers';
         errors.isSurnameError = true;
       }
     }
     if (country.length !== 0) {
-      if (country.length > 30) {
+      if (country.length > 30 || hasNumber[country] !== null) {
         isError = true;
-        errors.countryErrorText = 'Country must contain less then 30 symbols';
+        errors.countryErrorText =
+          'Country must contain less then 30 symbols and cant have any numbers';
         errors.iscountryError = true;
       }
     }
     if (city.length !== 0) {
-      if (city.length > 30) {
+      if (city.length > 30 || hasNumber[city] !== null) {
         isError = true;
-        errors.cityErrorText = 'City must contain less then 30 symbols';
+        errors.cityErrorText = 'City must contain less then 30 symbols and cant have any numbers';
         errors.isCityError = true;
+      }
+    }
+    if (address.length !== 0) {
+      if (address.length > 30) {
+        isError = true;
+        errors.addressErrorText = 'address must contain less then 30 symbols';
+        errors.isAddressError = true;
       }
     }
     if (confirmPassword.length !== 0) {
@@ -124,16 +136,16 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault(); // preventing browser to reload
-    const { email, password } = this.state;
+    const { name, surname, country, city, email, password, address } = this.state;
     // const user = {
     //   email,
     //   password
     // };
 
     if (!this.validate() && (email.length && password.length) !== 0) {
-      // this.setState({ email, password });
+      this.setState({ name, surname, country, city, email, password, address });
       // console.log(`${email} & ${password} have been submitted`);
-      axios.get(`http://localhost:5000/api/values`);
+      axios.post(`http://localhost:5000/api/user`);
       //   .then(res => {
       //   console.log(res);
       //   console.log(res.data);
@@ -156,13 +168,13 @@ class Form extends Component {
       confirmPassword,
       country,
       city,
-      adress,
+      address,
       confirmPasswordErrorText,
       nameErrorText,
       surnameErrorText,
       countryErrorText,
       cityErrorText,
-      adressErrorText,
+      addressErrorText,
       emailErrorText,
       passwordErrorText,
       isEmailError,
@@ -171,7 +183,7 @@ class Form extends Component {
       isSurnameError,
       isCountryError,
       isCityError,
-      isAdressError,
+      isAddressError,
       isConfirmPassword
     } = this.state;
 
@@ -273,11 +285,11 @@ class Form extends Component {
             name="address"
             label="Address"
             type="address"
-            value={adress}
+            value={address}
             required
             onChange={this.handleChange}
-            error={isAdressError}
-            helperText={adressErrorText}
+            error={isAddressError}
+            helperText={addressErrorText}
             onBlur={this.validate}
             margin="normal"
           />
