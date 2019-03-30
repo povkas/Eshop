@@ -75,7 +75,7 @@ class Form extends Component {
       }
     }
     if (name.length !== 0) {
-      if (name.length > 30 || hasNumber[name] !== null) {
+      if (name.length > 30 || hasNumber(name)) {
         isError = true;
         errors.nameErrorText =
           'Name must contain less then 30 symbols and contain have any numbers';
@@ -83,7 +83,7 @@ class Form extends Component {
       }
     }
     if (surname.length !== 0) {
-      if (surname.length > 30 || hasNumber[surname] !== null) {
+      if (surname.length > 30 || hasNumber(surname)) {
         isError = true;
         errors.surnameErrorText =
           'Surname must contain less then 30 symbols and cant contain any numbers';
@@ -91,7 +91,7 @@ class Form extends Component {
       }
     }
     if (country.length !== 0) {
-      if (country.length > 30 || hasNumber[country] !== null) {
+      if (country.length > 30 || hasNumber(country)) {
         isError = true;
         errors.countryErrorText =
           'Country must contain less then 30 symbols and cant contain any numbers';
@@ -99,7 +99,7 @@ class Form extends Component {
       }
     }
     if (city.length !== 0) {
-      if (city.length > 30 || hasNumber[city] !== null) {
+      if (city.length > 30 || hasNumber(city)) {
         isError = true;
         errors.cityErrorText =
           'City must contain less then 30 symbols and cant contain any numbers';
@@ -139,20 +139,40 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault(); // preventing browser to reload
     const { name, surname, country, city, email, password, address } = this.state;
-    // const user = {
-    //   email,
-    //   password
-    // };
 
-    if (!this.validate() && (email.length && password.length) !== 0) {
-      this.setState({ name, surname, country, city, email, password, address });
-      // console.log(`${email} & ${password} have been submitted`);
-      axios.post(`http://localhost:5000/api/user`);
-      //   .then(res => {
-      //   console.log(res);
-      //   console.log(res.data);
-      // });
-    }
+    const url = `http://localhost:5000/api/user`;
+
+    const data = JSON.stringify({
+      name,
+      surname,
+      country,
+      city,
+      address,
+      email,
+      password
+    });
+
+    // https://appdividend.com/2018/07/18/react-redux-node-mongodb-jwt-authentication/#18_Set_the_Auth_token
+    // loginUser(data);
+
+    axios
+      .post(url, data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => {
+        // eslint-disable-next-line no-console
+        console.log(`Res.Data:\n${res.data}`);
+        //     const jwttoken = res.data;
+        //     localStorage.clear();
+        //     localStorage.setItem('jwtToken', jwttoken); // adds token to browser's local storage
+        //     setAuthToken(jwttoken); // adds token to all axios headers
+
+        //     const decoded = jwtDecode(jwttoken);
+        //     // eslint-disable-next-line no-console
+        //     console.log(`Decoded:\n${JSON.stringify(decoded)}`);
+      });
   };
 
   mergedSubmitClose = () => {
