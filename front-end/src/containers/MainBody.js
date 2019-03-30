@@ -23,25 +23,29 @@ class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openModal: false
+      isProductModalOpen: false
     };
   }
 
   handleOpen = () => {
-    this.setState({ openModal: true });
+    this.setState({ isProductModalOpen: true });
+  };
+
+  handleClose = () => {
+    this.setState({ isProductModalOpen: false });
   };
 
   render() {
     const { classes } = this.props;
-    const { openModal } = this.state;
+    const { isProductModalOpen } = this.state;
     return (
       <div>
-        <ProductModal openModal2={openModal} />
+        <ProductModal openModal={isProductModalOpen} handleClose={this.handleClose} />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item>
             <Paper className={classes.paper} elevation={24}>
               <BrowserRouter>
-                <Route path="/" component={() => <ProductTable handleModal={this.handleOpen} />} />
+                <Route path="/" component={() => <ProductTable openProduct={this.handleOpen} />} />
               </BrowserRouter>
             </Paper>
           </Grid>

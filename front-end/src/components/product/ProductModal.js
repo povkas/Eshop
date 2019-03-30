@@ -52,8 +52,6 @@ class ProductModal extends React.Component {
   }
 
   getColor = childColor => {
-    // eslint-disable-next-line no-unused-vars
-    const { color } = this.state;
     this.setState({ color: childColor });
   };
 
@@ -65,14 +63,11 @@ class ProductModal extends React.Component {
   };
 
   render() {
-    const { classes, openModal2 } = this.props;
+    const { classes, openModal, handleClose } = this.props;
 
     return (
       <div>
-        {/* <ProductIcon passOpen={this.handleOpen} /> */}
-        {/* <ProductIcon product={product} key={key} passOpen={this.handleOpen} /> */}
-        <Button onClick={this.handleOpen}>Open</Button>
-        <Modal open={openModal2} onClose={this.handleClose}>
+        <Modal open={openModal} onClose={handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
             <Grid container direction="row" justify="space-evenly" alignItems="center">
               <img

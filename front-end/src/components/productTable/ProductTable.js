@@ -20,13 +20,13 @@ class ProductTable extends React.Component {
 
   render() {
     const { products } = this.state;
-    const { handleModal } = this.props;
+    const { openProduct } = this.props;
 
     return (
       <div>
         <Grid container justify="space-evenly" alignItems="center">
           {products.map(product => (
-            <ProductItem product={product} key={product.id} handleModalOpen={handleModal} />
+            <ProductItem product={product} key={product.id} handleModalOpen={openProduct} />
           ))}
         </Grid>
       </div>
