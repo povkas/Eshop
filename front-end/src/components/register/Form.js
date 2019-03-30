@@ -78,7 +78,7 @@ class Form extends Component {
       if (name.length > 30 || hasNumber(name)) {
         isError = true;
         errors.nameErrorText =
-          'Name must contain less then 30 symbols and contain have any numbers';
+          'Name must contain less then 30 symbols and cant contain have any numbers';
         errors.isNameError = true;
       }
     }
@@ -155,24 +155,15 @@ class Form extends Component {
     // https://appdividend.com/2018/07/18/react-redux-node-mongodb-jwt-authentication/#18_Set_the_Auth_token
     // loginUser(data);
 
-    axios
-      .post(url, data, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => {
+    axios.post(url, data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    /* .then(res => {
         // eslint-disable-next-line no-console
         console.log(`Res.Data:\n${res.data}`);
-        //     const jwttoken = res.data;
-        //     localStorage.clear();
-        //     localStorage.setItem('jwtToken', jwttoken); // adds token to browser's local storage
-        //     setAuthToken(jwttoken); // adds token to all axios headers
-
-        //     const decoded = jwtDecode(jwttoken);
-        //     // eslint-disable-next-line no-console
-        //     console.log(`Decoded:\n${JSON.stringify(decoded)}`);
-      });
+      }); */
   };
 
   mergedSubmitClose = () => {

@@ -27,7 +27,7 @@ namespace Eshop.Controllers
         [Produces(typeof(NewUserDto))]
         public async Task<ActionResult> Create([FromBody] NewUserDto newUser)
         {
-            if (await _userService.CheckUserExistence(newUser))
+            if (!await _userService.CheckUserExistence(newUser))
             {
                 throw new FailedToCreateUserException("This email is already taken");
             }
