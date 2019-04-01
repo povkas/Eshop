@@ -38,8 +38,17 @@ class MainBody extends React.Component {
 
   changeProduct = product => {
     const { selectedProduct } = this.state;
-    this.setState({ selectedProduct: product }, () => this.handleOpen(product));
+    this.setState({ selectedProduct: product }, () => this.handleOpen());
   };
+
+  // changeProduct = product => {
+  //   // const { selectedProduct } = this.state;
+  //   this.setState({ selectedProduct: product }, () =>
+  //     setTimeout(() => {
+  //       this.handleOpen();
+  //     }, 50)
+  //   );
+  // };
 
   render() {
     const { classes } = this.props;
