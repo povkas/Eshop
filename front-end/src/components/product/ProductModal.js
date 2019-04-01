@@ -2,22 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Divider, Typography, Grid } from '@material-ui/core';
-import Star from '@material-ui/icons/Star';
+import { Star } from '@material-ui/icons';
 import ColorSelect from './ColorSelect';
 import Styles, { getModalStyle } from './Styles';
+import QuantitySelect from './QuantitySelect';
 
 class ProductModal extends React.Component {
   constructor(props) {
     super(props);
+    const { quantity } = this.props;
     this.state = {
-      // eslint-disable-next-line react/no-unused-state
-      color: ''
+      color: '',
+      quantity
     };
   }
 
-  getColor = childColor => {
-    // eslint-disable-next-line react/no-unused-state
-    this.setState({ color: childColor });
+  getColor = color => {
+    this.setState({ color });
+  };
+
+  getQuantity = quantity => {
+    this.setState({ quantity });
   };
 
   render() {
@@ -63,7 +68,8 @@ class ProductModal extends React.Component {
             <Typography align="justify">{product.description}</Typography>
             <Grid container direction="row" alignItems="center" justify="space-between">
               <ColorSelect getColor={this.getColor} />
-              <Typography variant="h5">Amount: {product.quantity}</Typography>
+              <Typography variant="h5">Amount: </Typography>
+              <QuantitySelect quantity={product.quantity} getQuantity={this.getQuantity} />
             </Grid>
           </div>
         </Modal>
