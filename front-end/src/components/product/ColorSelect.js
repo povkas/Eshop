@@ -5,17 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
-const styles = theme => ({
-  button: {
-    display: 'block',
-    marginTop: theme.spacing.unit * 2
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 110
-  }
-});
+import Styles from './Styles';
 
 class ColorSelect extends React.Component {
   constructor(props) {
@@ -76,4 +66,4 @@ ColorSelect.propTypes = {
   classes: PropTypes.shape().isRequired
 };
 
-export default withStyles(styles)(ColorSelect);
+export default withStyles(Styles)(ColorSelect);
