@@ -33,7 +33,9 @@ class Form extends Component {
       isCountryError: false,
       isCityError: false,
       isAddressError: false,
-      isConfirmPassword: false
+      isConfirmPassword: false,
+      registrationErrorMessage: '',
+      isRegistrationError: false
     };
     this.state = this.initialstate;
   }
@@ -139,6 +141,10 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault(); // preventing browser to reload
     const { name, surname, country, city, email, password, address } = this.state;
+    const errors = {
+      registrationErrorMessage: '',
+      isRegistrationError: false
+    };
 
     const url = `http://localhost:5000/api/user`;
 
@@ -155,13 +161,26 @@ class Form extends Component {
     // https://appdividend.com/2018/07/18/react-redux-node-mongodb-jwt-authentication/#18_Set_the_Auth_token
     // loginUser(data);
 
-    axios.post(url, data, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    axios
+      .post(url, data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        // console.log(response);
+        if (response === 201) {
+          errors.registrationErrorMessage = 'Registration successful';
+        }
+      })
+      .catch(error => {
+        // console.log(error.response);
+        if (error.response === 422) {
+          errors.registrationErrorMessage = 'User already exist';
+        }
+      });
+
     /* .then(res => {
-        // eslint-disable-next-line no-console
         console.log(`Res.Data:\n${res.data}`);
       }); */
   };
@@ -198,10 +217,12 @@ class Form extends Component {
       isCityError,
       isAddressError,
       isConfirmPassword
+      // registrationErrorMessage
     } = this.state;
 
     return (
       <div>
+        <h1>Registration</h1>
         {/* <form onSubmit={this.mergedSubmitClose}> */}
         <form onSubmit={this.handleSubmit}>
           <TextField
@@ -306,6 +327,7 @@ class Form extends Component {
             onBlur={this.validate}
             margin="normal"
           />
+
           <div />
           <Button variant="outlined" type="submit">
             Sign up

@@ -13,14 +13,14 @@ function getModalPlace() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-    height: '80vh'
+    height: '65vh%'
   };
 }
 
 const modalStyles = theme => ({
   paper: {
     position: 'absolute',
-    width: theme.spacing.unit * 35,
+    width: theme.spacing.unit * 25,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,

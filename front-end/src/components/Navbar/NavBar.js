@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/icons/Menu';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
-import { LoginForm } from '../login';
 import { RegistrationForm } from '../register';
 
 function NavBar(props) {
@@ -26,7 +25,6 @@ function NavBar(props) {
             </Link>
           </Typography>
 
-          <LoginForm className={classes} />
           <RegistrationForm className={classes} />
 
           <IconButton className={classes.menuButton}>
