@@ -37,7 +37,6 @@ class MainBody extends React.Component {
   };
 
   changeProduct = product => {
-    // eslint-disable-next-line no-unused-vars
     const { selectedProduct } = this.state;
     this.setState({ selectedProduct: product }, () => this.handleOpen(product));
   };

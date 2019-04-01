@@ -16,7 +16,8 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'import/prefer-default-export': 'off',
     'react/no-unused-state': 'off',
-    radix: 'off'
+    radix: 'off',
+    'no-unused-vars': 'off'
   },
   globals: {
     fetch: 'writeable',
