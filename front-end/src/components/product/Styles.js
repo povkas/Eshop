@@ -14,11 +14,6 @@ const styles = theme => ({
     height: '24vmin',
     width: '24vmin'
   },
-  star: {
-    width: '2.4vmin',
-    height: '2.4vmin',
-    fill: '#000000'
-  },
   divider: {
     margin: `${theme.spacing.unit * 2}px 0`
   },

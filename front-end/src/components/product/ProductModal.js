@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Divider, Typography, Grid } from '@material-ui/core';
-import { Star } from '@material-ui/icons';
 import ColorSelect from './ColorSelect';
 import Styles, { getModalStyle } from './Styles';
 import QuantitySelect from './QuantitySelect';
@@ -46,15 +45,6 @@ class ProductModal extends React.Component {
               </Grid>
               <Grid item xs={2}>
                 <Typography variant="h5">Rating:</Typography>
-              </Grid>
-              <Grid item xs={3}>
-                <Button disableRipple>
-                  <Star className={classes.star} />
-                  <Star className={classes.star} />
-                  <Star className={classes.star} />
-                  <Star className={classes.star} />
-                  <Star className={classes.star} />
-                </Button>
               </Grid>
               <Grid item>
                 <Button variant="outlined" onClick={this.handleToCart}>
