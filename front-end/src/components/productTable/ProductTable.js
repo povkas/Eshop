@@ -18,23 +18,9 @@ class ProductTable extends React.Component {
     });
   }
 
-  // idUpdate = id => {
-  //   const { idSelected } = this.props;
-  //   idSelected(id);
-  //   console.log(`idUpdateTable id=${id}`);
-  // };
-
-  // idUpdate = product => {
-  //   const { idSelected, openProduct } = this.props;
-  //   idSelected(product);
-  //   openProduct();
-  //   console.log(`idUpdateTable id=${product}`);
-  // };
-
   render() {
     const { products } = this.state;
-    const { idSelected } = this.props;
-    // const { openProduct } = this.props;
+    const { productHandler } = this.props;
 
     return (
       <div>
@@ -43,8 +29,7 @@ class ProductTable extends React.Component {
             <ProductItem
               product={product}
               key={product.id}
-              // handleModalOpen={openProduct}
-              selectProduct={() => idSelected(product)}
+              selectProduct={() => productHandler(product)}
             />
           ))}
         </Grid>

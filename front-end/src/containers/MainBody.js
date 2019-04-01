@@ -24,7 +24,7 @@ class MainBody extends React.Component {
     super(props);
     this.state = {
       isProductModalOpen: false,
-      selectedProduct: null
+      selectedProduct: {}
     };
   }
 
@@ -36,30 +36,21 @@ class MainBody extends React.Component {
     this.setState({ isProductModalOpen: false });
   };
 
-  updateId = product => {
+  changeProduct = product => {
     // eslint-disable-next-line no-unused-vars
     const { selectedProduct } = this.state;
-    // this.setState({ selectedProduct: product.id }, () =>
-    //   console.log(`${JSON.stringify(selectedProduct)} ${JSON.stringify(product.id)}`)
-    // );
-    this.setState({ selectedProduct: product.id }, () => this.handleOpen());
-    // this.setState(
-    //   state => ({ selectedProduct: state.selectedProduct + product.id }),
-    //   () => this.handleOpen()
-    // );
-    // eslint-disable-next-line no-console
-    console.log(`${JSON.stringify(selectedProduct)} ${JSON.stringify(product.id)}`);
+    this.setState({ selectedProduct: product }, () => this.handleOpen(product));
   };
 
   render() {
     const { classes } = this.props;
-    const { isProductModalOpen } = this.state;
+    const { isProductModalOpen, selectedProduct } = this.state;
     return (
       <div>
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}
-          // product={selectedProduct}
+          product={selectedProduct}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item>
@@ -68,7 +59,10 @@ class MainBody extends React.Component {
                 <Route
                   path="/"
                   component={() => (
-                    <ProductTable openProduct={this.handleOpen} idSelected={this.updateId} />
+                    <ProductTable
+                      openProduct={this.handleOpen}
+                      productHandler={this.changeProduct}
+                    />
                   )}
                 />
               </BrowserRouter>
