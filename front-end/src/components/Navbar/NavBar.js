@@ -5,10 +5,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Menu from '@material-ui/icons/Menu';
+import { Menu, Person } from '@material-ui/icons';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
-import { LoginForm } from '../login';
 
 function NavBar(props) {
   const { classes } = props;
@@ -24,9 +23,9 @@ function NavBar(props) {
               BimBam
             </Link>
           </Typography>
-
-          <LoginForm className={classes} />
-
+          <IconButton className={classes.menuButton}>
+            <Person />
+          </IconButton>
           <IconButton className={classes.menuButton}>
             <ShoppingCart />
           </IconButton>
