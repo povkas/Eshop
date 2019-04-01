@@ -12,7 +12,7 @@ class ColorSelect extends React.Component {
     super(props);
     this.state = {
       color: '',
-      open: false
+      isSelectOpened: false
     };
   }
 
@@ -23,23 +23,23 @@ class ColorSelect extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ isSelectOpened: false });
   };
 
   handleOpen = () => {
-    this.setState({ open: true });
+    this.setState({ isSelectOpened: true });
   };
 
   render() {
     const { classes } = this.props;
-    const { open, color } = this.state;
+    const { isSelectOpened, color } = this.state;
 
     return (
       <form>
         <FormControl className={classes.formControl}>
           <InputLabel>Select color</InputLabel>
           <Select
-            open={open}
+            open={isSelectOpened}
             onClose={this.handleClose}
             onOpen={this.handleOpen}
             value={color}
