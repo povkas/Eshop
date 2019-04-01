@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import Styles from './Styles';
 
 function ProductItem(props) {
-  const { classes, product, handleModalOpen } = props;
+  const { classes, product, selectProduct } = props;
   return (
     <Grid item>
       <Paper className={classes.paper} component="div">
@@ -18,7 +18,13 @@ function ProductItem(props) {
           className={classes.image}
         />
         <Divider />
-        <b onClick={handleModalOpen}>
+        <b
+          onClick={() => {
+            // handleModalOpen();
+            selectProduct();
+            // idUpdate(product);
+          }}
+        >
           {product.title}
           <span className={classes.price}>{product.price}€</span>
         </b>
