@@ -1,6 +1,8 @@
 import React from 'react';
 import { Input, IconButton } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
+import Styles from './Styles';
 
 class Quantity extends React.Component {
   constructor(props) {
@@ -38,7 +40,7 @@ class Quantity extends React.Component {
   };
 
   render() {
-    // const { quantity } = this.props;
+    const { classes } = this.props;
     const { quantitySelected } = this.state;
     return (
       <div>
@@ -49,6 +51,7 @@ class Quantity extends React.Component {
           onChange={this.handleChange}
           value={parseInt(quantitySelected)}
           placeholder="Enter your desired quantity"
+          className={classes.input}
         />
         <IconButton onClick={this.increment}>
           <Add />
@@ -58,4 +61,4 @@ class Quantity extends React.Component {
   }
 }
 
-export default Quantity;
+export default withStyles(Styles)(Quantity);
