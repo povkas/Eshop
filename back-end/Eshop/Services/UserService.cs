@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Eshop.DTOs.Users;
+using CryptoHelper;
 
 namespace Eshop.Services
 {
@@ -31,6 +32,8 @@ namespace Eshop.Services
         {
             var user = _mapper.Map<User>(newItem);
             user.IsAdmin = false;
+            string hashedPassword = HashPassword(user.Password);
+            user.Password = hashedPassword;
             await _repository.Create(user);
             var userDto = _mapper.Map<UserDto>(user);
             return userDto;
@@ -71,12 +74,22 @@ namespace Eshop.Services
             var users = await _repository.GetAll();
             foreach (User user in users)
             {
-                if (userLogin.Email == user.Email && userLogin.Password == user.Password)
+                if (userLogin.Email == user.Email && VerifyPassword(user.Password, userLogin.Password))
                 {
                     return true;
                 }
             }
             return false;
         }
-    }
+
+        public string HashPassword(string password)
+        {
+            return Crypto.HashPassword(password);
+        }
+
+        public bool VerifyPassword(string hash, string password)
+        {
+            return Crypto.VerifyHashedPassword(hash, password);
+        }
+}
 }
