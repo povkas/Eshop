@@ -7,7 +7,7 @@ namespace Eshop.DTOs.Products
         [Required]
         public string Description { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
         [Required]
         public decimal Price { get; set; }
         [Required]
