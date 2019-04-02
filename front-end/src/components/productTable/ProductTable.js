@@ -24,7 +24,7 @@ class ProductTable extends React.Component {
       <div>
         <Grid container justify="space-evenly" alignItems="center">
           {products.map(product => (
-            <ProductItem product={product} key={product.key} />
+            <ProductItem product={product} key={product.id} />
           ))}
         </Grid>
       </div>

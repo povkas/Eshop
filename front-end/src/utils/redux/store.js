@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
-
+// ideti middleWare
 const initialState = {
+  shoppingCart: [],
   items: []
 };
 
