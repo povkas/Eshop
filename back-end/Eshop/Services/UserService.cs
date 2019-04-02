@@ -28,14 +28,14 @@ namespace Eshop.Services
             return productDto;
         }
 
-        public async Task<NewUserDto> CreateUser(NewUserDto newItem)
+        public async Task<UserDto> CreateUser(NewUserDto newItem)
         {
             var user = _mapper.Map<User>(newItem);
             user.IsAdmin = false;
             string hashedPassword = HashPassword(user.Password);
             user.Password = hashedPassword;
             await _repository.Create(user);
-            var userDto = _mapper.Map<NewUserDto>(user);
+            var userDto = _mapper.Map<UserDto>(user);
             return userDto;
         }
 
