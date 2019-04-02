@@ -28,48 +28,52 @@ class ProductModal extends React.Component {
     const { classes, openModal, handleClose, product } = this.props;
 
     return (
-      <div>
-        <Modal open={openModal} onClose={handleClose}>
-          <div style={getModalStyle()} className={classes.paper}>
-            <Grid container direction="row" justify="space-evenly" alignItems="center">
-              <img
-                src={`data:image/png;base64,${product.image}`}
-                alt={product.title}
-                className={classes.image}
-              />
+      <Modal open={openModal} onClose={handleClose}>
+        <div style={getModalStyle()} className={classes.paper}>
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <img
+              src={`data:image/png;base64,${product.image}`}
+              alt={product.title}
+              className={classes.image}
+            />
+          </Grid>
+          <Divider className={classes.divider} />
+          <Grid container direction="row" alignItems="center" justify="space-around">
+            <Grid item xs={4}>
+              <Typography variant="h5">Cost: {product.price}€</Typography>
             </Grid>
-            <Divider className={classes.divider} />
-            <Grid container direction="row" alignItems="center" justify="space-around">
-              <Grid item xs={4}>
-                <Typography variant="h5">Cost: {product.price}€</Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Typography variant="h5">Rating:</Typography>
-              </Grid>
-              <Grid item>
-                <Button variant="outlined" onClick={this.handleToCart}>
-                  <Typography variant="h6">Add to cart</Typography>
-                </Button>
-              </Grid>
+            <Grid item xs={2}>
+              <Typography variant="h5">Rating:</Typography>
             </Grid>
-            <Divider className={classes.divider} />
-            <Typography variant="h4">{product.title}</Typography>
-            <Typography variant="h6">Description</Typography>
-            <Typography align="justify">{product.description}</Typography>
-            <Grid container direction="row" alignItems="center" justify="space-between">
-              <ColorSelect getColor={this.getColor} />
-              <Typography variant="h5">Amount: </Typography>
-              <QuantitySelect quantity={product.quantity} getQuantity={this.getQuantity} />
+            <Grid item>
+              <Button variant="outlined" onClick={this.handleToCart}>
+                <Typography variant="h6">Add to cart</Typography>
+              </Button>
             </Grid>
-          </div>
-        </Modal>
-      </div>
+          </Grid>
+          <Divider className={classes.divider} />
+          <Typography variant="h4">{product.title}</Typography>
+          <Typography variant="h6">Description</Typography>
+          <Typography align="justify">{product.description}</Typography>
+          <Grid container direction="row" alignItems="center" justify="space-between">
+            <ColorSelect getColor={this.getColor} />
+            <Typography variant="h5">Amount: </Typography>
+            <QuantitySelect quantity={product.quantity} getQuantity={this.getQuantity} />
+          </Grid>
+        </div>
+      </Modal>
     );
   }
 }
 
 ProductModal.propTypes = {
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  product: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    price: PropTypes.number,
+    quantity: PropTypes.number
+  }).isRequired
 };
 
 export default withStyles(Styles)(ProductModal);
