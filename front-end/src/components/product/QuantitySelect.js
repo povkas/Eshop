@@ -28,7 +28,7 @@ class QuantitySelect extends React.Component {
     const { getQuantity, quantity } = this.props;
     const { quantitySelected } = this.state;
     if (parseInt(quantitySelected + 1) < quantity) {
-      this.setState({ quantitySelected: parseInt(quantitySelected + 1) });
+      this.setState({ quantitySelected: parseInt(quantitySelected + 1), helperText: ' ' });
       getQuantity(parseInt(quantitySelected + 1));
     }
     if (parseInt(quantitySelected + 1) === quantity) this.setState({ incrDisable: true });
@@ -37,7 +37,8 @@ class QuantitySelect extends React.Component {
   decrementClick = () => {
     const { getQuantity } = this.props;
     const { quantitySelected } = this.state;
-    if (quantitySelected > 1) this.setState({ quantitySelected: parseInt(quantitySelected - 1) });
+    if (quantitySelected > 1)
+      this.setState({ quantitySelected: parseInt(quantitySelected - 1), helperText: ' ' });
     if (parseInt(quantitySelected - 1) === 1) this.setState({ decrDisable: true });
     getQuantity(parseInt(quantitySelected - 1));
   };
