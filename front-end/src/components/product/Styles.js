@@ -25,8 +25,8 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     minWidth: 110
   },
-  input: {
-    width: '3.2vmin'
+  textField: {
+    width: '5vmin'
   }
 });
 
