@@ -9,16 +9,10 @@ import QuantitySelect from './QuantitySelect';
 class ProductModal extends React.Component {
   constructor(props) {
     super(props);
-    const { quantity } = this.props;
     this.state = {
-      color: '',
-      quantity
+      quantity: 1
     };
   }
-
-  getColor = color => {
-    this.setState({ color });
-  };
 
   getQuantity = quantity => {
     this.setState({ quantity });
@@ -52,8 +46,7 @@ class ProductModal extends React.Component {
           <Typography variant="h4">{product.title}</Typography>
           <Typography variant="h6">Description</Typography>
           <Typography align="justify">{product.description}</Typography>
-          <Grid container direction="row" alignItems="center" justify="space-between">
-            <ColorSelect getColor={this.getColor} />
+          <Grid container direction="row" alignItems="center" justify="flex-end">
             <Typography variant="h5">Amount: </Typography>
             <QuantitySelect quantity={product.quantity} getQuantity={this.getQuantity} />
           </Grid>
