@@ -7,17 +7,18 @@ import Styles from './Styles';
 class Quantity extends React.Component {
   constructor(props) {
     super(props);
-    const { quantity } = this.props;
     this.state = {
-      quantitySelected: quantity
+      quantitySelected: 1
     };
   }
 
   increment = () => {
-    const { getQuantity } = this.props;
+    const { getQuantity, quantity } = this.props;
     const { quantitySelected } = this.state;
-    this.setState({ quantitySelected: parseInt(quantitySelected + 1) });
-    getQuantity(parseInt(quantitySelected + 1));
+    if (parseInt(quantitySelected + 1) <= quantity) {
+      this.setState({ quantitySelected: parseInt(quantitySelected + 1) });
+      getQuantity(parseInt(quantitySelected + 1));
+    }
   };
 
   decrement = () => {
@@ -31,8 +32,13 @@ class Quantity extends React.Component {
     const { value } = event.target;
     const { quantity, getQuantity } = this.props;
     if (value >= 1) {
-      this.setState({ quantitySelected: parseInt(value) });
-      getQuantity(value);
+      if (value > quantity) {
+        this.setState({ quantitySelected: quantity });
+        getQuantity(quantity);
+      } else {
+        this.setState({ quantitySelected: parseInt(value) });
+        getQuantity(value);
+      }
     } else {
       this.setState({ quantitySelected: quantity });
       getQuantity(quantity);

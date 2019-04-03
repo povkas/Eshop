@@ -38,12 +38,9 @@ class ProductModal extends React.Component {
             />
           </Grid>
           <Divider className={classes.divider} />
-          <Grid container direction="row" alignItems="center" justify="space-around">
+          <Grid container direction="row" alignItems="center" justify="space-between">
             <Grid item xs={4}>
               <Typography variant="h5">Cost: {product.price}€</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography variant="h5">Rating:</Typography>
             </Grid>
             <Grid item>
               <Button variant="outlined" onClick={this.handleToCart}>
