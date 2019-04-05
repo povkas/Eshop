@@ -5,11 +5,14 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './Styles';
 
 function Filter(props) {
-  const { classes } = props;
+  const { classes, upperPriceLimit, lowerPriceLimit, date, changeDate } = props;
+
   return (
     <ExpansionPanel className={classes.expansion}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -23,7 +26,7 @@ function Filter(props) {
           <TextField
             id="from-price"
             label="From"
-            value="B"
+            value={lowerPriceLimit}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -34,7 +37,7 @@ function Filter(props) {
           <TextField
             id="to-price"
             label="To"
-            value="A"
+            value={upperPriceLimit}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -45,28 +48,13 @@ function Filter(props) {
         </div>
         <div className={classes.inputs}>
           <Typography variant="subheading">Date added</Typography>
-          <TextField
-            id="from-year"
-            label="From"
-            value="B"
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true
-            }}
-            margin="normal"
-          />
-          <TextField
-            id="to-year"
-            label="To"
-            value="A"
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true
-            }}
-            margin="normal"
-          />
+          <Select value={date} onChange={changeDate}>
+            <MenuItem value="all">Show all</MenuItem>
+            <MenuItem value="day">Less than a day ago</MenuItem>
+            <MenuItem value="week">Less than a week ago</MenuItem>
+            <MenuItem value="month">Less than a month ago</MenuItem>
+            <MenuItem value="year">Less than a year ago</MenuItem>
+          </Select>
         </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>
