@@ -78,12 +78,14 @@ function Filter(props) {
 
 Filter.propTypes = {
   classes: PropTypes.shape().isRequired,
-  upperPriceLimit: PropTypes.shape().isRequired,
-  lowerPriceLimit: PropTypes.shape().isRequired,
-  date: PropTypes.shape().isRequired,
-  changeDate: PropTypes.shape().isRequired,
-  changePriceLower: PropTypes.shape().isRequired,
-  changePriceUpper: PropTypes.shape().isRequired
+  upperPriceLimit: PropTypes.number.isRequired,
+  lowerPriceLimit: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
+  changeDate: PropTypes.func.isRequired,
+  changePriceLower: PropTypes.func.isRequired,
+  changePriceUpper: PropTypes.func.isRequired,
+  lowerPriceLimitHelper: PropTypes.string.isRequired,
+  upperPriceLimitHelper: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(Filter);
