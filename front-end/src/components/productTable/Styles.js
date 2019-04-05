@@ -1,3 +1,7 @@
+import grey from '@material-ui/core/colors/grey';
+
+const color = grey[100];
+
 const styles = theme => ({
   paper: {
     justifyContent: 'center',
@@ -16,6 +20,9 @@ const styles = theme => ({
   },
   price: {
     float: 'right'
+  },
+  expansion: {
+    backgroundColor: color
   }
 });
 
