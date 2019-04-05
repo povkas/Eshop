@@ -17,58 +17,56 @@ function Filter(props) {
           Filters
         </Typography>
       </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
-        <div className={classes.filterDiv}>
+      <ExpansionPanelDetails className={classes.filterDiv}>
+        <div className={classes.inputs}>
           <Typography variant="subheading">Price</Typography>
-          <div className={classes.inputs}>
-            <TextField
-              id="from-price"
-              label="From"
-              value="B"
-              type="number"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true
-              }}
-              margin="normal"
-            />
-            <TextField
-              id="to-price"
-              label="To"
-              value="A"
-              type="number"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true
-              }}
-              margin="normal"
-            />
-          </div>
-          <Typography variant="subheading">Year</Typography>
-          <div className={classes.inputs}>
-            <TextField
-              id="from-year"
-              label="From"
-              value="B"
-              type="number"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true
-              }}
-              margin="normal"
-            />
-            <TextField
-              id="to-year"
-              label="To"
-              value="A"
-              type="number"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true
-              }}
-              margin="normal"
-            />
-          </div>
+          <TextField
+            id="from-price"
+            label="From"
+            value="B"
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true
+            }}
+            margin="normal"
+          />
+          <TextField
+            id="to-price"
+            label="To"
+            value="A"
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true
+            }}
+            margin="normal"
+          />
+        </div>
+        <div className={classes.inputs}>
+          <Typography variant="subheading">Date added</Typography>
+          <TextField
+            id="from-year"
+            label="From"
+            value="B"
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true
+            }}
+            margin="normal"
+          />
+          <TextField
+            id="to-year"
+            label="To"
+            value="A"
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true
+            }}
+            margin="normal"
+          />
         </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>

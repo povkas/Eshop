@@ -7,7 +7,8 @@ const styles = theme => ({
     justifyContent: 'center',
     textAlign: 'left',
     margin: '1vmin',
-    minHeight: '27vmin',
+    height: '285px',
+    width: '255px',
     color: theme.palette.text.secondary,
     padding: '15px',
     '&:hover': {
@@ -15,8 +16,8 @@ const styles = theme => ({
     }
   },
   image: {
-    height: '24.5vmin',
-    width: '25.5vmin'
+    height: '245px',
+    width: '255px'
   },
   expansion: {
     backgroundColor: color
@@ -25,8 +26,9 @@ const styles = theme => ({
     width: '10vmin;'
   },
   filterDiv: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    textAlign: 'center'
   },
   inputs: {
     justifyContent: 'center',
