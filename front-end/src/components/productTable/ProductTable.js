@@ -34,6 +34,7 @@ class ProductTable extends React.Component {
   changeShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
     let qualifyingProducts = [];
+
     if (upperPriceLimit >= lowerPriceLimit && upperPriceLimit > 0) {
       qualifyingProducts = allProducts.filter(this.checkPriceUpper);
       this.setState({ upperPriceLimitHelper: '' });
@@ -50,10 +51,9 @@ class ProductTable extends React.Component {
 
     if (lowerPriceLimit >= 0) {
       this.setState({ lowerPriceLimitHelper: '' });
-      qualifyingProducts = allProducts.filter(this.checkPriceLower);
-    } else {
+      qualifyingProducts = qualifyingProducts.filter(this.checkPriceLower);
+    } else if (lowerPriceLimit < 0) {
       this.setState({ lowerPriceLimitHelper: 'Number cannot be negative' });
-      qualifyingProducts = allProducts;
     }
 
     qualifyingProducts = qualifyingProducts.filter(this.checkDate);

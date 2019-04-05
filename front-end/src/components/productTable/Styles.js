@@ -7,7 +7,7 @@ const styles = theme => ({
     justifyContent: 'center',
     textAlign: 'left',
     margin: '1vmin',
-    height: '285px',
+    height: '300px',
     width: '255px',
     color: theme.palette.text.secondary,
     padding: '15px',
@@ -28,8 +28,9 @@ const styles = theme => ({
   },
   filterDiv: {
     justifyContent: 'space-evenly',
-    alignItems: 'center',
-    textAlign: 'center'
+    alignItems: 'top',
+    textAlign: 'center',
+    height: '200px'
   },
   inputs: {
     justifyContent: 'center',
