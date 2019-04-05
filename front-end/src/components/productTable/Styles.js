@@ -7,7 +7,7 @@ const styles = theme => ({
     justifyContent: 'center',
     textAlign: 'left',
     margin: '1vmin',
-    height: '27vmin',
+    minHeight: '27vmin',
     color: theme.palette.text.secondary,
     padding: '15px',
     '&:hover': {
@@ -17,9 +17,6 @@ const styles = theme => ({
   image: {
     height: '24.5vmin',
     width: '25.5vmin'
-  },
-  price: {
-    float: 'right'
   },
   expansion: {
     backgroundColor: color
