@@ -19,7 +19,9 @@ function Filter(props) {
     date,
     changeDate,
     changePriceLower,
-    changePriceUpper
+    changePriceUpper,
+    lowerPriceLimitHelper,
+    upperPriceLimitHelper
   } = props;
 
   return (
@@ -42,6 +44,7 @@ function Filter(props) {
             InputLabelProps={{
               shrink: true
             }}
+            helperText={lowerPriceLimitHelper}
             margin="normal"
           />
           <TextField
@@ -54,6 +57,7 @@ function Filter(props) {
             InputLabelProps={{
               shrink: true
             }}
+            helperText={upperPriceLimitHelper}
             margin="normal"
           />
         </div>

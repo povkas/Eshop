@@ -12,7 +12,9 @@ class ProductTable extends React.Component {
       productsOnDisplay: [],
       lowerPriceLimit: 0,
       upperPriceLimit: 0,
-      date: 'all'
+      date: 'all',
+      lowerPriceLimitHelper: '',
+      upperPriceLimitHelper: ''
     };
 
     this.changeDate = this.changeDate.bind(this);
@@ -32,11 +34,27 @@ class ProductTable extends React.Component {
   changeShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
     let qualifyingProducts = [];
-    if (upperPriceLimit >= lowerPriceLimit && upperPriceLimit > 0)
+    if (upperPriceLimit >= lowerPriceLimit && upperPriceLimit > 0) {
       qualifyingProducts = allProducts.filter(this.checkPriceUpper);
-    else qualifyingProducts = allProducts;
-    if (lowerPriceLimit >= 0) qualifyingProducts = allProducts.filter(this.checkPriceLower);
-    else qualifyingProducts = allProducts;
+      this.setState({ upperPriceLimitHelper: '' });
+    } else if (upperPriceLimit < lowerPriceLimit) {
+      this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
+      qualifyingProducts = allProducts;
+    } else if (upperPriceLimit < 0) {
+      this.setState({ upperPriceLimitHelper: 'Number cannot be negative' });
+      qualifyingProducts = allProducts;
+    } else {
+      this.setState({ upperPriceLimitHelper: '' });
+      qualifyingProducts = allProducts;
+    }
+
+    if (lowerPriceLimit >= 0) {
+      this.setState({ lowerPriceLimitHelper: '' });
+      qualifyingProducts = allProducts.filter(this.checkPriceLower);
+    } else {
+      this.setState({ lowerPriceLimitHelper: 'Number cannot be negative' });
+      qualifyingProducts = allProducts;
+    }
 
     qualifyingProducts = qualifyingProducts.filter(this.checkDate);
     this.setState({ productsOnDisplay: qualifyingProducts });
@@ -103,7 +121,14 @@ class ProductTable extends React.Component {
   }
 
   render() {
-    const { productsOnDisplay, lowerPriceLimit, upperPriceLimit, date } = this.state;
+    const {
+      productsOnDisplay,
+      lowerPriceLimit,
+      upperPriceLimit,
+      date,
+      lowerPriceLimitHelper,
+      upperPriceLimitHelper
+    } = this.state;
 
     return (
       <div>
@@ -114,6 +139,8 @@ class ProductTable extends React.Component {
           changeDate={this.changeDate}
           changePriceLower={this.changePriceLower}
           changePriceUpper={this.changePriceUpper}
+          lowerPriceLimitHelper={lowerPriceLimitHelper}
+          upperPriceLimitHelper={upperPriceLimitHelper}
         />
         <Grid container justify="space-evenly" alignItems="center">
           {productsOnDisplay.map(product => (
