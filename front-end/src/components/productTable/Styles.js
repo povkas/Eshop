@@ -20,6 +20,18 @@ const styles = theme => ({
   },
   expansion: {
     backgroundColor: color
+  },
+  textField: {
+    width: '10vmin;'
+  },
+  filterDiv: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  inputs: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '12px'
   }
 });
 
