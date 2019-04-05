@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +20,10 @@ const MainBody = props => {
       </Grid>
     </Grid>
   );
+};
+
+MainBody.prototype = {
+  classes: PropTypes.shape().isRequired
 };
 
 export default withStyles(Styles)(MainBody);

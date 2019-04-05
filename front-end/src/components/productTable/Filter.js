@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -11,7 +12,15 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from './Styles';
 
 function Filter(props) {
-  const { classes, upperPriceLimit, lowerPriceLimit, date, changeDate } = props;
+  const {
+    classes,
+    upperPriceLimit,
+    lowerPriceLimit,
+    date,
+    changeDate,
+    changePriceLower,
+    changePriceUpper
+  } = props;
 
   return (
     <ExpansionPanel className={classes.expansion}>
@@ -27,6 +36,7 @@ function Filter(props) {
             id="from-price"
             label="From"
             value={lowerPriceLimit}
+            onChange={changePriceLower}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -38,6 +48,7 @@ function Filter(props) {
             id="to-price"
             label="To"
             value={upperPriceLimit}
+            onChange={changePriceUpper}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -60,5 +71,15 @@ function Filter(props) {
     </ExpansionPanel>
   );
 }
+
+Filter.propTypes = {
+  classes: PropTypes.shape().isRequired,
+  upperPriceLimit: PropTypes.shape().isRequired,
+  lowerPriceLimit: PropTypes.shape().isRequired,
+  date: PropTypes.shape().isRequired,
+  changeDate: PropTypes.shape().isRequired,
+  changePriceLower: PropTypes.shape().isRequired,
+  changePriceUpper: PropTypes.shape().isRequired
+};
 
 export default withStyles(styles)(Filter);

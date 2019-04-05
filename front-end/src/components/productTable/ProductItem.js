@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -27,5 +28,10 @@ function ProductItem(props) {
     </Grid>
   );
 }
+
+ProductItem.propTypes = {
+  classes: PropTypes.shape().isRequired,
+  product: PropTypes.shape().isRequired
+};
 
 export default withStyles(Styles)(ProductItem);

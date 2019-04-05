@@ -23,7 +23,8 @@ const styles = theme => ({
     backgroundColor: color
   },
   textField: {
-    width: '10vmin;'
+    width: '100px;',
+    margin: '12px'
   },
   filterDiv: {
     justifyContent: 'space-evenly',
@@ -33,7 +34,8 @@ const styles = theme => ({
   inputs: {
     justifyContent: 'center',
     alignItems: 'center',
-    margin: '12px'
+    margin: '12px',
+    width: '250px'
   }
 });
 
