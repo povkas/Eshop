@@ -1,35 +1,35 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { ProductItem } from '.';
-import * as productActions from '../../actions/productActions';
+import ProductItem from './ProductItem';
 
 class ProductTable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      products: []
-    };
-  }
-
-  componentDidMount() {
-    productActions.getProducts().then(res => {
-      this.setState({ products: res });
-    });
+    this.state = {};
   }
 
   render() {
-    const { products } = this.state;
+    const { productHandler, products } = this.props;
+
     return (
-      <div>
-        <Grid container justify="space-evenly" alignItems="center">
-          {products.map(product => (
-            <ProductItem product={product} key={product.key} />
-          ))}
-        </Grid>
-      </div>
+      <Grid container justify="space-evenly" alignItems="center">
+        {products.map(product => (
+          <ProductItem
+            product={product}
+            key={product.id}
+            selectProduct={() => productHandler(product)}
+          />
+        ))}
+      </Grid>
     );
   }
 }
+
+ProductTable.propTypes = {
+  productHandler: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape()).isRequired
+};
 
 export default ProductTable;
