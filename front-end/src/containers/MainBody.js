@@ -31,10 +31,9 @@ class MainBody extends React.Component {
       selectedProduct: {},
       allProducts: [],
       productsOnDisplay: [],
-      lowerPriceLimit: 0,
-      upperPriceLimit: 0,
+      lowerPriceLimit: '',
+      upperPriceLimit: '',
       date: 'all',
-      lowerPriceLimitHelper: '',
       upperPriceLimitHelper: ''
     };
 
@@ -93,9 +92,6 @@ class MainBody extends React.Component {
     } else if (upperPriceLimit < lowerPriceLimit) {
       this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
       qualifyingProducts = allProducts;
-    } else if (upperPriceLimit < 0) {
-      this.setState({ upperPriceLimitHelper: 'Number cannot be negative' });
-      qualifyingProducts = allProducts;
     } else {
       this.setState({ upperPriceLimitHelper: '' });
       qualifyingProducts = allProducts;
@@ -104,10 +100,7 @@ class MainBody extends React.Component {
     if (lowerPriceLimit >= 0) {
       this.setState({ lowerPriceLimitHelper: '' });
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceLower);
-    } else if (lowerPriceLimit < 0) {
-      this.setState({ lowerPriceLimitHelper: 'Number cannot be negative' });
     }
-
     qualifyingProducts = qualifyingProducts.filter(this.checkDate);
     this.setState({ productsOnDisplay: qualifyingProducts });
   }
@@ -117,15 +110,19 @@ class MainBody extends React.Component {
   }
 
   changePriceLower(e) {
-    this.setState({ lowerPriceLimit: parseFloat(e.target.value) }, () =>
-      this.changeShownProducts()
-    );
+    if (/^([1-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value)) {
+      this.setState({ lowerPriceLimit: e.target.value }, () => this.changeShownProducts());
+    } else if (e.target.value === '') {
+      this.setState({ lowerPriceLimit: e.target.value }, () => this.changeShownProducts());
+    }
   }
 
   changePriceUpper(e) {
-    this.setState({ upperPriceLimit: parseFloat(e.target.value) }, () =>
-      this.changeShownProducts()
-    );
+    if (/^([1-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value)) {
+      this.setState({ upperPriceLimit: e.target.value }, () => this.changeShownProducts());
+    } else if (e.target.value === '') {
+      this.setState({ upperPriceLimit: e.target.value }, () => this.changeShownProducts());
+    }
   }
 
   checkPriceUpper(product) {
@@ -181,7 +178,6 @@ class MainBody extends React.Component {
       lowerPriceLimit,
       upperPriceLimit,
       date,
-      lowerPriceLimitHelper,
       upperPriceLimitHelper
     } = this.state;
     return (
@@ -201,7 +197,6 @@ class MainBody extends React.Component {
                 changeDate={this.changeDate}
                 changePriceLower={this.changePriceLower}
                 changePriceUpper={this.changePriceUpper}
-                lowerPriceLimitHelper={lowerPriceLimitHelper}
                 upperPriceLimitHelper={upperPriceLimitHelper}
               />
               <BrowserRouter>

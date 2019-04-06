@@ -20,7 +20,6 @@ function Filter(props) {
     changeDate,
     changePriceLower,
     changePriceUpper,
-    lowerPriceLimitHelper,
     upperPriceLimitHelper
   } = props;
 
@@ -39,12 +38,10 @@ function Filter(props) {
             label="From"
             value={lowerPriceLimit}
             onChange={changePriceLower}
-            type="number"
             className={classes.textField}
             InputLabelProps={{
               shrink: true
             }}
-            helperText={lowerPriceLimitHelper}
             margin="normal"
           />
           <TextField
@@ -52,7 +49,6 @@ function Filter(props) {
             label="To"
             value={upperPriceLimit}
             onChange={changePriceUpper}
-            type="number"
             className={classes.textField}
             InputLabelProps={{
               shrink: true
@@ -78,13 +74,12 @@ function Filter(props) {
 
 Filter.propTypes = {
   classes: PropTypes.shape().isRequired,
-  upperPriceLimit: PropTypes.number.isRequired,
-  lowerPriceLimit: PropTypes.number.isRequired,
+  upperPriceLimit: PropTypes.string.isRequired,
+  lowerPriceLimit: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   changeDate: PropTypes.func.isRequired,
   changePriceLower: PropTypes.func.isRequired,
   changePriceUpper: PropTypes.func.isRequired,
-  lowerPriceLimitHelper: PropTypes.string.isRequired,
   upperPriceLimitHelper: PropTypes.string.isRequired
 };
 
