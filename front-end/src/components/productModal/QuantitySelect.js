@@ -75,6 +75,9 @@ class QuantitySelect extends React.Component {
           value={parseInt(quantitySelected)}
           disabled={inputDisable}
           helperText={helperText}
+          inputProps={{
+            style: { textAlign: 'center' }
+          }}
         />
         <IconButton onClick={this.incrementClick} disabled={incrDisable}>
           <Add />

@@ -26,7 +26,7 @@ const styles = theme => ({
     minWidth: 110
   },
   textField: {
-    width: '5vmin'
+    maxWidth: '10vmin'
   }
 });
 
