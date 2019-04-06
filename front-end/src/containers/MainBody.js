@@ -73,11 +73,13 @@ class MainBody extends React.Component {
   changeShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
     let qualifyingProducts = [];
+    const upperPriceLimitFloat = parseFloat(upperPriceLimit);
+    const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
-    if (upperPriceLimit >= lowerPriceLimit && upperPriceLimit > 0) {
+    if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
       qualifyingProducts = allProducts.filter(this.checkPriceUpper);
       this.setState({ upperPriceLimitHelper: '' });
-    } else if (upperPriceLimit < lowerPriceLimit) {
+    } else if (upperPriceLimitFloat < lowerPriceLimitFloat) {
       this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
       qualifyingProducts = allProducts;
     } else {
@@ -85,7 +87,7 @@ class MainBody extends React.Component {
       qualifyingProducts = allProducts;
     }
 
-    if (lowerPriceLimit >= 0) {
+    if (lowerPriceLimitFloat >= 0) {
       this.setState({ lowerPriceLimitHelper: '' });
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceLower);
     }
@@ -98,7 +100,7 @@ class MainBody extends React.Component {
   }
 
   changePriceLower(e) {
-    if (/^([1-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value)) {
+    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value)) {
       this.setState({ lowerPriceLimit: e.target.value }, () => this.changeShownProducts());
     } else if (e.target.value === '') {
       this.setState({ lowerPriceLimit: e.target.value }, () => this.changeShownProducts());
@@ -106,7 +108,7 @@ class MainBody extends React.Component {
   }
 
   changePriceUpper(e) {
-    if (/^([1-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value)) {
+    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value)) {
       this.setState({ upperPriceLimit: e.target.value }, () => this.changeShownProducts());
     } else if (e.target.value === '') {
       this.setState({ upperPriceLimit: e.target.value }, () => this.changeShownProducts());
@@ -115,12 +117,14 @@ class MainBody extends React.Component {
 
   checkPriceUpper(product) {
     const { upperPriceLimit } = this.state;
-    return product.price <= upperPriceLimit;
+    const upperPriceLimitFloat = parseFloat(upperPriceLimit);
+    return product.price <= upperPriceLimitFloat;
   }
 
   checkPriceLower(product) {
     const { lowerPriceLimit } = this.state;
-    return product.price >= lowerPriceLimit;
+    const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
+    return product.price >= lowerPriceLimitFloat;
   }
 
   checkDate(product) {
