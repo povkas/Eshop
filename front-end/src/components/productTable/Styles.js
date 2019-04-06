@@ -31,7 +31,7 @@ const styles = theme => ({
     justifyContent: 'space-evenly',
     alignItems: 'top',
     textAlign: 'center',
-    height: '200px'
+    height: '140px'
   },
   inputs: {
     justifyContent: 'center',
