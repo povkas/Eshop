@@ -28,31 +28,48 @@ class QuantitySelect extends React.Component {
   incrementClick = () => {
     const { getQuantity, quantity } = this.props;
     const { quantitySelected } = this.state;
+    this.setState({ decrDisable: false });
     if (parseInt(quantitySelected + 1) < quantity) {
       this.setState({ quantitySelected: parseInt(quantitySelected + 1), helperText: ' ' });
       getQuantity(parseInt(quantitySelected + 1));
     }
-    if (parseInt(quantitySelected + 1) === quantity) this.setState({ incrDisable: true });
+    if (parseInt(quantitySelected + 1) === quantity)
+      this.setState(
+        {
+          incrDisable: true,
+          quantitySelected: parseInt(quantitySelected + 1),
+          helperText: 'No more!'
+        },
+        getQuantity(parseInt(quantitySelected + 1))
+      );
   };
 
   decrementClick = () => {
     const { getQuantity } = this.props;
     const { quantitySelected } = this.state;
-    if (quantitySelected > 1)
+    this.setState({ incrDisable: false });
+    if (quantitySelected > 1) {
       this.setState({ quantitySelected: parseInt(quantitySelected - 1), helperText: ' ' });
+      getQuantity(parseInt(quantitySelected - 1));
+    }
     if (parseInt(quantitySelected - 1) === 1) this.setState({ decrDisable: true });
-    getQuantity(parseInt(quantitySelected - 1));
   };
 
   handleChange = event => {
     const { value } = event.target;
     const { quantity, getQuantity } = this.props;
-    if (value >= 1) {
+    if (value > 1) {
+      this.setState({ decrDisable: false });
       if (value >= quantity) {
-        this.setState({ quantitySelected: quantity, helperText: 'No more!', incrDisable: true });
+        this.setState({
+          quantitySelected: quantity,
+          helperText: 'No more!',
+          incrDisable: true,
+          decrDisable: false
+        });
         getQuantity(quantity);
       } else {
-        this.setState({ quantitySelected: parseInt(value), helperText: ' ' });
+        this.setState({ quantitySelected: parseInt(value), incrDisable: false, helperText: ' ' });
         getQuantity(value);
       }
     } else {
