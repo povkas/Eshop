@@ -20,10 +20,11 @@ const styles = theme => ({
     width: '255px'
   },
   expansion: {
-    backgroundColor: color
+    backgroundColor: color,
+    width: 'inherit'
   },
   textField: {
-    width: '100px;',
+    width: '100px',
     margin: '12px'
   },
   filterDiv: {
