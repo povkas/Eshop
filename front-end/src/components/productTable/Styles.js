@@ -38,6 +38,9 @@ const styles = theme => ({
     alignItems: 'center',
     margin: '12px',
     width: '250px'
+  },
+  emptyMessage: {
+    margin: '50px'
   }
 });
 

@@ -4,24 +4,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
 import { isEqual } from 'lodash';
 import ProductModal from '../components/productModal/ProductModal';
 import ProductTable from '../components/productTable/ProductTable';
 import { getProducts } from '../actions/productActions';
 import Filter from '../components/productTable/Filter';
-
-const color = grey[100];
-
-const Styles = () => ({
-  paper: {
-    flexGrow: 1,
-    backgroundColor: color,
-    width: '50vw',
-    minHeight: '90vh',
-    margin: '2vh'
-  }
-});
+import Styles from './Styles';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -30,7 +18,7 @@ class MainBody extends React.Component {
       isProductModalOpen: false,
       selectedProduct: {},
       allProducts: [],
-      productsOnDisplay: [],
+      filteredProducts: [],
       lowerPriceLimit: '',
       upperPriceLimit: '',
       date: 'all',
@@ -49,7 +37,7 @@ class MainBody extends React.Component {
 
   componentDidMount() {
     getProducts().then(res => {
-      this.setState({ allProducts: res, productsOnDisplay: res });
+      this.setState({ allProducts: res, filteredProducts: res });
     });
     this._isMounted = true;
   }
@@ -102,7 +90,7 @@ class MainBody extends React.Component {
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceLower);
     }
     qualifyingProducts = qualifyingProducts.filter(this.checkDate);
-    this.setState({ productsOnDisplay: qualifyingProducts });
+    this.setState({ filteredProducts: qualifyingProducts });
   }
 
   changeDate(e) {
@@ -174,7 +162,7 @@ class MainBody extends React.Component {
     const {
       isProductModalOpen,
       selectedProduct,
-      productsOnDisplay,
+      filteredProducts,
       lowerPriceLimit,
       upperPriceLimit,
       date,
@@ -206,7 +194,7 @@ class MainBody extends React.Component {
                     <ProductTable
                       openProduct={this.handleOpen}
                       productHandler={this.changeProduct}
-                      products={productsOnDisplay}
+                      products={filteredProducts}
                     />
                   )}
                 />
