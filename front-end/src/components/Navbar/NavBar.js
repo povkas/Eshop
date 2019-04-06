@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import AppBar from '@material-ui/core/AppBar';
@@ -34,5 +35,9 @@ function NavBar(props) {
     </BrowserRouter>
   );
 }
+
+NavBar.propTypes = {
+  classes: PropTypes.shape().isRequired
+};
 
 export default withStyles(Styles)(NavBar);

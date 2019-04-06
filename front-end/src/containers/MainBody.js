@@ -4,8 +4,11 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
+import { isEqual } from 'lodash';
+import PropTypes from 'prop-types';
+import ProductModal from '../components/productModal/ProductModal';
 import ProductTable from '../components/productTable/ProductTable';
-import ProductModal from '../components/product/ProductModal';
+import { getProducts } from '../actions/productActions';
 
 const color = grey[100];
 
@@ -24,12 +27,33 @@ class MainBody extends React.Component {
     super(props);
     this.state = {
       isProductModalOpen: false,
-      selectedProduct: {}
+      selectedProduct: {},
+      products: []
     };
+
+    this._isMounted = false;
+  }
+
+  componentDidMount() {
+    getProducts().then(res => {
+      this.setState({ products: res });
+    });
+    this._isMounted = true;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const isModalToggled = !isEqual(this.state, nextState);
+    return isModalToggled;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   handleOpen = () => {
-    this.setState({ isProductModalOpen: true });
+    if (this._isMounted === true) {
+      this.setState({ isProductModalOpen: true });
+    }
   };
 
   handleClose = () => {
@@ -37,15 +61,17 @@ class MainBody extends React.Component {
   };
 
   changeProduct = product => {
-    this.setState({
-      selectedProduct: product,
-      isProductModalOpen: true
-    });
+    if (this._isMounted === true) {
+      this.setState({
+        selectedProduct: product,
+        isProductModalOpen: true
+      });
+    }
   };
 
   render() {
     const { classes } = this.props;
-    const { isProductModalOpen, selectedProduct } = this.state;
+    const { isProductModalOpen, selectedProduct, products } = this.state;
     return (
       <div>
         <ProductModal
@@ -63,6 +89,7 @@ class MainBody extends React.Component {
                     <ProductTable
                       openProduct={this.handleOpen}
                       productHandler={this.changeProduct}
+                      products={products}
                     />
                   )}
                 />
@@ -74,5 +101,9 @@ class MainBody extends React.Component {
     );
   }
 }
+
+MainBody.propTypes = {
+  classes: PropTypes.shape().isRequired
+};
 
 export default withStyles(Styles)(MainBody);

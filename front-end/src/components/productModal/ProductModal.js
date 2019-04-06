@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Divider, Typography, Grid } from '@material-ui/core';
-import ColorSelect from './ColorSelect';
 import Styles, { getModalStyle } from './Styles';
 import QuantitySelect from './QuantitySelect';
 
@@ -10,11 +9,13 @@ class ProductModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // eslint-disable-next-line react/no-unused-state
       quantity: 1
     };
   }
 
   getQuantity = quantity => {
+    // eslint-disable-next-line react/no-unused-state
     this.setState({ quantity });
   };
 
@@ -63,7 +64,9 @@ ProductModal.propTypes = {
     description: PropTypes.string,
     price: PropTypes.number,
     quantity: PropTypes.number
-  }).isRequired
+  }).isRequired,
+  openModal: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(ProductModal);

@@ -63,7 +63,8 @@ class ColorSelect extends React.Component {
 }
 
 ColorSelect.propTypes = {
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  getColor: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(ColorSelect);

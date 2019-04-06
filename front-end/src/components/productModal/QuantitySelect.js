@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TextField, IconButton } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -82,5 +83,11 @@ class QuantitySelect extends React.Component {
     );
   }
 }
+
+QuantitySelect.propTypes = {
+  quantity: PropTypes.number.isRequired,
+  getQuantity: PropTypes.func.isRequired,
+  classes: PropTypes.shape().isRequired
+};
 
 export default withStyles(Styles)(QuantitySelect);
