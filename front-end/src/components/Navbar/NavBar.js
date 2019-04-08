@@ -28,6 +28,7 @@ function NavBar(props) {
           <IconButton className={classes.menuButton}>
             <Person />
           </IconButton>
+
           <CategoriesList className={classes} />
 
           <IconButton className={classes.menuButton}>
