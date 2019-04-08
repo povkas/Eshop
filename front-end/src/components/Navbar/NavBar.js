@@ -25,6 +25,7 @@ function NavBar(props) {
               BimBam
             </Link>
           </Typography>
+
           <IconButton className={classes.menuButton}>
             <Person />
           </IconButton>
