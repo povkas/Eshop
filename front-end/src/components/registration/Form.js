@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import errorMessages from '../../utils/constants/registrationErrors';
 
@@ -303,5 +304,9 @@ class Form extends Component {
     );
   }
 }
+
+Form.propTypes = {
+  passClose: PropTypes.shape().isRequired
+};
 
 export default Form;

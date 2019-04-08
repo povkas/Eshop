@@ -42,7 +42,8 @@ class RegistrationForm extends React.Component {
 }
 
 RegistrationForm.propTypes = {
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  className: PropTypes.shape().isRequired
 };
 
 export default withStyles(Styles)(RegistrationForm);
