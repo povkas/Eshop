@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import errorMessages from '../../utils/constants/registrationErrors';
 
 function hasNumber(myString) {
   return /\d/.test(myString);
@@ -9,7 +10,7 @@ function hasNumber(myString) {
 class Form extends Component {
   constructor(props) {
     super(props);
-    this.initialstate = {
+    this.state = {
       name: '',
       surname: '',
       email: '',
@@ -35,7 +36,6 @@ class Form extends Component {
       isAddressError: false,
       isConfirmPassword: false
     };
-    this.state = this.initialstate;
   }
 
   validate = () => {
@@ -63,60 +63,56 @@ class Form extends Component {
     if (email.length !== 0) {
       if (email.indexOf('@') === -1 || email.indexOf('.') === -1 || email.length > 128) {
         isError = true;
-        errors.emailErrorText = 'Requires valid email';
+        errors.emailErrorText = errorMessages.emailError;
         errors.isEmailError = true;
       }
     }
     if (password.length !== 0) {
       if (password.length < 8 || password.length > 255) {
         isError = true;
-        errors.passwordErrorText = 'Password must contain at least 8 symbols';
+        errors.passwordErrorText = errorMessages.password;
         errors.isPasswordError = true;
       }
     }
     if (name.length !== 0) {
       if (name.length > 30 || hasNumber(name)) {
         isError = true;
-        errors.nameErrorText =
-          'Name must contain less then 30 symbols and cant contain have any numbers';
+        errors.nameErrorText = errorMessages.nameError;
         errors.isNameError = true;
       }
     }
     if (surname.length !== 0) {
       if (surname.length > 30 || hasNumber(surname)) {
         isError = true;
-        errors.surnameErrorText =
-          'Surname must contain less then 30 symbols and cant contain any numbers';
+        errors.surnameErrorText = errorMessages.surnameError;
         errors.isSurnameError = true;
       }
     }
     if (country.length !== 0) {
       if (country.length > 30 || hasNumber(country)) {
         isError = true;
-        errors.countryErrorText =
-          'Country must contain less then 30 symbols and cant contain any numbers';
+        errors.countryErrorText = errorMessages.countryError;
         errors.iscountryError = true;
       }
     }
     if (city.length !== 0) {
       if (city.length > 30 || hasNumber(city)) {
         isError = true;
-        errors.cityErrorText =
-          'City must contain less then 30 symbols and cant contain any numbers';
+        errors.cityErrorText = errorMessages.cityError;
         errors.isCityError = true;
       }
     }
     if (address.length !== 0) {
       if (address.length > 30) {
         isError = true;
-        errors.addressErrorText = 'address must contain less then 30 symbols';
+        errors.addressErrorText = errorMessages.adressError;
         errors.isAddressError = true;
       }
     }
     if (confirmPassword.length !== 0) {
       if (confirmPassword !== password) {
         isError = true;
-        errors.confirmPasswordErrorText = 'Confirm password is not the same as password';
+        errors.confirmPasswordErrorText = errorMessages.confirmPasswordError;
         errors.isConfirmPassword = true;
       }
     }
@@ -152,18 +148,11 @@ class Form extends Component {
       password
     });
 
-    // https://appdividend.com/2018/07/18/react-redux-node-mongodb-jwt-authentication/#18_Set_the_Auth_token
-    // loginUser(data);
-
     axios.post(url, data, {
       headers: {
         'Content-Type': 'application/json'
       }
     });
-    /* .then(res => {
-        // eslint-disable-next-line no-console
-        console.log(`Res.Data:\n${res.data}`);
-      }); */
   };
 
   mergedSubmitClose = () => {
@@ -202,7 +191,6 @@ class Form extends Component {
 
     return (
       <div>
-        {/* <form onSubmit={this.mergedSubmitClose}> */}
         <form onSubmit={this.handleSubmit}>
           <TextField
             autoFocus

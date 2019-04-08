@@ -4,29 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import Form from './Form';
-
-function getModalPlace() {
-  const top = 80;
-  const left = 85;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-    height: '80vh%'
-  };
-}
-
-const modalStyles = theme => ({
-  paper: {
-    position: 'absolute',
-    width: theme.spacing.unit * 35,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    outline: 'none'
-  }
-});
+import Styles from './Styles';
 
 class RegistrationForm extends React.Component {
   constructor(props) {
@@ -54,7 +32,7 @@ class RegistrationForm extends React.Component {
           Sign Up
         </Button>
         <Modal open={openModal} onClose={this.handleClose}>
-          <div style={getModalPlace()} className={classes.paper}>
+          <div className={classes.paper}>
             <Form passClose={this.handleClose} />
           </div>
         </Modal>
@@ -67,4 +45,4 @@ RegistrationForm.propTypes = {
   classes: PropTypes.shape().isRequired
 };
 
-export default withStyles(modalStyles)(RegistrationForm);
+export default withStyles(Styles)(RegistrationForm);
