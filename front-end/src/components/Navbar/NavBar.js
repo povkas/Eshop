@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/icons/Menu';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
+import { RegistrationForm } from '../registration';
 
 function NavBar(props) {
   const { classes } = props;
@@ -27,6 +28,7 @@ function NavBar(props) {
           <IconButton className={classes.menuButton}>
             <Person />
           </IconButton>
+          <RegistrationForm className={classes} />
 
           <IconButton className={classes.menuButton}>
             <ShoppingCart />
