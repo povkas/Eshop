@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Menu, Person } from '@material-ui/icons';
+import { Person } from '@material-ui/icons';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
 import { CategoriesList } from '../DropDownMenu';
@@ -17,9 +17,6 @@ function NavBar(props) {
     <BrowserRouter>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton}>
-            <Menu />
-          </IconButton>
           <CategoriesList />
 
           <Typography variant="h6" color="inherit" className={classes.grow}>
