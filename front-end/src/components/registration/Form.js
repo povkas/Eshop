@@ -4,10 +4,15 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import errorMessages from '../../utils/constants/registrationErrors';
+import { styles } from './Styles';
 
 function hasNumber(myString) {
   return /\d/.test(myString);
 }
+
+/* const Styles = StyleSheet.create({
+  textFld: { width: 1000, height: 40 }
+}); */
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -194,7 +199,7 @@ class Form extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <TextField
-            autoFocus
+            style={styles}
             name="name"
             label="Name"
             type="name"
@@ -207,7 +212,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            autoFocus
+            style={styles}
             name="surname"
             label="Surname"
             type="surname"
@@ -220,7 +225,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            autoFocus
+            style={styles}
             name="email"
             label="Email"
             type="email"
@@ -233,6 +238,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
+            style={styles}
             name="password"
             label="Password"
             type="password"
@@ -245,6 +251,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
+            style={styles}
             name="confirmPassword"
             label="ConfirmPassword"
             type="password"
@@ -257,7 +264,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            autoFocus
+            style={styles}
             name="country"
             label="Country"
             type="country"
@@ -270,7 +277,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            autoFocus
+            style={styles}
             name="city"
             label="City"
             type="city"
@@ -283,7 +290,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            autoFocus
+            style={styles}
             name="address"
             label="Address"
             type="address"
