@@ -14,7 +14,9 @@ module.exports = {
     'linebreak-style': 0,
     'import/no-unresolved': 'off',
     'react/jsx-one-expression-per-line': 'off',
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    'no-param-reassign': 0,
+    'import/no-named-as-default': 0
   },
   globals: {
     fetch: 'writeable',
