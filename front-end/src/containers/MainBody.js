@@ -8,7 +8,7 @@ import { isEqual } from 'lodash';
 import ProductModal from '../components/productModal/ProductModal';
 import ProductTable from '../components/productTable/ProductTable';
 import { getProducts } from '../actions/productActions';
-import Filter from '../components/productTable/Filter';
+import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 
 class MainBody extends React.Component {
@@ -22,7 +22,9 @@ class MainBody extends React.Component {
       lowerPriceLimit: '',
       upperPriceLimit: '',
       date: 'all',
-      upperPriceLimitHelper: ''
+      upperPriceLimitHelper: '',
+      sortCriteria: 'nameDescending',
+      sortingCompleted: false
     };
 
     this._isMounted = false;
@@ -33,6 +35,7 @@ class MainBody extends React.Component {
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
     this.checkPriceLower = this.checkPriceLower.bind(this);
     this.checkDate = this.checkDate.bind(this);
+    this.changeSort = this.changeSort.bind(this);
   }
 
   componentDidMount() {
@@ -95,6 +98,54 @@ class MainBody extends React.Component {
     this.setState({ filteredProducts: qualifyingProducts });
   }
 
+  sortShownProducts() {
+    const { sortCriteria, filteredProducts } = this.state;
+    let compare;
+    switch (sortCriteria) {
+      default:
+        compare = (a, b) => {
+          if (a.title > b.title) return 1;
+          if (b.title > a.title) return -1;
+          return 0;
+        };
+        break;
+      case 'nameAscending':
+        compare = (a, b) => {
+          if (a.title > b.title) return -1;
+          if (b.title > a.title) return 1;
+          return 0;
+        };
+        break;
+      case 'priceDescending':
+        compare = (a, b) => {
+          return b.price - a.price;
+        };
+        break;
+      case 'priceAscending':
+        compare = (a, b) => {
+          return a.price - b.price;
+        };
+        break;
+      case 'dateAscending':
+        compare = (a, b) => {
+          if (a.created > b.created) return -1;
+          if (b.created > a.created) return 1;
+          return 0;
+        };
+        break;
+      case 'dateDescending':
+        compare = (a, b) => {
+          if (a.created > b.created) return 1;
+          if (b.created > a.created) return -1;
+          return 0;
+        };
+        break;
+    }
+    const sortedProducts = filteredProducts;
+    sortedProducts.sort(compare);
+    this.setState({ filteredProducts: sortedProducts, sortingCompleted: true });
+  }
+
   changeDate(e) {
     this.setState({ date: e.target.value }, () => this.changeShownProducts());
   }
@@ -113,6 +164,12 @@ class MainBody extends React.Component {
     } else if (e.target.value === '') {
       this.setState({ upperPriceLimit: e.target.value }, () => this.changeShownProducts());
     }
+  }
+
+  changeSort(e) {
+    this.setState({ sortCriteria: e.target.value, sortingCompleted: false }, () =>
+      this.sortShownProducts()
+    );
   }
 
   checkPriceUpper(product) {
@@ -170,7 +227,8 @@ class MainBody extends React.Component {
       lowerPriceLimit,
       upperPriceLimit,
       date,
-      upperPriceLimitHelper
+      upperPriceLimitHelper,
+      sortCriteria
     } = this.state;
     return (
       <div>
@@ -191,6 +249,7 @@ class MainBody extends React.Component {
                 changePriceUpper={this.changePriceUpper}
                 upperPriceLimitHelper={upperPriceLimitHelper}
               />
+              <Sort sortCriteria={sortCriteria} changeSort={this.changeSort} />
               <BrowserRouter>
                 <Route
                   path="/"
