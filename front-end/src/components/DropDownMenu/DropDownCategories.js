@@ -6,10 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 function DropDownCategories(props) {
   const { category } = props;
-
   return (
     <div>
-      <MenuItem>{category.Category}</MenuItem>
+      <MenuItem>{category.category}</MenuItem>
     </div>
   );
 }

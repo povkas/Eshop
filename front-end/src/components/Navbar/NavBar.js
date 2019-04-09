@@ -20,6 +20,8 @@ function NavBar(props) {
           <IconButton className={classes.menuButton}>
             <Menu />
           </IconButton>
+          <CategoriesList />
+
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <Link to="/" className={classes.shopName}>
               BimBam
@@ -28,8 +30,6 @@ function NavBar(props) {
           <IconButton className={classes.menuButton}>
             <Person />
           </IconButton>
-
-          <CategoriesList className={classes} />
 
           <IconButton className={classes.menuButton}>
             <ShoppingCart />
