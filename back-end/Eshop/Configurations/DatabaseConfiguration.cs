@@ -19,7 +19,8 @@ namespace Eshop.Configurations
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<Context>();
-//                context.Database.Migrate();
+                context.Database.EnsureDeleted();
+                context.Database.Migrate();
                 SeedData.Seed(context);
             }
         }
