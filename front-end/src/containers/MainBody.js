@@ -10,6 +10,7 @@ import ProductTable from '../components/productTable/ProductTable';
 import { getProducts } from '../actions/productActions';
 import Filter from '../components/productTable/Filter';
 import Styles from './Styles';
+import CategoriesList from '../components/DropDownMenu/CategoriesList';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class MainBody extends React.Component {
       lowerPriceLimit: '',
       upperPriceLimit: '',
       date: 'all',
-      upperPriceLimitHelper: ''
+      upperPriceLimitHelper: '',
+      selectedCategory: ''
     };
 
     this._isMounted = false;
@@ -33,6 +35,8 @@ class MainBody extends React.Component {
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
     this.checkPriceLower = this.checkPriceLower.bind(this);
     this.checkDate = this.checkDate.bind(this);
+    this.checkselectedCategory = this.checkselectedCategory.bind(this);
+    this.changeCategory = this.changeCategory.bind(this);
   }
 
   componentDidMount() {
@@ -51,14 +55,17 @@ class MainBody extends React.Component {
     this._isMounted = false;
   }
 
-  handleOpen = () => {
-    if (this._isMounted === true) {
-      this.setState({ isProductModalOpen: true });
+  selectCategory = category => {
+    const { selectedCategory } = this.state;
+    if (selectedCategory === category.category) {
+      this.setState({
+        selectedCategory: ''
+      });
+    } else {
+      this.setState({
+        selectedCategory: category.category
+      });
     }
-  };
-
-  handleClose = () => {
-    this.setState({ isProductModalOpen: false });
   };
 
   changeProduct = product => {
@@ -70,11 +77,35 @@ class MainBody extends React.Component {
     }
   };
 
+  handleClose = () => {
+    this.setState({ isProductModalOpen: false });
+  };
+
+  handleOpen = () => {
+    if (this._isMounted === true) {
+      this.setState({ isProductModalOpen: true });
+    }
+  };
+
+  changeShownCategories = () => {
+    const { allProducts } = this.state;
+    let qualifyingProducts = [];
+    if (this.checkselectedCategory) {
+      qualifyingProducts = allProducts.filter(this.checkselectedCategory);
+    }
+    this.setState({ filteredProducts: qualifyingProducts });
+  };
+
   changeShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
     let qualifyingProducts = [];
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
+
+    /* if (this.checkselectedCategory) {
+      qualifyingProducts = allProducts.filter(this.checkselectedCategory);
+    }
+    this.setState({ filteredProducts: qualifyingProducts }); */
 
     if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
       qualifyingProducts = allProducts.filter(this.checkPriceUpper);
@@ -115,10 +146,23 @@ class MainBody extends React.Component {
     }
   }
 
+  changeCategory(e) {
+    this.setState({ selectedCategory: e.target.value }, () => this.changeShownCategories());
+  }
+
   checkPriceUpper(product) {
     const { upperPriceLimit } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     return product.price <= upperPriceLimitFloat;
+  }
+
+  checkselectedCategory(product) {
+    // console.log(product.category);
+    const { selectedCategory } = this.state;
+    if (selectedCategory !== '') {
+      return product.category === selectedCategory;
+    }
+    return false;
   }
 
   checkPriceLower(product) {
@@ -170,10 +214,19 @@ class MainBody extends React.Component {
       lowerPriceLimit,
       upperPriceLimit,
       date,
-      upperPriceLimitHelper
+      upperPriceLimitHelper,
+      selectedCategory
     } = this.state;
+
+    console.log(selectedCategory);
+
     return (
       <div>
+        <CategoriesList
+          selectedCategory={selectedCategory}
+          selectCategory={this.selectCategory}
+          changeCategory={this.changeShownCategories()}
+        />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}

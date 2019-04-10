@@ -4,6 +4,7 @@ import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import React from 'react';
 import List from '@material-ui/core/List';
+import PropTypes from 'prop-types';
 import { Menu } from '@material-ui/icons';
 import { DropDownCategories } from '.';
 import * as categoriesAction from '../../actions/categoriesAction';
@@ -31,35 +32,30 @@ class CategoriesList extends React.Component {
     });
   };
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
   render() {
-    const { left, categories, anchorEl } = this.state;
+    const { left, categories } = this.state;
+    const { selectedCategory, selectCategory, changeCategory } = this.props;
+    // console.log(selectCategory);
     return (
       <div>
-        <IconButton
-          aria-owns={anchorEl ? 'simple-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.toggleDrawer('left', true)}
-        >
+        <IconButton onClick={this.toggleDrawer('left', true)}>
           <Menu />
         </IconButton>
         <Drawer open={left} onClose={this.toggleDrawer('left', false)}>
           <div
             tabIndex={0}
             role="button"
-            onClick={this.toggleDrawer('left', false)}
+            onClick={this.toggleDrawer('left', true)}
             onKeyDown={this.toggleDrawer('left', false)}
           >
             <List>
               {categories.map(category => (
-                <DropDownCategories category={category} />
+                <DropDownCategories
+                  selectedCategory={selectedCategory}
+                  selectCategory={selectCategory}
+                  changeCategory={changeCategory}
+                  category={category}
+                />
               ))}
             </List>
           </div>
@@ -68,5 +64,11 @@ class CategoriesList extends React.Component {
     );
   }
 }
+
+CategoriesList.propTypes = {
+  selectCategory: PropTypes.shape().isRequired,
+  selectedCategory: PropTypes.shape().isRequired,
+  changeCategory: PropTypes.shape().isRequired
+};
 
 export default CategoriesList;
