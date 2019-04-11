@@ -12,30 +12,15 @@ class DropDownCategories extends React.Component {
     this.state = {};
   }
 
-  /* selectCategory = category => {
-    const { selectedItem } = this.state;
-    if (selectedItem === category.category) {
-      this.setState({
-        selectedItem: ''
-      });
-    } else {
-      this.setState({
-        selectedItem: category.category
-      });
-    }
-  }; */
-
   render() {
-    const { category, selectCategory, changeCategory } = this.props;
-    // console.log(selectCategory);
+    const { category, selectCategory } = this.props;
+
     return (
       <ListItem
         onClick={() => {
           selectCategory(category);
-          changeCategory();
         }}
         button
-        key={category.category}
       >
         <ListItemText primary={category.category} />
       </ListItem>
@@ -44,12 +29,8 @@ class DropDownCategories extends React.Component {
 }
 
 DropDownCategories.propTypes = {
-  category: PropTypes.shape().isRequired
-};
-
-DropDownCategories.propTypes = {
   selectCategory: PropTypes.shape().isRequired,
-  changeCategory: PropTypes.shape().isRequired
+  category: PropTypes.shape().isRequired
 };
 
 export default DropDownCategories;

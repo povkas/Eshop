@@ -20,7 +20,6 @@ class MainBody extends React.Component {
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
-      categorisedProducts: [],
       lowerPriceLimit: '',
       upperPriceLimit: '',
       date: 'all',
@@ -39,7 +38,6 @@ class MainBody extends React.Component {
     this.checkPriceLower = this.checkPriceLower.bind(this);
     this.checkDate = this.checkDate.bind(this);
     this.checkselectedCategory = this.checkselectedCategory.bind(this);
-    this.changeCategory = this.changeCategory.bind(this);
     this.changeSort = this.changeSort.bind(this);
   }
 
@@ -58,19 +56,6 @@ class MainBody extends React.Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-
-  selectCategory = category => {
-    const { selectedCategory } = this.state;
-    if (selectedCategory === category.category) {
-      this.setState({
-        selectedCategory: ''
-      });
-    } else {
-      this.setState({
-        selectedCategory: category.category
-      });
-    }
-  };
 
   changeProduct = product => {
     if (this._isMounted === true) {
@@ -91,6 +76,25 @@ class MainBody extends React.Component {
     }
   };
 
+  selectCategory = category => {
+    const { selectedCategory } = this.state;
+    if (selectedCategory === category.category) {
+      this.setState(
+        {
+          selectedCategory: ''
+        },
+        () => this.changeShownCategories()
+      );
+    } else {
+      this.setState(
+        {
+          selectedCategory: category.category
+        },
+        () => this.changeShownCategories()
+      );
+    }
+  };
+
   changeShownCategories = () => {
     const { allProducts, selectedCategory } = this.state;
     let qualifyingProducts = [];
@@ -99,25 +103,28 @@ class MainBody extends React.Component {
     } else {
       qualifyingProducts = allProducts;
     }
-    this.setState({ categorisedProducts: qualifyingProducts });
     this.setState({ filteredProducts: qualifyingProducts });
   };
 
   changeShownProducts() {
-    const { upperPriceLimit, lowerPriceLimit, categorisedProducts } = this.state;
+    const { upperPriceLimit, lowerPriceLimit, selectedCategory, allProducts } = this.state;
     let qualifyingProducts = [];
+    if (selectedCategory !== '') {
+      qualifyingProducts = allProducts.filter(this.checkselectedCategory);
+    } else {
+      qualifyingProducts = allProducts;
+    }
+
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
     if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
-      qualifyingProducts = categorisedProducts.filter(this.checkPriceUpper);
+      qualifyingProducts = qualifyingProducts.filter(this.checkPriceUpper);
       this.setState({ upperPriceLimitHelper: '' });
     } else if (upperPriceLimitFloat < lowerPriceLimitFloat) {
       this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
-      qualifyingProducts = categorisedProducts;
     } else {
       this.setState({ upperPriceLimitHelper: '' });
-      qualifyingProducts = categorisedProducts;
     }
 
     if (lowerPriceLimitFloat >= 0) {
@@ -196,10 +203,6 @@ class MainBody extends React.Component {
     }
   }
 
-  changeCategory(e) {
-    this.setState({ selectedCategory: e.target.value }, () => this.changeShownCategories());
-  }
-
   changeSort(e) {
     this.setState({ sortCriteria: e.target.value, sortingCompleted: false }, () =>
       this.sortShownProducts()
@@ -273,11 +276,7 @@ class MainBody extends React.Component {
 
     return (
       <div>
-        <NavBar
-          selectedCategory={selectedCategory}
-          selectCategory={this.selectCategory}
-          changeCategory={this.changeShownCategories()}
-        />
+        <NavBar selectedCategory={selectedCategory} selectCategory={this.selectCategory} />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}

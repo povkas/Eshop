@@ -34,7 +34,7 @@ class CategoriesList extends React.Component {
 
   render() {
     const { left, categories } = this.state;
-    const { selectedCategory, selectCategory, changeCategory } = this.props;
+    const { selectedCategory, selectCategory } = this.props;
     // console.log(selectCategory);
     return (
       <div>
@@ -53,8 +53,8 @@ class CategoriesList extends React.Component {
                 <DropDownCategories
                   selectedCategory={selectedCategory}
                   selectCategory={selectCategory}
-                  changeCategory={changeCategory}
                   category={category}
+                  key={category.id}
                 />
               ))}
             </List>
@@ -67,8 +67,7 @@ class CategoriesList extends React.Component {
 
 CategoriesList.propTypes = {
   selectCategory: PropTypes.shape().isRequired,
-  selectedCategory: PropTypes.shape().isRequired,
-  changeCategory: PropTypes.shape().isRequired
+  selectedCategory: PropTypes.shape().isRequired
 };
 
 export default CategoriesList;
