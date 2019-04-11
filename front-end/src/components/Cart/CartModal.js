@@ -119,6 +119,8 @@ class CartModal extends React.Component {
   }
 }
 CartModal.propTypes = {
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  open: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 export default withStyles(styles)(CartModal);

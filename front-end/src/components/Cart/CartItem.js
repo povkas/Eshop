@@ -1,4 +1,5 @@
 import React from 'react';
+import PropType from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -58,5 +59,9 @@ class CartItem extends React.Component {
     );
   }
 }
+
+CartItem.propTypes = {
+  classes: PropType.shape().isRequired
+};
 
 export default withStyles(styles)(CartItem);
