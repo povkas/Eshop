@@ -12,12 +12,17 @@ import Styles from './Styles';
 import { CategoriesList } from '../DropDownMenu';
 
 function NavBar(props) {
-  const { classes } = props;
+  const { classes, selectedCategory, selectCategory, changeCategory } = props;
+
   return (
     <BrowserRouter>
       <AppBar position="static">
         <Toolbar>
-          <CategoriesList />
+          <CategoriesList
+            selectedCategory={selectedCategory}
+            selectCategory={selectCategory}
+            changeCategory={changeCategory}
+          />
 
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <Link to="/" className={classes.shopName}>
@@ -37,7 +42,10 @@ function NavBar(props) {
 }
 
 NavBar.propTypes = {
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  selectedCategory: PropTypes.shape().isRequired,
+  selectCategory: PropTypes.shape().isRequired,
+  changeCategory: PropTypes.shape().isRequired
 };
 
 export default withStyles(Styles)(NavBar);

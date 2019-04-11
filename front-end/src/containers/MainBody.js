@@ -10,7 +10,7 @@ import ProductTable from '../components/productTable/ProductTable';
 import { getProducts } from '../actions/productActions';
 import Filter from '../components/productTable/Filter';
 import Styles from './Styles';
-import CategoriesList from '../components/DropDownMenu/CategoriesList';
+import { NavBar } from '../components/Navbar';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -88,11 +88,14 @@ class MainBody extends React.Component {
   };
 
   changeShownCategories = () => {
-    const { allProducts } = this.state;
+    const { allProducts, selectedCategory } = this.state;
     let qualifyingProducts = [];
-    if (this.checkselectedCategory) {
+    if (selectedCategory !== '') {
       qualifyingProducts = allProducts.filter(this.checkselectedCategory);
+    } else {
+      qualifyingProducts = allProducts;
     }
+
     this.setState({ filteredProducts: qualifyingProducts });
   };
 
@@ -101,11 +104,6 @@ class MainBody extends React.Component {
     let qualifyingProducts = [];
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
-
-    /* if (this.checkselectedCategory) {
-      qualifyingProducts = allProducts.filter(this.checkselectedCategory);
-    }
-    this.setState({ filteredProducts: qualifyingProducts }); */
 
     if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
       qualifyingProducts = allProducts.filter(this.checkPriceUpper);
@@ -157,12 +155,8 @@ class MainBody extends React.Component {
   }
 
   checkselectedCategory(product) {
-    // console.log(product.category);
     const { selectedCategory } = this.state;
-    if (selectedCategory !== '') {
-      return product.category === selectedCategory;
-    }
-    return false;
+    return product.category === selectedCategory;
   }
 
   checkPriceLower(product) {
@@ -218,11 +212,9 @@ class MainBody extends React.Component {
       selectedCategory
     } = this.state;
 
-    console.log(selectedCategory);
-
     return (
       <div>
-        <CategoriesList
+        <NavBar
           selectedCategory={selectedCategory}
           selectCategory={this.selectCategory}
           changeCategory={this.changeShownCategories()}
