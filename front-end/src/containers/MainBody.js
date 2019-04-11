@@ -236,6 +236,7 @@ class MainBody extends React.Component {
                 changePriceUpper={this.changePriceUpper}
                 upperPriceLimitHelper={upperPriceLimitHelper}
               />
+
               <BrowserRouter>
                 <Route
                   path="/"
