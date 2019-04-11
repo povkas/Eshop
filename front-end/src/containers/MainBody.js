@@ -8,7 +8,7 @@ import { isEqual } from 'lodash';
 import ProductModal from '../components/productModal/ProductModal';
 import ProductTable from '../components/productTable/ProductTable';
 import { getProducts } from '../actions/productActions';
-import Filter from '../components/productTable/Filter';
+import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 
@@ -20,11 +20,14 @@ class MainBody extends React.Component {
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
+      categorisedProducts: [],
       lowerPriceLimit: '',
       upperPriceLimit: '',
       date: 'all',
       upperPriceLimitHelper: '',
-      selectedCategory: ''
+      selectedCategory: '',
+      sortCriteria: 'nameDescending',
+      sortingCompleted: false
     };
 
     this._isMounted = false;
@@ -37,6 +40,7 @@ class MainBody extends React.Component {
     this.checkDate = this.checkDate.bind(this);
     this.checkselectedCategory = this.checkselectedCategory.bind(this);
     this.changeCategory = this.changeCategory.bind(this);
+    this.changeSort = this.changeSort.bind(this);
   }
 
   componentDidMount() {
@@ -95,25 +99,25 @@ class MainBody extends React.Component {
     } else {
       qualifyingProducts = allProducts;
     }
-
+    this.setState({ categorisedProducts: qualifyingProducts });
     this.setState({ filteredProducts: qualifyingProducts });
   };
 
   changeShownProducts() {
-    const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
+    const { upperPriceLimit, lowerPriceLimit, categorisedProducts } = this.state;
     let qualifyingProducts = [];
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
     if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
-      qualifyingProducts = allProducts.filter(this.checkPriceUpper);
+      qualifyingProducts = categorisedProducts.filter(this.checkPriceUpper);
       this.setState({ upperPriceLimitHelper: '' });
     } else if (upperPriceLimitFloat < lowerPriceLimitFloat) {
       this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
-      qualifyingProducts = allProducts;
+      qualifyingProducts = categorisedProducts;
     } else {
       this.setState({ upperPriceLimitHelper: '' });
-      qualifyingProducts = allProducts;
+      qualifyingProducts = categorisedProducts;
     }
 
     if (lowerPriceLimitFloat >= 0) {
@@ -122,6 +126,54 @@ class MainBody extends React.Component {
     }
     qualifyingProducts = qualifyingProducts.filter(this.checkDate);
     this.setState({ filteredProducts: qualifyingProducts });
+  }
+
+  sortShownProducts() {
+    const { sortCriteria, filteredProducts } = this.state;
+    let compare;
+    switch (sortCriteria) {
+      default:
+        compare = (a, b) => {
+          if (a.title > b.title) return 1;
+          if (b.title > a.title) return -1;
+          return 0;
+        };
+        break;
+      case 'nameAscending':
+        compare = (a, b) => {
+          if (a.title > b.title) return -1;
+          if (b.title > a.title) return 1;
+          return 0;
+        };
+        break;
+      case 'priceDescending':
+        compare = (a, b) => {
+          return b.price - a.price;
+        };
+        break;
+      case 'priceAscending':
+        compare = (a, b) => {
+          return a.price - b.price;
+        };
+        break;
+      case 'dateAscending':
+        compare = (a, b) => {
+          if (a.created > b.created) return -1;
+          if (b.created > a.created) return 1;
+          return 0;
+        };
+        break;
+      case 'dateDescending':
+        compare = (a, b) => {
+          if (a.created > b.created) return 1;
+          if (b.created > a.created) return -1;
+          return 0;
+        };
+        break;
+    }
+    const sortedProducts = filteredProducts;
+    sortedProducts.sort(compare);
+    this.setState({ filteredProducts: sortedProducts, sortingCompleted: true });
   }
 
   changeDate(e) {
@@ -146,6 +198,12 @@ class MainBody extends React.Component {
 
   changeCategory(e) {
     this.setState({ selectedCategory: e.target.value }, () => this.changeShownCategories());
+  }
+
+  changeSort(e) {
+    this.setState({ sortCriteria: e.target.value, sortingCompleted: false }, () =>
+      this.sortShownProducts()
+    );
   }
 
   checkPriceUpper(product) {
@@ -209,7 +267,8 @@ class MainBody extends React.Component {
       upperPriceLimit,
       date,
       upperPriceLimitHelper,
-      selectedCategory
+      selectedCategory,
+      sortCriteria
     } = this.state;
 
     return (
@@ -236,7 +295,7 @@ class MainBody extends React.Component {
                 changePriceUpper={this.changePriceUpper}
                 upperPriceLimitHelper={upperPriceLimitHelper}
               />
-
+              <Sort sortCriteria={sortCriteria} changeSort={this.changeSort} />
               <BrowserRouter>
                 <Route
                   path="/"
