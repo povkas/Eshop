@@ -5,30 +5,10 @@ import Modal from '@material-ui/core/Modal';
 import Link from '@material-ui/core/Link';
 import Person from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authentication';
 import Form from './Form';
-
-function getModalPlace() {
-  const top = 35;
-  const left = 76;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-    height: '30vh'
-  };
-}
-
-const modalStyles = theme => ({
-  paper: {
-    position: 'absolute',
-    width: theme.spacing.unit * 28,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    outline: 'none'
-  }
-});
+import Styles from './Styles';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -46,6 +26,11 @@ class LoginForm extends React.Component {
     this.setState({ openModal: false });
   };
 
+  handleLogin = user => {
+    const { loginUserProp } = this.props;
+    loginUserProp(user);
+  };
+
   render() {
     const { classes, className } = this.props;
     const { openModal } = this.state;
@@ -56,8 +41,8 @@ class LoginForm extends React.Component {
           <Person />
         </IconButton>
         <Modal open={openModal} onClose={this.handleClose}>
-          <div style={getModalPlace()} className={classes.paper}>
-            <Form passClose={this.handleClose} />
+          <div className={classes.paper}>
+            <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
             {/* eslint-disable-next-line react/no-unescaped-entities */}
             <Link href=" ">Don't have an account? Click to register</Link>
             <br />
@@ -70,7 +55,34 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  className: PropTypes.shape().isRequired
 };
 
-export default withStyles(modalStyles)(LoginForm);
+// works
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     loginUser: user => {
+//       axios
+//         .post(`http://localhost:5000/api/user/login`, user, {
+//           headers: {
+//             'Content-Type': 'application/json'
+//           }
+//         })
+//         .then(res => {
+//           localStorage.clear();
+//           localStorage.setItem('jwtToken', res.data);
+//           const decoded = jwtDecode(res.data);
+//           dispatch(setCurrentUser(decoded));
+//         });
+//     }
+//   };
+// };
+const mapDispatchToProps = dispatch => {
+  return { loginUserProp: user => loginUser(user)(dispatch) };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(Styles)(LoginForm));

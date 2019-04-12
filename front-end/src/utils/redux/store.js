@@ -1,15 +1,6 @@
 import { createStore } from 'redux';
+import authReducer from '../../reducers/authReducer';
 
-const initialState = {
-  items: []
-};
-
-const myReducer = (state = initialState, action) => {
-  const newState = { ...state };
-  newState.items = action.items;
-  return newState;
-};
-
-const store = createStore(myReducer);
+const store = createStore(authReducer);
 
 export default store;
