@@ -59,30 +59,15 @@ LoginForm.propTypes = {
   className: PropTypes.shape().isRequired
 };
 
-// works
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     loginUser: user => {
-//       axios
-//         .post(`http://localhost:5000/api/user/login`, user, {
-//           headers: {
-//             'Content-Type': 'application/json'
-//           }
-//         })
-//         .then(res => {
-//           localStorage.clear();
-//           localStorage.setItem('jwtToken', res.data);
-//           const decoded = jwtDecode(res.data);
-//           dispatch(setCurrentUser(decoded));
-//         });
-//     }
-//   };
-// };
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+
 const mapDispatchToProps = dispatch => {
   return { loginUserProp: user => loginUser(user)(dispatch) };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(Styles)(LoginForm));
