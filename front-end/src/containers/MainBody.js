@@ -37,7 +37,7 @@ class MainBody extends React.Component {
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
     this.checkPriceLower = this.checkPriceLower.bind(this);
     this.checkDate = this.checkDate.bind(this);
-    this.checkselectedCategory = this.checkselectedCategory.bind(this);
+    this.checkSelectedCategory = this.checkSelectedCategory.bind(this);
     this.changeSort = this.changeSort.bind(this);
   }
 
@@ -78,45 +78,35 @@ class MainBody extends React.Component {
 
   selectCategory = category => {
     const { selectedCategory } = this.state;
-    if (selectedCategory === category.category) {
+    if (selectedCategory === category) {
       this.setState(
         {
           selectedCategory: ''
         },
-        () => this.changeShownCategories()
+        () => this.filterByCategory()
       );
     } else {
       this.setState(
         {
-          selectedCategory: category.category
+          selectedCategory: category
         },
-        () => this.changeShownCategories()
+        () => this.filterByCategory()
       );
     }
   };
 
-  changeShownCategories = () => {
-    const { allProducts, selectedCategory } = this.state;
-    let qualifyingProducts = [];
-    if (selectedCategory !== '') {
-      qualifyingProducts = allProducts.filter(this.checkselectedCategory);
-    } else {
-      qualifyingProducts = allProducts;
-    }
+  filterByCategory = () => {
+    const { allProducts } = this.state;
+    const qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
     this.setState({ filteredProducts: qualifyingProducts });
   };
 
   changeShownProducts() {
-    const { upperPriceLimit, lowerPriceLimit, selectedCategory, allProducts } = this.state;
-    let qualifyingProducts = [];
-    if (selectedCategory !== '') {
-      qualifyingProducts = allProducts.filter(this.checkselectedCategory);
-    } else {
-      qualifyingProducts = allProducts;
-    }
-
+    const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
+
+    let qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
 
     if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceUpper);
@@ -215,9 +205,10 @@ class MainBody extends React.Component {
     return product.price <= upperPriceLimitFloat;
   }
 
-  checkselectedCategory(product) {
+  checkSelectedCategory(product) {
     const { selectedCategory } = this.state;
-    return product.category === selectedCategory;
+
+    return product.category === selectedCategory || !selectedCategory;
   }
 
   checkPriceLower(product) {
@@ -270,13 +261,12 @@ class MainBody extends React.Component {
       upperPriceLimit,
       date,
       upperPriceLimitHelper,
-      selectedCategory,
       sortCriteria
     } = this.state;
 
     return (
       <div>
-        <NavBar selectedCategory={selectedCategory} selectCategory={this.selectCategory} />
+        <NavBar selectCategory={this.selectCategory} />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}

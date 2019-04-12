@@ -9,17 +9,16 @@ import Typography from '@material-ui/core/Typography';
 import { Person } from '@material-ui/icons';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
-import { CategoriesList } from '../DropDownMenu';
+import { CategoriesList } from '../categoriesList';
 
 function NavBar(props) {
-  const { classes, selectedCategory, selectCategory } = props;
+  const { classes, selectCategory } = props;
 
   return (
     <BrowserRouter>
       <AppBar position="static">
         <Toolbar>
-          <CategoriesList selectedCategory={selectedCategory} selectCategory={selectCategory} />
-
+          <CategoriesList selectCategory={selectCategory} />
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <Link to="/" className={classes.shopName}>
               BimBam
@@ -39,8 +38,7 @@ function NavBar(props) {
 
 NavBar.propTypes = {
   classes: PropTypes.shape().isRequired,
-  selectedCategory: PropTypes.shape().isRequired,
-  selectCategory: PropTypes.shape().isRequired
+  selectCategory: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(NavBar);

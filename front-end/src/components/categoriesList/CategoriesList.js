@@ -1,6 +1,4 @@
 import Drawer from '@material-ui/core/Drawer';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import React from 'react';
 import List from '@material-ui/core/List';
@@ -8,7 +6,6 @@ import PropTypes from 'prop-types';
 import { Menu } from '@material-ui/icons';
 import { DropDownCategories } from '.';
 import * as categoriesAction from '../../actions/categoriesAction';
-// import products from '../../utils/constants/api';
 
 class CategoriesList extends React.Component {
   constructor(props) {
@@ -34,8 +31,8 @@ class CategoriesList extends React.Component {
 
   render() {
     const { left, categories } = this.state;
-    const { selectedCategory, selectCategory } = this.props;
-    // console.log(selectCategory);
+    const { selectCategory } = this.props;
+
     return (
       <div>
         <IconButton onClick={this.toggleDrawer('left', true)}>
@@ -51,10 +48,9 @@ class CategoriesList extends React.Component {
             <List>
               {categories.map(category => (
                 <DropDownCategories
-                  selectedCategory={selectedCategory}
                   selectCategory={selectCategory}
-                  category={category}
-                  key={category.id}
+                  key={category.category}
+                  category={category.category}
                 />
               ))}
             </List>
@@ -66,8 +62,7 @@ class CategoriesList extends React.Component {
 }
 
 CategoriesList.propTypes = {
-  selectCategory: PropTypes.shape().isRequired,
-  selectedCategory: PropTypes.shape().isRequired
+  selectCategory: PropTypes.func.isRequired
 };
 
 export default CategoriesList;
