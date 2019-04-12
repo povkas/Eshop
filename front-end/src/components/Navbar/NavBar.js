@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,31 +10,54 @@ import Menu from '@material-ui/icons/Menu';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
 import { LoginForm } from '../login';
+import { logoutUser } from '../../actions/authentication';
 
-function NavBar(props) {
-  const { classes } = props;
-  return (
-    <BrowserRouter>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton}>
-            <Menu />
-          </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            <Link to="/" className={classes.shopName}>
-              BimBam連合
-            </Link>
-          </Typography>
+class NavBar extends React.Component {
+  handleLogout = e => {
+    e.preventDefault();
+    const { logoutUserProp } = this.props;
+    logoutUserProp();
+  };
 
-          <LoginForm className={classes} />
-
-          <IconButton className={classes.menuButton}>
-            <ShoppingCart />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    </BrowserRouter>
-  );
+  render() {
+    const { classes, auth } = this.props;
+    let logOut;
+    if (auth.isAuthenticated) {
+      logOut = <IconButton onClick={this.handleLogout}>Logout</IconButton>;
+    }
+    return (
+      <BrowserRouter>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={classes.menuButton}>
+              <Menu />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
+              <Link to="/" className={classes.shopName}>
+                BimBam連合
+              </Link>
+            </Typography>
+            {logOut}
+            <LoginForm className={classes} />
+            <IconButton className={classes.menuButton}>
+              <ShoppingCart />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      </BrowserRouter>
+    );
+  }
 }
 
-export default withStyles(Styles)(NavBar);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const mapDispatchToProps = dispatch => {
+  return { logoutUserProp: () => logoutUser(dispatch) };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(Styles)(NavBar));

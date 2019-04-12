@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { API } from '../utils/constants';
-import { SET_CURRENT_USER, GET_ERRORS } from './types';
+import { SET_CURRENT_USER, GET_ERRORS, LOGOUT } from './types';
 import setAuthToken from '../components/login/setAuthToken';
 
 export const loginUser = user => dispatch => {
@@ -18,6 +18,12 @@ export const loginUser = user => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const logoutUser = dispatch => {
+  localStorage.removeItem('jwtToken');
+  setAuthToken(false);
+  dispatch({ type: LOGOUT });
 };
 
 export const setCurrentUser = decoded => {
