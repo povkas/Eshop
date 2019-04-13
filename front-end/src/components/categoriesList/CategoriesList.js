@@ -4,14 +4,19 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 // eslint-disable-next-line import/no-duplicates
 import { FiberManualRecord } from '@material-ui/icons';
 // eslint-disable-next-line import/no-duplicates
 import { Menu } from '@material-ui/icons';
 import { DropDownCategories } from '.';
 import * as categoriesAction from '../../actions/categoriesAction';
+import Styles from './Styles';
 
 class CategoriesList extends React.Component {
   constructor(props) {
@@ -37,13 +42,14 @@ class CategoriesList extends React.Component {
 
   render() {
     const { left, categories } = this.state;
-    const { selectCategory } = this.props;
+    const { selectCategory, classes } = this.props;
 
     return (
       <div>
         <IconButton onClick={this.toggleDrawer('left', true)}>
-          <Menu />
+          <Menu className={classes.menuButton} />
         </IconButton>
+
         <Drawer open={left} onClose={this.toggleDrawer('left', false)}>
           <div
             tabIndex={0}
@@ -51,6 +57,12 @@ class CategoriesList extends React.Component {
             onClick={this.toggleDrawer('left', false)}
             onKeyDown={this.toggleDrawer('left', false)}
           >
+            <div className={classes.drawerHeader}>
+              <IconButton onClick={this.handleDrawerClose}>
+                {classes.direction === 'ltr' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              </IconButton>
+            </div>
+            <Divider />
             <List>
               <ListItem
                 onClick={() => {
@@ -79,7 +91,8 @@ class CategoriesList extends React.Component {
 }
 
 CategoriesList.propTypes = {
-  selectCategory: PropTypes.func.isRequired
+  selectCategory: PropTypes.func.isRequired,
+  classes: PropTypes.func.isRequired
 };
 
-export default CategoriesList;
+export default withStyles(Styles)(CategoriesList);

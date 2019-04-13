@@ -18,9 +18,12 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen
     })
   },
+  arrowPosition: {
+    right: '50%'
+  },
+
   menuButton: {
-    marginLeft: 12,
-    marginRight: 20
+    marginRight: 15
   },
   hide: {
     display: 'none'
@@ -34,7 +37,7 @@ const styles = theme => ({
   },
   drawerHeader: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'left',
     padding: '0 8px',
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end'

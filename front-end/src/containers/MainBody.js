@@ -101,11 +101,16 @@ class MainBody extends React.Component {
   };
 
   changeShownProducts() {
-    const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
+    const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
-    let qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    let qualifyingProducts = [];
+    if (selectedCategory === 'All Products') {
+      qualifyingProducts = allProducts;
+    } else {
+      qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    }
 
     if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceUpper);
