@@ -1,8 +1,14 @@
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import React from 'react';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line import/no-duplicates
+import { FiberManualRecord } from '@material-ui/icons';
+// eslint-disable-next-line import/no-duplicates
 import { Menu } from '@material-ui/icons';
 import { DropDownCategories } from '.';
 import * as categoriesAction from '../../actions/categoriesAction';
@@ -42,10 +48,21 @@ class CategoriesList extends React.Component {
           <div
             tabIndex={0}
             role="button"
-            onClick={this.toggleDrawer('left', true)}
+            onClick={this.toggleDrawer('left', false)}
             onKeyDown={this.toggleDrawer('left', false)}
           >
             <List>
+              <ListItem
+                onClick={() => {
+                  selectCategory('All Products');
+                }}
+                button
+              >
+                <ListItemIcon>
+                  <FiberManualRecord />
+                </ListItemIcon>
+                <ListItemText primary="All Products" />
+              </ListItem>
               {categories.map(category => (
                 <DropDownCategories
                   selectCategory={selectCategory}

@@ -77,28 +77,27 @@ class MainBody extends React.Component {
   };
 
   selectCategory = category => {
-    const { selectedCategory } = this.state;
-    if (selectedCategory === category) {
-      this.setState(
-        {
-          selectedCategory: ''
-        },
-        () => this.filterByCategory()
-      );
-    } else {
-      this.setState(
-        {
-          selectedCategory: category
-        },
-        () => this.filterByCategory()
-      );
-    }
+    this.setState(
+      {
+        selectedCategory: category
+      },
+      () => this.filterByCategory()
+    );
   };
 
   filterByCategory = () => {
-    const { allProducts } = this.state;
-    const qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    const { allProducts, selectedCategory } = this.state;
+    let qualifyingProducts = [];
+    if (selectedCategory === 'All Products') {
+      qualifyingProducts = allProducts;
+    } else {
+      qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    }
     this.setState({ filteredProducts: qualifyingProducts });
+    this.setState({ lowerPriceLimit: '' });
+    this.setState({ upperPriceLimit: '' });
+    this.setState({ sortCriteria: 'nameDescending' });
+    this.setState({ date: 'all' });
   };
 
   changeShownProducts() {
@@ -207,7 +206,6 @@ class MainBody extends React.Component {
 
   checkSelectedCategory(product) {
     const { selectedCategory } = this.state;
-
     return product.category === selectedCategory || !selectedCategory;
   }
 
