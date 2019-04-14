@@ -10,10 +10,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-// eslint-disable-next-line import/no-duplicates
-import { FiberManualRecord } from '@material-ui/icons';
-// eslint-disable-next-line import/no-duplicates
-import { Menu } from '@material-ui/icons';
+import { Menu, FiberManualRecord } from '@material-ui/icons';
 import { DropDownCategories } from '.';
 import * as categoriesAction from '../../actions/categoriesAction';
 import Styles from './Styles';
@@ -21,7 +18,6 @@ import Styles from './Styles';
 class CategoriesList extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       categories: [],
       left: false
@@ -43,14 +39,13 @@ class CategoriesList extends React.Component {
 
   render() {
     const { left, categories } = this.state;
-    const { selectCategory, classes } = this.props;
+    const { selectCategory, classes, all } = this.props;
 
     return (
       <div>
         <IconButton onClick={this.toggleDrawer('left', true)}>
           <Menu className={classes.menuButton} />
         </IconButton>
-
         <Drawer open={left} onClose={this.toggleDrawer('left', false)}>
           <div
             tabIndex={0}
@@ -67,14 +62,14 @@ class CategoriesList extends React.Component {
             <List>
               <ListItem
                 onClick={() => {
-                  selectCategory('All Products');
+                  selectCategory(all);
                 }}
                 button
               >
                 <ListItemIcon>
                   <FiberManualRecord />
                 </ListItemIcon>
-                <ListItemText primary="All Products" />
+                <ListItemText primary="All" />
               </ListItem>
               {categories.map(category => (
                 <DropDownCategories
@@ -93,7 +88,8 @@ class CategoriesList extends React.Component {
 
 CategoriesList.propTypes = {
   selectCategory: PropTypes.func.isRequired,
-  classes: PropTypes.func.isRequired
+  classes: PropTypes.func.isRequired,
+  all: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(CategoriesList);

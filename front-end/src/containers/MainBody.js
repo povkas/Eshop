@@ -26,7 +26,8 @@ class MainBody extends React.Component {
       upperPriceLimitHelper: '',
       selectedCategory: '',
       sortCriteria: 'nameDescending',
-      sortingCompleted: false
+      sortingCompleted: false,
+      all: 'All'
     };
 
     this._isMounted = false;
@@ -88,7 +89,7 @@ class MainBody extends React.Component {
   filterByCategory = () => {
     const { allProducts, selectedCategory } = this.state;
     let qualifyingProducts = [];
-    if (selectedCategory === 'All Products') {
+    if (selectedCategory === 'All') {
       qualifyingProducts = allProducts;
     } else {
       qualifyingProducts = allProducts.filter(this.checkSelectedCategory);

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { categoriesAPI } from '../utils/constants';
+import { categories } from '../utils/constants/api';
 
 export const getCategories = () => {
-  return axios.get(categoriesAPI).then(res => res.data);
+  return axios.get(categories).then(res => res.data);
 };
