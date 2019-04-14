@@ -112,7 +112,10 @@ class MainBody extends React.Component {
       qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
     }
 
-    if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
+    if (
+      upperPriceLimitFloat >= lowerPriceLimitFloat ||
+      (Number.isNaN(lowerPriceLimitFloat) && upperPriceLimitFloat > 0)
+    ) {
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceUpper);
       this.setState({ upperPriceLimitHelper: '' });
     } else if (upperPriceLimitFloat < lowerPriceLimitFloat) {

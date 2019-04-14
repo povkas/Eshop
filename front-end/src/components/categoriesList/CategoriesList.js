@@ -30,6 +30,7 @@ class CategoriesList extends React.Component {
 
   componentDidMount() {
     categoriesAction.getCategories().then(res => {
+      res.sort((a, b) => a.category.localeCompare(b.category));
       this.setState({ categories: res });
     });
   }
