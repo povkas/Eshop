@@ -1,7 +1,4 @@
 const theme = () => ({
-  grow: {
-    flexGrow: 1
-  },
   menuButton: {
     marginRight: 20
   },
@@ -11,6 +8,10 @@ const theme = () => ({
   shopName: {
     textDecoration: 'none',
     color: 'white'
+  },
+  searchDiv: {
+    marginLeft: 20,
+    flexGrow: 1
   }
 });
 

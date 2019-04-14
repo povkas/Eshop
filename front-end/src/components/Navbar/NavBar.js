@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { Menu, Person } from '@material-ui/icons';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
+import Search from './Search';
 
 function NavBar(props) {
   const { classes } = props;
@@ -19,11 +20,12 @@ function NavBar(props) {
           <IconButton className={classes.menuButton}>
             <Menu />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h6" color="inherit">
             <Link to="/" className={classes.shopName}>
               BimBam
             </Link>
           </Typography>
+          <Search />
           <IconButton className={classes.menuButton}>
             <Person />
           </IconButton>
