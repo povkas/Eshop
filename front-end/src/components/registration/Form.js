@@ -10,9 +10,6 @@ function hasNumber(myString) {
   return /\d/.test(myString);
 }
 
-/* const Styles = StyleSheet.create({
-  textFld: { width: 1000, height: 40 }
-}); */
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -161,20 +158,13 @@ class Form extends Component {
           'Content-Type': 'application/json'
         }
       })
-      .then(response => {
-        console.log(response);
+      .then(() => {
         this.setState({ registrationResponse: 'Registration Successful' });
       })
       .catch(error => {
-        // Error
         if (error.response) {
           this.setState({ registrationResponse: 'Email has already been taken' });
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log('Error', error.message);
         }
-        console.log(error.config);
       });
   };
 
@@ -213,15 +203,26 @@ class Form extends Component {
       isConfirmPassword
     } = this.state;
 
+    const labelNames = {
+      name: 'name',
+      surname: 'surname',
+      email: 'email',
+      password: 'password',
+      confirmPassword: 'confirmPassword',
+      city: 'city',
+      country: 'country',
+      address: 'address'
+    };
+
     return (
       <div>
         REGISTRATION
         <form onSubmit={this.handleSubmit}>
           <TextField
             style={styles}
-            name="name"
+            name={labelNames.name}
             label="Name"
-            type="name"
+            type={labelNames.name}
             value={name}
             required
             onChange={this.handleChange}
@@ -232,9 +233,9 @@ class Form extends Component {
           />
           <TextField
             style={styles}
-            name="surname"
+            name={labelNames.surname}
             label="Surname"
-            type="surname"
+            type={labelNames.surname}
             value={surname}
             required
             onChange={this.handleChange}
@@ -245,9 +246,9 @@ class Form extends Component {
           />
           <TextField
             style={styles}
-            name="email"
+            name={labelNames.email}
             label="Email"
-            type="email"
+            type={labelNames.email}
             value={email}
             required
             onChange={this.handleChange}
@@ -258,9 +259,9 @@ class Form extends Component {
           />
           <TextField
             style={styles}
-            name="password"
+            name={labelNames.password}
             label="Password"
-            type="password"
+            type={labelNames.password}
             value={password}
             required
             onChange={this.handleChange}
@@ -271,9 +272,9 @@ class Form extends Component {
           />
           <TextField
             style={styles}
-            name="confirmPassword"
+            name={labelNames.confirmPassword}
             label="ConfirmPassword"
-            type="password"
+            type={labelNames.password}
             value={confirmPassword}
             required
             onChange={this.handleChange}
@@ -284,9 +285,9 @@ class Form extends Component {
           />
           <TextField
             style={styles}
-            name="country"
+            name={labelNames.country}
             label="Country"
-            type="country"
+            type={labelNames.country}
             value={country}
             required
             onChange={this.handleChange}
@@ -297,9 +298,9 @@ class Form extends Component {
           />
           <TextField
             style={styles}
-            name="city"
+            name={labelNames.city}
             label="City"
-            type="city"
+            type={labelNames.city}
             value={city}
             required
             onChange={this.handleChange}
@@ -310,9 +311,9 @@ class Form extends Component {
           />
           <TextField
             style={styles}
-            name="address"
+            name={labelNames.address}
             label="Address"
-            type="address"
+            type={labelNames.address}
             value={address}
             required
             onChange={this.handleChange}
