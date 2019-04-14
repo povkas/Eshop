@@ -17,6 +17,7 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      registrationResponse: '',
       name: '',
       surname: '',
       email: '',
@@ -154,11 +155,27 @@ class Form extends Component {
       password
     });
 
-    axios.post(url, data, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    axios
+      .post(url, data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        console.log(response);
+        this.setState({ registrationResponse: 'Registration Successful' });
+      })
+      .catch(error => {
+        // Error
+        if (error.response) {
+          this.setState({ registrationResponse: 'Email has already been taken' });
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
   };
 
   mergedSubmitClose = () => {
@@ -169,6 +186,7 @@ class Form extends Component {
 
   render() {
     const {
+      registrationResponse,
       name,
       surname,
       email,
@@ -197,6 +215,7 @@ class Form extends Component {
 
     return (
       <div>
+        REGISTRATION
         <form onSubmit={this.handleSubmit}>
           <TextField
             style={styles}
@@ -307,6 +326,7 @@ class Form extends Component {
             Sign up
           </Button>
         </form>
+        {registrationResponse}
       </div>
     );
   }

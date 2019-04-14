@@ -6,9 +6,9 @@ export const modalStyles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none',
-    height: '80vh%',
+    height: '88vh',
     width: '13vw',
-    top: `${5}%`,
+    top: `${0}%`,
     left: `${75}%`
   }
 });
@@ -16,7 +16,8 @@ export const modalStyles = theme => ({
 export const styles = {
   width: '12vw',
   height: '6.5vh',
-  marginTop: 16
+  marginTop: '1.9vh',
+  marginBot: '1.9vh'
 };
 
 export default modalStyles;
