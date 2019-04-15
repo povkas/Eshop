@@ -40,7 +40,7 @@ class CategoriesList extends React.Component {
 
   render() {
     const { left, categories } = this.state;
-    const { selectCategory, classes, all, currentCategory } = this.props;
+    const { selectCategory, classes, currentCategory } = this.props;
 
     return (
       <div>
@@ -63,7 +63,7 @@ class CategoriesList extends React.Component {
             <List>
               <ListItem
                 onClick={() => {
-                  selectCategory(all);
+                  selectCategory(allProductsCategory);
                 }}
                 button
               >
@@ -91,8 +91,7 @@ class CategoriesList extends React.Component {
 CategoriesList.propTypes = {
   selectCategory: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,
-  classes: PropTypes.func.isRequired,
-  all: PropTypes.func.isRequired
+  classes: PropTypes.shape().isRequired
 };
 
 export default withStyles(Styles)(CategoriesList);
