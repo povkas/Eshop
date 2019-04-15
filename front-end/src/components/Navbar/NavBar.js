@@ -6,19 +6,19 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Menu, Person } from '@material-ui/icons';
+import { Person } from '@material-ui/icons';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
+import { CategoriesList } from '../categoriesList';
 
 function NavBar(props) {
-  const { classes } = props;
+  const { classes, selectCategory, currentCategory } = props;
+
   return (
     <BrowserRouter>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton}>
-            <Menu />
-          </IconButton>
+          <CategoriesList selectCategory={selectCategory} currentCategory={currentCategory} />
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <Link to="/" className={classes.shopName}>
               BimBam
@@ -37,7 +37,9 @@ function NavBar(props) {
 }
 
 NavBar.propTypes = {
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  selectCategory: PropTypes.func.isRequired,
+  currentCategory: PropTypes.string.isRequired
 };
 
 export default withStyles(Styles)(NavBar);
