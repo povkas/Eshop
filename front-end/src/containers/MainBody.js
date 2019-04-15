@@ -11,6 +11,7 @@ import { getProducts } from '../actions/productActions';
 import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
+import { allProductsCategory } from '../utils/constants';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -26,8 +27,7 @@ class MainBody extends React.Component {
       upperPriceLimitHelper: '',
       selectedCategory: '',
       sortCriteria: 'nameDescending',
-      sortingCompleted: false,
-      all: 'All'
+      sortingCompleted: false
     };
 
     this._isMounted = false;
@@ -89,7 +89,7 @@ class MainBody extends React.Component {
   filterByCategory = () => {
     const { allProducts, selectedCategory } = this.state;
     let qualifyingProducts = [];
-    if (selectedCategory === 'All') {
+    if (selectedCategory === allProductsCategory) {
       qualifyingProducts = allProducts;
     } else {
       qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
@@ -107,7 +107,7 @@ class MainBody extends React.Component {
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
     let qualifyingProducts = [];
-    if (selectedCategory === 'All Products') {
+    if (selectedCategory === allProductsCategory) {
       qualifyingProducts = allProducts;
     } else {
       qualifyingProducts = allProducts.filter(this.checkSelectedCategory);

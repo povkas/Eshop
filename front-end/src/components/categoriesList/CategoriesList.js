@@ -13,6 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Menu, FiberManualRecord } from '@material-ui/icons';
 import { DropDownCategories } from '.';
 import * as categoriesAction from '../../actions/categoriesAction';
+import { allProductsCategory } from '../../utils/constants';
 import Styles from './Styles';
 
 class CategoriesList extends React.Component {
@@ -69,7 +70,7 @@ class CategoriesList extends React.Component {
                 <ListItemIcon>
                   <FiberManualRecord />
                 </ListItemIcon>
-                <ListItemText primary="All" />
+                <ListItemText primary={allProductsCategory} />
               </ListItem>
               {categories.map(category => (
                 <DropDownCategories
