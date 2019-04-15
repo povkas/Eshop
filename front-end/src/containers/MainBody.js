@@ -40,11 +40,12 @@ class MainBody extends React.Component {
     this.checkDate = this.checkDate.bind(this);
     this.checkSelectedCategory = this.checkSelectedCategory.bind(this);
     this.changeSort = this.changeSort.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
     getProducts().then(res => {
-      this.setState({ allProducts: res, filteredProducts: res });
+      this.setState({ allProducts: res, filteredProducts: res }, () => this.sortShownProducts());
     });
     this._isMounted = true;
   }
@@ -91,15 +92,20 @@ class MainBody extends React.Component {
     let qualifyingProducts = [];
     if (selectedCategory === allProductsCategory) {
       qualifyingProducts = allProducts;
-    } else {
+      this.setState({ filteredProducts: qualifyingProducts });
+    } else if (selectedCategory !== 'search') {
       qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+      this.setState({ filteredProducts: qualifyingProducts });
     }
-    this.setState({ filteredProducts: qualifyingProducts });
     this.setState({ lowerPriceLimit: '' });
     this.setState({ upperPriceLimit: '' });
     this.setState({ sortCriteria: 'nameDescending' });
-    this.setState({ date: 'all' });
+    this.setState({ date: 'all' }, () => this.sortShownProducts());
   };
+
+  handleSearch(products) {
+    this.setState({ filteredProducts: products }, () => this.selectCategory('search'));
+  }
 
   changeShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory } = this.state;
@@ -269,12 +275,19 @@ class MainBody extends React.Component {
       date,
       upperPriceLimitHelper,
       sortCriteria,
-      selectedCategory
+      selectedCategory,
+      allProducts
     } = this.state;
 
     return (
       <div>
-        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
+        <NavBar
+          selectCategory={this.selectCategory}
+          currentCategory={selectedCategory}
+          products={allProducts}
+          handleSearch={this.handleSearch}
+          productHandler={this.changeProduct}
+        />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}

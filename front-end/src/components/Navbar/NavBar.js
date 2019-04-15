@@ -13,7 +13,14 @@ import Search from './Search';
 import { CategoriesList } from '../categoriesList';
 
 function NavBar(props) {
-  const { classes, selectCategory, currentCategory } = props;
+  const {
+    classes,
+    selectCategory,
+    currentCategory,
+    products,
+    handleSearch,
+    productHandler
+  } = props;
 
   return (
     <BrowserRouter>
@@ -25,7 +32,7 @@ function NavBar(props) {
               BimBam
             </Link>
           </Typography>
-          <Search />
+          <Search products={products} handleSearch={handleSearch} productHandler={productHandler} />
           <IconButton className={classes.menuButton}>
             <Person />
           </IconButton>
@@ -41,7 +48,10 @@ function NavBar(props) {
 NavBar.propTypes = {
   classes: PropTypes.shape().isRequired,
   selectCategory: PropTypes.func.isRequired,
-  currentCategory: PropTypes.string.isRequired
+  currentCategory: PropTypes.string.isRequired,
+  productHandler: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape()).isRequired
 };
 
 export default withStyles(Styles)(NavBar);

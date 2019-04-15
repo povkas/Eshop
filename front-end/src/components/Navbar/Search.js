@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
@@ -10,35 +12,91 @@ class Search extends React.Component {
 
     this.state = {
       searchValue: '',
-      hasFocus: document.activeElement.id === 'searchInput',
-      suggestions: []
+      suggestions: [],
+      hasFocus: false
     };
+
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
-  changeValue = e => {
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.setState({ hasFocus: false });
+    }
+  }
+
+  changeValue(e) {
     this.setState({ searchValue: e.target.value }, () => this.changeSuggestions());
-  };
+  }
 
   changeSuggestions() {
-    const { searchValue } = this.state;
     const { products } = this.props;
-    if (searchValue.length >= 3) {
-      const qualifyingProducts = products.filter(product => product.title.includes(searchValue));
-      this.setState({ suggestions: qualifyingProducts });
-    }
+    const qualifyingProducts = products.filter(product => this.checkIfIncludes(product));
+    this.setState({ suggestions: qualifyingProducts });
+  }
+
+  checkIfIncludes(product) {
+    const { searchValue } = this.state;
+    const productName = product.title.toLowerCase();
+    const searchString = searchValue.toLowerCase();
+
+    // return searchValue.length < 3 ? false : productName.includes(searchString);
+    return productName.includes(searchString);
+  }
+
+  showAllProducts() {
+    const { handleSearch } = this.props;
+    const { suggestions } = this.state;
+    this.setState({ hasFocus: false }, () => handleSearch(suggestions));
+  }
+
+  handleSuggestionClick(product) {
+    const { productHandler } = this.props;
+    this.setState({ hasFocus: false, searchValue: product.title }, () => productHandler(product));
   }
 
   render() {
     const { classes } = this.props;
-    const { searchValue, hasFocus, suggestions } = this.state;
+    const { searchValue, suggestions, hasFocus } = this.state;
     return (
-      <div className={classes.searchDiv}>
-        <input id="searchInput" value={searchValue} onChange={this.changeValue} />
+      <div className={classes.searchDiv} ref={this.setWrapperRef}>
+        <input
+          id="searchInput"
+          value={searchValue}
+          onChange={e => this.changeValue(e)}
+          className={classes.searchInput}
+          onFocus={() => this.setState({ hasFocus: true })}
+        />
         {hasFocus ? (
-          <Paper>
-            {suggestions.map(suggestion => (
-              <div>{suggestion.title}</div>
+          <Paper className={classes.suggestionList} square>
+            {suggestions.slice(0, 5).map(suggestion => (
+              <div
+                key={suggestion.id}
+                className={classes.suggestion}
+                onClick={() => this.handleSuggestionClick(suggestion)}
+                role="button"
+              >
+                {suggestion.title}
+              </div>
             ))}
+            {suggestions.length > 5 ? (
+              <div className={classes.showAll} onClick={() => this.showAllProducts()} role="button">
+                Show all
+              </div>
+            ) : null}
           </Paper>
         ) : null}
       </div>
@@ -48,7 +106,9 @@ class Search extends React.Component {
 
 Search.propTypes = {
   classes: PropTypes.shape().isRequired,
-  products: PropTypes.arrayOf(PropTypes.shape()).isRequired
+  products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  productHandler: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(Search);
