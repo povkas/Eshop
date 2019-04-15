@@ -6,13 +6,12 @@ module.exports = {
   },
   plugins: ['prettier'],
   rules: {
-    'no-use-before-define': 'off',
     'react/jsx-filename-extension': 'off',
-    'react/prop-types': 'off',
-    'comma-dangle': 'off',
     'prettier/prettier': ['error'],
-    'linebreak-style': 0,
-    'import/no-unresolved': 'off'
+    'no-underscore-dangle': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    'import/prefer-default-export': 'off',
+    radix: 'off'
   },
   globals: {
     fetch: 'writeable',

@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Menu from '@material-ui/icons/Menu';
-// import Person from '@material-ui/icons/Person';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
 import { LoginForm, UserOptions } from '../login';
 import { logoutUser } from '../../actions/authentication';
+import { CategoriesList } from '../categoriesList';
 
 class NavBar extends React.Component {
   handleLogout = e => {
@@ -21,7 +21,7 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { classes, auth } = this.props;
+    const { classes, auth, selectCategory, currentCategory } = this.props;
     let logOut;
     if (auth.isAuthenticated) {
       logOut = (
@@ -35,9 +35,7 @@ class NavBar extends React.Component {
       <BrowserRouter>
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton}>
-              <Menu />
-            </IconButton>
+            <CategoriesList selectCategory={selectCategory} currentCategory={currentCategory} />
             <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link to="/" className={classes.shopName}>
                 BimBam連合
@@ -53,6 +51,14 @@ class NavBar extends React.Component {
     );
   }
 }
+
+NavBar.propTypes = {
+  classes: PropTypes.shape().isRequired,
+  selectCategory: PropTypes.func.isRequired,
+  currentCategory: PropTypes.string.isRequired,
+  auth: PropTypes.shape().isRequired,
+  logoutUserProp: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   auth: state.auth

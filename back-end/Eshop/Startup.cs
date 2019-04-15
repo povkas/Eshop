@@ -1,3 +1,4 @@
+using System.Net;
 using Eshop.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,7 +18,6 @@ namespace Eshop
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.SetUpAutoMapper();
@@ -27,7 +27,6 @@ namespace Eshop
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -46,16 +45,16 @@ namespace Eshop
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials())
-                .UseHttpsRedirection()
-                .UseMvc()
-                .Run(_notFoundHandler);
+                        .UseHttpsRedirection()
+                        .UseMvc()
+                        .Run(_notFoundHandler);
             app.InitializeDatabase();
         }
 
         private readonly RequestDelegate _notFoundHandler =
             async ctx =>
             {
-                ctx.Response.StatusCode = 404;
+                ctx.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 await ctx.Response.WriteAsync("Page not found.");
             };
     }

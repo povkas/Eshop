@@ -41,7 +41,6 @@ namespace EShop.Controllers
             var product = await _productsService.GetById(id);
             if (product == null)
             {
-                _logger.LogWarning("GetById({ID}) NOT FOUND", id);
                 throw new NotFoundCustomException("A product with id " + id + " was not found");
             }
 
@@ -55,7 +54,7 @@ namespace EShop.Controllers
             _logger.LogInformation("Posting product {}", newProduct);
             var createdProduct = await _productsService.Create(newProduct);
 
-            return Ok(createdProduct);
+            return Created("product", createdProduct);
         }
 
         [HttpPut("{id}")]

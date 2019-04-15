@@ -56,7 +56,8 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   classes: PropTypes.shape().isRequired,
-  className: PropTypes.shape().isRequired
+  className: PropTypes.shape().isRequired,
+  loginUserProp: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -46,5 +47,10 @@ class UserOptions extends React.Component {
     );
   }
 }
+
+UserOptions.propTypes = {
+  className: PropTypes.shape().isRequired,
+  logOut: PropTypes.func.isRequired
+};
 
 export default UserOptions;

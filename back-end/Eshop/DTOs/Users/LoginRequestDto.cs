@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Eshop.DTOs.Products
+namespace Eshop.DTOs.Users
 {
-    public class UserDto
+    public class LoginRequestDto
     {
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]

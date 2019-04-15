@@ -29,10 +29,9 @@ namespace Eshop.Configurations
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
             return service
-                .AddScoped<IProductsService, ProductsService>()
-                .AddScoped<IProductCategoriesService, ProductCategoriesService>()
-                .AddScoped<ILoginService, LoginService>()
-                .AddScoped<IRegistrationService, RegistrationService>();
+                .AddScoped<IProductsService, ProductService>()
+                .AddScoped<IProductCategoriesService, ProductCategoryService>()
+                .AddScoped<IUserService, UserService>();
         }
     }
 }

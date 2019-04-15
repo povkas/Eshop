@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "037bab9a-9a98-44b2-a8fd-644b11bfbc0c",
+    "_postman_id": "2c521668-d068-41f0-a215-987ad6e4717b",
     "name": "E-shop",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -18,11 +18,11 @@
               "raw": ""
             },
             "url": {
-              "raw": "http://localhost:5000/api/products/1",
+              "raw": "http://localhost:5000/api/products/2",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
-              "path": ["api", "products", "1"]
+              "path": ["api", "products", "2"]
             }
           },
           "response": []
@@ -75,6 +75,26 @@
       ]
     },
     {
+      "name": "Product categories",
+      "item": [
+        {
+          "name": "[GET] Product categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "User",
       "item": [
         {
@@ -91,7 +111,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"email\":\"user@gmail.com\",\n    \"password\":\"password123\"\n}"
+              "raw": "{\n\t\"email\":\"papa@gmail.com\",\n    \"password\":\"sexius123\"\n}"
             },
             "url": {
               "raw": "http://localhost:5000/api/user/login",
@@ -101,46 +121,6 @@
               "path": ["api", "user", "login"]
             },
             "description": "sending post login request with UserTdo body "
-          },
-          "response": []
-        },
-        {
-          "name": "[GET] user",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "name": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "http://localhost:5000/api/user/validate?email=user@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzU1MjIyLCJleHAiOjE1NTMzNTcwMjIsImlhdCI6MTU1MzM1NTIyMn0.hyqwIg_b10EKpaYXbIwEfE-cDGSwOw3hTFVqZh97zwo",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "user", "validate"],
-              "query": [
-                {
-                  "key": "email",
-                  "value": "user@gmail.com"
-                },
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXJAZ21haWwuY29tIiwibmJmIjoxNTUzMzU1MjIyLCJleHAiOjE1NTMzNTcwMjIsImlhdCI6MTU1MzM1NTIyMn0.hyqwIg_b10EKpaYXbIwEfE-cDGSwOw3hTFVqZh97zwo"
-                }
-              ]
-            },
-            "description": "Checks if JWT token works return 200 code if token is good or 400 if it bad"
           },
           "response": []
         }

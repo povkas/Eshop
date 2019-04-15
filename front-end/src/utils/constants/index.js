@@ -1,2 +1,3 @@
 export { default as ROUTES } from './routes';
-export { default as API } from './api';
+export { products, categories, getUser } from './api';
+export { allProductsCategory } from './categories';
