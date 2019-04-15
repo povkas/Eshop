@@ -7,9 +7,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/icons/Menu';
+// import Person from '@material-ui/icons/Person';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
-import { LoginForm } from '../login';
+import { LoginForm, UserOptions } from '../login';
 import { logoutUser } from '../../actions/authentication';
 
 class NavBar extends React.Component {
@@ -23,7 +24,12 @@ class NavBar extends React.Component {
     const { classes, auth } = this.props;
     let logOut;
     if (auth.isAuthenticated) {
-      logOut = <IconButton onClick={this.handleLogout}>Logout</IconButton>;
+      logOut = (
+        // <IconButton className={classes.menuButton} onClick={this.handleLogout}>
+        //   <Person />
+        // </IconButton>
+        <UserOptions className={classes} logOut={this.handleLogout} />
+      );
     }
     return (
       <BrowserRouter>
@@ -37,8 +43,7 @@ class NavBar extends React.Component {
                 BimBam連合
               </Link>
             </Typography>
-            {logOut}
-            <LoginForm className={classes} />
+            {auth.isAuthenticated ? logOut : <LoginForm className={classes} />}
             <IconButton className={classes.menuButton}>
               <ShoppingCart />
             </IconButton>
