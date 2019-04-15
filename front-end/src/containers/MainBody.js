@@ -10,6 +10,8 @@ import ProductTable from '../components/productTable/ProductTable';
 import { getProducts } from '../actions/productActions';
 import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
+import { NavBar } from '../components/Navbar';
+import { allProductsCategory } from '../utils/constants';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class MainBody extends React.Component {
       upperPriceLimit: '',
       date: 'all',
       upperPriceLimitHelper: '',
+      selectedCategory: '',
       sortCriteria: 'nameDescending',
       sortingCompleted: false
     };
@@ -35,6 +38,7 @@ class MainBody extends React.Component {
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
     this.checkPriceLower = this.checkPriceLower.bind(this);
     this.checkDate = this.checkDate.bind(this);
+    this.checkSelectedCategory = this.checkSelectedCategory.bind(this);
     this.changeSort = this.changeSort.bind(this);
   }
 
@@ -54,16 +58,6 @@ class MainBody extends React.Component {
     this._isMounted = false;
   }
 
-  handleOpen = () => {
-    if (this._isMounted === true) {
-      this.setState({ isProductModalOpen: true });
-    }
-  };
-
-  handleClose = () => {
-    this.setState({ isProductModalOpen: false });
-  };
-
   changeProduct = product => {
     if (this._isMounted === true) {
       this.setState({
@@ -73,21 +67,62 @@ class MainBody extends React.Component {
     }
   };
 
-  changeShownProducts() {
-    const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
+  handleClose = () => {
+    this.setState({ isProductModalOpen: false });
+  };
+
+  handleOpen = () => {
+    if (this._isMounted === true) {
+      this.setState({ isProductModalOpen: true });
+    }
+  };
+
+  selectCategory = category => {
+    this.setState(
+      {
+        selectedCategory: category
+      },
+      () => this.filterByCategory()
+    );
+  };
+
+  filterByCategory = () => {
+    const { allProducts, selectedCategory } = this.state;
     let qualifyingProducts = [];
+    if (selectedCategory === allProductsCategory) {
+      qualifyingProducts = allProducts;
+    } else {
+      qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    }
+    this.setState({ filteredProducts: qualifyingProducts });
+    this.setState({ lowerPriceLimit: '' });
+    this.setState({ upperPriceLimit: '' });
+    this.setState({ sortCriteria: 'nameDescending' });
+    this.setState({ date: 'all' });
+  };
+
+  changeShownProducts() {
+    const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
-    if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
-      qualifyingProducts = allProducts.filter(this.checkPriceUpper);
+    let qualifyingProducts = [];
+    if (selectedCategory === allProductsCategory) {
+      qualifyingProducts = allProducts;
+    } else {
+      qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    }
+
+    if (
+      upperPriceLimitFloat >= lowerPriceLimitFloat ||
+      (Number.isNaN(lowerPriceLimitFloat) && upperPriceLimitFloat > 0)
+    ) {
+      qualifyingProducts = qualifyingProducts.filter(this.checkPriceUpper);
       this.setState({ upperPriceLimitHelper: '' });
     } else if (upperPriceLimitFloat < lowerPriceLimitFloat) {
       this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
-      qualifyingProducts = allProducts;
     } else {
       this.setState({ upperPriceLimitHelper: '' });
-      qualifyingProducts = allProducts;
     }
 
     if (lowerPriceLimitFloat >= 0) {
@@ -178,6 +213,11 @@ class MainBody extends React.Component {
     return product.price <= upperPriceLimitFloat;
   }
 
+  checkSelectedCategory(product) {
+    const { selectedCategory } = this.state;
+    return product.category === selectedCategory || !selectedCategory;
+  }
+
   checkPriceLower(product) {
     const { lowerPriceLimit } = this.state;
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
@@ -228,10 +268,13 @@ class MainBody extends React.Component {
       upperPriceLimit,
       date,
       upperPriceLimitHelper,
-      sortCriteria
+      sortCriteria,
+      selectedCategory
     } = this.state;
+
     return (
       <div>
+        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}
