@@ -39,7 +39,7 @@ class CategoriesList extends React.Component {
 
   render() {
     const { left, categories } = this.state;
-    const { selectCategory, classes, all } = this.props;
+    const { selectCategory, classes, all, currentCategory } = this.props;
 
     return (
       <div>
@@ -74,6 +74,7 @@ class CategoriesList extends React.Component {
               {categories.map(category => (
                 <DropDownCategories
                   selectCategory={selectCategory}
+                  isSelected={currentCategory === category.category}
                   key={category.category}
                   category={category.category}
                 />
@@ -88,6 +89,7 @@ class CategoriesList extends React.Component {
 
 CategoriesList.propTypes = {
   selectCategory: PropTypes.func.isRequired,
+  currentCategory: PropTypes.string.isRequired,
   classes: PropTypes.func.isRequired,
   all: PropTypes.func.isRequired
 };

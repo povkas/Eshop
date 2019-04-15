@@ -268,12 +268,13 @@ class MainBody extends React.Component {
       upperPriceLimit,
       date,
       upperPriceLimitHelper,
-      sortCriteria
+      sortCriteria,
+      selectedCategory
     } = this.state;
 
     return (
       <div>
-        <NavBar selectCategory={this.selectCategory} />
+        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}
