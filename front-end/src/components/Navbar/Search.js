@@ -78,11 +78,11 @@ class Search extends React.Component {
           id="searchInput"
           value={searchValue}
           onChange={e => this.changeValue(e)}
-          className={classes.searchInput}
           onFocus={() => this.setState({ hasFocus: true })}
           type="text"
           autoComplete="off"
           placeholder="Search for anything"
+          InputProps={{ className: classes.searchInput }}
         />
         {hasFocus ? (
           <Paper className={classes.suggestionList} square>
