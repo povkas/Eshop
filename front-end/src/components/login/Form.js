@@ -17,32 +17,57 @@ class Form extends Component {
     this.state = this.initialstate;
   }
 
-  validate = () => {
+  validateEmail = () => {
     let isError = false;
-    const { email, password } = this.state;
+    const { email } = this.state;
     const errors = {
       emailErrorText: ' ',
-      passwordErrorText: ' ',
-      isEmailError: false,
-      isPasswordError: false
+      isEmailError: false
     };
 
     if (email.length !== 0) {
-      if (email.indexOf('@') === -1 || email.indexOf('.') === -1 || email.length > 128) {
+      if (
+        email.indexOf('@') === -1 ||
+        email.indexOf('.') === -1 ||
+        email.length > 128 ||
+        email.indexOf('@') > email.lastIndexOf('.') ||
+        email.endsWith('.')
+      ) {
         isError = true;
         errors.emailErrorText = 'Requires valid email';
         errors.isEmailError = true;
       }
+    } else {
+      isError = true;
+      errors.emailErrorText = 'Email is required';
+      errors.isEmailError = true;
     }
+
+    this.setState({ ...errors });
+    return isError;
+  };
+
+  validatePassword = () => {
+    let isError = false;
+    const { password } = this.state;
+    const errors = {
+      passwordErrorText: ' ',
+      isPasswordError: false
+    };
+
     if (password.length !== 0) {
       if (password.length < 8 || password.length > 255) {
         isError = true;
         errors.passwordErrorText = 'Password must contain at least 8 symbols';
         errors.isPasswordError = true;
       }
+    } else {
+      isError = true;
+      errors.passwordErrorText = 'Password is required';
+      errors.isPasswordError = true;
     }
-    this.setState({ ...errors });
 
+    this.setState({ ...errors });
     return isError;
   };
 
@@ -54,19 +79,16 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { onSubmit } = this.props;
+    const { onSubmit, passClose } = this.props;
     const { email, password } = this.state;
     const userData = {
       email,
       password
     };
-    onSubmit(userData);
-  };
-
-  mergedSubmitClose = e => {
-    const { passClose } = this.props;
-    this.handleSubmit(e);
-    if (!this.validate()) passClose();
+    if (!this.validateEmail() && !this.validatePassword()) {
+      onSubmit(userData);
+      passClose();
+    }
   };
 
   render() {
@@ -81,18 +103,16 @@ class Form extends Component {
 
     return (
       <div>
-        <form onSubmit={this.mergedSubmitClose}>
+        <form onSubmit={this.handleSubmit}>
           <TextField
             autoFocus
             name="email"
             label="Email"
-            type="email"
             value={email}
-            required
             onChange={this.handleChange}
             error={isEmailError}
             helperText={emailErrorText}
-            onBlur={this.validate}
+            onBlur={this.validateEmail}
             margin="normal"
           />
           <TextField
@@ -100,11 +120,10 @@ class Form extends Component {
             label="Password"
             type="password"
             value={password}
-            required
             onChange={this.handleChange}
             error={isPasswordError}
-            onBlur={this.validate}
             helperText={passwordErrorText}
+            onBlur={this.validatePassword}
             margin="normal"
           />
           <Button variant="outlined" type="submit">

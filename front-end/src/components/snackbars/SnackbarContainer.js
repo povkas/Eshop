@@ -19,7 +19,7 @@ const variantIcon = {
 const variantMessage = {
   success: 'Login successful!',
   error: 'Logout successful!',
-  loginError: 'Login failed!'
+  loginError: 'Incorrect email or password!'
 };
 
 const stylesWrap = theme => ({
