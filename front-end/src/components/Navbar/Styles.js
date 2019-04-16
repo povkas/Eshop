@@ -39,6 +39,11 @@ const theme = () => ({
       cursor: 'pointer',
       backgroundColor: 'silver'
     }
+  },
+  emptySuggestions: {
+    color: 'black',
+    paddingTop: 1,
+    textAlign: 'center'
   }
 });
 
