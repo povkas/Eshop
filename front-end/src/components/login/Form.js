@@ -102,35 +102,33 @@ class Form extends Component {
     } = this.state;
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <TextField
-            autoFocus
-            name="email"
-            label="Email"
-            value={email}
-            onChange={this.handleChange}
-            error={isEmailError}
-            helperText={emailErrorText}
-            onBlur={this.validateEmail}
-            margin="normal"
-          />
-          <TextField
-            name="password"
-            label="Password"
-            type="password"
-            value={password}
-            onChange={this.handleChange}
-            error={isPasswordError}
-            helperText={passwordErrorText}
-            onBlur={this.validatePassword}
-            margin="normal"
-          />
-          <Button variant="outlined" type="submit">
-            Log in
-          </Button>
-        </form>
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <TextField
+          autoFocus
+          name="email"
+          label="Email"
+          value={email}
+          onChange={this.handleChange}
+          error={isEmailError}
+          helperText={emailErrorText}
+          onBlur={this.validateEmail}
+          margin="normal"
+        />
+        <TextField
+          name="password"
+          label="Password"
+          type="password"
+          value={password}
+          onChange={this.handleChange}
+          error={isPasswordError}
+          helperText={passwordErrorText}
+          onBlur={this.validatePassword}
+          margin="normal"
+        />
+        <Button variant="outlined" type="submit">
+          Log in
+        </Button>
+      </form>
     );
   }
 }

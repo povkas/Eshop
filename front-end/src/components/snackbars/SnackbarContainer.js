@@ -1,52 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
-import green from '@material-ui/core/colors/green';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import wrapStyles from './Styles';
 
 const variantIcon = {
-  success: CheckCircleIcon,
-  error: ErrorIcon,
-  loginError: ErrorIcon
+  loginSuccess: CheckCircleIcon,
+  loginError: ErrorIcon,
+  logoutSuccess: ErrorIcon
 };
 
 const variantMessage = {
-  success: 'Login successful!',
-  error: 'Logout successful!',
-  loginError: 'Incorrect email or password!'
+  loginSuccess: 'Login successful!',
+  loginError: 'Incorrect email or password!',
+  logoutSuccess: 'Logout successful!'
 };
 
-const stylesWrap = theme => ({
-  success: {
-    backgroundColor: green[600]
-  },
-  error: {
-    backgroundColor: blue[600]
-  },
-  loginError: {
-    backgroundColor: theme.palette.error.dark
-  },
-  iconVariant: {
-    fontSize: 20,
-    opacity: 0.9,
-    marginRight: theme.spacing.unit
-  },
-  message: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  close: {
-    padding: theme.spacing.unit / 2
-  }
-});
-
-function MySnackbarContent(props) {
+function SnackContent(props) {
   const { classes, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
   const Message = variantMessage[variant];
@@ -70,32 +45,29 @@ function MySnackbarContent(props) {
   );
 }
 
-MySnackbarContent.propTypes = {
+SnackContent.propTypes = {
   classes: PropTypes.shape().isRequired,
   onClose: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(['success', 'error']).isRequired
+  variant: PropTypes.oneOf(['loginSuccess', 'loginError', 'logoutSuccess']).isRequired
 };
 
-const MySnackbarContentWrapper = withStyles(stylesWrap)(MySnackbarContent);
+const SnackbarContentWrapper = withStyles(wrapStyles)(SnackContent);
 
-// eslint-disable-next-line react/prefer-stateless-function
-class SnackbarContainer extends React.Component {
-  render() {
-    const { open, closeSnackbar, variant } = this.props;
-    return (
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={closeSnackbar}
-      >
-        <MySnackbarContentWrapper onClose={closeSnackbar} variant={variant} />
-      </Snackbar>
-    );
-  }
+function SnackbarContainer(props) {
+  const { open, closeSnackbar, variant } = props;
+  return (
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left'
+      }}
+      open={open}
+      autoHideDuration={6000}
+      onClose={closeSnackbar}
+    >
+      <SnackbarContentWrapper onClose={closeSnackbar} variant={variant} />
+    </Snackbar>
+  );
 }
 
 SnackbarContainer.propTypes = {

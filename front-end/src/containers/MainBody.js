@@ -30,7 +30,7 @@ class MainBody extends React.Component {
       selectedCategory: '',
       sortCriteria: 'nameDescending',
       sortingCompleted: false,
-      variant: ''
+      snackbarVariant: ''
     };
 
     this._isMounted = false;
@@ -74,8 +74,8 @@ class MainBody extends React.Component {
     this.setState({ isProductModalOpen: false });
   };
 
-  openSnackbar = variant => {
-    this.setState({ isSnackbarOpen: true, variant });
+  openSnackbar = snackbarVariant => {
+    this.setState({ isSnackbarOpen: true, snackbarVariant });
   };
 
   closeSnackbar = () => {
@@ -276,7 +276,7 @@ class MainBody extends React.Component {
       upperPriceLimitHelper,
       sortCriteria,
       selectedCategory,
-      variant
+      snackbarVariant
     } = this.state;
 
     return (
@@ -318,7 +318,7 @@ class MainBody extends React.Component {
         <SnackbarContainer
           open={isSnackbarOpen}
           closeSnackbar={this.closeSnackbar}
-          variant={variant}
+          variant={snackbarVariant}
         />
       </div>
     );

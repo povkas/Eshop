@@ -18,7 +18,7 @@ export const loginUser = (user, openSnackbar) => dispatch => {
       localStorage.setItem('jwtToken', res.data);
       setAuthToken(res.data);
       dispatch(setCurrentUser(jwtDecode(res.data)));
-      openSnackbar('success');
+      openSnackbar('loginSuccess');
     })
     .catch(err => {
       dispatch({

@@ -18,7 +18,7 @@ class NavBar extends React.Component {
     e.preventDefault();
     const { logoutUserProp, openSnackbar } = this.props;
     logoutUserProp();
-    openSnackbar('error');
+    openSnackbar('logoutSuccess');
   };
 
   render() {
