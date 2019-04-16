@@ -79,6 +79,7 @@ class Search extends React.Component {
           onChange={e => this.changeValue(e)}
           className={classes.searchInput}
           onFocus={() => this.setState({ hasFocus: true })}
+          type="text"
         />
         {hasFocus ? (
           <Paper className={classes.suggestionList} square>
