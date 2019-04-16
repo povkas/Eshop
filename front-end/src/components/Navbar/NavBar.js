@@ -18,9 +18,18 @@ class NavBar extends React.Component {
     super(props);
     this.state = {
       open: false,
-      registrationResponse: ''
+      registrationResponse: '',
+      snackColor: ''
     };
   }
+
+  failedColor = () => {
+    this.setState({ snackColor: '#8B0000' });
+  };
+
+  successfulColor = () => {
+    this.setState({ snackColor: '#006400' });
+  };
 
   registrationResponseSuccessful = () => {
     this.setState({ registrationResponse: 'Registration Successful' });
@@ -43,7 +52,7 @@ class NavBar extends React.Component {
 
   render() {
     const { classes, selectCategory, currentCategory } = this.props;
-    const { open, registrationResponse } = this.state;
+    const { open, registrationResponse, snackColor } = this.state;
     return (
       <BrowserRouter>
         <AppBar position="static">
@@ -59,6 +68,8 @@ class NavBar extends React.Component {
               Successful={this.registrationResponseSuccessful}
               Failed={this.registrationResponseFailed}
               handleClick={this.handleClick}
+              failedColor={this.failedColor}
+              successfulColor={this.successfulColor}
             />
             <Snackbar
               anchorOrigin={{
@@ -66,7 +77,7 @@ class NavBar extends React.Component {
                 horizontal: 'left'
               }}
               ContentProps={{
-                style: { backgroundColor: '#2d3a86' }
+                style: { backgroundColor: snackColor }
               }}
               open={open}
               autoHideDuration={6000}

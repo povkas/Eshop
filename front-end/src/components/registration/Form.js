@@ -137,7 +137,7 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault(); // preventing browser to reload
     const { name, surname, country, city, email, password, address } = this.state;
-    const { Successful, Failed, passClose, handleClick } = this.props;
+    const { Successful, Failed, passClose, handleClick, failedColor, successfulColor } = this.props;
     const url = `http://localhost:5000/api/user`;
 
     const data = JSON.stringify({
@@ -158,12 +158,14 @@ class Form extends Component {
       })
       .then(() => {
         Successful();
+        successfulColor();
         passClose();
         handleClick();
       })
       .catch(error => {
         if (error.response) {
           Failed();
+          failedColor();
           handleClick();
         }
       });
@@ -330,7 +332,9 @@ Form.propTypes = {
   passClose: PropTypes.shape().isRequired,
   Successful: PropTypes.shape().isRequired,
   Failed: PropTypes.shape().isRequired,
-  handleClick: PropTypes.shape().isRequired
+  handleClick: PropTypes.shape().isRequired,
+  failedColor: PropTypes.shape().isRequired,
+  successfulColor: PropTypes.shape().isRequired
 };
 
 export default withStyles(styles1)(Form);

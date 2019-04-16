@@ -16,7 +16,6 @@ namespace Eshop.Controllers
     {
         private readonly IUserService _userService;
         private readonly ILogger _logger;
-
         public UsersController(IUserService userService, ILogger<UsersController> logger)
         {
             _userService = userService;
