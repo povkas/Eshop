@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -11,12 +12,14 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const variantIcon = {
   success: CheckCircleIcon,
-  error: ErrorIcon
+  error: ErrorIcon,
+  loginError: ErrorIcon
 };
 
 const variantMessage = {
   success: 'Login successful!',
-  error: 'Logout successful!'
+  error: 'Logout successful!',
+  loginError: 'Login failed!'
 };
 
 const stylesWrap = theme => ({
@@ -24,6 +27,9 @@ const stylesWrap = theme => ({
     backgroundColor: green[600]
   },
   error: {
+    backgroundColor: blue[600]
+  },
+  loginError: {
     backgroundColor: theme.palette.error.dark
   },
   iconVariant: {

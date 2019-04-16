@@ -74,8 +74,8 @@ class MainBody extends React.Component {
     this.setState({ isProductModalOpen: false });
   };
 
-  openSnackbar = variant1 => {
-    this.setState({ isSnackbarOpen: true, variant: variant1 });
+  openSnackbar = variant => {
+    this.setState({ isSnackbarOpen: true, variant });
   };
 
   closeSnackbar = () => {

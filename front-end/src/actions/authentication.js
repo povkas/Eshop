@@ -25,6 +25,7 @@ export const loginUser = (user, openSnackbar) => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       });
+      openSnackbar('loginError');
     });
 };
 
