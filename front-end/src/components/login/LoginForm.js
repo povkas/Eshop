@@ -27,8 +27,8 @@ class LoginForm extends React.Component {
   };
 
   handleLogin = user => {
-    const { loginUserProp } = this.props;
-    loginUserProp(user);
+    const { loginUserProp, openSnackbar } = this.props;
+    loginUserProp(user, openSnackbar);
   };
 
   render() {
@@ -57,7 +57,8 @@ class LoginForm extends React.Component {
 LoginForm.propTypes = {
   classes: PropTypes.shape().isRequired,
   className: PropTypes.shape().isRequired,
-  loginUserProp: PropTypes.func.isRequired
+  loginUserProp: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -65,7 +66,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return { loginUserProp: user => loginUser(user)(dispatch) };
+  return { loginUserProp: (user, openSnackbar) => loginUser(user, openSnackbar)(dispatch) };
 };
 
 export default connect(

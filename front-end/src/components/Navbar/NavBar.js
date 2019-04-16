@@ -16,21 +16,13 @@ import { CategoriesList } from '../categoriesList';
 class NavBar extends React.Component {
   handleLogout = e => {
     e.preventDefault();
-    const { logoutUserProp } = this.props;
+    const { logoutUserProp, openSnackbar } = this.props;
     logoutUserProp();
+    openSnackbar('error');
   };
 
   render() {
-    const { classes, auth, selectCategory, currentCategory } = this.props;
-    let logOut;
-    if (auth.isAuthenticated) {
-      logOut = (
-        // <IconButton className={classes.menuButton} onClick={this.handleLogout}>
-        //   <Person />
-        // </IconButton>
-        <UserOptions className={classes} logOut={this.handleLogout} />
-      );
-    }
+    const { classes, auth, selectCategory, currentCategory, openSnackbar } = this.props;
     return (
       <BrowserRouter>
         <AppBar position="static">
@@ -41,7 +33,15 @@ class NavBar extends React.Component {
                 BimBam連合
               </Link>
             </Typography>
-            {auth.isAuthenticated ? logOut : <LoginForm className={classes} />}
+            {auth.isAuthenticated ? (
+              <UserOptions
+                className={classes}
+                logOut={this.handleLogout}
+                openSnackbar={openSnackbar}
+              />
+            ) : (
+              <LoginForm className={classes} openSnackbar={openSnackbar} />
+            )}
             <IconButton className={classes.menuButton}>
               <ShoppingCart />
             </IconButton>
@@ -57,7 +57,8 @@ NavBar.propTypes = {
   selectCategory: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,
   auth: PropTypes.shape().isRequired,
-  logoutUserProp: PropTypes.func.isRequired
+  logoutUserProp: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

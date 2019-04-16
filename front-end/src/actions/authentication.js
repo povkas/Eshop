@@ -11,13 +11,14 @@ export const setCurrentUser = decoded => {
   };
 };
 
-export const loginUser = user => dispatch => {
+export const loginUser = (user, openSnackbar) => dispatch => {
   axios
     .post(getUser, user)
     .then(res => {
       localStorage.setItem('jwtToken', res.data);
       setAuthToken(res.data);
       dispatch(setCurrentUser(jwtDecode(res.data)));
+      openSnackbar('success');
     })
     .catch(err => {
       dispatch({
