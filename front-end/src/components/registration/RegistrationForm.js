@@ -23,7 +23,7 @@ class RegistrationForm extends React.Component {
   };
 
   render() {
-    const { classes, className } = this.props;
+    const { classes, className, Successful, Failed, handleClick } = this.props;
     const { openModal } = this.state;
 
     return (
@@ -33,7 +33,12 @@ class RegistrationForm extends React.Component {
         </Button>
         <Modal open={openModal} onClose={this.handleClose}>
           <div className={classes.paper}>
-            <Form passClose={this.handleClose} />
+            <Form
+              passClose={this.handleClose}
+              Successful={Successful}
+              Failed={Failed}
+              handleClick={handleClick}
+            />
           </div>
         </Modal>
       </div>
@@ -43,7 +48,10 @@ class RegistrationForm extends React.Component {
 
 RegistrationForm.propTypes = {
   classes: PropTypes.shape().isRequired,
-  className: PropTypes.shape().isRequired
+  className: PropTypes.shape().isRequired,
+  Failed: PropTypes.shape().isRequired,
+  Successful: PropTypes.shape().isRequired,
+  handleClick: PropTypes.shape().isRequired
 };
 
 export default withStyles(Styles)(RegistrationForm);

@@ -1,7 +1,8 @@
+import green from '@material-ui/core/colors/green';
+
 export const modalStyles = theme => ({
   paper: {
     position: 'absolute',
-    // width: theme.spacing.unit * 25,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
@@ -18,6 +19,12 @@ export const styles = {
   height: '6.5vh',
   marginTop: '1.9vh',
   marginBot: '1.9vh'
+};
+
+export const styles1 = {
+  success: {
+    backgroundColor: green[600]
+  }
 };
 
 export default modalStyles;

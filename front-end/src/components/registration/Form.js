@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import errorMessages from '../../utils/constants/registrationErrors';
-import { styles } from './Styles';
+import { styles, styles1 } from './Styles';
 
 function hasNumber(myString) {
   return /\d/.test(myString);
@@ -14,7 +15,6 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      registrationResponse: '',
       name: '',
       surname: '',
       email: '',
@@ -120,9 +120,7 @@ class Form extends Component {
         errors.isConfirmPassword = true;
       }
     }
-
     this.setState({ ...errors });
-
     return isError;
   };
 
@@ -139,7 +137,7 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault(); // preventing browser to reload
     const { name, surname, country, city, email, password, address } = this.state;
-
+    const { Successful, Failed, passClose, handleClick } = this.props;
     const url = `http://localhost:5000/api/user`;
 
     const data = JSON.stringify({
@@ -159,24 +157,20 @@ class Form extends Component {
         }
       })
       .then(() => {
-        this.setState({ registrationResponse: 'Registration Successful' });
+        Successful();
+        passClose();
+        handleClick();
       })
       .catch(error => {
         if (error.response) {
-          this.setState({ registrationResponse: 'Email has already been taken' });
+          Failed();
+          handleClick();
         }
       });
   };
 
-  mergedSubmitClose = () => {
-    const { passClose } = this.props;
-    this.handleSubmit();
-    if (!this.validate()) passClose();
-  };
-
   render() {
     const {
-      registrationResponse,
       name,
       surname,
       email,
@@ -327,14 +321,16 @@ class Form extends Component {
             Sign up
           </Button>
         </form>
-        {registrationResponse}
       </div>
     );
   }
 }
 
 Form.propTypes = {
-  passClose: PropTypes.shape().isRequired
+  passClose: PropTypes.shape().isRequired,
+  Successful: PropTypes.shape().isRequired,
+  Failed: PropTypes.shape().isRequired,
+  handleClick: PropTypes.shape().isRequired
 };
 
-export default Form;
+export default withStyles(styles1)(Form);
