@@ -8,8 +8,10 @@ import { isEqual } from 'lodash';
 import ProductModal from '../components/productModal/ProductModal';
 import ProductTable from '../components/productTable/ProductTable';
 import { getProducts } from '../actions/productActions';
-import Filter from '../components/productTable/Filter';
+import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
+import { NavBar } from '../components/Navbar';
+import { allProductsCategory } from '../utils/constants';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -22,7 +24,10 @@ class MainBody extends React.Component {
       lowerPriceLimit: '',
       upperPriceLimit: '',
       date: 'all',
-      upperPriceLimitHelper: ''
+      upperPriceLimitHelper: '',
+      selectedCategory: '',
+      sortCriteria: 'nameDescending',
+      sortingCompleted: false
     };
 
     this._isMounted = false;
@@ -33,6 +38,8 @@ class MainBody extends React.Component {
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
     this.checkPriceLower = this.checkPriceLower.bind(this);
     this.checkDate = this.checkDate.bind(this);
+    this.checkSelectedCategory = this.checkSelectedCategory.bind(this);
+    this.changeSort = this.changeSort.bind(this);
   }
 
   componentDidMount() {
@@ -51,16 +58,6 @@ class MainBody extends React.Component {
     this._isMounted = false;
   }
 
-  handleOpen = () => {
-    if (this._isMounted === true) {
-      this.setState({ isProductModalOpen: true });
-    }
-  };
-
-  handleClose = () => {
-    this.setState({ isProductModalOpen: false });
-  };
-
   changeProduct = product => {
     if (this._isMounted === true) {
       this.setState({
@@ -70,21 +67,62 @@ class MainBody extends React.Component {
     }
   };
 
-  changeShownProducts() {
-    const { upperPriceLimit, lowerPriceLimit, allProducts } = this.state;
+  handleClose = () => {
+    this.setState({ isProductModalOpen: false });
+  };
+
+  handleOpen = () => {
+    if (this._isMounted === true) {
+      this.setState({ isProductModalOpen: true });
+    }
+  };
+
+  selectCategory = category => {
+    this.setState(
+      {
+        selectedCategory: category
+      },
+      () => this.filterByCategory()
+    );
+  };
+
+  filterByCategory = () => {
+    const { allProducts, selectedCategory } = this.state;
     let qualifyingProducts = [];
+    if (selectedCategory === allProductsCategory) {
+      qualifyingProducts = allProducts;
+    } else {
+      qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    }
+    this.setState({ filteredProducts: qualifyingProducts });
+    this.setState({ lowerPriceLimit: '' });
+    this.setState({ upperPriceLimit: '' });
+    this.setState({ sortCriteria: 'nameDescending' });
+    this.setState({ date: 'all' });
+  };
+
+  changeShownProducts() {
+    const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
-    if (upperPriceLimitFloat >= lowerPriceLimitFloat && upperPriceLimitFloat > 0) {
-      qualifyingProducts = allProducts.filter(this.checkPriceUpper);
+    let qualifyingProducts = [];
+    if (selectedCategory === allProductsCategory) {
+      qualifyingProducts = allProducts;
+    } else {
+      qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    }
+
+    if (
+      upperPriceLimitFloat >= lowerPriceLimitFloat ||
+      (Number.isNaN(lowerPriceLimitFloat) && upperPriceLimitFloat > 0)
+    ) {
+      qualifyingProducts = qualifyingProducts.filter(this.checkPriceUpper);
       this.setState({ upperPriceLimitHelper: '' });
     } else if (upperPriceLimitFloat < lowerPriceLimitFloat) {
       this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
-      qualifyingProducts = allProducts;
     } else {
       this.setState({ upperPriceLimitHelper: '' });
-      qualifyingProducts = allProducts;
     }
 
     if (lowerPriceLimitFloat >= 0) {
@@ -93,6 +131,54 @@ class MainBody extends React.Component {
     }
     qualifyingProducts = qualifyingProducts.filter(this.checkDate);
     this.setState({ filteredProducts: qualifyingProducts });
+  }
+
+  sortShownProducts() {
+    const { sortCriteria, filteredProducts } = this.state;
+    let compare;
+    switch (sortCriteria) {
+      default:
+        compare = (a, b) => {
+          if (a.title > b.title) return 1;
+          if (b.title > a.title) return -1;
+          return 0;
+        };
+        break;
+      case 'nameAscending':
+        compare = (a, b) => {
+          if (a.title > b.title) return -1;
+          if (b.title > a.title) return 1;
+          return 0;
+        };
+        break;
+      case 'priceDescending':
+        compare = (a, b) => {
+          return b.price - a.price;
+        };
+        break;
+      case 'priceAscending':
+        compare = (a, b) => {
+          return a.price - b.price;
+        };
+        break;
+      case 'dateAscending':
+        compare = (a, b) => {
+          if (a.created > b.created) return -1;
+          if (b.created > a.created) return 1;
+          return 0;
+        };
+        break;
+      case 'dateDescending':
+        compare = (a, b) => {
+          if (a.created > b.created) return 1;
+          if (b.created > a.created) return -1;
+          return 0;
+        };
+        break;
+    }
+    const sortedProducts = filteredProducts;
+    sortedProducts.sort(compare);
+    this.setState({ filteredProducts: sortedProducts, sortingCompleted: true });
   }
 
   changeDate(e) {
@@ -115,10 +201,21 @@ class MainBody extends React.Component {
     }
   }
 
+  changeSort(e) {
+    this.setState({ sortCriteria: e.target.value, sortingCompleted: false }, () =>
+      this.sortShownProducts()
+    );
+  }
+
   checkPriceUpper(product) {
     const { upperPriceLimit } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     return product.price <= upperPriceLimitFloat;
+  }
+
+  checkSelectedCategory(product) {
+    const { selectedCategory } = this.state;
+    return product.category === selectedCategory || !selectedCategory;
   }
 
   checkPriceLower(product) {
@@ -170,10 +267,14 @@ class MainBody extends React.Component {
       lowerPriceLimit,
       upperPriceLimit,
       date,
-      upperPriceLimitHelper
+      upperPriceLimitHelper,
+      sortCriteria,
+      selectedCategory
     } = this.state;
+
     return (
       <div>
+        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}
@@ -191,6 +292,7 @@ class MainBody extends React.Component {
                 changePriceUpper={this.changePriceUpper}
                 upperPriceLimitHelper={upperPriceLimitHelper}
               />
+              <Sort sortCriteria={sortCriteria} changeSort={this.changeSort} />
               <BrowserRouter>
                 <Route
                   path="/"

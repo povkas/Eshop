@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Person } from '@material-ui/icons';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
+import { CategoriesList } from '../categoriesList';
 import { RegistrationForm } from '../registration';
 
 class NavBar extends React.Component {
@@ -33,7 +34,7 @@ class NavBar extends React.Component {
     this.setState({ open: true });
   };
 
-  handleClose = (event, reason) => {
+  handleClose = reason => {
     if (reason === 'clickaway') {
       return;
     }
@@ -41,12 +42,13 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, selectCategory, currentCategory } = this.props;
     const { open, registrationResponse } = this.state;
     return (
       <BrowserRouter>
         <AppBar position="static">
           <Toolbar>
+            <CategoriesList selectCategory={selectCategory} currentCategory={currentCategory} />
             <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link to="/" className={classes.shopName}>
                 BimBam
@@ -63,7 +65,9 @@ class NavBar extends React.Component {
                 vertical: 'bottom',
                 horizontal: 'left'
               }}
-              variant="success"
+              ContentProps={{
+                style: { backgroundColor: '#2d3a86' }
+              }}
               open={open}
               autoHideDuration={6000}
               onClose={this.handleClose}
@@ -83,7 +87,9 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  selectCategory: PropTypes.func.isRequired,
+  currentCategory: PropTypes.string.isRequired
 };
 
 export default withStyles(Styles)(NavBar);

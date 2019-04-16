@@ -21,7 +21,6 @@ class ProductModal extends React.Component {
 
   render() {
     const { classes, openModal, handleClose, product } = this.props;
-
     return (
       <Modal open={openModal} onClose={handleClose}>
         <div style={getModalStyle()} className={classes.paper}>

@@ -41,6 +41,15 @@ const styles = theme => ({
   },
   emptyMessage: {
     margin: '50px'
+  },
+  sortDiv: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '12px',
+    alignItems: 'center'
+  },
+  sortText: {
+    marginRight: '12px'
   }
 });
 
