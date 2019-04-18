@@ -7,8 +7,8 @@ import styles from './Styles';
 function LoadingSpinner(props) {
   const { classes } = props;
   return (
-    <div>
-      <CircularProgress className={classes.progress} size={15} /> Loading...
+    <div className={classes.loadingSpinner}>
+      <CircularProgress size={40} thickness={5} />
     </div>
   );
 }

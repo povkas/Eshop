@@ -52,8 +52,10 @@ const styles = theme => ({
   sortText: {
     marginRight: '12px'
   },
-  progress: {
-    margin: theme.spacing.unit * 2
+  loadingSpinner: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
