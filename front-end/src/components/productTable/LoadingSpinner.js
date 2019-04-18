@@ -1,9 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import styles from './Styles';
 
-const LoadingSpinner = () => (
-  <div>
-    <i className="fa fa-spinner fa-spin" /> Loading...
-  </div>
-);
+function LoadingSpinner(props) {
+  const { classes } = props;
+  return (
+    <div>
+      <CircularProgress className={classes.progress} size={15} /> Loading...
+    </div>
+  );
+}
 
-export default LoadingSpinner;
+LoadingSpinner.propTypes = {
+  classes: PropTypes.shape().isRequired
+};
+
+export default withStyles(styles)(LoadingSpinner);
