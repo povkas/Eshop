@@ -34,6 +34,7 @@ class LoginForm extends React.Component {
   render() {
     const { classes, className } = this.props;
     const { openModal } = this.state;
+    const register = "Don't have an account? Click to register";
 
     return (
       <div>
@@ -43,8 +44,7 @@ class LoginForm extends React.Component {
         <Modal open={openModal} onClose={this.handleClose}>
           <div className={classes.paper}>
             <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <Link href=" ">Don't have an account? Click to register</Link>
+            <Link href=" ">{register}</Link>
             <br />
             <Link href=" ">Forgot password?</Link>
           </div>

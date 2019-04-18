@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { authErrors } from '../../utils/constants';
 
 class Form extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Form extends Component {
       emailErrorText: ' ',
       isEmailError: false
     };
+    const { validEmail, isRequiredEmail } = authErrors;
 
     if (email.length !== 0) {
       if (
@@ -34,12 +36,12 @@ class Form extends Component {
         email.endsWith('.')
       ) {
         isError = true;
-        errors.emailErrorText = 'Requires valid email';
+        errors.emailErrorText = validEmail;
         errors.isEmailError = true;
       }
     } else {
       isError = true;
-      errors.emailErrorText = 'Email is required';
+      errors.emailErrorText = isRequiredEmail;
       errors.isEmailError = true;
     }
 
@@ -54,16 +56,17 @@ class Form extends Component {
       passwordErrorText: ' ',
       isPasswordError: false
     };
+    const { passwordLength, isRequiredPassword } = authErrors;
 
     if (password.length !== 0) {
       if (password.length < 8 || password.length > 255) {
         isError = true;
-        errors.passwordErrorText = 'Password must contain at least 8 symbols';
+        errors.passwordErrorText = passwordLength;
         errors.isPasswordError = true;
       }
     } else {
       isError = true;
-      errors.passwordErrorText = 'Password is required';
+      errors.passwordErrorText = isRequiredPassword;
       errors.isPasswordError = true;
     }
 

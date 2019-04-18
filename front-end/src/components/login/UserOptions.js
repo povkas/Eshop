@@ -9,27 +9,27 @@ class UserOptions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      anchorEl: null
+      openMenu: null
     };
   }
 
   handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({ openMenu: event.currentTarget });
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ openMenu: null });
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const { openMenu } = this.state;
     const { className, logOut } = this.props;
 
     return (
       <div>
         <IconButton
           className={className.menuButton}
-          aria-owns={anchorEl ? 'simple-menu' : undefined}
+          aria-owns={openMenu ? 'simple-menu' : undefined}
           aria-haspopup="true"
           onClick={this.handleClick}
         >
@@ -37,8 +37,8 @@ class UserOptions extends React.Component {
         </IconButton>
         <Menu
           id="simple-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
+          anchorEl={openMenu}
+          open={Boolean(openMenu)}
           onClose={this.handleClose}
         >
           <MenuItem onClick={e => logOut(e)}>Logout</MenuItem>

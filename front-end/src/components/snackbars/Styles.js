@@ -1,7 +1,7 @@
 import green from '@material-ui/core/colors/green';
 import blue from '@material-ui/core/colors/blue';
 
-const wrapStyles = theme => ({
+const Styles = theme => ({
   loginSuccess: {
     backgroundColor: green[600]
   },
@@ -25,4 +25,4 @@ const wrapStyles = theme => ({
   }
 });
 
-export default wrapStyles;
+export default Styles;

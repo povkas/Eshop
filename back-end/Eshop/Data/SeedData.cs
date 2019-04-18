@@ -11,8 +11,8 @@ namespace Eshop.Data
     {
         public static void Seed(Context context)
         {
-//            if (context.Users.Any() && context.Products.Any() && context.ProductCategories.Any())
-//                return;
+            if (context.Users.Any() && context.Products.Any() && context.ProductCategories.Any())
+                return;
 
             var users = new List<User>
             {
