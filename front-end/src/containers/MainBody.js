@@ -12,12 +12,14 @@ import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 import { allProductsCategory } from '../utils/constants';
+import { SnackbarContainer } from '../components/snackbars';
 
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isProductModalOpen: false,
+      isSnackbarOpen: false,
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
@@ -27,7 +29,8 @@ class MainBody extends React.Component {
       upperPriceLimitHelper: '',
       selectedCategory: '',
       sortCriteria: 'nameDescending',
-      sortingCompleted: false
+      sortingCompleted: false,
+      snackbarVariant: ''
     };
 
     this._isMounted = false;
@@ -75,6 +78,14 @@ class MainBody extends React.Component {
     if (this._isMounted === true) {
       this.setState({ isProductModalOpen: true });
     }
+  };
+
+  openSnackbar = snackbarVariant => {
+    this.setState({ isSnackbarOpen: true, snackbarVariant });
+  };
+
+  closeSnackbar = () => {
+    this.setState({ isSnackbarOpen: false });
   };
 
   selectCategory = category => {
@@ -262,6 +273,7 @@ class MainBody extends React.Component {
     const { classes } = this.props;
     const {
       isProductModalOpen,
+      isSnackbarOpen,
       selectedProduct,
       filteredProducts,
       lowerPriceLimit,
@@ -269,12 +281,17 @@ class MainBody extends React.Component {
       date,
       upperPriceLimitHelper,
       sortCriteria,
-      selectedCategory
+      selectedCategory,
+      snackbarVariant
     } = this.state;
 
     return (
       <div>
-        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
+        <NavBar
+          selectCategory={this.selectCategory}
+          currentCategory={selectedCategory}
+          openSnackbar={this.openSnackbar}
+        />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}
@@ -308,6 +325,11 @@ class MainBody extends React.Component {
             </Paper>
           </Grid>
         </Grid>
+        <SnackbarContainer
+          open={isSnackbarOpen}
+          closeSnackbar={this.closeSnackbar}
+          variant={snackbarVariant}
+        />
       </div>
     );
   }

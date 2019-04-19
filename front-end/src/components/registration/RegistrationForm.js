@@ -23,15 +23,7 @@ class RegistrationForm extends React.Component {
   };
 
   render() {
-    const {
-      classes,
-      className,
-      Successful,
-      Failed,
-      handleClick,
-      failedColor,
-      successfulColor
-    } = this.props;
+    const { classes, className, openSnackbar } = this.props;
     const { openModal } = this.state;
 
     return (
@@ -41,14 +33,7 @@ class RegistrationForm extends React.Component {
         </Button>
         <Modal open={openModal} onClose={this.handleClose}>
           <div className={classes.paper}>
-            <Form
-              passClose={this.handleClose}
-              Successful={Successful}
-              Failed={Failed}
-              handleClick={handleClick}
-              failedColor={failedColor}
-              successfulColor={successfulColor}
-            />
+            <Form passClose={this.handleClose} openSnackbar={openSnackbar} />
           </div>
         </Modal>
       </div>
@@ -59,11 +44,7 @@ class RegistrationForm extends React.Component {
 RegistrationForm.propTypes = {
   classes: PropTypes.shape().isRequired,
   className: PropTypes.shape().isRequired,
-  Failed: PropTypes.shape().isRequired,
-  Successful: PropTypes.shape().isRequired,
-  handleClick: PropTypes.shape().isRequired,
-  failedColor: PropTypes.shape().isRequired,
-  successfulColor: PropTypes.shape().isRequired
+  openSnackbar: PropTypes.shape().isRequired
 };
 
 export default withStyles(Styles)(RegistrationForm);

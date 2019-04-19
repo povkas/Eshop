@@ -23,35 +23,8 @@ class NavBar extends React.Component {
     };
   }
 
-  failedColor = () => {
-    this.setState({ snackColor: '#8B0000' });
-  };
-
-  successfulColor = () => {
-    this.setState({ snackColor: '#006400' });
-  };
-
-  registrationResponseSuccessful = () => {
-    this.setState({ registrationResponse: 'Registration Successful' });
-  };
-
-  registrationResponseFailed = () => {
-    this.setState({ registrationResponse: 'Email has already been taken' });
-  };
-
-  handleClick = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = reason => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    this.setState({ open: false });
-  };
-
   render() {
-    const { classes, selectCategory, currentCategory } = this.props;
+    const { classes, selectCategory, currentCategory, openSnackbar } = this.props;
     const { open, registrationResponse, snackColor } = this.state;
     return (
       <BrowserRouter>
@@ -64,13 +37,7 @@ class NavBar extends React.Component {
               </Link>
             </Typography>
 
-            <RegistrationForm
-              Successful={this.registrationResponseSuccessful}
-              Failed={this.registrationResponseFailed}
-              handleClick={this.handleClick}
-              failedColor={this.failedColor}
-              successfulColor={this.successfulColor}
-            />
+            <RegistrationForm openSnackbar={openSnackbar} />
             <Snackbar
               anchorOrigin={{
                 vertical: 'bottom',
@@ -100,7 +67,8 @@ class NavBar extends React.Component {
 NavBar.propTypes = {
   classes: PropTypes.shape().isRequired,
   selectCategory: PropTypes.func.isRequired,
-  currentCategory: PropTypes.string.isRequired
+  currentCategory: PropTypes.string.isRequired,
+  openSnackbar: PropTypes.string.isRequired
 };
 
 export default withStyles(Styles)(NavBar);
