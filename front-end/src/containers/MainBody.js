@@ -10,6 +10,7 @@ import { getProducts } from '../actions/productActions';
 import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
+import { checkIfDateWithinPeriod } from '../utils/dateFunctions';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -31,7 +32,6 @@ class MainBody extends React.Component {
 
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
     this.checkPriceLower = this.checkPriceLower.bind(this);
-    this.checkDate = this.checkDate.bind(this);
     this.changeSort = this.changeSort.bind(this);
   }
 
@@ -93,7 +93,7 @@ class MainBody extends React.Component {
   };
 
   changeShownProducts() {
-    const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory } = this.state;
+    const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory, date } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
@@ -115,7 +115,9 @@ class MainBody extends React.Component {
     if (lowerPriceLimitFloat >= 0) {
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceLower);
     }
-    qualifyingProducts = qualifyingProducts.filter(this.checkDate);
+    qualifyingProducts = qualifyingProducts.filter(product =>
+      checkIfDateWithinPeriod(product.created, date)
+    );
     this.setState({ filteredProducts: qualifyingProducts });
   }
 
@@ -180,40 +182,6 @@ class MainBody extends React.Component {
     const { lowerPriceLimit } = this.state;
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
     return product.price >= lowerPriceLimitFloat;
-  }
-
-  checkDate(product) {
-    const { date } = this.state;
-    let dateFromDatabase = product.created;
-    dateFromDatabase = dateFromDatabase.replace(/:| /g, '-');
-    dateFromDatabase = dateFromDatabase.replace('T', '-');
-    const YMDhms = dateFromDatabase.split('-');
-    const correctDate = new Date();
-    const radix = 10;
-    correctDate.setFullYear(
-      parseInt(YMDhms[0], radix),
-      parseInt(YMDhms[1], radix) - 1,
-      parseInt(YMDhms[2], radix)
-    );
-    correctDate.setHours(
-      parseInt(YMDhms[3], radix),
-      parseInt(YMDhms[4], radix),
-      parseInt(YMDhms[5], radix),
-      0
-    );
-
-    switch (date) {
-      case 'day':
-        return new Date() - correctDate < 86400000;
-      case 'week':
-        return new Date() - correctDate < 86400000 * 7;
-      case 'month':
-        return new Date() - correctDate < 86400000 * 31;
-      case 'year':
-        return new Date().getFullYear() - correctDate.getFullYear() < 1;
-      default:
-        return true;
-    }
   }
 
   render() {
