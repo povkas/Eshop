@@ -29,9 +29,6 @@ class MainBody extends React.Component {
 
     this._isMounted = false;
 
-    this.changeDate = this.changeDate.bind(this);
-    this.changePriceLower = this.changePriceLower.bind(this);
-    this.changePriceUpper = this.changePriceUpper.bind(this);
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
     this.checkPriceLower = this.checkPriceLower.bind(this);
     this.checkDate = this.checkDate.bind(this);
@@ -83,6 +80,16 @@ class MainBody extends React.Component {
       sortCriteria: 'nameDescending',
       date: 'all'
     });
+  };
+
+  changeDate = e => {
+    this.setState({ date: e.target.value }, () => this.changeShownProducts());
+  };
+
+  changePrice = (name, e) => {
+    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value) || e.target.value === '') {
+      this.setState({ [name]: e.target.value }, () => this.changeShownProducts());
+    }
   };
 
   changeShownProducts() {
@@ -157,22 +164,6 @@ class MainBody extends React.Component {
     }
 
     this.setState({ filteredProducts: filteredProducts.sort(compare) });
-  }
-
-  changeDate(e) {
-    this.setState({ date: e.target.value }, () => this.changeShownProducts());
-  }
-
-  changePriceLower(e) {
-    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value) || e.target.value === '') {
-      this.setState({ lowerPriceLimit: e.target.value }, () => this.changeShownProducts());
-    }
-  }
-
-  changePriceUpper(e) {
-    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value) || e.target.value === '') {
-      this.setState({ upperPriceLimit: e.target.value }, () => this.changeShownProducts());
-    }
   }
 
   changeSort(e) {
@@ -255,8 +246,7 @@ class MainBody extends React.Component {
                 upperPriceLimit={upperPriceLimit}
                 date={date}
                 changeDate={this.changeDate}
-                changePriceLower={this.changePriceLower}
-                changePriceUpper={this.changePriceUpper}
+                changePrice={this.changePrice}
                 upperPriceLimitHelper={upperPriceLimitHelper}
               />
               <Sort sortCriteria={sortCriteria} changeSort={this.changeSort} />
