@@ -11,6 +11,7 @@ import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 import { checkIfDateWithinPeriod } from '../utils/dateFunctions';
+import { compareByCriteria } from '../utils/sortFunctions';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -31,7 +32,6 @@ class MainBody extends React.Component {
     this._isMounted = false;
 
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
-    this.checkPriceLower = this.checkPriceLower.bind(this);
     this.changeSort = this.changeSort.bind(this);
   }
 
@@ -83,16 +83,16 @@ class MainBody extends React.Component {
   };
 
   changeDate = e => {
-    this.setState({ date: e.target.value }, () => this.changeShownProducts());
+    this.setState({ date: e.target.value }, () => this.filterShownProducts());
   };
 
   changePrice = (name, e) => {
     if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value) || e.target.value === '') {
-      this.setState({ [name]: e.target.value }, () => this.changeShownProducts());
+      this.setState({ [name]: e.target.value }, () => this.filterShownProducts());
     }
   };
 
-  changeShownProducts() {
+  filterShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory, date } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
@@ -113,7 +113,9 @@ class MainBody extends React.Component {
     }
 
     if (lowerPriceLimitFloat >= 0) {
-      qualifyingProducts = qualifyingProducts.filter(this.checkPriceLower);
+      qualifyingProducts = qualifyingProducts.filter(
+        product => product.price >= lowerPriceLimitFloat
+      );
     }
     qualifyingProducts = qualifyingProducts.filter(product =>
       checkIfDateWithinPeriod(product.created, date)
@@ -123,49 +125,7 @@ class MainBody extends React.Component {
 
   sortShownProducts() {
     const { sortCriteria, filteredProducts } = this.state;
-    let compare;
-    switch (sortCriteria) {
-      default:
-        compare = (a, b) => {
-          if (a.title > b.title) return 1;
-          if (b.title > a.title) return -1;
-          return 0;
-        };
-        break;
-      case 'nameAscending':
-        compare = (a, b) => {
-          if (a.title > b.title) return -1;
-          if (b.title > a.title) return 1;
-          return 0;
-        };
-        break;
-      case 'priceDescending':
-        compare = (a, b) => {
-          return b.price - a.price;
-        };
-        break;
-      case 'priceAscending':
-        compare = (a, b) => {
-          return a.price - b.price;
-        };
-        break;
-      case 'dateAscending':
-        compare = (a, b) => {
-          if (a.created > b.created) return -1;
-          if (b.created > a.created) return 1;
-          return 0;
-        };
-        break;
-      case 'dateDescending':
-        compare = (a, b) => {
-          if (a.created > b.created) return 1;
-          if (b.created > a.created) return -1;
-          return 0;
-        };
-        break;
-    }
-
-    this.setState({ filteredProducts: filteredProducts.sort(compare) });
+    this.setState({ filteredProducts: filteredProducts.sort(compareByCriteria(sortCriteria)) });
   }
 
   changeSort(e) {
@@ -176,12 +136,6 @@ class MainBody extends React.Component {
     const { upperPriceLimit } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     return Number.isNaN(upperPriceLimitFloat) ? true : product.price <= upperPriceLimitFloat;
-  }
-
-  checkPriceLower(product) {
-    const { lowerPriceLimit } = this.state;
-    const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
-    return product.price >= lowerPriceLimitFloat;
   }
 
   render() {
