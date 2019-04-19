@@ -4,7 +4,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import { isEqual } from 'lodash';
 import ProductModal from '../components/productModal/ProductModal';
 import ProductTable from '../components/productTable/ProductTable';
 import { getProducts } from '../actions/productActions';
@@ -25,8 +24,7 @@ class MainBody extends React.Component {
       date: 'all',
       upperPriceLimitHelper: '',
       selectedCategory: '',
-      sortCriteria: 'nameDescending',
-      sortingCompleted: false
+      sortCriteria: 'nameDescending'
     };
 
     this._isMounted = false;
@@ -45,11 +43,6 @@ class MainBody extends React.Component {
       this.setState({ allProducts: res, filteredProducts: res });
     });
     this._isMounted = true;
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const isModalToggled = !isEqual(this.state, nextState);
-    return isModalToggled;
   }
 
   componentWillUnmount() {
@@ -101,20 +94,18 @@ class MainBody extends React.Component {
       product => !selectedCategory || product.category === selectedCategory
     );
 
+    this.setState({ upperPriceLimitHelper: '' });
+
     if (
       upperPriceLimitFloat >= lowerPriceLimitFloat ||
       (Number.isNaN(lowerPriceLimitFloat) && upperPriceLimitFloat > 0)
     ) {
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceUpper);
-      this.setState({ upperPriceLimitHelper: '' });
     } else if (upperPriceLimitFloat < lowerPriceLimitFloat) {
       this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
-    } else {
-      this.setState({ upperPriceLimitHelper: '' });
     }
 
     if (lowerPriceLimitFloat >= 0) {
-      this.setState({ lowerPriceLimitHelper: '' });
       qualifyingProducts = qualifyingProducts.filter(this.checkPriceLower);
     }
     qualifyingProducts = qualifyingProducts.filter(this.checkDate);
@@ -164,9 +155,8 @@ class MainBody extends React.Component {
         };
         break;
     }
-    const sortedProducts = filteredProducts;
-    sortedProducts.sort(compare);
-    this.setState({ filteredProducts: sortedProducts, sortingCompleted: true });
+
+    this.setState({ filteredProducts: filteredProducts.sort(compare) });
   }
 
   changeDate(e) {
@@ -186,9 +176,7 @@ class MainBody extends React.Component {
   }
 
   changeSort(e) {
-    this.setState({ sortCriteria: e.target.value, sortingCompleted: false }, () =>
-      this.sortShownProducts()
-    );
+    this.setState({ sortCriteria: e.target.value }, () => this.sortShownProducts());
   }
 
   checkPriceUpper(product) {
