@@ -1,4 +1,5 @@
 import blue from '@material-ui/core/colors/blue';
+import indigo from '@material-ui/core/colors/indigo';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
 
@@ -14,9 +15,14 @@ const theme = () => ({
     textDecoration: 'none',
     color: 'white'
   },
+  grow: {
+    flexGrow: 1
+  },
   searchDiv: {
     marginLeft: 20,
-    flexGrow: 1
+    flexGrow: 1,
+    height: 25,
+    justifyContent: 'center'
   },
   suggestion: {
     color: blue[800],
@@ -29,13 +35,22 @@ const theme = () => ({
     }
   },
   suggestionList: {
-    width: 256,
+    width: 466,
     position: 'absolute',
     zIndex: 1
   },
   searchInput: {
-    width: 250,
-    color: 'white'
+    width: 460,
+    color: 'white',
+    backgroundColor: indigo[700],
+    border: `1px solid ${indigo[700]}`,
+    borderRadius: '5px',
+    height: 'inherit',
+    paddingLeft: 5,
+    '&:focus': {
+      backgroundColor: indigo[800],
+      border: `1px solid ${indigo[400]}`
+    }
   },
   showAll: {
     color: blue[900],

@@ -3,7 +3,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Styles from './Styles';
 
@@ -74,15 +73,13 @@ class Search extends React.Component {
     const { searchValue, suggestions, hasFocus } = this.state;
     return (
       <div className={classes.searchDiv} ref={this.setWrapperRef}>
-        <TextField
+        <input
           id="searchInput"
           value={searchValue}
+          className={classes.searchInput}
           onChange={e => this.changeValue(e)}
           onFocus={() => this.setState({ hasFocus: true })}
-          type="text"
-          autoComplete="off"
-          placeholder="Search for anything"
-          InputProps={{ className: classes.searchInput }}
+          placeholder="Search for products"
         />
         {hasFocus ? (
           <Paper className={classes.suggestionList} square>
