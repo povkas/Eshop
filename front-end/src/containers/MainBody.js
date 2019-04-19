@@ -11,7 +11,6 @@ import { getProducts } from '../actions/productActions';
 import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
-import { allProductsCategory } from '../utils/constants';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -38,7 +37,6 @@ class MainBody extends React.Component {
     this.checkPriceUpper = this.checkPriceUpper.bind(this);
     this.checkPriceLower = this.checkPriceLower.bind(this);
     this.checkDate = this.checkDate.bind(this);
-    this.checkSelectedCategory = this.checkSelectedCategory.bind(this);
     this.changeSort = this.changeSort.bind(this);
   }
 
@@ -77,28 +75,21 @@ class MainBody extends React.Component {
     }
   };
 
-  selectCategory = category => {
-    this.setState(
-      {
-        selectedCategory: category
-      },
-      () => this.filterByCategory()
-    );
-  };
+  filterByCategory = category => {
+    const { allProducts } = this.state;
 
-  filterByCategory = () => {
-    const { allProducts, selectedCategory } = this.state;
-    let qualifyingProducts = [];
-    if (selectedCategory === allProductsCategory) {
-      qualifyingProducts = allProducts;
-    } else {
-      qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
-    }
-    this.setState({ filteredProducts: qualifyingProducts });
-    this.setState({ lowerPriceLimit: '' });
-    this.setState({ upperPriceLimit: '' });
-    this.setState({ sortCriteria: 'nameDescending' });
-    this.setState({ date: 'all' });
+    const qualifyingProducts = allProducts.filter(
+      product => !category || product.category === category
+    );
+
+    this.setState({
+      selectedCategory: category,
+      filteredProducts: qualifyingProducts,
+      lowerPriceLimit: '',
+      upperPriceLimit: '',
+      sortCriteria: 'nameDescending',
+      date: 'all'
+    });
   };
 
   changeShownProducts() {
@@ -106,12 +97,9 @@ class MainBody extends React.Component {
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
-    let qualifyingProducts = [];
-    if (selectedCategory === allProductsCategory) {
-      qualifyingProducts = allProducts;
-    } else {
-      qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
-    }
+    let qualifyingProducts = allProducts.filter(
+      product => !selectedCategory || product.category === selectedCategory
+    );
 
     if (
       upperPriceLimitFloat >= lowerPriceLimitFloat ||
@@ -186,17 +174,13 @@ class MainBody extends React.Component {
   }
 
   changePriceLower(e) {
-    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value)) {
-      this.setState({ lowerPriceLimit: e.target.value }, () => this.changeShownProducts());
-    } else if (e.target.value === '') {
+    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value) || e.target.value === '') {
       this.setState({ lowerPriceLimit: e.target.value }, () => this.changeShownProducts());
     }
   }
 
   changePriceUpper(e) {
-    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value)) {
-      this.setState({ upperPriceLimit: e.target.value }, () => this.changeShownProducts());
-    } else if (e.target.value === '') {
+    if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value) || e.target.value === '') {
       this.setState({ upperPriceLimit: e.target.value }, () => this.changeShownProducts());
     }
   }
@@ -210,12 +194,7 @@ class MainBody extends React.Component {
   checkPriceUpper(product) {
     const { upperPriceLimit } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
-    return product.price <= upperPriceLimitFloat;
-  }
-
-  checkSelectedCategory(product) {
-    const { selectedCategory } = this.state;
-    return product.category === selectedCategory || !selectedCategory;
+    return Number.isNaN(upperPriceLimitFloat) ? true : product.price <= upperPriceLimitFloat;
   }
 
   checkPriceLower(product) {
@@ -274,7 +253,7 @@ class MainBody extends React.Component {
 
     return (
       <div>
-        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
+        <NavBar filterByCategory={this.filterByCategory} currentCategory={selectedCategory} />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}
