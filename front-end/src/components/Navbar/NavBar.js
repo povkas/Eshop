@@ -34,11 +34,7 @@ class NavBar extends React.Component {
               </Link>
             </Typography>
             {auth.isAuthenticated ? (
-              <UserOptions
-                className={classes}
-                logOut={this.handleLogout}
-                openSnackbar={openSnackbar}
-              />
+              <UserOptions className={classes} logOut={this.handleLogout} />
             ) : (
               <LoginForm className={classes} openSnackbar={openSnackbar} />
             )}
