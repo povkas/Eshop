@@ -26,15 +26,10 @@ class Form extends Component {
       isEmailError: false
     };
     const { validEmail, isRequiredEmail } = authErrors;
+    const emailRegex = /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/;
 
     if (email.length !== 0) {
-      if (
-        email.indexOf('@') === -1 ||
-        email.indexOf('.') === -1 ||
-        email.length > 128 ||
-        email.indexOf('@') > email.lastIndexOf('.') ||
-        email.endsWith('.')
-      ) {
+      if (email.length > 128 || !emailRegex.test(email)) {
         isError = true;
         errors.emailErrorText = validEmail;
         errors.isEmailError = true;
