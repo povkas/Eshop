@@ -59,7 +59,7 @@ function Filter(props) {
         <div className={classes.inputs}>
           <Typography variant="subheading">Date added</Typography>
           <Select value={date} onChange={changeDate}>
-            <MenuItem value="all">Show all</MenuItem>
+            <MenuItem value="">Show all</MenuItem>
             <MenuItem value="day">Less than a day ago</MenuItem>
             <MenuItem value="week">Less than a week ago</MenuItem>
             <MenuItem value="month">Less than a month ago</MenuItem>

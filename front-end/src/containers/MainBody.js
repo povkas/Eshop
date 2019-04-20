@@ -23,21 +23,18 @@ class MainBody extends React.Component {
       filteredProducts: [],
       lowerPriceLimit: '',
       upperPriceLimit: '',
-      date: 'all',
+      date: '',
       upperPriceLimitHelper: '',
       selectedCategory: '',
       sortCriteria: 'nameDescending'
     };
 
     this._isMounted = false;
-
-    this.checkPriceUpper = this.checkPriceUpper.bind(this);
-    this.changeSort = this.changeSort.bind(this);
   }
 
   componentDidMount() {
     getProducts().then(res => {
-      this.setState({ allProducts: res, filteredProducts: res });
+      this.setState({ allProducts: res, filteredProducts: res }, () => this.sortShownProducts());
     });
     this._isMounted = true;
   }
@@ -67,19 +64,21 @@ class MainBody extends React.Component {
 
   filterByCategory = category => {
     const { allProducts } = this.state;
-
     const qualifyingProducts = allProducts.filter(
       product => !category || product.category === category
     );
 
-    this.setState({
-      selectedCategory: category,
-      filteredProducts: qualifyingProducts,
-      lowerPriceLimit: '',
-      upperPriceLimit: '',
-      sortCriteria: 'nameDescending',
-      date: 'all'
-    });
+    this.setState(
+      {
+        selectedCategory: category,
+        filteredProducts: qualifyingProducts,
+        lowerPriceLimit: '',
+        upperPriceLimit: '',
+        sortCriteria: 'nameDescending',
+        date: 'all'
+      },
+      () => this.sortShownProducts()
+    );
   };
 
   changeDate = e => {
@@ -90,6 +89,10 @@ class MainBody extends React.Component {
     if (/^([0-9][0-9]*\.?[0-9]?[0-9]?)$/.test(e.target.value) || e.target.value === '') {
       this.setState({ [name]: e.target.value }, () => this.filterShownProducts());
     }
+  };
+
+  changeSort = e => {
+    this.setState({ sortCriteria: e.target.value }, () => this.sortShownProducts());
   };
 
   filterShownProducts() {
@@ -107,7 +110,9 @@ class MainBody extends React.Component {
       upperPriceLimitFloat >= lowerPriceLimitFloat ||
       (Number.isNaN(lowerPriceLimitFloat) && upperPriceLimitFloat > 0)
     ) {
-      qualifyingProducts = qualifyingProducts.filter(this.checkPriceUpper);
+      qualifyingProducts = qualifyingProducts.filter(product =>
+        Number.isNaN(upperPriceLimitFloat) ? true : product.price <= upperPriceLimitFloat
+      );
     } else if (upperPriceLimitFloat < lowerPriceLimitFloat) {
       this.setState({ upperPriceLimitHelper: 'Number smaller than lower bound number' });
     }
@@ -126,16 +131,6 @@ class MainBody extends React.Component {
   sortShownProducts() {
     const { sortCriteria, filteredProducts } = this.state;
     this.setState({ filteredProducts: filteredProducts.sort(compareByCriteria(sortCriteria)) });
-  }
-
-  changeSort(e) {
-    this.setState({ sortCriteria: e.target.value }, () => this.sortShownProducts());
-  }
-
-  checkPriceUpper(product) {
-    const { upperPriceLimit } = this.state;
-    const upperPriceLimitFloat = parseFloat(upperPriceLimit);
-    return Number.isNaN(upperPriceLimitFloat) ? true : product.price <= upperPriceLimitFloat;
   }
 
   render() {
