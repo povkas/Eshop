@@ -12,13 +12,17 @@ import Styles from './Styles';
 import { CategoriesList } from '../categoriesList';
 
 function NavBar(props) {
-  const { classes, filterByCategory, currentCategory } = props;
+  const { classes, filterByCategory, currentCategory, setError } = props;
 
   return (
     <BrowserRouter>
       <AppBar position="static">
         <Toolbar>
-          <CategoriesList filterByCategory={filterByCategory} currentCategory={currentCategory} />
+          <CategoriesList
+            filterByCategory={filterByCategory}
+            currentCategory={currentCategory}
+            setError={setError}
+          />
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <Link to="/" className={classes.shopName}>
               BimBam
@@ -39,7 +43,8 @@ function NavBar(props) {
 NavBar.propTypes = {
   classes: PropTypes.shape().isRequired,
   filterByCategory: PropTypes.func.isRequired,
-  currentCategory: PropTypes.string.isRequired
+  currentCategory: PropTypes.string.isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(NavBar);

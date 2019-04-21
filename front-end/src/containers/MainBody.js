@@ -12,6 +12,7 @@ import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 import { checkIfDateWithinPeriod } from '../utils/dateFunctions';
 import { compareByCriteria } from '../utils/sortFunctions';
+import CustomizedSnackbars from '../components/snackbar/CustomSnackbar';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -26,22 +27,33 @@ class MainBody extends React.Component {
       date: '',
       upperPriceLimitHelper: '',
       selectedCategory: '',
-      sortCriteria: 'nameDescending'
+      sortCriteria: 'nameDescending',
+      error: {}
     };
 
     this._isMounted = false;
   }
 
   componentDidMount() {
-    getProducts().then(res => {
-      this.setState({ allProducts: res, filteredProducts: res }, () => this.sortShownProducts());
-    });
+    getProducts()
+      .then(res => {
+        this.setState({ allProducts: res, filteredProducts: res }, () => this.sortShownProducts());
+      })
+      .catch(err => {
+        const errors = err.response ? err.response.data : { status: 404, message: 'Unidentified' };
+        this.setState({ error: errors });
+      });
+
     this._isMounted = true;
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
+
+  setError = err => {
+    this.setState({ error: err });
+  };
 
   changeProduct = product => {
     if (this._isMounted === true) {
@@ -60,6 +72,10 @@ class MainBody extends React.Component {
     if (this._isMounted === true) {
       this.setState({ isProductModalOpen: true });
     }
+  };
+
+  handleSnackbarClose = () => {
+    this.setState({ error: {} });
   };
 
   filterByCategory = category => {
@@ -144,12 +160,17 @@ class MainBody extends React.Component {
       date,
       upperPriceLimitHelper,
       sortCriteria,
-      selectedCategory
+      selectedCategory,
+      error
     } = this.state;
 
     return (
       <div>
-        <NavBar filterByCategory={this.filterByCategory} currentCategory={selectedCategory} />
+        <NavBar
+          filterByCategory={this.filterByCategory}
+          currentCategory={selectedCategory}
+          setError={this.setError}
+        />
         <ProductModal
           openModal={isProductModalOpen}
           handleClose={this.handleClose}
@@ -182,6 +203,7 @@ class MainBody extends React.Component {
             </Paper>
           </Grid>
         </Grid>
+        <CustomizedSnackbars error={error} handleClose={this.handleSnackbarClose} />
       </div>
     );
   }

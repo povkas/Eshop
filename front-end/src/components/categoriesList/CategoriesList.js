@@ -25,10 +25,17 @@ class CategoriesList extends React.Component {
   }
 
   componentDidMount() {
-    categoriesAction.getCategories().then(res => {
-      res.sort((a, b) => a.category.localeCompare(b.category));
-      this.setState({ categories: res });
-    });
+    const { setError } = this.props;
+    categoriesAction
+      .getCategories()
+      .then(res => {
+        res.sort((a, b) => a.category.localeCompare(b.category));
+        this.setState({ categories: res });
+      })
+      .catch(err => {
+        const errors = err.response ? err.response.data : { status: 404, message: 'Unidentified' };
+        setError(errors);
+      });
   }
 
   toggleDrawer = (side, open) => () => {
@@ -89,6 +96,7 @@ class CategoriesList extends React.Component {
 
 CategoriesList.propTypes = {
   filterByCategory: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,
   classes: PropTypes.shape().isRequired
 };
