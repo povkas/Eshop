@@ -23,7 +23,8 @@ namespace Eshop.Configurations
             return service
                 .AddScoped<IRepository<Product>, ProductsRepository>()
                 .AddScoped<IRepository<ProductCategory>, ProductCategoriesRepository>()
-                .AddScoped<IRepository<User>, UsersRepository>();
+                .AddScoped<IRepository<User>, UsersRepository>()
+                .AddScoped<IRepository<CreditCard>, CreditCardsRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)

@@ -20,5 +20,12 @@ namespace Eshop.Data.Repositories
         {
             return queryable;
         }
+
+        public async Task<CreditCard> GetByNumber(string number)
+        {
+            var item = await IncludeDependencies(ItemSet).FirstOrDefaultAsync(x => x.Number == number);
+
+            return item;
+        }
     }
 }
