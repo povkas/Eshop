@@ -7,12 +7,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Person } from '@material-ui/icons';
+import Button from '@material-ui/core/Button';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
 import { CategoriesList } from '../categoriesList';
 
 function NavBar(props) {
-  const { classes, selectCategory, currentCategory } = props;
+  const { classes, selectCategory, currentCategory, openPayment } = props;
 
   return (
     <BrowserRouter>
@@ -24,6 +25,7 @@ function NavBar(props) {
               BimBam
             </Link>
           </Typography>
+          <Button onClick={openPayment}> Proceed with payment</Button>
           <IconButton className={classes.menuButton}>
             <Person />
           </IconButton>
@@ -39,7 +41,8 @@ function NavBar(props) {
 NavBar.propTypes = {
   classes: PropTypes.shape().isRequired,
   selectCategory: PropTypes.func.isRequired,
-  currentCategory: PropTypes.string.isRequired
+  currentCategory: PropTypes.string.isRequired,
+  openPayment: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(NavBar);

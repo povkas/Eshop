@@ -12,12 +12,14 @@ import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 import { allProductsCategory } from '../utils/constants';
+import { PaymentModal } from '../components/paymentModal';
 
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isProductModalOpen: false,
+      isPaymentModalOpen: false,
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
@@ -67,13 +69,13 @@ class MainBody extends React.Component {
     }
   };
 
-  handleClose = () => {
-    this.setState({ isProductModalOpen: false });
+  handleClose = name => {
+    this.setState({ [name]: false });
   };
 
-  handleOpen = () => {
+  handleOpen = name => {
     if (this._isMounted === true) {
-      this.setState({ isProductModalOpen: true });
+      this.setState({ [name]: true });
     }
   };
 
@@ -262,6 +264,7 @@ class MainBody extends React.Component {
     const { classes } = this.props;
     const {
       isProductModalOpen,
+      isPaymentModalOpen,
       selectedProduct,
       filteredProducts,
       lowerPriceLimit,
@@ -274,11 +277,19 @@ class MainBody extends React.Component {
 
     return (
       <div>
-        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
+        <NavBar
+          selectCategory={this.selectCategory}
+          currentCategory={selectedCategory}
+          openPayment={() => this.handleOpen('isPaymentModalOpen')}
+        />
         <ProductModal
-          openModal={isProductModalOpen}
-          handleClose={this.handleClose}
+          isOpen={isProductModalOpen}
+          handleClose={() => this.handleClose('isProductModalOpen')}
           product={selectedProduct}
+        />
+        <PaymentModal
+          isOpen={isPaymentModalOpen}
+          handleClose={() => this.handleClose('isPaymentModalOpen')}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item>
@@ -298,7 +309,7 @@ class MainBody extends React.Component {
                   path="/"
                   component={() => (
                     <ProductTable
-                      openProduct={this.handleOpen}
+                      openProduct={() => this.handleOpen('isProductModalOpen')}
                       productHandler={this.changeProduct}
                       products={filteredProducts}
                     />
