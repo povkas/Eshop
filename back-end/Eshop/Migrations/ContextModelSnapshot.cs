@@ -15,9 +15,26 @@ namespace Eshop.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Eshop.Models.CreditCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ExpirationDate");
+
+                    b.Property<string>("Number");
+
+                    b.Property<int>("SecretCode");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CreditCards");
+                });
 
             modelBuilder.Entity("Eshop.Models.Product", b =>
                 {
