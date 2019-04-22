@@ -11,9 +11,7 @@ class Form extends Component {
       email: '',
       password: '',
       emailErrorText: ' ',
-      isEmailError: false,
-      passwordErrorText: ' ',
-      isPasswordError: false
+      passwordErrorText: ' '
     };
     this.state = this.initialstate;
   }
@@ -22,8 +20,7 @@ class Form extends Component {
     let isError = false;
     const { email } = this.state;
     const errors = {
-      emailErrorText: ' ',
-      isEmailError: false
+      emailErrorText: ' '
     };
     const { validEmail, isRequiredEmail } = authErrors;
     const emailRegex = /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/;
@@ -32,12 +29,10 @@ class Form extends Component {
       if (email.length > 128 || !emailRegex.test(email)) {
         isError = true;
         errors.emailErrorText = validEmail;
-        errors.isEmailError = true;
       }
     } else {
       isError = true;
       errors.emailErrorText = isRequiredEmail;
-      errors.isEmailError = true;
     }
 
     this.setState({ ...errors });
@@ -48,8 +43,7 @@ class Form extends Component {
     let isError = false;
     const { password } = this.state;
     const errors = {
-      passwordErrorText: ' ',
-      isPasswordError: false
+      passwordErrorText: ' '
     };
     const { passwordLength, isRequiredPassword } = authErrors;
 
@@ -57,12 +51,10 @@ class Form extends Component {
       if (password.length < 8 || password.length > 255) {
         isError = true;
         errors.passwordErrorText = passwordLength;
-        errors.isPasswordError = true;
       }
     } else {
       isError = true;
       errors.passwordErrorText = isRequiredPassword;
-      errors.isPasswordError = true;
     }
 
     this.setState({ ...errors });
@@ -90,14 +82,7 @@ class Form extends Component {
   };
 
   render() {
-    const {
-      email,
-      password,
-      emailErrorText,
-      isEmailError,
-      passwordErrorText,
-      isPasswordError
-    } = this.state;
+    const { email, password, emailErrorText, passwordErrorText } = this.state;
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -107,7 +92,7 @@ class Form extends Component {
           label="Email"
           value={email}
           onChange={this.handleChange}
-          error={isEmailError}
+          error={emailErrorText !== ' '}
           helperText={emailErrorText}
           onBlur={this.validateEmail}
           margin="normal"
@@ -118,7 +103,7 @@ class Form extends Component {
           type="password"
           value={password}
           onChange={this.handleChange}
-          error={isPasswordError}
+          error={passwordErrorText !== ' '}
           helperText={passwordErrorText}
           onBlur={this.validatePassword}
           margin="normal"
