@@ -27,7 +27,8 @@ class MainBody extends React.Component {
       upperPriceLimitHelper: '',
       selectedCategory: '',
       sortCriteria: 'nameDescending',
-      sortingCompleted: false
+      sortingCompleted: false,
+      productsLoading: false
     };
 
     this._isMounted = false;
@@ -43,8 +44,10 @@ class MainBody extends React.Component {
   }
 
   componentDidMount() {
-    getProducts().then(res => {
-      this.setState({ allProducts: res, filteredProducts: res });
+    this.setState({ productsLoading: true }, () => {
+      getProducts().then(res => {
+        this.setState({ allProducts: res, filteredProducts: res, productsLoading: false });
+      });
     });
     this._isMounted = true;
   }
@@ -269,7 +272,8 @@ class MainBody extends React.Component {
       date,
       upperPriceLimitHelper,
       sortCriteria,
-      selectedCategory
+      selectedCategory,
+      productsLoading
     } = this.state;
 
     return (
@@ -301,6 +305,7 @@ class MainBody extends React.Component {
                       openProduct={this.handleOpen}
                       productHandler={this.changeProduct}
                       products={filteredProducts}
+                      productsLoading={productsLoading}
                     />
                   )}
                 />
