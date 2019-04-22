@@ -51,8 +51,7 @@ class Search extends React.Component {
     const productName = product.title.toLowerCase();
     const searchString = searchValue.toLowerCase();
 
-    // return searchValue.length < 3 ? false : productName.includes(searchString);
-    return productName.includes(searchString);
+    return searchValue.length < 3 ? false : productName.includes(searchString);
   }
 
   showAllProducts() {
