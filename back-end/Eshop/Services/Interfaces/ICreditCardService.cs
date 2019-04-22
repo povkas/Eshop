@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Eshop.DTOs.CreditCards;
 using Eshop.Models;
 
 namespace Eshop.Services.Interfaces
 {
-    public class ICreditCardService
+    public interface ICreditCardService
     {
-        Task<ICollection<CreditCard>> GetAll;
+        Task<CreditCardDto> GetByNumber(string number);
     }
 }

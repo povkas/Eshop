@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Eshop.Data.Repositories;
 using Eshop.DTOs.CreditCards;
+using Eshop.Models;
 using Eshop.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Eshop.Services
 {
@@ -16,12 +19,13 @@ namespace Eshop.Services
         {
             _repository = repository;
             _mapper = mapper;
+
         }
 
         public async Task<CreditCardDto> GetByNumber(string number)
         {
-            var creditCards = await _repository.GetByNumber(number);
-            var creditCardDto = _mapper.Map<CreditCardDto>(creditCards);
+            var creditCard = await _repository.GetByNumber(number);
+            var creditCardDto = _mapper.Map<CreditCardDto>(creditCard);
 
             return creditCardDto;
         }

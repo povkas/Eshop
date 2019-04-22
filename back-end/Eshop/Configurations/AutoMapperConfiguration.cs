@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Eshop.DTOs;
+using Eshop.DTOs.CreditCards;
 using Eshop.DTOs.Products;
 using Eshop.DTOs.Users;
 using Eshop.Models;
@@ -24,6 +25,8 @@ namespace Eshop.Configurations
             CreateMap<NewUserDto, User>(MemberList.Source);
             CreateMap<UserDto, User>(MemberList.Source);
             CreateMap<User, UserDto>(MemberList.Destination);
+
+            CreateMap<CreditCard, CreditCardDto>(MemberList.Destination);
         }
     }
 }

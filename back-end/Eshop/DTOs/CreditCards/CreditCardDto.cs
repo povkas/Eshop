@@ -10,6 +10,6 @@ namespace Eshop.DTOs.CreditCards
         public int Id { get; set; }
         public string Number { get; set; }
         public string ExpirationDate { get; set; }
-        public int SecretNumber { get; set; }
+        public int SecretCode { get; set; }
     }
 }

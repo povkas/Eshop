@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Eshop.DTOs.CreditCards;
 using Eshop.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Data.Repositories
 {
-    public class CreditCardsRepository : RepositoryBase<CreditCard>
+    public class CreditCardsRepository : ICreditCardsRepository
     {
-        protected override DbSet<CreditCard> ItemSet { get; }
+        protected readonly Context Context;
 
-        public CreditCardsRepository(Context context) : base(context)
+        protected DbSet<CreditCard> ItemSet { get; }
+
+        public CreditCardsRepository(Context context)
         {
             ItemSet = context.CreditCards;
+            Context = context;
         }
 
-        protected override IQueryable<CreditCard> IncludeDependencies(IQueryable<CreditCard> queryable)
+        protected IQueryable<CreditCard> IncludeDependencies(IQueryable<CreditCard> queryable)
         {
             return queryable;
         }
