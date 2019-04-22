@@ -12,12 +12,14 @@ import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 import { allProductsCategory } from '../utils/constants';
+import { SnackbarContainer } from '../components/snackbars';
 
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isProductModalOpen: false,
+      isSnackbarOpen: false,
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
@@ -28,6 +30,7 @@ class MainBody extends React.Component {
       selectedCategory: '',
       sortCriteria: 'nameDescending',
       sortingCompleted: false,
+      snackbarVariant: '',
       productsLoading: false
     };
 
@@ -70,14 +73,16 @@ class MainBody extends React.Component {
     }
   };
 
-  handleClose = () => {
+  handleModalClose = () => {
     this.setState({ isProductModalOpen: false });
   };
 
-  handleOpen = () => {
-    if (this._isMounted === true) {
-      this.setState({ isProductModalOpen: true });
-    }
+  openSnackbar = snackbarVariant => {
+    this.setState({ isSnackbarOpen: true, snackbarVariant });
+  };
+
+  closeSnackbar = () => {
+    this.setState({ isSnackbarOpen: false });
   };
 
   selectCategory = category => {
@@ -265,6 +270,7 @@ class MainBody extends React.Component {
     const { classes } = this.props;
     const {
       isProductModalOpen,
+      isSnackbarOpen,
       selectedProduct,
       filteredProducts,
       lowerPriceLimit,
@@ -273,15 +279,20 @@ class MainBody extends React.Component {
       upperPriceLimitHelper,
       sortCriteria,
       selectedCategory,
+      snackbarVariant,
       productsLoading
     } = this.state;
 
     return (
       <div>
-        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
+        <NavBar
+          selectCategory={this.selectCategory}
+          currentCategory={selectedCategory}
+          openSnackbar={this.openSnackbar}
+        />
         <ProductModal
           openModal={isProductModalOpen}
-          handleClose={this.handleClose}
+          handleClose={this.handleModalClose}
           product={selectedProduct}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
@@ -313,6 +324,11 @@ class MainBody extends React.Component {
             </Paper>
           </Grid>
         </Grid>
+        <SnackbarContainer
+          open={isSnackbarOpen}
+          closeSnackbar={this.closeSnackbar}
+          variant={snackbarVariant}
+        />
       </div>
     );
   }
