@@ -40,7 +40,8 @@ const styles = theme => ({
     width: '250px'
   },
   emptyMessage: {
-    margin: '50px'
+    margin: '50px',
+    textAlign: 'center'
   },
   sortDiv: {
     display: 'flex',
@@ -50,6 +51,11 @@ const styles = theme => ({
   },
   sortText: {
     marginRight: '12px'
+  },
+  loadingSpinner: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
