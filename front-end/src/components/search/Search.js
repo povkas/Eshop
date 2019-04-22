@@ -62,7 +62,10 @@ class Search extends React.Component {
 
   handleSuggestionClick(product) {
     const { productHandler } = this.props;
-    this.setState({ hasFocus: false, searchValue: product.title }, () => productHandler(product));
+    this.setState({ hasFocus: false, searchValue: product.title }, () => {
+      productHandler(product);
+      this.changeSuggestions();
+    });
   }
 
   render() {
