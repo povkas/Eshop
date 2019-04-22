@@ -23,7 +23,7 @@ class Form extends Component {
       emailErrorText: ' '
     };
     const { validEmail, isRequiredEmail } = authErrors;
-    const emailRegex = /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/;
+    const emailRegex = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
 
     if (email.length !== 0) {
       if (email.length > 128 || !emailRegex.test(email)) {
