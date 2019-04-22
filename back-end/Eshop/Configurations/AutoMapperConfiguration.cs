@@ -17,8 +17,10 @@ namespace Eshop.Configurations
         protected AutoMapperConfiguration(string name) : base(name)
         {
             CreateMap<NewProductDto, Product>(MemberList.Source);
+            CreateMap<PatchProductDto, Product>(MemberList.Source);
             CreateMap<ProductDto, Product>(MemberList.Source);
             CreateMap<Product, ProductDto>(MemberList.Destination);
+            CreateMap<Product, PatchProductDto>(MemberList.Destination);
 
             CreateMap<ProductCategory, ProductCategoryDto>(MemberList.Destination);
 
@@ -27,6 +29,7 @@ namespace Eshop.Configurations
             CreateMap<User, UserDto>(MemberList.Destination);
 
             CreateMap<CreditCard, CreditCardDto>(MemberList.Destination);
+            CreateMap<PatchCreditCardDto, CreditCard>(MemberList.Source);
         }
     }
 }

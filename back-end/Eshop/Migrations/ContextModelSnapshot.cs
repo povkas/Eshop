@@ -25,6 +25,8 @@ namespace Eshop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("Balance");
+
                     b.Property<string>("ExpirationDate");
 
                     b.Property<string>("Number");
