@@ -66,13 +66,10 @@ namespace EShop.Services
 
         public async Task<bool> PartialUpdate(int id, JsonPatchDocument<PatchProductDto> itemPatch)
         {
-            _logger.LogInformation("Mapped object to update {itemPatch}", itemPatch);
-
             if (itemPatch == null) throw new ArgumentNullException(nameof(itemPatch));
 
             var itemToUpdate = await _repository.GetById(id);
-
-            _logger.LogInformation("Mapped object to update {itemToUpdate}", itemToUpdate);
+            _logger.LogInformation("Got object to update {itemToUpdate} by id {ID}", itemToUpdate, id);
 
             if (itemToUpdate == null)
             {
@@ -80,10 +77,11 @@ namespace EShop.Services
             }
 
             var updateData = _mapper.Map<PatchProductDto>(itemToUpdate);
-
             _logger.LogInformation("Mapped object to update {UPDATEDATA}", updateData);
+
             itemPatch.ApplyTo(updateData);
-            _logger.LogInformation("Patched object to update data {ItemPatch}", itemPatch);
+            _logger.LogInformation("Patched object with update data {ItemPatch}", itemPatch);
+
             _mapper.Map(updateData, itemToUpdate);
             var updated = await _repository.Update(itemToUpdate);
             return updated;
