@@ -32,5 +32,12 @@ namespace Eshop.Data.Repositories
 
             return item;
         }
+
+        public virtual async Task<bool> Update(CreditCard creditCard)
+        {
+            ItemSet.Attach(creditCard);
+            var changes = await Context.SaveChangesAsync();
+            return changes > 0;
+        }
     }
 }
