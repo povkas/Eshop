@@ -9,7 +9,7 @@
 			"name": "Products",
 			"item": [
 				{
-					"name": "[DELETE] Product",
+					"name": "Product",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -34,7 +34,7 @@
 					"response": []
 				},
 				{
-					"name": "[GET] Products",
+					"name": "Products",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -58,7 +58,7 @@
 					"response": []
 				},
 				{
-					"name": "[POST] Product",
+					"name": "Product",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -87,6 +87,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Product",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"value\": 4,\r\n    \"path\": \"/quantity\",\r\n    \"op\": \"replace\"\r\n  }\r\n]"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -94,7 +126,10 @@
 			"name": "Product categories",
 			"item": [
 				{
-					"name": "[GET] Product categories",
+					"name": "Product categories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -103,7 +138,16 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": ""
+							"raw": "http://localhost:5000/api/product-categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"product-categories"
+							]
 						}
 					},
 					"response": []
@@ -114,7 +158,7 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "[LOGIN] user",
+					"name": "Login user",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -145,6 +189,37 @@
 						"description": "sending post login request with UserTdo body "
 					},
 					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Name\",\n\t\"surname\": \"Surname\",\n\t\"Address\": \"Violet st. 19\",\n\t\"City\": \"Southampton\",\n\t\"Country\": \"United Kingdom\",\n\t\"email\": \"name@email.com\",\n\t\"password\": \"name1234\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -152,7 +227,7 @@
 			"name": "Credit cards",
 			"item": [
 				{
-					"name": "[GET] Check if exists",
+					"name": "Check if card exists",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -173,6 +248,38 @@
 							"path": [
 								"api",
 								"credit-cards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change credit card balance",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n\t\"value\": 40,\n\t\"path\": \"/balance\",\n\t\"op\": replace\n  }\n]"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/credit-cards/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"credit-cards",
+								"1"
 							]
 						}
 					},
