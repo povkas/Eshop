@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { Person } from '@material-ui/icons';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
-import Search from './Search';
+import Search from '../search/Search';
 import { CategoriesList } from '../categoriesList';
 
 function NavBar(props) {
