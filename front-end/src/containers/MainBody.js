@@ -30,7 +30,8 @@ class MainBody extends React.Component {
       selectedCategory: '',
       sortCriteria: 'nameDescending',
       sortingCompleted: false,
-      snackbarVariant: ''
+      snackbarVariant: '',
+      productsLoading: false
     };
 
     this._isMounted = false;
@@ -46,8 +47,10 @@ class MainBody extends React.Component {
   }
 
   componentDidMount() {
-    getProducts().then(res => {
-      this.setState({ allProducts: res, filteredProducts: res });
+    this.setState({ productsLoading: true }, () => {
+      getProducts().then(res => {
+        this.setState({ allProducts: res, filteredProducts: res, productsLoading: false });
+      });
     });
     this._isMounted = true;
   }
@@ -276,7 +279,8 @@ class MainBody extends React.Component {
       upperPriceLimitHelper,
       sortCriteria,
       selectedCategory,
-      snackbarVariant
+      snackbarVariant,
+      productsLoading
     } = this.state;
 
     return (
@@ -308,7 +312,12 @@ class MainBody extends React.Component {
                 <Route
                   path="/"
                   component={() => (
-                    <ProductTable productHandler={this.changeProduct} products={filteredProducts} />
+                    <ProductTable
+                      openProduct={this.handleOpen}
+                      productHandler={this.changeProduct}
+                      products={filteredProducts}
+                      productsLoading={productsLoading}
+                    />
                   )}
                 />
               </BrowserRouter>
