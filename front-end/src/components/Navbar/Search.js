@@ -95,7 +95,7 @@ class Search extends React.Component {
                 Show all
               </div>
             ) : null}
-            {searchValue.length > 3 && suggestions.length === 0 ? (
+            {searchValue.length > 2 && suggestions.length === 0 ? (
               <div className={classes.emptySuggestions}>There are no matching products</div>
             ) : null}
           </Paper>
