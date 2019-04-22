@@ -10,6 +10,7 @@ import { Person } from '@material-ui/icons';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
 import { CategoriesList } from '../categoriesList';
+import { ProductForm } from '../productForm';
 
 function NavBar(props) {
   const { classes, selectCategory, currentCategory } = props;
@@ -24,6 +25,7 @@ function NavBar(props) {
               BimBam
             </Link>
           </Typography>
+          <ProductForm className={classes} />
           <IconButton className={classes.menuButton}>
             <Person />
           </IconButton>
