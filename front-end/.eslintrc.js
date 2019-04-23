@@ -18,6 +18,7 @@ module.exports = {
   globals: {
     fetch: 'writeable',
     document: 'writeable',
-    window: 'writeable'
+    window: 'writeable',
+    localStorage: true
   }
 };
