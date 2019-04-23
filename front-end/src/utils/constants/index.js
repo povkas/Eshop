@@ -1,4 +1,5 @@
 export { default as ROUTES } from './routes';
-export { default as API } from './api';
-export { categories } from './api';
+export { products, categories, getUser } from './api';
 export { allProductsCategory } from './categories';
+export { snackbarMessages } from './snackbarMessages';
+export { authErrors } from './authErrors';

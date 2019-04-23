@@ -12,12 +12,14 @@ import { Filter, Sort } from '../components/productTable';
 import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 import { allProductsCategory } from '../utils/constants';
+import { SnackbarContainer } from '../components/snackbars';
 
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isProductModalOpen: false,
+      isSnackbarOpen: false,
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
@@ -27,7 +29,9 @@ class MainBody extends React.Component {
       upperPriceLimitHelper: '',
       selectedCategory: '',
       sortCriteria: 'nameDescending',
-      sortingCompleted: false
+      sortingCompleted: false,
+      snackbarVariant: '',
+      productsLoading: false
     };
 
     this._isMounted = false;
@@ -43,8 +47,10 @@ class MainBody extends React.Component {
   }
 
   componentDidMount() {
-    getProducts().then(res => {
-      this.setState({ allProducts: res, filteredProducts: res });
+    this.setState({ productsLoading: true }, () => {
+      getProducts().then(res => {
+        this.setState({ allProducts: res, filteredProducts: res, productsLoading: false });
+      });
     });
     this._isMounted = true;
   }
@@ -67,14 +73,16 @@ class MainBody extends React.Component {
     }
   };
 
-  handleClose = () => {
+  handleModalClose = () => {
     this.setState({ isProductModalOpen: false });
   };
 
-  handleOpen = () => {
-    if (this._isMounted === true) {
-      this.setState({ isProductModalOpen: true });
-    }
+  openSnackbar = snackbarVariant => {
+    this.setState({ isSnackbarOpen: true, snackbarVariant });
+  };
+
+  closeSnackbar = () => {
+    this.setState({ isSnackbarOpen: false });
   };
 
   selectCategory = category => {
@@ -262,6 +270,7 @@ class MainBody extends React.Component {
     const { classes } = this.props;
     const {
       isProductModalOpen,
+      isSnackbarOpen,
       selectedProduct,
       filteredProducts,
       lowerPriceLimit,
@@ -269,15 +278,21 @@ class MainBody extends React.Component {
       date,
       upperPriceLimitHelper,
       sortCriteria,
-      selectedCategory
+      selectedCategory,
+      snackbarVariant,
+      productsLoading
     } = this.state;
 
     return (
       <div>
-        <NavBar selectCategory={this.selectCategory} currentCategory={selectedCategory} />
+        <NavBar
+          selectCategory={this.selectCategory}
+          currentCategory={selectedCategory}
+          openSnackbar={this.openSnackbar}
+        />
         <ProductModal
           openModal={isProductModalOpen}
-          handleClose={this.handleClose}
+          handleClose={this.handleModalClose}
           product={selectedProduct}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
@@ -301,6 +316,7 @@ class MainBody extends React.Component {
                       openProduct={this.handleOpen}
                       productHandler={this.changeProduct}
                       products={filteredProducts}
+                      productsLoading={productsLoading}
                     />
                   )}
                 />
@@ -308,6 +324,11 @@ class MainBody extends React.Component {
             </Paper>
           </Grid>
         </Grid>
+        <SnackbarContainer
+          open={isSnackbarOpen}
+          closeSnackbar={this.closeSnackbar}
+          variant={snackbarVariant}
+        />
       </div>
     );
   }
