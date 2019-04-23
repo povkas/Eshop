@@ -44,12 +44,15 @@ class MainBody extends React.Component {
     this.checkDate = this.checkDate.bind(this);
     this.checkSelectedCategory = this.checkSelectedCategory.bind(this);
     this.changeSort = this.changeSort.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
     this.setState({ productsLoading: true }, () => {
       getProducts().then(res => {
-        this.setState({ allProducts: res, filteredProducts: res, productsLoading: false });
+        this.setState({ allProducts: res, filteredProducts: res, productsLoading: false }, () =>
+          this.sortShownProducts()
+        );
       });
     });
     this._isMounted = true;
@@ -99,15 +102,20 @@ class MainBody extends React.Component {
     let qualifyingProducts = [];
     if (selectedCategory === allProductsCategory) {
       qualifyingProducts = allProducts;
-    } else {
+      this.setState({ filteredProducts: qualifyingProducts });
+    } else if (selectedCategory !== 'search') {
       qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+      this.setState({ filteredProducts: qualifyingProducts });
     }
-    this.setState({ filteredProducts: qualifyingProducts });
     this.setState({ lowerPriceLimit: '' });
     this.setState({ upperPriceLimit: '' });
     this.setState({ sortCriteria: 'nameDescending' });
-    this.setState({ date: 'all' });
+    this.setState({ date: 'all' }, () => this.sortShownProducts());
   };
+
+  handleSearch(products) {
+    this.setState({ filteredProducts: products }, () => this.selectCategory('search'));
+  }
 
   changeShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory } = this.state;
@@ -279,6 +287,7 @@ class MainBody extends React.Component {
       upperPriceLimitHelper,
       sortCriteria,
       selectedCategory,
+      allProducts,
       snackbarVariant,
       productsLoading
     } = this.state;
@@ -288,6 +297,9 @@ class MainBody extends React.Component {
         <NavBar
           selectCategory={this.selectCategory}
           currentCategory={selectedCategory}
+          products={allProducts}
+          handleSearch={this.handleSearch}
+          productHandler={this.changeProduct}
           openSnackbar={this.openSnackbar}
         />
         <ProductModal

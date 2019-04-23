@@ -12,6 +12,7 @@ import Styles from './Styles';
 import { LoginForm, UserOptions } from '../login';
 import { logoutUser } from '../../actions/authentication';
 import { CategoriesList } from '../categoriesList';
+import Search from '../search/Search';
 
 class NavBar extends React.Component {
   handleLogout = e => {
@@ -22,7 +23,16 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { classes, auth, selectCategory, currentCategory, openSnackbar } = this.props;
+    const {
+      classes,
+      auth,
+      selectCategory,
+      currentCategory,
+      openSnackbar,
+      products,
+      handleSearch,
+      productHandler
+    } = this.props;
     return (
       <BrowserRouter>
         <AppBar position="static">
@@ -30,9 +40,14 @@ class NavBar extends React.Component {
             <CategoriesList selectCategory={selectCategory} currentCategory={currentCategory} />
             <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link to="/" className={classes.shopName}>
-                BimBam連合
+                BimBam
               </Link>
             </Typography>
+            <Search
+              products={products}
+              handleSearch={handleSearch}
+              productHandler={productHandler}
+            />
             {auth.isAuthenticated ? (
               <UserOptions className={classes} logOut={this.handleLogout} />
             ) : (
@@ -52,6 +67,9 @@ NavBar.propTypes = {
   classes: PropTypes.shape().isRequired,
   selectCategory: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,
+  productHandler: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   auth: PropTypes.shape().isRequired,
   logoutUserProp: PropTypes.func.isRequired,
   openSnackbar: PropTypes.func.isRequired
