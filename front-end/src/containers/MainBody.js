@@ -12,7 +12,6 @@ import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 import { checkIfDateWithinPeriod } from '../utils/dateFunctions';
 import { compareByCriteria } from '../utils/sortFunctions';
-import CustomizedSnackbars from '../components/snackbar/CustomSnackbar';
 import { SnackbarContainer } from '../components/snackbars';
 
 class MainBody extends React.Component {
@@ -29,7 +28,7 @@ class MainBody extends React.Component {
       selectedCategory: '',
       sortCriteria: 'nameDescending',
       productsLoading: false,
-      snackbar: {}
+      snackbarContents: {}
     };
 
     this._isMounted = false;
@@ -48,8 +47,8 @@ class MainBody extends React.Component {
         .catch(err => {
           const errors = err.response
             ? err.response.data
-            : { status: 404, message: 'Unidentified' };
-          this.setState({ snackbar: errors });
+            : { message: '404: An unidentified error', variant: 'error' };
+          this.setState({ snackbarContents: errors });
         });
     });
 
@@ -61,7 +60,7 @@ class MainBody extends React.Component {
   }
 
   setError = err => {
-    this.setState({ snackbar: err });
+    this.setState({ snackbarContents: err });
   };
 
   changeProduct = product => {
@@ -77,11 +76,11 @@ class MainBody extends React.Component {
   };
 
   openSnackbar = message => {
-    this.setState({ snackbar: message });
+    this.setState({ snackbarContents: message });
   };
 
   handleSnackbarClose = () => {
-    this.setState({ snackbar: {} });
+    this.setState({ snackbarContents: {} });
   };
 
   filterByCategory = category => {
@@ -170,7 +169,7 @@ class MainBody extends React.Component {
       upperPriceLimitHelper,
       sortCriteria,
       selectedCategory,
-      snackbar,
+      snackbarContents,
       allProducts,
       productsLoading
     } = this.state;
@@ -215,8 +214,10 @@ class MainBody extends React.Component {
             </Paper>
           </Grid>
         </Grid>
-        <CustomizedSnackbars error={snackbar} handleClose={this.handleSnackbarClose} />
-        <SnackbarContainer snackbar={snackbar} handleClose={this.handleSnackbarClose} />
+        <SnackbarContainer
+          snackbarContents={snackbarContents}
+          handleClose={this.handleSnackbarClose}
+        />
       </div>
     );
   }

@@ -1,29 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from './SnackbarContent';
+import SnackbarContentWrapper from './SnackbarContent';
 
 function SnackbarContainer(props) {
-  const { open, closeSnackbar, variant } = props;
+  const { handleClose, snackbarContents } = props;
   return (
     <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left'
       }}
-      open={open}
+      open={Object.entries(snackbarContents).length !== 0}
       autoHideDuration={6000}
-      onClose={closeSnackbar}
+      onClose={handleClose}
     >
-      <SnackbarContent onClose={closeSnackbar} variant={variant} />
+      <SnackbarContentWrapper onClose={handleClose} snackbarContents={snackbarContents} />
     </Snackbar>
   );
 }
 
 SnackbarContainer.propTypes = {
-  open: PropTypes.bool.isRequired,
-  closeSnackbar: PropTypes.func.isRequired,
-  variant: PropTypes.string.isRequired
+  handleClose: PropTypes.func.isRequired,
+  snackbarContents: PropTypes.shape().isRequired
 };
 
 export default SnackbarContainer;

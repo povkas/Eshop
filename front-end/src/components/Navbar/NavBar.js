@@ -13,13 +13,14 @@ import { LoginForm, UserOptions } from '../login';
 import { logoutUser } from '../../actions/authentication';
 import { CategoriesList } from '../categoriesList';
 import Search from '../search/Search';
+import { snackbarMessages } from '../../utils/constants';
 
 class NavBar extends React.Component {
   handleLogout = e => {
     e.preventDefault();
     const { logoutUserProp, openSnackbar } = this.props;
     logoutUserProp();
-    openSnackbar('logoutSuccess');
+    openSnackbar({ message: snackbarMessages.logoutSuccess, variant: 'neutral' });
   };
 
   render() {

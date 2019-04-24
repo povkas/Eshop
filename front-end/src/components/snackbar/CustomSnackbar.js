@@ -12,11 +12,7 @@ const styles2 = theme => ({
 class CustomizedSnackbars extends React.PureComponent {
   render() {
     const { classes, error, handleClose } = this.props;
-    const { status, message } = error;
-
-    if (!status && !message) {
-      return null;
-    }
+    const { status, message, variant } = error;
 
     return (
       <div>
@@ -30,7 +26,7 @@ class CustomizedSnackbars extends React.PureComponent {
           onClose={handleClose}
         >
           <MySnackbarContent
-            variant="error"
+            variant={variant}
             className={classes.margin}
             message={status && message ? `${status}: ${message}` : ''}
             onClose={handleClose}

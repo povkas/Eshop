@@ -33,8 +33,7 @@ class CategoriesList extends React.Component {
         this.setState({ categories: res });
       })
       .catch(err => {
-        const errors = err.response ? err.response.data : { status: 404, message: 'Unidentified' };
-        setError(errors);
+        setError(err.response ? err.response.data : { status: 404, message: 'Unidentified' });
       });
   }
 
