@@ -46,11 +46,7 @@ class MainBody extends React.Component {
           );
         })
         .catch(err => {
-          this.setState({ productsLoading: false });
-          const errors = err.response
-            ? { message: `${err.response.status} : ${err.response.data.Message}` }
-            : { message: snackbarMessages.unidentified };
-          this.setState({ snackbarContents: { message: errors.message, variant: 'error' } });
+          this.setError(err);
         });
     });
 
@@ -62,7 +58,11 @@ class MainBody extends React.Component {
   }
 
   setError = err => {
-    this.setState({ snackbarContents: err });
+    this.setState({ productsLoading: false });
+    const errors = err.response
+      ? { message: `${err.response.status} : ${err.response.data.Message}` }
+      : { message: snackbarMessages.unidentified };
+    this.setState({ snackbarContents: { message: errors.message, variant: 'error' } });
   };
 
   changeProduct = product => {
@@ -77,8 +77,8 @@ class MainBody extends React.Component {
     this.setState({ selectedProduct: {} });
   };
 
-  openSnackbar = message => {
-    this.setState({ snackbarContents: message });
+  openSnackbar = snackbarContents => {
+    this.setState({ snackbarContents });
   };
 
   handleSnackbarClose = () => {

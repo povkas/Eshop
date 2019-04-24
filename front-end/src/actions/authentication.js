@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { getUser, snackbarMessages } from '../utils/constants';
-import { SET_CURRENT_USER, GET_ERRORS, LOGOUT } from './types';
+import { SET_CURRENT_USER, LOGOUT } from './types';
 import setAuthToken from '../components/login/setAuthToken';
 
 export const setCurrentUser = decoded => {
@@ -27,10 +27,6 @@ export const loginUser = (user, openSnackbar) => dispatch => {
       const errors = err.response
         ? { message: `${err.response.status} : ${err.response.data.Message}` }
         : { message: snackbarMessages.unidentified };
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
       openSnackbar({ message: errors.message, variant: 'error' });
     });
 };
