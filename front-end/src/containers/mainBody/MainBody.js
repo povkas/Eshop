@@ -4,16 +4,16 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import ProductModal from '../components/productModal/ProductModal';
-import ProductTable from '../components/productTable/ProductTable';
-import { getProducts } from '../actions/productActions';
-import { Filter, Sort } from '../components/productTable';
+import ProductModal from '../../components/productModal/ProductModal';
+import ProductTable from '../../components/productTable/ProductTable';
+import { getProducts } from '../../actions/productActions';
+import { Filter, Sort } from '../../components/productTable';
 import Styles from './Styles';
-import { NavBar } from '../components/Navbar';
-import { checkIfDateWithinPeriod } from '../utils/dateFunctions';
-import { compareByCriteria } from '../utils/sortFunctions';
-import { SnackbarContainer } from '../components/snackbar';
-import { snackbarMessages } from '../utils/constants';
+import { NavBar } from '../navbar';
+import { checkIfDateWithinPeriod } from '../../utils/dateFunctions';
+import { compareByCriteria } from '../../utils/sortFunctions';
+import { SnackbarContainer } from '../../components/snackbar';
+import { snackbarMessages } from '../../utils/constants';
 
 class MainBody extends React.Component {
   constructor(props) {

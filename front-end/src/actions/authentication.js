@@ -11,7 +11,7 @@ export const setCurrentUser = decoded => {
   };
 };
 
-export const loginUser = (user, openSnackbar) => dispatch => {
+export const loginUser = (user, openSnackbar, setError) => dispatch => {
   axios
     .post(getUser, user)
     .then(res => {
@@ -24,10 +24,7 @@ export const loginUser = (user, openSnackbar) => dispatch => {
       });
     })
     .catch(err => {
-      const errors = err.response
-        ? { message: `${err.response.status} : ${err.response.data.Message}` }
-        : { message: snackbarMessages.unidentified };
-      openSnackbar({ message: errors.message, variant: 'error' });
+      setError(err);
     });
 };
 
