@@ -12,7 +12,7 @@ import Styles from './Styles';
 import { NavBar } from '../components/Navbar';
 import { checkIfDateWithinPeriod } from '../utils/dateFunctions';
 import { compareByCriteria } from '../utils/sortFunctions';
-import { SnackbarContainer } from '../components/snackbars';
+import { SnackbarContainer } from '../components/snackbar';
 import { snackbarMessages } from '../utils/constants';
 
 class MainBody extends React.Component {
@@ -82,7 +82,8 @@ class MainBody extends React.Component {
   };
 
   handleSnackbarClose = () => {
-    this.setState({ snackbarContents: {} });
+    const { snackbarContents } = this.state;
+    this.setState({ snackbarContents: { ...snackbarContents, message: undefined } });
   };
 
   filterByCategory = category => {

@@ -16,8 +16,12 @@ const iconSelect = variant => {
 };
 
 function SnackContentWrapper(props) {
-  const { classes, onClose, snackbarContents } = props;
-  const { message, variant } = snackbarContents;
+  const {
+    classes,
+    onClose,
+    snackbarContents: { message, variant },
+    ...other
+  } = props;
 
   const Icon = iconSelect(variant);
 
@@ -35,6 +39,7 @@ function SnackContentWrapper(props) {
           <CloseIcon className={classes.icon} />
         </IconButton>
       ]}
+      {...other}
     />
   );
 }

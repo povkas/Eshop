@@ -7,13 +7,8 @@ function SnackbarContainer(props) {
   const { handleClose, snackbarContents } = props;
   return (
     <Snackbar
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left'
-      }}
-      open={
-        Object.entries(snackbarContents).length === 0 && snackbarContents.constructor === Object
-      }
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+      open={typeof snackbarContents.message !== 'undefined'}
       autoHideDuration={6000}
       onClose={handleClose}
     >

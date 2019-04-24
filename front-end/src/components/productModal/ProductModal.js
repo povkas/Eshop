@@ -22,10 +22,7 @@ class ProductModal extends React.Component {
   render() {
     const { classes, handleClose, product } = this.props;
     return (
-      <Modal
-        open={Object.entries(product).length !== 0 && product.constructor === Object}
-        onClose={handleClose}
-      >
+      <Modal open={Object.entries(product).length !== 0} onClose={handleClose}>
         <div style={getModalStyle()} className={classes.paper}>
           <Grid container direction="row" justify="space-evenly" alignItems="center">
             <img
