@@ -19,8 +19,6 @@ class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isProductModalOpen: false,
-      isSnackbarOpen: false,
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
@@ -31,8 +29,7 @@ class MainBody extends React.Component {
       selectedCategory: '',
       sortCriteria: 'nameDescending',
       productsLoading: false,
-      snackbarVariant: '',
-      error: {}
+      snackbar: {}
     };
 
     this._isMounted = false;
@@ -52,7 +49,7 @@ class MainBody extends React.Component {
           const errors = err.response
             ? err.response.data
             : { status: 404, message: 'Unidentified' };
-          this.setState({ error: errors });
+          this.setState({ snackbar: errors });
         });
     });
 
@@ -64,32 +61,27 @@ class MainBody extends React.Component {
   }
 
   setError = err => {
-    this.setState({ error: err });
+    this.setState({ snackbar: err });
   };
 
   changeProduct = product => {
     if (this._isMounted === true) {
       this.setState({
-        selectedProduct: product,
-        isProductModalOpen: true
+        selectedProduct: product
       });
     }
   };
 
   handleModalClose = () => {
-    this.setState({ isProductModalOpen: false });
+    this.setState({ selectedProduct: {} });
   };
 
-  openSnackbar = snackbarVariant => {
-    this.setState({ isSnackbarOpen: true, snackbarVariant });
-  };
-
-  closeSnackbar = () => {
-    this.setState({ isSnackbarOpen: false });
+  openSnackbar = message => {
+    this.setState({ snackbar: message });
   };
 
   handleSnackbarClose = () => {
-    this.setState({ error: {} });
+    this.setState({ snackbar: {} });
   };
 
   filterByCategory = category => {
@@ -127,24 +119,6 @@ class MainBody extends React.Component {
 
   filterShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory, date } = this.state;
-    // filterByCategory = () => {
-    //   const { allProducts, selectedCategory } = this.state;
-    //   let qualifyingProducts = [];
-    //   if (selectedCategory === allProductsCategory) {
-    //     qualifyingProducts = allProducts;
-    //     this.setState({ filteredProducts: qualifyingProducts });
-    //   } else if (selectedCategory !== 'search') {
-    //     qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
-    //     this.setState({ filteredProducts: qualifyingProducts });
-    //   }
-    //   this.setState({ lowerPriceLimit: '' });
-    //   this.setState({ upperPriceLimit: '' });
-    //   this.setState({ sortCriteria: 'nameDescending' });
-    //   this.setState({ date: 'all' }, () => this.sortShownProducts());
-    // };
-
-    // changeShownProducts() {
-    //   const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
@@ -188,8 +162,6 @@ class MainBody extends React.Component {
   render() {
     const { classes } = this.props;
     const {
-      isProductModalOpen,
-      isSnackbarOpen,
       selectedProduct,
       filteredProducts,
       lowerPriceLimit,
@@ -198,9 +170,8 @@ class MainBody extends React.Component {
       upperPriceLimitHelper,
       sortCriteria,
       selectedCategory,
-      error,
+      snackbar,
       allProducts,
-      snackbarVariant,
       productsLoading
     } = this.state;
 
@@ -215,11 +186,7 @@ class MainBody extends React.Component {
           productHandler={this.changeProduct}
           openSnackbar={this.openSnackbar}
         />
-        <ProductModal
-          openModal={isProductModalOpen}
-          handleClose={this.handleModalClose}
-          product={selectedProduct}
-        />
+        <ProductModal product={selectedProduct} handleClose={this.handleModalClose} />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item>
             <Paper className={classes.paper} elevation={24}>
@@ -248,12 +215,8 @@ class MainBody extends React.Component {
             </Paper>
           </Grid>
         </Grid>
-        <CustomizedSnackbars error={error} handleClose={this.handleSnackbarClose} />
-        <SnackbarContainer
-          open={isSnackbarOpen}
-          closeSnackbar={this.closeSnackbar}
-          variant={snackbarVariant}
-        />
+        <CustomizedSnackbars error={snackbar} handleClose={this.handleSnackbarClose} />
+        <SnackbarContainer snackbar={snackbar} handleClose={this.handleSnackbarClose} />
       </div>
     );
   }

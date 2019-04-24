@@ -20,9 +20,12 @@ class ProductModal extends React.Component {
   };
 
   render() {
-    const { classes, openModal, handleClose, product } = this.props;
+    const { classes, handleClose, product } = this.props;
     return (
-      <Modal open={openModal} onClose={handleClose}>
+      <Modal
+        open={Object.entries(product).length !== 0 && product.constructor === Object}
+        onClose={handleClose}
+      >
         <div style={getModalStyle()} className={classes.paper}>
           <Grid container direction="row" justify="space-evenly" alignItems="center">
             <img
@@ -64,7 +67,6 @@ ProductModal.propTypes = {
     price: PropTypes.number,
     quantity: PropTypes.number
   }).isRequired,
-  openModal: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired
 };
 
