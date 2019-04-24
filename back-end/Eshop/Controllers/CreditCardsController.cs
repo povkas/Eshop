@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eshop.DTOs.CreditCards;
+using Eshop.ExceptionHandling;
 using Eshop.Models;
 using Eshop.Services;
 using Eshop.Services.Interfaces;
@@ -25,16 +26,16 @@ namespace Eshop.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{number}")]
-        public async Task<IActionResult> CheckIfCreditCardExists(string number)
+        [HttpGet]
+        public async Task<IActionResult> CheckIfCreditCardExists([FromBody] CreditCardDto creditCard)
         {
-            _logger.LogInformation("Getting credit card by number {NUMBER}", number);
-            var creditCard = await _service.GetByNumber(number);
+            _logger.LogInformation("Getting credit card by number {NUMBER}", creditCard.Number);
+            var creditCardInDb = await _service.GetByNumber(creditCard.Number);
             _logger.LogInformation("Received credit card - {}", creditCard);
 
-            if (creditCard == null)
+            if (creditCardInDb == null || creditCard.ExpirationDate != creditCardInDb.ExpirationDate || creditCard.SecurityCode != creditCardInDb.SecurityCode)
             {
-                return Ok(false);
+                throw new IncorrectInputException("Incorrect credit card details");
             }
 
             return Ok(true);
