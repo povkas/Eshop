@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ProductItem from './ProductItem';
-import LoadingSpinner from './LoadingSpinner';
 import Styles from './Styles';
 
 class ProductTable extends React.Component {
@@ -18,7 +18,9 @@ class ProductTable extends React.Component {
 
     if (products.length === 0 || productsLoading) {
       return productsLoading ? (
-        <LoadingSpinner />
+        <div className={classes.loadingSpinner}>
+          <CircularProgress size={40} thickness={5} />
+        </div>
       ) : (
         <div className={classes.emptyMessage}>There are no products matching this criteria.</div>
       );

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { getUser } from '../utils/constants';
-import { SET_CURRENT_USER, GET_ERRORS, LOGOUT } from './types';
+import { getUser, snackbarMessages } from '../utils/constants';
+import { SET_CURRENT_USER, LOGOUT } from './types';
 import setAuthToken from '../components/login/setAuthToken';
 
 export const setCurrentUser = decoded => {
@@ -11,21 +11,20 @@ export const setCurrentUser = decoded => {
   };
 };
 
-export const loginUser = (user, openSnackbar) => dispatch => {
+export const loginUser = (user, openSnackbar, setError) => dispatch => {
   axios
     .post(getUser, user)
     .then(res => {
       localStorage.setItem('jwtToken', res.data);
       setAuthToken(res.data);
       dispatch(setCurrentUser(jwtDecode(res.data)));
-      openSnackbar('loginSuccess');
+      openSnackbar({
+        message: snackbarMessages.loginSuccess,
+        variant: 'success'
+      });
     })
     .catch(err => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
-      openSnackbar('loginError');
+      setError(err);
     });
 };
 

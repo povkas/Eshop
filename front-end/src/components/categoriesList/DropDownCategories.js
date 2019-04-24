@@ -6,12 +6,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { FiberManualRecord } from '@material-ui/icons';
 
 function DropDownCategories(props) {
-  const { category, selectCategory, isSelected } = props;
+  const { category, filterByCategory, isSelected } = props;
 
   return (
     <ListItem
       onClick={() => {
-        selectCategory(category);
+        filterByCategory(category);
       }}
       button
       selected={isSelected}
@@ -25,7 +25,7 @@ function DropDownCategories(props) {
 }
 
 DropDownCategories.propTypes = {
-  selectCategory: PropTypes.func.isRequired,
+  filterByCategory: PropTypes.func.isRequired,
   isSelected: PropTypes.bool.isRequired,
   category: PropTypes.string.isRequired
 };
