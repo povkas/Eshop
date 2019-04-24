@@ -8,6 +8,7 @@ using Eshop.Models;
 using Eshop.Services;
 using Eshop.Services.Interfaces;
 using EShop.Controllers;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -39,6 +40,15 @@ namespace Eshop.Controllers
             }
 
             return Ok(true);
+        }
+
+        [HttpPatch("{number}")]
+        public async Task<IActionResult> Patch(string number, [FromBody] PatchCreditCardDto patch)
+        {
+            _logger.LogInformation("Patching credit card {NUMBER} with information {PATCH}", number, patch);
+            await _service.PartialUpdate(number, patch);
+
+            return NoContent();
         }
     }
 }
