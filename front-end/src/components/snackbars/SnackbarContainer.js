@@ -11,7 +11,9 @@ function SnackbarContainer(props) {
         vertical: 'bottom',
         horizontal: 'left'
       }}
-      open={Object.entries(snackbarContents).length !== 0}
+      open={
+        Object.entries(snackbarContents).length === 0 && snackbarContents.constructor === Object
+      }
       autoHideDuration={6000}
       onClose={handleClose}
     >

@@ -24,11 +24,14 @@ export const loginUser = (user, openSnackbar) => dispatch => {
       });
     })
     .catch(err => {
+      const errors = err.response
+        ? { message: `${err.response.status} : ${err.response.data.Message}` }
+        : { message: snackbarMessages.unidentified };
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       });
-      openSnackbar({ message: snackbarMessages.loginError, variant: 'error' });
+      openSnackbar({ message: errors.message, variant: 'error' });
     });
 };
 

@@ -13,6 +13,7 @@ import { NavBar } from '../components/Navbar';
 import { checkIfDateWithinPeriod } from '../utils/dateFunctions';
 import { compareByCriteria } from '../utils/sortFunctions';
 import { SnackbarContainer } from '../components/snackbars';
+import { snackbarMessages } from '../utils/constants';
 
 class MainBody extends React.Component {
   constructor(props) {
@@ -45,10 +46,11 @@ class MainBody extends React.Component {
           );
         })
         .catch(err => {
+          this.setState({ productsLoading: false });
           const errors = err.response
-            ? err.response.data
-            : { message: '404: An unidentified error', variant: 'error' };
-          this.setState({ snackbarContents: errors });
+            ? { message: `${err.response.status} : ${err.response.data.Message}` }
+            : { message: snackbarMessages.unidentified };
+          this.setState({ snackbarContents: { message: errors.message, variant: 'error' } });
         });
     });
 
