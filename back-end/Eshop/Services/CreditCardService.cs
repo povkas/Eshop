@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Eshop.Data.Repositories;
 using Eshop.DTOs.CreditCards;
-using Eshop.DTOs.Products;
 using Eshop.ExceptionHandling;
-using Eshop.Models;
 using Eshop.Services.Interfaces;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Logging;
 
 namespace Eshop.Services

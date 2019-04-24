@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Eshop.DTOs.CreditCards;
 using Eshop.ExceptionHandling;
-using Eshop.Models;
-using Eshop.Services;
 using Eshop.Services.Interfaces;
-using EShop.Controllers;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -34,12 +27,12 @@ namespace Eshop.Controllers
             var creditCardInDb = await _service.GetByNumber(creditCard.Number);
             _logger.LogInformation("Received credit card - {}", creditCard);
 
-            if (creditCardInDb == null || creditCard.ExpirationDate != creditCardInDb.ExpirationDate || creditCard.SecurityCode != creditCardInDb.SecurityCode)
+            if (creditCardInDb == null || creditCard.ExpirationDate.Equals(creditCardInDb.ExpirationDate) || creditCard.SecurityCode != creditCardInDb.SecurityCode)
             {
                 throw new IncorrectInputException("Incorrect credit card details");
             }
 
-            return Ok(true);
+            return NoContent();
         }
 
         [HttpPatch("{number}")]
