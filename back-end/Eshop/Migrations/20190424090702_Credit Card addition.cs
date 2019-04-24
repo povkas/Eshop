@@ -15,7 +15,7 @@ namespace Eshop.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Number = table.Column<string>(nullable: true),
                     ExpirationDate = table.Column<string>(nullable: true),
-                    SecretCode = table.Column<int>(nullable: false),
+                    SecurityCode = table.Column<int>(nullable: false),
                     Balance = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>

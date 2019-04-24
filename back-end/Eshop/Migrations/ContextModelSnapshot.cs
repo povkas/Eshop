@@ -31,7 +31,7 @@ namespace Eshop.Migrations
 
                     b.Property<string>("Number");
 
-                    b.Property<int>("SecretCode");
+                    b.Property<int>("SecurityCode");
 
                     b.HasKey("Id");
 

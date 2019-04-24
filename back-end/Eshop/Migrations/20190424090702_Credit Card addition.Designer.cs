@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20190422080623_Credit Card addition")]
+    [Migration("20190424090702_Credit Card addition")]
     partial class CreditCardaddition
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace Eshop.Migrations
 
                     b.Property<string>("Number");
 
-                    b.Property<int>("SecretCode");
+                    b.Property<int>("SecurityCode");
 
                     b.HasKey("Id");
 
