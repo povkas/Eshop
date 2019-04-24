@@ -41,6 +41,7 @@ namespace Eshop
             }
 
             app.UseMiddleware<CustomExceptionMiddleware>()
+
                 .UseCors(builder =>
                     builder.WithOrigins("http://localhost:3000")
                         .AllowAnyOrigin()
@@ -50,6 +51,7 @@ namespace Eshop
                 .UseHttpsRedirection()
                 .UseMvc()
                 .Run(_notFoundHandler);
+
             app.InitializeDatabase();
         }
 
