@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Threading.Tasks;
 using AutoMapper;
 using Eshop.Data.Repositories;
@@ -41,7 +42,7 @@ namespace Eshop.Services
 
             if (itemToUpdate == null)
             {
-                throw new InvalidOperationException($"Credit card {number} was not found");
+                throw new IncorrectInputException($"Credit card {number} was not found");
             }
 
             if (itemToUpdate.Balance - itemPatch.Balance < 0)

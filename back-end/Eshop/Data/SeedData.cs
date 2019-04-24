@@ -420,19 +420,22 @@ namespace Eshop.Data
                 {
                     Number = "7777-6666-5555-4444",
                     ExpirationDate = "19/12",
-                    SecurityCode = 055
+                    SecurityCode = 055,
+                    Balance = 1000
                 },
                 new CreditCard
                 {
                     Number = "1111-2222-3333-4444",
                     ExpirationDate = "22/02",
-                    SecurityCode = 055
+                    SecurityCode = 055,
+                    Balance = 1000
                 },
                 new CreditCard
                 {
                     Number = "3456-6695-5202-2878",
                     ExpirationDate = "19/03",
-                    SecurityCode = 055
+                    SecurityCode = 055,
+                    Balance = 1000
                 }
             };
 
