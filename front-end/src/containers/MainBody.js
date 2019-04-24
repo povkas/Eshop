@@ -13,12 +13,14 @@ import { NavBar } from '../components/Navbar';
 import { checkIfDateWithinPeriod } from '../utils/dateFunctions';
 import { compareByCriteria } from '../utils/sortFunctions';
 import CustomizedSnackbars from '../components/snackbar/CustomSnackbar';
+import { SnackbarContainer } from '../components/snackbars';
 
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isProductModalOpen: false,
+      isSnackbarOpen: false,
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
@@ -28,21 +30,31 @@ class MainBody extends React.Component {
       upperPriceLimitHelper: '',
       selectedCategory: '',
       sortCriteria: 'nameDescending',
+      productsLoading: false,
+      snackbarVariant: '',
       error: {}
     };
 
     this._isMounted = false;
+
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
-    getProducts()
-      .then(res => {
-        this.setState({ allProducts: res, filteredProducts: res }, () => this.sortShownProducts());
-      })
-      .catch(err => {
-        const errors = err.response ? err.response.data : { status: 404, message: 'Unidentified' };
-        this.setState({ error: errors });
-      });
+    this.setState({ productsLoading: true }, () => {
+      getProducts()
+        .then(res => {
+          this.setState({ allProducts: res, filteredProducts: res, productsLoading: false }, () =>
+            this.sortShownProducts()
+          );
+        })
+        .catch(err => {
+          const errors = err.response
+            ? err.response.data
+            : { status: 404, message: 'Unidentified' };
+          this.setState({ error: errors });
+        });
+    });
 
     this._isMounted = true;
   }
@@ -64,14 +76,16 @@ class MainBody extends React.Component {
     }
   };
 
-  handleClose = () => {
+  handleModalClose = () => {
     this.setState({ isProductModalOpen: false });
   };
 
-  handleOpen = () => {
-    if (this._isMounted === true) {
-      this.setState({ isProductModalOpen: true });
-    }
+  openSnackbar = snackbarVariant => {
+    this.setState({ isSnackbarOpen: true, snackbarVariant });
+  };
+
+  closeSnackbar = () => {
+    this.setState({ isSnackbarOpen: false });
   };
 
   handleSnackbarClose = () => {
@@ -113,6 +127,24 @@ class MainBody extends React.Component {
 
   filterShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory, date } = this.state;
+    // filterByCategory = () => {
+    //   const { allProducts, selectedCategory } = this.state;
+    //   let qualifyingProducts = [];
+    //   if (selectedCategory === allProductsCategory) {
+    //     qualifyingProducts = allProducts;
+    //     this.setState({ filteredProducts: qualifyingProducts });
+    //   } else if (selectedCategory !== 'search') {
+    //     qualifyingProducts = allProducts.filter(this.checkSelectedCategory);
+    //     this.setState({ filteredProducts: qualifyingProducts });
+    //   }
+    //   this.setState({ lowerPriceLimit: '' });
+    //   this.setState({ upperPriceLimit: '' });
+    //   this.setState({ sortCriteria: 'nameDescending' });
+    //   this.setState({ date: 'all' }, () => this.sortShownProducts());
+    // };
+
+    // changeShownProducts() {
+    //   const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory } = this.state;
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
@@ -144,6 +176,10 @@ class MainBody extends React.Component {
     this.setState({ filteredProducts: qualifyingProducts });
   }
 
+  handleSearch(products) {
+    this.setState({ filteredProducts: products }, () => this.selectCategory('search'));
+  }
+
   sortShownProducts() {
     const { sortCriteria, filteredProducts } = this.state;
     this.setState({ filteredProducts: filteredProducts.sort(compareByCriteria(sortCriteria)) });
@@ -153,6 +189,7 @@ class MainBody extends React.Component {
     const { classes } = this.props;
     const {
       isProductModalOpen,
+      isSnackbarOpen,
       selectedProduct,
       filteredProducts,
       lowerPriceLimit,
@@ -161,7 +198,10 @@ class MainBody extends React.Component {
       upperPriceLimitHelper,
       sortCriteria,
       selectedCategory,
-      error
+      error,
+      allProducts,
+      snackbarVariant,
+      productsLoading
     } = this.state;
 
     return (
@@ -170,10 +210,14 @@ class MainBody extends React.Component {
           filterByCategory={this.filterByCategory}
           currentCategory={selectedCategory}
           setError={this.setError}
+          products={allProducts}
+          handleSearch={this.handleSearch}
+          productHandler={this.changeProduct}
+          openSnackbar={this.openSnackbar}
         />
         <ProductModal
           openModal={isProductModalOpen}
-          handleClose={this.handleClose}
+          handleClose={this.handleModalClose}
           product={selectedProduct}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
@@ -196,6 +240,7 @@ class MainBody extends React.Component {
                       openProduct={this.handleOpen}
                       productHandler={this.changeProduct}
                       products={filteredProducts}
+                      productsLoading={productsLoading}
                     />
                   )}
                 />
@@ -204,6 +249,11 @@ class MainBody extends React.Component {
           </Grid>
         </Grid>
         <CustomizedSnackbars error={error} handleClose={this.handleSnackbarClose} />
+        <SnackbarContainer
+          open={isSnackbarOpen}
+          closeSnackbar={this.closeSnackbar}
+          variant={snackbarVariant}
+        />
       </div>
     );
   }
