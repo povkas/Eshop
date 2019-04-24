@@ -18,8 +18,7 @@ function Filter(props) {
     lowerPriceLimit,
     date,
     changeDate,
-    changePriceLower,
-    changePriceUpper,
+    changePrice,
     upperPriceLimitHelper
   } = props;
 
@@ -37,7 +36,7 @@ function Filter(props) {
             id="from-price"
             label="From"
             value={lowerPriceLimit}
-            onChange={changePriceLower}
+            onChange={e => changePrice('lowerPriceLimit', e)}
             className={classes.textField}
             InputLabelProps={{
               shrink: true
@@ -48,7 +47,7 @@ function Filter(props) {
             id="to-price"
             label="To"
             value={upperPriceLimit}
-            onChange={changePriceUpper}
+            onChange={e => changePrice('upperPriceLimit', e)}
             className={classes.textField}
             InputLabelProps={{
               shrink: true
@@ -60,7 +59,7 @@ function Filter(props) {
         <div className={classes.inputs}>
           <Typography variant="subheading">Date added</Typography>
           <Select value={date} onChange={changeDate}>
-            <MenuItem value="all">Show all</MenuItem>
+            <MenuItem value="">Show all</MenuItem>
             <MenuItem value="day">Less than a day ago</MenuItem>
             <MenuItem value="week">Less than a week ago</MenuItem>
             <MenuItem value="month">Less than a month ago</MenuItem>
@@ -78,8 +77,7 @@ Filter.propTypes = {
   lowerPriceLimit: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   changeDate: PropTypes.func.isRequired,
-  changePriceLower: PropTypes.func.isRequired,
-  changePriceUpper: PropTypes.func.isRequired,
+  changePrice: PropTypes.func.isRequired,
   upperPriceLimitHelper: PropTypes.string.isRequired
 };
 
