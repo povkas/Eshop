@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import CategorySelect from './CategorySelect';
 
 class Form extends Component {
   constructor(props) {
@@ -28,62 +29,121 @@ class Form extends Component {
     });
   };
 
-  validateCategory = () => {
-    const { category } = this.state;
-    const errors = {
-      categoryErrorText: ' '
-    };
-
-    if (category.length === 0) errors.categoryErrorText = 'Category is required!';
-
-    this.setState({ ...errors });
-  };
-
   validateName = () => {
     const { name } = this.state;
-    const errors = {
-      nameErrorText: ' '
-    };
 
-    if (name.length === 0) errors.nameErrorText = 'Name is required!';
+    let nameErrorText = ' ';
+    let isError = false;
 
-    this.setState({ ...errors });
+    if (name.length === 0) {
+      isError = true;
+      nameErrorText = 'Name is required!';
+    }
+
+    this.setState({ nameErrorText });
+
+    return isError;
   };
 
   validatePrice = () => {
     const priceRegex = /^[1-9]\d{0,3}(\.\d{1,4})?$/;
 
     const { price } = this.state;
-    const errors = {
-      priceErrorText: ' '
-    };
+    let priceErrorText = ' ';
+    let isError = false;
 
     if (price.length !== 0) {
-      if (!priceRegex.test(price)) errors.priceErrorText = 'Number is not valid!';
-    } else errors.priceErrorText = 'Price is required!';
+      if (!priceRegex.test(price)) {
+        isError = true;
+        priceErrorText = 'Number is not valid!';
+      }
+    } else {
+      isError = true;
+      priceErrorText = 'Price is required!';
+    }
 
-    this.setState({ ...errors });
+    this.setState({ priceErrorText });
+
+    return isError;
   };
 
   validateQuantity = () => {
     const quantityRegex = /^[1-9]\d{0,3}$/;
 
     const { quantity } = this.state;
-    const errors = {
-      quantityErrorText: ' '
-    };
+    let quantityErrorText = ' ';
+    let isError = false;
 
     if (quantity.length !== 0) {
-      if (!quantityRegex.test(quantity)) errors.quantityErrorText = 'Number is not valid!';
-    } else errors.quantityErrorText = 'Quantity is required!';
+      if (!quantityRegex.test(quantity)) {
+        isError = true;
+        quantityErrorText = 'Number is not valid!';
+      }
+    } else {
+      isError = true;
+      quantityErrorText = 'Quantity is required!';
+    }
 
-    this.setState({ ...errors });
+    this.setState({ quantityErrorText });
+
+    return isError;
+  };
+
+  getCategory = category => {
+    this.setState({ category });
+  };
+
+  validateCategorySelection = category => {
+    let categoryErrorText = ' ';
+    let isError = false;
+
+    if (category === '' || category === undefined) {
+      isError = true;
+      categoryErrorText = 'Category is required!';
+    }
+
+    this.setState({ categoryErrorText });
+
+    return isError;
+  };
+
+  resetErrorMessage = () => {
+    this.setState({ categoryErrorText: ' ' });
+  };
+
+  validateForm = () => {
+    let isError = false;
+    const { category } = this.state;
+
+    if (
+      this.validateName() ||
+      this.validatePrice() ||
+      this.validateQuantity() ||
+      this.validateCategorySelection(category)
+    )
+      isError = true;
+
+    return isError;
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { passClose } = this.props;
-    passClose();
+    const { onSubmit, passClose } = this.props;
+    const { name, price, description, quantity, photo, category } = this.state;
+
+    const productData = {
+      name,
+      price,
+      description,
+      quantity,
+      photo,
+      category
+    };
+
+    if (!this.validateForm()) {
+      onSubmit(productData);
+      passClose();
+    }
   };
 
   render() {
@@ -92,7 +152,6 @@ class Form extends Component {
       price,
       description,
       quantity,
-      category,
       nameErrorText,
       priceErrorText,
       descriptionErrorText,
@@ -132,7 +191,6 @@ class Form extends Component {
           onChange={this.handleChange}
           error={descriptionErrorText !== ' '}
           helperText={descriptionErrorText}
-          // onBlur={this.validateDescription}
           margin="normal"
         />
         <br />
@@ -147,15 +205,11 @@ class Form extends Component {
           margin="normal"
         />
         <br />
-        <TextField
-          name="category"
-          label="Category"
-          value={category}
-          onChange={this.handleChange}
-          error={categoryErrorText !== ' '}
-          helperText={categoryErrorText}
-          onBlur={this.validateCategory}
-          margin="normal"
+        <CategorySelect
+          getCategory={this.getCategory}
+          validate={this.validateCategorySelection}
+          errorMessage={categoryErrorText}
+          resetMessage={this.resetErrorMessage}
         />
         <br />
         <Button variant="outlined" type="submit">
@@ -167,7 +221,8 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  passClose: PropTypes.func.isRequired
+  passClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default Form;

@@ -9,6 +9,10 @@ const Styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none'
+  },
+  formControl: {
+    margin: 'normal',
+    minWidth: 192
   }
 });
 

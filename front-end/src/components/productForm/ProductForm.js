@@ -22,6 +22,11 @@ class ProductForm extends React.Component {
     this.setState({ openModal: false });
   };
 
+  addProduct = () => {
+    // request
+    // product vietoj ()
+  };
+
   render() {
     const { classes, className } = this.props;
     const { openModal } = this.state;
@@ -33,13 +38,7 @@ class ProductForm extends React.Component {
         </IconButton>
         <Modal open={openModal} onClose={this.handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
-            <Form
-              passClose={this.handleClose}
-              onSubmit={() => {
-                // eslint-disable-next-line no-useless-return
-                return;
-              }}
-            />
+            <Form passClose={this.handleClose} onSubmit={this.addProduct} />
           </div>
         </Modal>
       </div>

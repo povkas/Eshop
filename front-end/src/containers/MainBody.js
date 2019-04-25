@@ -73,7 +73,7 @@ class MainBody extends React.Component {
     }
   };
 
-  handleModalClose = () => {
+  handleProductModalClose = () => {
     this.setState({ isProductModalOpen: false });
   };
 
@@ -292,7 +292,7 @@ class MainBody extends React.Component {
         />
         <ProductModal
           openModal={isProductModalOpen}
-          handleClose={this.handleModalClose}
+          handleClose={this.handleProductModalClose}
           product={selectedProduct}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
