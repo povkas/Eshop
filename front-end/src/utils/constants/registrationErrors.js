@@ -6,7 +6,7 @@ const errorMasages = {
   countryError: 'Country must contain less then 30 symbols and cant contain any numbers',
   cityError: 'City must contain less then 30 symbols and cant contain any numbers',
   adressError: 'Address must contain less then 30 symbols',
-  confirmPasswordError: 'Confirm password is not the same as password'
+  confirmPasswordError: 'Confirm password must be the same as password'
 };
 
 export default errorMasages;

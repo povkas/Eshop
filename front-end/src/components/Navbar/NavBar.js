@@ -18,8 +18,16 @@ import { RegistrationForm } from '../registration';
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { openRegistrationModal: false };
   }
+
+  handleRegistrationOpen = () => {
+    this.setState({ openRegistrationModal: true });
+  };
+
+  handleRegistrationClose = () => {
+    this.setState({ openRegistrationModal: false });
+  };
 
   handleLogout = e => {
     e.preventDefault();
@@ -29,6 +37,7 @@ class NavBar extends React.Component {
   };
 
   render() {
+    const { openRegistrationModal } = this.state;
     const {
       classes,
       auth,
@@ -49,7 +58,6 @@ class NavBar extends React.Component {
                 BimBam
               </Link>
             </Typography>
-            <RegistrationForm openSnackbar={openSnackbar} />
             <Search
               products={products}
               handleSearch={handleSearch}
@@ -58,8 +66,18 @@ class NavBar extends React.Component {
             {auth.isAuthenticated ? (
               <UserOptions className={classes} logOut={this.handleLogout} />
             ) : (
-              <LoginForm className={classes} openSnackbar={openSnackbar} />
+              <LoginForm
+                openRegistration={this.handleRegistrationOpen}
+                className={classes}
+                openSnackbar={openSnackbar}
+              />
             )}
+            <RegistrationForm
+              closeRegistration={this.handleRegistrationClose}
+              openRegistration={this.handleRegistrationOpen}
+              openSnackbar={openSnackbar}
+              openRegistrationModal={openRegistrationModal}
+            />
             <IconButton className={classes.menuButton}>
               <ShoppingCart />
             </IconButton>

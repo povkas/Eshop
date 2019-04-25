@@ -2,38 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
 import Form from './Form';
 import Styles from './Styles';
 
 class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      openModal: false
-    };
+    this.state = {};
   }
 
-  handleOpen = () => {
-    this.setState({ openModal: true });
-  };
-
-  handleClose = () => {
-    this.setState({ openModal: false });
-  };
-
   render() {
-    const { classes, className, openSnackbar } = this.props;
-    const { openModal } = this.state;
-
+    const { classes, openSnackbar, closeRegistration, openRegistrationModal } = this.props;
     return (
       <div>
-        <Button className={className} onClick={this.handleOpen}>
-          Sign Up
-        </Button>
-        <Modal open={openModal} onClose={this.handleClose}>
+        <Modal open={openRegistrationModal} onClose={closeRegistration}>
           <div className={classes.paper}>
-            <Form passClose={this.handleClose} openSnackbar={openSnackbar} />
+            <Form passClose={closeRegistration} openSnackbar={openSnackbar} />
           </div>
         </Modal>
       </div>
@@ -43,8 +27,9 @@ class RegistrationForm extends React.Component {
 
 RegistrationForm.propTypes = {
   classes: PropTypes.shape().isRequired,
-  className: PropTypes.shape().isRequired,
-  openSnackbar: PropTypes.shape().isRequired
+  openSnackbar: PropTypes.func.isRequired,
+  closeRegistration: PropTypes.func.isRequired,
+  openRegistrationModal: PropTypes.bool.isRequired
 };
 
 export default withStyles(Styles)(RegistrationForm);

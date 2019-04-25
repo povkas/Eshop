@@ -9,6 +9,15 @@ const modalStyles = theme => ({
     width: '10vw',
     top: `${6}%`,
     left: `${75}%`
+  },
+  button: {
+    fontSize: 11.5,
+    color: '#551A8B',
+    marginLeft: '-19px',
+    width: '10vw'
+  },
+  color: {
+    color: '#551A8B'
   }
 });
 

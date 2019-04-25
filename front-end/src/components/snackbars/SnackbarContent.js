@@ -44,7 +44,13 @@ function SnackContent(props) {
 SnackContent.propTypes = {
   classes: PropTypes.shape().isRequired,
   onClose: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(['loginSuccess', 'loginError', 'logoutSuccess']).isRequired
+  variant: PropTypes.oneOf([
+    'registrationSuccess',
+    'loginSuccess',
+    'loginError',
+    'logoutSuccess',
+    'registrationFailed'
+  ]).isRequired
 };
 
 export default withStyles(Styles)(SnackContent);

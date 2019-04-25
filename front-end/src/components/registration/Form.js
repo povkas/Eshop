@@ -325,8 +325,8 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  passClose: PropTypes.shape().isRequired,
-  openSnackbar: PropTypes.shape().isRequired
+  passClose: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 export default withStyles(styles1)(Form);

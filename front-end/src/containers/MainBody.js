@@ -31,7 +31,8 @@ class MainBody extends React.Component {
       sortCriteria: 'nameDescending',
       sortingCompleted: false,
       snackbarVariant: '',
-      productsLoading: false
+      productsLoading: false,
+      openRegistrationModal: false
     };
 
     this._isMounted = false;
