@@ -7,13 +7,22 @@ import { withStyles } from '@material-ui/core/styles';
 import Styles from './Styles';
 
 function Sort(props) {
-  const { sortCriteria, changeSort, classes } = props;
+  const { numberOfProducts, sortCriteria, changeSort, changeNumberOfProducts, classes } = props;
   return (
     <div className={classes.sortDiv}>
       <Typography variant="subheading" className={classes.sortText}>
+        Products per page:
+      </Typography>
+      <Select value={numberOfProducts} onChange={changeNumberOfProducts} className={classes.select}>
+        <MenuItem value={6}>6</MenuItem>
+        <MenuItem value={12}>12</MenuItem>
+        <MenuItem value={24}>24</MenuItem>
+        <MenuItem value={48}>48</MenuItem>
+      </Select>
+      <Typography variant="subheading" className={classes.sortText}>
         Sort by:
       </Typography>
-      <Select value={sortCriteria} onChange={changeSort}>
+      <Select value={sortCriteria} onChange={changeSort} className={classes.select}>
         <MenuItem value="nameDescending">A-Z</MenuItem>
         <MenuItem value="nameAscending">Z-A</MenuItem>
         <MenuItem value="priceDescending">Price descending</MenuItem>
@@ -28,7 +37,9 @@ function Sort(props) {
 Sort.propTypes = {
   classes: PropTypes.shape().isRequired,
   changeSort: PropTypes.func.isRequired,
-  sortCriteria: PropTypes.string.isRequired
+  sortCriteria: PropTypes.string.isRequired,
+  numberOfProducts: PropTypes.number.isRequired,
+  changeNumberOfProducts: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(Sort);

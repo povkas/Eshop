@@ -37,7 +37,7 @@ class NavBar extends React.Component {
     } = this.props;
     return (
       <BrowserRouter>
-        <AppBar position="static">
+        <AppBar position="sticky">
           <Toolbar>
             <CategoriesList
               filterByCategory={filterByCategory}
