@@ -13,7 +13,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { Menu, FiberManualRecord } from '@material-ui/icons';
 import { DropDownCategories } from '.';
 import * as categoriesAction from '../../actions/categoriesAction';
-import { allProductsCategory } from '../../utils/constants';
 import Styles from './Styles';
 
 class CategoriesList extends React.Component {
@@ -26,10 +25,16 @@ class CategoriesList extends React.Component {
   }
 
   componentDidMount() {
-    categoriesAction.getCategories().then(res => {
-      res.sort((a, b) => a.category.localeCompare(b.category));
-      this.setState({ categories: res });
-    });
+    const { setError } = this.props;
+    categoriesAction
+      .getCategories()
+      .then(res => {
+        res.sort((a, b) => a.category.localeCompare(b.category));
+        this.setState({ categories: res });
+      })
+      .catch(err => {
+        setError(err);
+      });
   }
 
   toggleDrawer = (side, open) => () => {
@@ -40,7 +45,7 @@ class CategoriesList extends React.Component {
 
   render() {
     const { left, categories } = this.state;
-    const { selectCategory, classes, currentCategory } = this.props;
+    const { filterByCategory, classes, currentCategory } = this.props;
 
     return (
       <div>
@@ -63,18 +68,18 @@ class CategoriesList extends React.Component {
             <List>
               <ListItem
                 onClick={() => {
-                  selectCategory(allProductsCategory);
+                  filterByCategory('');
                 }}
                 button
               >
                 <ListItemIcon>
                   <FiberManualRecord />
                 </ListItemIcon>
-                <ListItemText primary={allProductsCategory} />
+                <ListItemText primary="All" />
               </ListItem>
               {categories.map(category => (
                 <DropDownCategories
-                  selectCategory={selectCategory}
+                  filterByCategory={filterByCategory}
                   isSelected={currentCategory === category.category}
                   key={category.category}
                   category={category.category}
@@ -89,7 +94,8 @@ class CategoriesList extends React.Component {
 }
 
 CategoriesList.propTypes = {
-  selectCategory: PropTypes.func.isRequired,
+  filterByCategory: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,
   classes: PropTypes.shape().isRequired
 };

@@ -9,36 +9,57 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
-import { LoginForm, UserOptions } from '../login';
+import { LoginForm, UserOptions } from '../../components/login';
 import { logoutUser } from '../../actions/authentication';
-import { CategoriesList } from '../categoriesList';
-import { ProductForm } from '../productForm';
+import { ProductForm } from '../../components/productForm';
+import { CategoriesList } from '../../components/categoriesList';
+import Search from '../../components/search/Search';
+import { snackbarMessages } from '../../utils/constants';
 
 class NavBar extends React.Component {
   handleLogout = e => {
     e.preventDefault();
     const { logoutUserProp, openSnackbar } = this.props;
     logoutUserProp();
-    openSnackbar('logoutSuccess');
+    openSnackbar({ message: snackbarMessages.logoutSuccess, variant: 'neutral' });
   };
 
   render() {
-    const { classes, auth, selectCategory, currentCategory, openSnackbar } = this.props;
+    const {
+      classes,
+      auth,
+      currentCategory,
+      openSnackbar,
+      products,
+      handleSearch,
+      productHandler,
+      filterByCategory,
+      setError
+    } = this.props;
     return (
       <BrowserRouter>
         <AppBar position="static">
           <Toolbar>
-            <CategoriesList selectCategory={selectCategory} currentCategory={currentCategory} />
+            <CategoriesList
+              filterByCategory={filterByCategory}
+              currentCategory={currentCategory}
+              setError={setError}
+            />
             <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link to="/" className={classes.shopName}>
-                BimBam連合
+                BimBam
               </Link>
             </Typography>
+            <Search
+              products={products}
+              handleSearch={handleSearch}
+              productHandler={productHandler}
+            />
             <ProductForm className={classes} />
             {auth.isAuthenticated ? (
               <UserOptions className={classes} logOut={this.handleLogout} />
             ) : (
-              <LoginForm className={classes} openSnackbar={openSnackbar} />
+              <LoginForm className={classes} openSnackbar={openSnackbar} setError={setError} />
             )}
             <IconButton className={classes.menuButton}>
               <ShoppingCart />
@@ -52,8 +73,12 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   classes: PropTypes.shape().isRequired,
-  selectCategory: PropTypes.func.isRequired,
+  filterByCategory: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,
+  setError: PropTypes.func.isRequired,
+  productHandler: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   auth: PropTypes.shape().isRequired,
   logoutUserProp: PropTypes.func.isRequired,
   openSnackbar: PropTypes.func.isRequired
