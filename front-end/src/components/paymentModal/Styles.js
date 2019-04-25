@@ -1,21 +1,18 @@
 const styles = theme => ({
   paper: {
     position: 'absolute',
-    width: '30vw',
+    width: '40vw',
     minHeight: '50vh',
     maxHeight: '82vh',
     margin: '2vh',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+    padding: '24px',
     outline: 'none'
   },
   image: {
     height: '24vmin',
     width: '24vmin'
-  },
-  divider: {
-    margin: `${theme.spacing.unit * 2}px 0`
   },
   button: {
     display: 'block',
@@ -27,6 +24,9 @@ const styles = theme => ({
   },
   textField: {
     maxWidth: '10vmin'
+  },
+  childrenCentered: {
+    maxWidht: '10000vmin'
   }
 });
 
