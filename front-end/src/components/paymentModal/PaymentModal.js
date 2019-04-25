@@ -25,7 +25,7 @@ class PaymentModal extends React.Component {
     const { classes, isOpen, handleClose } = this.props;
     const { submitted } = this.state;
     return (
-      <Modal open={isOpen} onClose={handleClose} className={classes.childrenCentered}>
+      <Modal open={isOpen} onClose={handleClose}>
         <Paper style={getModalStyle()} className={classes.paper}>
           <h2>Payment</h2>
           <Grid container justify="space-evenly" alignItems="center">

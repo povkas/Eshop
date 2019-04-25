@@ -24,9 +24,6 @@ const styles = theme => ({
   },
   textField: {
     maxWidth: '10vmin'
-  },
-  childrenCentered: {
-    maxWidht: '10000vmin'
   }
 });
 
