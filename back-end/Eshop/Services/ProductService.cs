@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace EShop.Services
 {
@@ -15,11 +16,13 @@ namespace EShop.Services
     {
         private readonly IRepository<Product> _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public ProductService(IRepository<Product> repository, IMapper mapper)
+        public ProductService(IRepository<Product> repository, IMapper mapper, ILogger<ProductService> logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<ProductDto> GetById(int id)
@@ -61,18 +64,24 @@ namespace EShop.Services
             await _repository.Update(itemToUpdate);
         }
 
-        public async Task<bool> PartialUpdate(int id, JsonPatchDocument<NewProductDto> itemPatch)
+        public async Task<bool> PartialUpdate(int id, JsonPatchDocument<PatchProductDto> itemPatch)
         {
             if (itemPatch == null) throw new ArgumentNullException(nameof(itemPatch));
 
             var itemToUpdate = await _repository.GetById(id);
+            _logger.LogInformation("Got object to update {itemToUpdate} by id {ID}", itemToUpdate, id);
+
             if (itemToUpdate == null)
             {
                 throw new InvalidOperationException($"Product {id} was not found");
             }
 
-            var updateData = _mapper.Map<NewProductDto>(itemToUpdate);
+            var updateData = _mapper.Map<PatchProductDto>(itemToUpdate);
+            _logger.LogInformation("Mapped object to update {UPDATEDATA}", updateData);
+
             itemPatch.ApplyTo(updateData);
+            _logger.LogInformation("Patched object with update data {ItemPatch}", itemPatch);
+
             _mapper.Map(updateData, itemToUpdate);
             var updated = await _repository.Update(itemToUpdate);
             return updated;

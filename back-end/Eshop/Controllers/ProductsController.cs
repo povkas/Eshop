@@ -67,9 +67,9 @@ namespace EShop.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<NewProductDto> patch)
+        public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<PatchProductDto> patch)
         {
-            _logger.LogInformation("Patching product {ID} with information {}", id, patch);
+            _logger.LogInformation("Patching product {ID} with information {PATCH}", id, patch);
             await _productsService.PartialUpdate(id, patch);
 
             return NoContent();

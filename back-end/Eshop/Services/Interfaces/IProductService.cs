@@ -16,7 +16,7 @@ namespace EShop.Services.Interfaces
 
         Task Update(int id, NewProductDto updateData);
 
-        Task<bool> PartialUpdate(int id, JsonPatchDocument<NewProductDto> itemPatch);
+        Task<bool> PartialUpdate(int id, JsonPatchDocument<PatchProductDto> itemPatch);
 
         Task<bool> Delete(int id);
     }
