@@ -7,9 +7,17 @@ import axios from 'axios';
 import errorMessages from '../../utils/constants/registrationErrors';
 import { styles, styles1 } from './Styles';
 import { snackbarMessages } from '../../utils/constants';
+import { addUser } from '../../utils/constants/api';
 
 function hasNumber(myString) {
   return /\d/.test(myString);
+}
+
+function notEmpty(myString) {
+  if (myString !== '') {
+    return true;
+  }
+  return false;
 }
 
 class Form extends Component {
@@ -24,105 +32,70 @@ class Form extends Component {
       country: '',
       city: '',
       address: '',
-      confirmPasswordErrorText: ' ',
-      nameErrorText: ' ',
-      surnameErrorText: ' ',
-      countryErrorText: ' ',
-      cityErrorText: ' ',
-      addressErrorText: ' ',
-      emailErrorText: ' ',
-      passwordErrorText: ' ',
-      isEmailError: false,
-      isPasswordError: false,
-      isNameError: false,
-      isSurnameError: false,
-      isCountryError: false,
-      isCityError: false,
-      isAddressError: false,
-      isConfirmPassword: false
+      confirmPasswordErrorText: '',
+      nameErrorText: '',
+      surnameErrorText: '',
+      countryErrorText: '',
+      cityErrorText: '',
+      addressErrorText: '',
+      emailErrorText: '',
+      passwordErrorText: ''
     };
   }
 
   validate = () => {
-    let isError = false;
     const { name, surname, country, city, email, password, confirmPassword, address } = this.state;
     const errors = {
-      confirmPasswordErrorText: ' ',
-      nameErrorText: ' ',
-      surnameErrorText: ' ',
-      countryErrorText: ' ',
-      cityErrorText: ' ',
-      addressErrorText: ' ',
-      emailErrorText: ' ',
-      passwordErrorText: ' ',
-      isEmailError: false,
-      isPasswordError: false,
-      isNameError: false,
-      isSurnameError: false,
-      isCountryError: false,
-      isCityError: false,
-      isAddressError: false,
-      isConfirmPassword: false
+      confirmPasswordErrorText: '',
+      nameErrorText: '',
+      surnameErrorText: '',
+      countryErrorText: '',
+      cityErrorText: '',
+      addressErrorText: '',
+      emailErrorText: '',
+      passwordErrorText: ''
     };
 
     if (email.length !== 0) {
       if (email.indexOf('@') === -1 || email.indexOf('.') === -1 || email.length > 128) {
-        isError = true;
         errors.emailErrorText = errorMessages.emailError;
-        errors.isEmailError = true;
       }
     }
     if (password.length !== 0) {
       if (password.length < 8 || password.length > 255) {
-        isError = true;
         errors.passwordErrorText = errorMessages.password;
-        errors.isPasswordError = true;
       }
     }
     if (name.length !== 0) {
       if (name.length > 30 || hasNumber(name)) {
-        isError = true;
         errors.nameErrorText = errorMessages.nameError;
-        errors.isNameError = true;
       }
     }
     if (surname.length !== 0) {
       if (surname.length > 30 || hasNumber(surname)) {
-        isError = true;
         errors.surnameErrorText = errorMessages.surnameError;
-        errors.isSurnameError = true;
       }
     }
     if (country.length !== 0) {
       if (country.length > 30 || hasNumber(country)) {
-        isError = true;
         errors.countryErrorText = errorMessages.countryError;
-        errors.iscountryError = true;
       }
     }
     if (city.length !== 0) {
       if (city.length > 30 || hasNumber(city)) {
-        isError = true;
         errors.cityErrorText = errorMessages.cityError;
-        errors.isCityError = true;
       }
     }
     if (address.length !== 0) {
       if (address.length > 30) {
-        isError = true;
         errors.addressErrorText = errorMessages.adressError;
-        errors.isAddressError = true;
       }
     }
-    if (confirmPassword.length !== 0) {
-      if (confirmPassword !== password) {
-        isError = true;
-        errors.confirmPasswordErrorText = errorMessages.confirmPasswordError;
-        errors.isConfirmPassword = true;
-      }
+    if (confirmPassword !== password) {
+      errors.confirmPasswordErrorText = errorMessages.confirmPasswordError;
     }
+
     this.setState({ ...errors });
-    return isError;
   };
 
   handleChange = e => {
@@ -136,10 +109,9 @@ class Form extends Component {
   };
 
   handleSubmit = e => {
-    e.preventDefault(); // preventing browser to reload
+    e.preventDefault();
     const { name, surname, country, city, email, password, address } = this.state;
     const { passClose, openSnackbar } = this.props;
-    const url = `http://localhost:5000/api/user`;
 
     const data = JSON.stringify({
       name,
@@ -152,7 +124,7 @@ class Form extends Component {
     });
 
     axios
-      .post(url, data, {
+      .post(addUser, data, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -164,6 +136,8 @@ class Form extends Component {
       .catch(error => {
         if (error.response) {
           openSnackbar({ message: snackbarMessages.registrationFailed, variant: 'error' });
+        } else if (error.request) {
+          openSnackbar({ message: snackbarMessages.unidentified, variant: 'error' });
         }
       });
   };
@@ -185,15 +159,7 @@ class Form extends Component {
       cityErrorText,
       addressErrorText,
       emailErrorText,
-      passwordErrorText,
-      isEmailError,
-      isPasswordError,
-      isNameError,
-      isSurnameError,
-      isCountryError,
-      isCityError,
-      isAddressError,
-      isConfirmPassword
+      passwordErrorText
     } = this.state;
 
     const labelNames = {
@@ -218,8 +184,8 @@ class Form extends Component {
             type={labelNames.name}
             value={name}
             required
+            error={notEmpty(nameErrorText)}
             onChange={this.handleChange}
-            error={isNameError}
             helperText={nameErrorText}
             onBlur={this.validate}
             margin="normal"
@@ -231,8 +197,8 @@ class Form extends Component {
             type={labelNames.surname}
             value={surname}
             required
+            error={notEmpty(surnameErrorText)}
             onChange={this.handleChange}
-            error={isSurnameError}
             helperText={surnameErrorText}
             onBlur={this.validate}
             margin="normal"
@@ -244,8 +210,8 @@ class Form extends Component {
             type={labelNames.email}
             value={email}
             required
+            error={notEmpty(emailErrorText)}
             onChange={this.handleChange}
-            error={isEmailError}
             helperText={emailErrorText}
             onBlur={this.validate}
             margin="normal"
@@ -257,8 +223,8 @@ class Form extends Component {
             type={labelNames.password}
             value={password}
             required
+            error={notEmpty(passwordErrorText)}
             onChange={this.handleChange}
-            error={isPasswordError}
             onBlur={this.validate}
             helperText={passwordErrorText}
             margin="normal"
@@ -270,8 +236,8 @@ class Form extends Component {
             type={labelNames.password}
             value={confirmPassword}
             required
+            error={notEmpty(confirmPasswordErrorText)}
             onChange={this.handleChange}
-            error={isConfirmPassword}
             onBlur={this.validate}
             helperText={confirmPasswordErrorText}
             margin="normal"
@@ -283,8 +249,8 @@ class Form extends Component {
             type={labelNames.country}
             value={country}
             required
+            error={notEmpty(countryErrorText)}
             onChange={this.handleChange}
-            error={isCountryError}
             helperText={countryErrorText}
             onBlur={this.validate}
             margin="normal"
@@ -296,8 +262,8 @@ class Form extends Component {
             type={labelNames.city}
             value={city}
             required
+            error={notEmpty(cityErrorText)}
             onChange={this.handleChange}
-            error={isCityError}
             helperText={cityErrorText}
             onBlur={this.validate}
             margin="normal"
@@ -309,8 +275,8 @@ class Form extends Component {
             type={labelNames.address}
             value={address}
             required
+            error={notEmpty(addressErrorText)}
             onChange={this.handleChange}
-            error={isAddressError}
             helperText={addressErrorText}
             onBlur={this.validate}
             margin="normal"

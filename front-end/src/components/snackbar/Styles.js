@@ -11,12 +11,6 @@ const Styles = theme => ({
   neutral: {
     backgroundColor: blue[600]
   },
-  registrationSuccess: {
-    backgroundColor: green[600]
-  },
-  registrationFailed: {
-    backgroundColor: theme.palette.error.dark
-  },
   iconVariant: {
     fontSize: 20,
     opacity: 0.9,

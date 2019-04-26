@@ -19,15 +19,15 @@ import { RegistrationForm } from '../../components/registration';
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { openRegistrationModal: false };
+    this.state = { isOpenRegistrationModal: false };
   }
 
   handleRegistrationOpen = () => {
-    this.setState({ openRegistrationModal: true });
+    this.setState({ isOpenRegistrationModal: true });
   };
 
   handleRegistrationClose = () => {
-    this.setState({ openRegistrationModal: false });
+    this.setState({ isOpenRegistrationModal: false });
   };
 
   handleLogout = e => {
@@ -38,7 +38,7 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { openRegistrationModal } = this.state;
+    const { isOpenRegistrationModal } = this.state;
     const {
       classes,
       auth,
@@ -83,7 +83,7 @@ class NavBar extends React.Component {
               closeRegistration={this.handleRegistrationClose}
               openRegistration={this.handleRegistrationOpen}
               openSnackbar={openSnackbar}
-              openRegistrationModal={openRegistrationModal}
+              isOpenRegistrationModal={isOpenRegistrationModal}
             />
             <IconButton className={classes.menuButton}>
               <ShoppingCart />

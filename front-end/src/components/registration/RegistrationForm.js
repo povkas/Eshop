@@ -12,10 +12,10 @@ class RegistrationForm extends React.Component {
   }
 
   render() {
-    const { classes, openSnackbar, closeRegistration, openRegistrationModal } = this.props;
+    const { classes, openSnackbar, closeRegistration, isOpenRegistrationModal } = this.props;
     return (
       <div>
-        <Modal open={openRegistrationModal} onClose={closeRegistration}>
+        <Modal open={isOpenRegistrationModal} onClose={closeRegistration}>
           <div className={classes.paper}>
             <Form passClose={closeRegistration} openSnackbar={openSnackbar} />
           </div>
@@ -29,7 +29,7 @@ RegistrationForm.propTypes = {
   classes: PropTypes.shape().isRequired,
   openSnackbar: PropTypes.func.isRequired,
   closeRegistration: PropTypes.func.isRequired,
-  openRegistrationModal: PropTypes.bool.isRequired
+  isOpenRegistrationModal: PropTypes.bool.isRequired
 };
 
 export default withStyles(Styles)(RegistrationForm);
