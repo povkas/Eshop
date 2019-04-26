@@ -4,12 +4,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Person from '@material-ui/icons/Person';
+import { ProductForm } from '../productForm';
 
 class UserOptions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openMenu: null
+      openMenu: null,
+      openProductForm: false
     };
   }
 
@@ -17,13 +19,22 @@ class UserOptions extends React.Component {
     this.setState({ openMenu: event.currentTarget });
   };
 
-  handleClose = () => {
+  closeMenu = () => {
     this.setState({ openMenu: null });
   };
 
+  openProductForm = () => {
+    this.closeMenu();
+    this.setState({ openProductForm: true });
+  };
+
+  closeModal = () => {
+    this.setState({ openProductForm: false });
+  };
+
   render() {
-    const { openMenu } = this.state;
-    const { className, logOut } = this.props;
+    const { openMenu, openProductForm } = this.state;
+    const { className, logOut, IsAdmin } = this.props;
 
     return (
       <div>
@@ -39,10 +50,12 @@ class UserOptions extends React.Component {
           id="simple-menu"
           anchorEl={openMenu}
           open={Boolean(openMenu)}
-          onClose={this.handleClose}
+          onClose={this.closeMenu}
         >
+          {IsAdmin ? <MenuItem onClick={this.openProductForm}>Add Product</MenuItem> : null}
           <MenuItem onClick={e => logOut(e)}>Logout</MenuItem>
         </Menu>
+        {IsAdmin ? <ProductForm open={openProductForm} close={this.closeModal} /> : null}
       </div>
     );
   }
@@ -50,7 +63,8 @@ class UserOptions extends React.Component {
 
 UserOptions.propTypes = {
   className: PropTypes.shape().isRequired,
-  logOut: PropTypes.func.isRequired
+  logOut: PropTypes.func.isRequired,
+  IsAdmin: PropTypes.bool.isRequired
 };
 
 export default UserOptions;

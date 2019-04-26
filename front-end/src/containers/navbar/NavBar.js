@@ -11,7 +11,6 @@ import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
 import { LoginForm, UserOptions } from '../../components/login';
 import { logoutUser } from '../../actions/authentication';
-import { ProductForm } from '../../components/productForm';
 import { CategoriesList } from '../../components/categoriesList';
 import Search from '../../components/search/Search';
 import { snackbarMessages } from '../../utils/constants';
@@ -36,6 +35,7 @@ class NavBar extends React.Component {
       filterByCategory,
       setError
     } = this.props;
+
     return (
       <BrowserRouter>
         <AppBar position="static">
@@ -55,9 +55,12 @@ class NavBar extends React.Component {
               handleSearch={handleSearch}
               productHandler={productHandler}
             />
-            {auth.user.IsAdmin === 'True' ? <ProductForm className={classes} /> : null}
             {auth.isAuthenticated ? (
-              <UserOptions className={classes} logOut={this.handleLogout} />
+              <UserOptions
+                IsAdmin={auth.user.IsAdmin === 'True'}
+                className={classes}
+                logOut={this.handleLogout}
+              />
             ) : (
               <LoginForm className={classes} openSnackbar={openSnackbar} setError={setError} />
             )}
