@@ -55,7 +55,7 @@ class NavBar extends React.Component {
               handleSearch={handleSearch}
               productHandler={productHandler}
             />
-            <ProductForm className={classes} />
+            {auth.user.IsAdmin === 'True' ? <ProductForm className={classes} /> : null}
             {auth.isAuthenticated ? (
               <UserOptions className={classes} logOut={this.handleLogout} />
             ) : (
