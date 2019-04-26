@@ -17,6 +17,7 @@ namespace Eshop.Services.Interfaces
 
         Task<ICollection<UserDto>> GetAll();
 
-        Task<bool> CheckIfUserExists(LoginRequestDto user);
+        Task<string> CheckIfUserExists(LoginRequestDto user);
+
     }
 }

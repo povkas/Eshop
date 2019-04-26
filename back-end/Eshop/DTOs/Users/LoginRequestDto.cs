@@ -13,5 +13,7 @@ namespace Eshop.DTOs.Users
         [MinLength(8, ErrorMessage = "Password must be at least 8 characters long")]
         [StringLength(128, ErrorMessage = "Password cannot exceed 128 characters")]
         public string Password { get; set; }
+
+        // public bool IsAdmin { get; set; }
     }
 }
