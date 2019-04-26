@@ -51,7 +51,7 @@ class ProductTable extends React.Component {
       );
     }
 
-    return buttons;
+    return buttons.filter(i => i.key && i.key >= currentPage - 2 && i.key < currentPage + 3);
   };
 
   render() {
