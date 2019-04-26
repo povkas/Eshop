@@ -28,8 +28,8 @@ class LoginForm extends React.Component {
   };
 
   handleLogin = user => {
-    const { loginUserProp, openSnackbar } = this.props;
-    loginUserProp(user, openSnackbar);
+    const { loginUserProp, setError, openSnackbar } = this.props;
+    loginUserProp(user, openSnackbar, setError);
   };
 
   render() {
@@ -71,7 +71,8 @@ LoginForm.propTypes = {
   className: PropTypes.shape().isRequired,
   loginUserProp: PropTypes.func.isRequired,
   openSnackbar: PropTypes.func.isRequired,
-  openRegistration: PropTypes.func.isRequired
+  openRegistration: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -79,7 +80,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return { loginUserProp: (user, openSnackbar) => loginUser(user, openSnackbar)(dispatch) };
+  return {
+    loginUserProp: (user, openSnackbar, setError) =>
+      loginUser(user, openSnackbar, setError)(dispatch)
+  };
 };
 
 export default connect(

@@ -1,7 +1,7 @@
 export const snackbarMessages = {
   loginSuccess: 'Login successful!',
-  loginError: 'Incorrect email or password!',
-  logoutSuccess: 'Logout successful!',
   registrationSuccess: 'Registration successful!',
-  registrationFailed: 'Email has already been taken!'
+  registrationFailed: 'Email has already been taken!',
+  logoutSuccess: 'Logout successful!',
+  unidentified: '404: An unidentified error'
 };

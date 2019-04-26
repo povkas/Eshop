@@ -7,28 +7,31 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Styles from './Styles';
-import { snackbarMessages } from '../../utils/constants';
 
-const variantIcon = {
-  registrationSuccess: CheckCircleIcon,
-  loginSuccess: CheckCircleIcon,
-  loginError: ErrorIcon,
-  logoutSuccess: ErrorIcon,
-  registrationFailed: ErrorIcon
+const iconSelect = variant => {
+  if (variant === 'error') {
+    return ErrorIcon;
+  }
+  return CheckCircleIcon;
 };
 
-function SnackContent(props) {
-  const { classes, onClose, variant, ...other } = props;
-  const Icon = variantIcon[variant];
-  const Message = snackbarMessages[variant];
+function SnackContentWrapper(props) {
+  const {
+    classes,
+    onClose,
+    snackbarContents: { message, variant },
+    ...other
+  } = props;
+
+  const Icon = iconSelect(variant);
 
   return (
     <SnackbarContent
       className={classes[variant]}
       message={[
-        <span className={classes.message} key={classes.message}>
+        <span className={classes.message} key={new Date().getTime()}>
           <Icon className={classes.iconVariant} />
-          {Message}
+          {message}
         </span>
       ]}
       action={[
@@ -41,16 +44,10 @@ function SnackContent(props) {
   );
 }
 
-SnackContent.propTypes = {
+SnackContentWrapper.propTypes = {
   classes: PropTypes.shape().isRequired,
   onClose: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf([
-    'registrationSuccess',
-    'loginSuccess',
-    'loginError',
-    'logoutSuccess',
-    'registrationFailed'
-  ]).isRequired
+  snackbarContents: PropTypes.shape().isRequired
 };
 
-export default withStyles(Styles)(SnackContent);
+export default withStyles(Styles)(SnackContentWrapper);

@@ -9,11 +9,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link, BrowserRouter } from 'react-router-dom';
 import Styles from './Styles';
-import { LoginForm, UserOptions } from '../login';
+import { LoginForm, UserOptions } from '../../components/login';
 import { logoutUser } from '../../actions/authentication';
-import { CategoriesList } from '../categoriesList';
-import Search from '../search/Search';
-import { RegistrationForm } from '../registration';
+import { CategoriesList } from '../../components/categoriesList';
+import Search from '../../components/search/Search';
+import { snackbarMessages } from '../../utils/constants';
+import { RegistrationForm } from '../../components/registration';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class NavBar extends React.Component {
     e.preventDefault();
     const { logoutUserProp, openSnackbar } = this.props;
     logoutUserProp();
-    openSnackbar('logoutSuccess');
+    openSnackbar({ message: snackbarMessages.logoutSuccess, variant: 'neutral' });
   };
 
   render() {
@@ -41,18 +42,23 @@ class NavBar extends React.Component {
     const {
       classes,
       auth,
-      selectCategory,
       currentCategory,
       openSnackbar,
       products,
       handleSearch,
-      productHandler
+      productHandler,
+      filterByCategory,
+      setError
     } = this.props;
     return (
       <BrowserRouter>
         <AppBar position="static">
           <Toolbar>
-            <CategoriesList selectCategory={selectCategory} currentCategory={currentCategory} />
+            <CategoriesList
+              filterByCategory={filterByCategory}
+              currentCategory={currentCategory}
+              setError={setError}
+            />
             <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link to="/" className={classes.shopName}>
                 BimBam
@@ -67,9 +73,10 @@ class NavBar extends React.Component {
               <UserOptions className={classes} logOut={this.handleLogout} />
             ) : (
               <LoginForm
-                openRegistration={this.handleRegistrationOpen}
                 className={classes}
+                openRegistration={this.handleRegistrationOpen}
                 openSnackbar={openSnackbar}
+                setError={setError}
               />
             )}
             <RegistrationForm
@@ -90,8 +97,9 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   classes: PropTypes.shape().isRequired,
-  selectCategory: PropTypes.func.isRequired,
+  filterByCategory: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,
+  setError: PropTypes.func.isRequired,
   productHandler: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()).isRequired,

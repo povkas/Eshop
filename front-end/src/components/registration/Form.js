@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import errorMessages from '../../utils/constants/registrationErrors';
 import { styles, styles1 } from './Styles';
+import { snackbarMessages } from '../../utils/constants';
 
 function hasNumber(myString) {
   return /\d/.test(myString);
@@ -157,12 +158,12 @@ class Form extends Component {
         }
       })
       .then(() => {
-        openSnackbar('registrationSuccess');
+        openSnackbar({ message: snackbarMessages.registrationSuccess, variant: 'success' });
         passClose();
       })
       .catch(error => {
         if (error.response) {
-          openSnackbar('registrationFailed');
+          openSnackbar({ message: snackbarMessages.registrationFailed, variant: 'error' });
         }
       });
   };

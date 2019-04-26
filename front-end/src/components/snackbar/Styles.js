@@ -2,13 +2,13 @@ import green from '@material-ui/core/colors/green';
 import blue from '@material-ui/core/colors/blue';
 
 const Styles = theme => ({
-  loginSuccess: {
+  success: {
     backgroundColor: green[600]
   },
-  loginError: {
+  error: {
     backgroundColor: theme.palette.error.dark
   },
-  logoutSuccess: {
+  neutral: {
     backgroundColor: blue[600]
   },
   registrationSuccess: {
