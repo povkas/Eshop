@@ -5,30 +5,17 @@ import Modal from '@material-ui/core/Modal';
 import Form from './Form';
 import Styles from './Styles';
 
-class RegistrationForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    const {
-      classes,
-      openSnackbar,
-      closeRegistration,
-      isOpenRegistrationModal,
-      setError
-    } = this.props;
-    return (
-      <div>
-        <Modal open={isOpenRegistrationModal} onClose={closeRegistration}>
-          <div className={classes.paper}>
-            <Form setError={setError} passClose={closeRegistration} openSnackbar={openSnackbar} />
-          </div>
-        </Modal>
-      </div>
-    );
-  }
+function RegistrationForm(props) {
+  const { classes, openSnackbar, closeRegistration, isOpenRegistrationModal, setError } = props;
+  return (
+    <div>
+      <Modal open={isOpenRegistrationModal} onClose={closeRegistration}>
+        <div className={classes.paper}>
+          <Form setError={setError} passClose={closeRegistration} openSnackbar={openSnackbar} />
+        </div>
+      </Modal>
+    </div>
+  );
 }
 
 RegistrationForm.propTypes = {

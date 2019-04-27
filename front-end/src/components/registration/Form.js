@@ -40,13 +40,13 @@ class Form extends Component {
     };
   }
 
-  handleChange = e => {
-    const { target } = e;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const { name } = target;
+  validate = (validationMethod, stateName) => {
+    this.setState({ [stateName]: validationMethod });
+  };
 
+  handleChange = e => {
     this.setState({
-      [name]: value
+      [e.target.name]: e.target.value
     });
   };
 
@@ -55,7 +55,7 @@ class Form extends Component {
     const { name, surname, country, city, email, password, address } = this.state;
     const { passClose, openSnackbar, setError } = this.props;
 
-    const data = JSON.stringify({
+    const data = {
       name,
       surname,
       country,
@@ -63,14 +63,10 @@ class Form extends Component {
       address,
       email,
       password
-    });
+    };
 
     axios
-      .post(addUser, data, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      .post(addUser, data)
       .then(() => {
         openSnackbar({ message: snackbarMessages.registrationSuccess, variant: 'success' });
         passClose();

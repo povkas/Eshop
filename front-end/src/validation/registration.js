@@ -58,8 +58,10 @@ export const passwordValidation = password => {
 };
 
 export const confirmPasswordValidation = (password, confirmPassword) => {
-  if (confirmPassword !== password) {
-    return errorMessages.confirmPasswordError;
+  if (confirmPassword.length !== 0) {
+    if (confirmPassword !== password) {
+      return errorMessages.confirmPasswordError;
+    }
   }
   return '';
 };

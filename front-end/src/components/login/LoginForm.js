@@ -45,8 +45,8 @@ class LoginForm extends React.Component {
         <Modal open={openModal} onClose={this.handleClose}>
           <div className={classes.paper}>
             <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
-
             <Button
+              uppercase="false"
               className={classes.button}
               onClick={() => {
                 this.handleClose();
@@ -55,7 +55,6 @@ class LoginForm extends React.Component {
             >
               {register}
             </Button>
-
             <Link className={classes.color} href=" ">
               Forgot password?
             </Link>
