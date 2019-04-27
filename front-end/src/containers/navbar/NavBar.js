@@ -84,6 +84,7 @@ class NavBar extends React.Component {
               openRegistration={this.handleRegistrationOpen}
               openSnackbar={openSnackbar}
               isOpenRegistrationModal={isOpenRegistrationModal}
+              setError={setError}
             />
             <IconButton className={classes.menuButton}>
               <ShoppingCart />

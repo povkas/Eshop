@@ -4,14 +4,19 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import errorMessages from '../../utils/constants/registrationErrors';
 import { styles, styles1 } from './Styles';
 import { snackbarMessages } from '../../utils/constants';
 import { addUser } from '../../utils/constants/api';
-
-function hasNumber(myString) {
-  return /\d/.test(myString);
-}
+import {
+  emailValidation,
+  adresssValidation,
+  countryValidation,
+  nameValidation,
+  surnameValidation,
+  passwordValidation,
+  confirmPasswordValidation,
+  cityValidation
+} from '../../validation';
 
 function notEmpty(myString) {
   if (myString !== '') {
@@ -31,72 +36,9 @@ class Form extends Component {
       confirmPassword: '',
       country: '',
       city: '',
-      address: '',
-      confirmPasswordErrorText: '',
-      nameErrorText: '',
-      surnameErrorText: '',
-      countryErrorText: '',
-      cityErrorText: '',
-      addressErrorText: '',
-      emailErrorText: '',
-      passwordErrorText: ''
+      address: ''
     };
   }
-
-  validate = () => {
-    const { name, surname, country, city, email, password, confirmPassword, address } = this.state;
-    const errors = {
-      confirmPasswordErrorText: '',
-      nameErrorText: '',
-      surnameErrorText: '',
-      countryErrorText: '',
-      cityErrorText: '',
-      addressErrorText: '',
-      emailErrorText: '',
-      passwordErrorText: ''
-    };
-
-    if (email.length !== 0) {
-      if (email.indexOf('@') === -1 || email.indexOf('.') === -1 || email.length > 128) {
-        errors.emailErrorText = errorMessages.emailError;
-      }
-    }
-    if (password.length !== 0) {
-      if (password.length < 8 || password.length > 255) {
-        errors.passwordErrorText = errorMessages.password;
-      }
-    }
-    if (name.length !== 0) {
-      if (name.length > 30 || hasNumber(name)) {
-        errors.nameErrorText = errorMessages.nameError;
-      }
-    }
-    if (surname.length !== 0) {
-      if (surname.length > 30 || hasNumber(surname)) {
-        errors.surnameErrorText = errorMessages.surnameError;
-      }
-    }
-    if (country.length !== 0) {
-      if (country.length > 30 || hasNumber(country)) {
-        errors.countryErrorText = errorMessages.countryError;
-      }
-    }
-    if (city.length !== 0) {
-      if (city.length > 30 || hasNumber(city)) {
-        errors.cityErrorText = errorMessages.cityError;
-      }
-    }
-    if (address.length !== 0) {
-      if (address.length > 30) {
-        errors.addressErrorText = errorMessages.adressError;
-      }
-    }
-    if (confirmPassword !== password) {
-      errors.confirmPasswordErrorText = errorMessages.confirmPasswordError;
-    }
-
-    this.setState({ ...errors });
-  };
 
   handleChange = e => {
     const { target } = e;
@@ -111,7 +53,7 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { name, surname, country, city, email, password, address } = this.state;
-    const { passClose, openSnackbar } = this.props;
+    const { passClose, openSnackbar, setError } = this.props;
 
     const data = JSON.stringify({
       name,
@@ -133,34 +75,13 @@ class Form extends Component {
         openSnackbar({ message: snackbarMessages.registrationSuccess, variant: 'success' });
         passClose();
       })
-      .catch(error => {
-        if (error.response) {
-          openSnackbar({ message: snackbarMessages.registrationFailed, variant: 'error' });
-        } else if (error.request) {
-          openSnackbar({ message: snackbarMessages.unidentified, variant: 'error' });
-        }
+      .catch(err => {
+        setError(err);
       });
   };
 
   render() {
-    const {
-      name,
-      surname,
-      email,
-      password,
-      confirmPassword,
-      country,
-      city,
-      address,
-      confirmPasswordErrorText,
-      nameErrorText,
-      surnameErrorText,
-      countryErrorText,
-      cityErrorText,
-      addressErrorText,
-      emailErrorText,
-      passwordErrorText
-    } = this.state;
+    const { name, surname, email, password, confirmPassword, country, city, address } = this.state;
 
     const labelNames = {
       name: 'name',
@@ -171,6 +92,16 @@ class Form extends Component {
       city: 'city',
       country: 'country',
       address: 'address'
+    };
+    const validation = {
+      name: nameValidation(name),
+      surname: surnameValidation(surname),
+      email: emailValidation(email),
+      password: passwordValidation(password),
+      confirmPassword: confirmPasswordValidation(password, confirmPassword),
+      address: adresssValidation(address),
+      city: cityValidation(city),
+      country: countryValidation(country)
     };
 
     return (
@@ -184,10 +115,9 @@ class Form extends Component {
             type={labelNames.name}
             value={name}
             required
-            error={notEmpty(nameErrorText)}
+            error={notEmpty(validation.name)}
             onChange={this.handleChange}
-            helperText={nameErrorText}
-            onBlur={this.validate}
+            helperText={validation.name}
             margin="normal"
           />
           <TextField
@@ -197,10 +127,9 @@ class Form extends Component {
             type={labelNames.surname}
             value={surname}
             required
-            error={notEmpty(surnameErrorText)}
+            error={notEmpty(validation.surname)}
             onChange={this.handleChange}
-            helperText={surnameErrorText}
-            onBlur={this.validate}
+            helperText={validation.surname}
             margin="normal"
           />
           <TextField
@@ -210,10 +139,9 @@ class Form extends Component {
             type={labelNames.email}
             value={email}
             required
-            error={notEmpty(emailErrorText)}
+            error={notEmpty(validation.email)}
             onChange={this.handleChange}
-            helperText={emailErrorText}
-            onBlur={this.validate}
+            helperText={validation.email}
             margin="normal"
           />
           <TextField
@@ -223,10 +151,9 @@ class Form extends Component {
             type={labelNames.password}
             value={password}
             required
-            error={notEmpty(passwordErrorText)}
+            error={notEmpty(validation.password)}
             onChange={this.handleChange}
-            onBlur={this.validate}
-            helperText={passwordErrorText}
+            helperText={validation.password}
             margin="normal"
           />
           <TextField
@@ -236,10 +163,9 @@ class Form extends Component {
             type={labelNames.password}
             value={confirmPassword}
             required
-            error={notEmpty(confirmPasswordErrorText)}
+            error={notEmpty(validation.confirmPassword)}
             onChange={this.handleChange}
-            onBlur={this.validate}
-            helperText={confirmPasswordErrorText}
+            helperText={validation.confirmPassword}
             margin="normal"
           />
           <TextField
@@ -249,10 +175,9 @@ class Form extends Component {
             type={labelNames.country}
             value={country}
             required
-            error={notEmpty(countryErrorText)}
+            error={notEmpty(validation.country)}
             onChange={this.handleChange}
-            helperText={countryErrorText}
-            onBlur={this.validate}
+            helperText={validation.country}
             margin="normal"
           />
           <TextField
@@ -262,10 +187,9 @@ class Form extends Component {
             type={labelNames.city}
             value={city}
             required
-            error={notEmpty(cityErrorText)}
+            error={notEmpty(validation.city)}
             onChange={this.handleChange}
-            helperText={cityErrorText}
-            onBlur={this.validate}
+            helperText={validation.city}
             margin="normal"
           />
           <TextField
@@ -275,10 +199,9 @@ class Form extends Component {
             type={labelNames.address}
             value={address}
             required
-            error={notEmpty(addressErrorText)}
+            error={notEmpty(validation.address)}
             onChange={this.handleChange}
-            helperText={addressErrorText}
-            onBlur={this.validate}
+            helperText={validation.address}
             margin="normal"
           />
           <div />
@@ -293,7 +216,8 @@ class Form extends Component {
 
 Form.propTypes = {
   passClose: PropTypes.func.isRequired,
-  openSnackbar: PropTypes.func.isRequired
+  openSnackbar: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 export default withStyles(styles1)(Form);
