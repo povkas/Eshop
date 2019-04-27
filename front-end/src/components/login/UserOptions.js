@@ -34,7 +34,7 @@ class UserOptions extends React.Component {
 
   render() {
     const { openMenu, openProductForm } = this.state;
-    const { className, logOut, IsAdmin } = this.props;
+    const { className, logOut, IsAdmin, createProduct } = this.props;
 
     return (
       <div>
@@ -55,13 +55,20 @@ class UserOptions extends React.Component {
           {IsAdmin ? <MenuItem onClick={this.openProductForm}>Add Product</MenuItem> : null}
           <MenuItem onClick={e => logOut(e)}>Logout</MenuItem>
         </Menu>
-        {IsAdmin ? <ProductForm open={openProductForm} close={this.closeModal} /> : null}
+        {IsAdmin ? (
+          <ProductForm
+            open={openProductForm}
+            close={this.closeModal}
+            createProductParent={createProduct}
+          />
+        ) : null}
       </div>
     );
   }
 }
 
 UserOptions.propTypes = {
+  createProduct: PropTypes.func.isRequired,
   className: PropTypes.shape().isRequired,
   logOut: PropTypes.func.isRequired,
   IsAdmin: PropTypes.bool.isRequired

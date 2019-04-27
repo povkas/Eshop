@@ -119,8 +119,23 @@ class MainBody extends React.Component {
     this.setState({ sortCriteria: e.target.value }, () => this.sortShownProducts());
   };
 
+  createProduct = product => {
+    this.setState(
+      previousState => ({
+        allProducts: [...previousState.allProducts, product]
+      }),
+      () => this.filterSort()
+    );
+  };
+
+  async filterSort() {
+    await this.filterShownProducts();
+    this.sortShownProducts();
+  }
+
   filterShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory, date } = this.state;
+
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
@@ -146,9 +161,11 @@ class MainBody extends React.Component {
         product => product.price >= lowerPriceLimitFloat
       );
     }
+
     qualifyingProducts = qualifyingProducts.filter(product =>
       checkIfDateWithinPeriod(product.created, date)
     );
+
     this.setState({ filteredProducts: qualifyingProducts });
   }
 
@@ -187,6 +204,7 @@ class MainBody extends React.Component {
           handleSearch={this.handleSearch}
           productHandler={this.changeProduct}
           openSnackbar={this.openSnackbar}
+          createProduct={this.createProduct}
         />
         <ProductModal product={selectedProduct} handleClose={this.handleModalClose} />
         <Grid container direction="row" justify="space-evenly" alignItems="center">

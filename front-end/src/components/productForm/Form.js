@@ -8,13 +8,13 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.initialstate = {
-      name: '',
+      title: '',
       price: '',
       description: '',
       quantity: '',
-      photo: {},
+      image: {},
       category: '',
-      nameErrorText: ' ',
+      titleErrorText: ' ',
       priceErrorText: ' ',
       descriptionErrorText: ' ',
       quantityErrorText: ' ',
@@ -29,18 +29,18 @@ class Form extends Component {
     });
   };
 
-  validateName = () => {
-    const { name } = this.state;
+  validateTitle = () => {
+    const { title } = this.state;
 
-    let nameErrorText = ' ';
+    let titleErrorText = ' ';
     let isError = false;
 
-    if (name.length === 0) {
+    if (title.length === 0) {
       isError = true;
-      nameErrorText = 'Name is required!';
+      titleErrorText = 'Title is required!';
     }
 
-    this.setState({ nameErrorText });
+    this.setState({ titleErrorText });
 
     return isError;
   };
@@ -116,7 +116,7 @@ class Form extends Component {
     const { category } = this.state;
 
     if (
-      this.validateName() ||
+      this.validateTitle() ||
       this.validatePrice() ||
       this.validateQuantity() ||
       this.validateCategorySelection(category)
@@ -129,15 +129,20 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { onSubmit, passClose } = this.props;
-    const { name, price, description, quantity, photo, category } = this.state;
+    const { title, price, description, quantity, category } = this.state;
+
+    const created = Date.now().toString();
+    const id = 2547;
 
     const productData = {
-      name,
-      price,
+      title,
       description,
+      price,
       quantity,
-      photo,
-      category
+      category,
+      created,
+      id
+      // image
     };
 
     if (!this.validateForm()) {
@@ -148,11 +153,11 @@ class Form extends Component {
 
   render() {
     const {
-      name,
+      title,
       price,
       description,
       quantity,
-      nameErrorText,
+      titleErrorText,
       priceErrorText,
       descriptionErrorText,
       quantityErrorText,
@@ -163,13 +168,13 @@ class Form extends Component {
       <form onSubmit={this.handleSubmit}>
         <TextField
           autoFocus
-          name="name"
-          label="Name"
-          value={name}
+          name="title"
+          label="Title"
+          value={title}
           onChange={this.handleChange}
-          error={nameErrorText !== ' '}
-          helperText={nameErrorText}
-          onBlur={this.validateName}
+          error={titleErrorText !== ' '}
+          helperText={titleErrorText}
+          onBlur={this.validateTitle}
           margin="normal"
         />
         <br />

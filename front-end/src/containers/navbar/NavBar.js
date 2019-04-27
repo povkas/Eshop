@@ -33,7 +33,8 @@ class NavBar extends React.Component {
       handleSearch,
       productHandler,
       filterByCategory,
-      setError
+      setError,
+      createProduct
     } = this.props;
 
     return (
@@ -60,6 +61,7 @@ class NavBar extends React.Component {
                 IsAdmin={auth.user.IsAdmin === 'True'}
                 className={classes}
                 logOut={this.handleLogout}
+                createProduct={createProduct}
               />
             ) : (
               <LoginForm className={classes} openSnackbar={openSnackbar} setError={setError} />
@@ -75,6 +77,7 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
+  createProduct: PropTypes.func.isRequired,
   classes: PropTypes.shape().isRequired,
   filterByCategory: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,
