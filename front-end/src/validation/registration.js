@@ -66,7 +66,7 @@ export const confirmPasswordValidation = (password, confirmPassword) => {
   return '';
 };
 
-export const adresssValidation = adress => {
+export const addresssValidation = adress => {
   if (adress.length !== 0) {
     if (adress.length > 30) {
       return errorMessages.adressError;

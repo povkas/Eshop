@@ -5,6 +5,6 @@ export {
   confirmPasswordValidation,
   passwordValidation,
   countryValidation,
-  adresssValidation,
+  addresssValidation,
   cityValidation
 } from './registration';

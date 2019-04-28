@@ -9,7 +9,7 @@ import { snackbarMessages } from '../../utils/constants';
 import { addUser } from '../../utils/constants/api';
 import {
   emailValidation,
-  adresssValidation,
+  addresssValidation,
   countryValidation,
   nameValidation,
   surnameValidation,
@@ -36,18 +36,36 @@ class Form extends Component {
       confirmPassword: '',
       country: '',
       city: '',
-      address: ''
+      address: '',
+      nameError: '',
+      surnameError: '',
+      emailError: '',
+      passwordError: '',
+      confirmPasswordError: '',
+      countryError: '',
+      cityError: '',
+      addressError: ''
     };
   }
 
-  validate = (validationMethod, stateName) => {
-    this.setState({ [stateName]: validationMethod });
+  validate = (e, method) => {
+    this.setState({ [`${e.target.name}Error`]: method(e.target.value) });
   };
 
-  handleChange = e => {
+  confirmPasswordValidate = (e, method) => {
+    const { password } = this.state;
+    this.setState({
+      [`${e.target.name}Error`]: method(e.target.value, password)
+    });
+  };
+
+  handleChange = (e, error) => {
     this.setState({
       [e.target.name]: e.target.value
     });
+    if (error !== '') {
+      this.setState({ [`${e.target.name}Error`]: '' });
+    }
   };
 
   handleSubmit = e => {
@@ -77,7 +95,24 @@ class Form extends Component {
   };
 
   render() {
-    const { name, surname, email, password, confirmPassword, country, city, address } = this.state;
+    const {
+      name,
+      surname,
+      email,
+      password,
+      confirmPassword,
+      country,
+      city,
+      address,
+      nameError,
+      surnameError,
+      emailError,
+      passwordError,
+      confirmPasswordError,
+      countryError,
+      cityError,
+      addressError
+    } = this.state;
 
     const labelNames = {
       name: 'name',
@@ -88,16 +123,6 @@ class Form extends Component {
       city: 'city',
       country: 'country',
       address: 'address'
-    };
-    const validation = {
-      name: nameValidation(name),
-      surname: surnameValidation(surname),
-      email: emailValidation(email),
-      password: passwordValidation(password),
-      confirmPassword: confirmPasswordValidation(password, confirmPassword),
-      address: adresssValidation(address),
-      city: cityValidation(city),
-      country: countryValidation(country)
     };
 
     return (
@@ -111,9 +136,10 @@ class Form extends Component {
             type={labelNames.name}
             value={name}
             required
-            error={notEmpty(validation.name)}
+            error={notEmpty(nameError)}
             onChange={this.handleChange}
-            helperText={validation.name}
+            onBlur={e => this.validate(e, nameValidation)}
+            helperText={nameError}
             margin="normal"
           />
           <TextField
@@ -123,9 +149,10 @@ class Form extends Component {
             type={labelNames.surname}
             value={surname}
             required
-            error={notEmpty(validation.surname)}
+            error={notEmpty(surnameError)}
             onChange={this.handleChange}
-            helperText={validation.surname}
+            onBlur={e => this.validate(e, surnameValidation)}
+            helperText={surnameError}
             margin="normal"
           />
           <TextField
@@ -135,9 +162,10 @@ class Form extends Component {
             type={labelNames.email}
             value={email}
             required
-            error={notEmpty(validation.email)}
+            error={notEmpty(emailError)}
             onChange={this.handleChange}
-            helperText={validation.email}
+            onBlur={e => this.validate(e, emailValidation)}
+            helperText={emailError}
             margin="normal"
           />
           <TextField
@@ -147,9 +175,10 @@ class Form extends Component {
             type={labelNames.password}
             value={password}
             required
-            error={notEmpty(validation.password)}
+            error={notEmpty(passwordError)}
             onChange={this.handleChange}
-            helperText={validation.password}
+            onBlur={e => this.validate(e, passwordValidation)}
+            helperText={passwordError}
             margin="normal"
           />
           <TextField
@@ -159,9 +188,10 @@ class Form extends Component {
             type={labelNames.password}
             value={confirmPassword}
             required
-            error={notEmpty(validation.confirmPassword)}
+            error={notEmpty(confirmPasswordError)}
             onChange={this.handleChange}
-            helperText={validation.confirmPassword}
+            onBlur={e => this.confirmPasswordValidate(e, confirmPasswordValidation)}
+            helperText={confirmPasswordError}
             margin="normal"
           />
           <TextField
@@ -171,9 +201,10 @@ class Form extends Component {
             type={labelNames.country}
             value={country}
             required
-            error={notEmpty(validation.country)}
+            error={notEmpty(countryError)}
+            onBlur={e => this.validate(e, countryValidation)}
             onChange={this.handleChange}
-            helperText={validation.country}
+            helperText={countryError}
             margin="normal"
           />
           <TextField
@@ -183,9 +214,10 @@ class Form extends Component {
             type={labelNames.city}
             value={city}
             required
-            error={notEmpty(validation.city)}
+            error={notEmpty(cityError)}
+            onBlur={e => this.validate(e, cityValidation)}
             onChange={this.handleChange}
-            helperText={validation.city}
+            helperText={cityError}
             margin="normal"
           />
           <TextField
@@ -195,9 +227,10 @@ class Form extends Component {
             type={labelNames.address}
             value={address}
             required
-            error={notEmpty(validation.address)}
+            error={notEmpty(addressError)}
+            onBlur={e => this.validate(e, addresssValidation)}
             onChange={this.handleChange}
-            helperText={validation.address}
+            helperText={addressError}
             margin="normal"
           />
           <div />
