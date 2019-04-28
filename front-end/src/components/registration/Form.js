@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { styles, styles1 } from './Styles';
 import { snackbarMessages } from '../../utils/constants';
 import { addUser } from '../../utils/constants/api';
 import {
@@ -114,6 +112,8 @@ class Form extends Component {
       addressError
     } = this.state;
 
+    const { classes } = this.props;
+
     const labelNames = {
       name: 'name',
       surname: 'surname',
@@ -130,7 +130,7 @@ class Form extends Component {
         REGISTRATION
         <form onSubmit={this.handleSubmit}>
           <TextField
-            style={styles}
+            className={classes.textFields}
             name={labelNames.name}
             label="Name"
             type={labelNames.name}
@@ -143,7 +143,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            style={styles}
+            className={classes.textFields}
             name={labelNames.surname}
             label="Surname"
             type={labelNames.surname}
@@ -156,7 +156,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            style={styles}
+            className={classes.textFields}
             name={labelNames.email}
             label="Email"
             type={labelNames.email}
@@ -169,7 +169,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            style={styles}
+            className={classes.textFields}
             name={labelNames.password}
             label="Password"
             type={labelNames.password}
@@ -182,7 +182,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            style={styles}
+            className={classes.textFields}
             name={labelNames.confirmPassword}
             label="ConfirmPassword"
             type={labelNames.password}
@@ -195,7 +195,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            style={styles}
+            className={classes.textFields}
             name={labelNames.country}
             label="Country"
             type={labelNames.country}
@@ -208,7 +208,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            style={styles}
+            className={classes.textFields}
             name={labelNames.city}
             label="City"
             type={labelNames.city}
@@ -221,7 +221,7 @@ class Form extends Component {
             margin="normal"
           />
           <TextField
-            style={styles}
+            className={classes.textFields}
             name={labelNames.address}
             label="Address"
             type={labelNames.address}
@@ -246,7 +246,8 @@ class Form extends Component {
 Form.propTypes = {
   passClose: PropTypes.func.isRequired,
   openSnackbar: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired
+  setError: PropTypes.func.isRequired,
+  classes: PropTypes.shape().isRequired
 };
 
-export default withStyles(styles1)(Form);
+export default Form;

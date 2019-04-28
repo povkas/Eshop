@@ -11,7 +11,12 @@ function RegistrationForm(props) {
     <div>
       <Modal open={isOpenRegistrationModal} onClose={closeRegistration}>
         <div className={classes.paper}>
-          <Form setError={setError} passClose={closeRegistration} openSnackbar={openSnackbar} />
+          <Form
+            classes={classes}
+            setError={setError}
+            passClose={closeRegistration}
+            openSnackbar={openSnackbar}
+          />
         </div>
       </Modal>
     </div>
