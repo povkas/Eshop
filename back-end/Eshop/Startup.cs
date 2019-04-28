@@ -39,15 +39,15 @@ namespace Eshop
             }
 
             app.UseMiddleware<CustomExceptionMiddleware>()
-                .UseCors(builder => 
-                 builder.WithOrigins("http://localhost:3000")
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials())
-                .UseHttpsRedirection()
-                .UseMvc()
-                .Run(_notFoundHandler);
+                    .UseCors(builder => 
+                     builder.WithOrigins("http://localhost:3000")
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials())
+                    .UseHttpsRedirection()
+                    .UseMvc()
+                    .Run(_notFoundHandler);
             app.InitializeDatabase();
         }
 
