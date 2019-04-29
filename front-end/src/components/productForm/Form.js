@@ -45,6 +45,22 @@ class Form extends Component {
     return isError;
   };
 
+  validateDescription = () => {
+    const { description } = this.state;
+
+    let descriptionErrorText = ' ';
+    let isError = false;
+
+    if (description.length === 0) {
+      isError = true;
+      descriptionErrorText = 'Description is required!';
+    }
+
+    this.setState({ descriptionErrorText });
+
+    return isError;
+  };
+
   validatePrice = () => {
     const priceRegex = /^[1-9]\d{0,3}(\.\d{1,4})?$/;
 
@@ -117,6 +133,7 @@ class Form extends Component {
 
     if (
       this.validateTitle() ||
+      this.validateDescription() ||
       this.validatePrice() ||
       this.validateQuantity() ||
       this.validateCategorySelection(category)
@@ -196,6 +213,7 @@ class Form extends Component {
           onChange={this.handleChange}
           error={descriptionErrorText !== ' '}
           helperText={descriptionErrorText}
+          onBlur={this.validateDescription}
           margin="normal"
         />
         <br />
