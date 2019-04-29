@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import Link from '@material-ui/core/Link';
 import Person from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authentication';
 import Form from './Form';
@@ -32,9 +33,9 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    const { classes, className } = this.props;
+    const { classes, className, openRegistration } = this.props;
     const { openModal } = this.state;
-    const register = "Don't have an account? Click to register";
+    const register = "Don't have an account?";
 
     return (
       <div>
@@ -44,9 +45,19 @@ class LoginForm extends React.Component {
         <Modal open={openModal} onClose={this.handleClose}>
           <div className={classes.paper}>
             <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
-            <Link href=" ">{register}</Link>
-            <br />
-            <Link href=" ">Forgot password?</Link>
+            <Button
+              uppercase="false"
+              className={classes.button}
+              onClick={() => {
+                this.handleClose();
+                openRegistration();
+              }}
+            >
+              {register}
+            </Button>
+            <Link className={classes.color} href=" ">
+              Forgot password?
+            </Link>
           </div>
         </Modal>
       </div>
@@ -58,8 +69,9 @@ LoginForm.propTypes = {
   classes: PropTypes.shape().isRequired,
   className: PropTypes.shape().isRequired,
   loginUserProp: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
-  openSnackbar: PropTypes.func.isRequired
+  openSnackbar: PropTypes.func.isRequired,
+  openRegistration: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
