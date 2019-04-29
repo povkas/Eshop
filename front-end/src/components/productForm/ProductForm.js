@@ -5,13 +5,12 @@ import Modal from '@material-ui/core/Modal';
 import { connect } from 'react-redux';
 import Form from './Form';
 import Styles, { getModalStyle } from './Styles';
-import { createProduct } from '../../actions/productActions';
+import { setProduct } from '../../actions/productActions';
 
 class ProductForm extends React.Component {
-  addProduct = product => {
-    const { createProductProp, createProductParent } = this.props;
-    createProductProp(product);
-    createProductParent(product); // only if success
+  createProduct = product => {
+    const { setProductProp, createProduct } = this.props;
+    setProductProp(product, createProduct);
   };
 
   render() {
@@ -21,7 +20,7 @@ class ProductForm extends React.Component {
       <div>
         <Modal open={open} onClose={close}>
           <div style={getModalStyle()} className={classes.paper}>
-            <Form passClose={close} onSubmit={this.addProduct} />
+            <Form passClose={close} onSubmit={this.createProduct} />
           </div>
         </Modal>
       </div>
@@ -30,16 +29,16 @@ class ProductForm extends React.Component {
 }
 
 ProductForm.propTypes = {
-  createProductParent: PropTypes.func.isRequired,
+  createProduct: PropTypes.func.isRequired,
   classes: PropTypes.shape().isRequired,
-  createProductProp: PropTypes.func.isRequired,
+  setProductProp: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    createProductProp: product => createProduct(product)(dispatch)
+    setProductProp: (product, createProduct) => setProduct(product, createProduct)(dispatch)
   };
 };
 

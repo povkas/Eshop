@@ -59,7 +59,7 @@ class UserOptions extends React.Component {
           <ProductForm
             open={openProductForm}
             close={this.closeModal}
-            createProductParent={createProduct}
+            createProduct={createProduct}
           />
         ) : null}
       </div>
