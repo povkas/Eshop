@@ -17,13 +17,11 @@ class ProductForm extends React.Component {
     const { classes, open, close } = this.props;
 
     return (
-      <div>
-        <Modal open={open} onClose={close}>
-          <div style={getModalStyle()} className={classes.paper}>
-            <Form passClose={close} onSubmit={this.createProduct} />
-          </div>
-        </Modal>
-      </div>
+      <Modal open={open} onClose={close}>
+        <div style={getModalStyle()} className={classes.paper}>
+          <Form passClose={close} onSubmit={this.createProduct} />
+        </div>
+      </Modal>
     );
   }
 }
