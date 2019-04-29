@@ -9,8 +9,8 @@ import { setProduct } from '../../actions/productActions';
 
 class ProductForm extends React.Component {
   createProduct = product => {
-    const { setProductProp, createProduct } = this.props;
-    setProductProp(product, createProduct);
+    const { setProductProp, createProduct, openSnackbar, setError } = this.props;
+    setProductProp(product, createProduct, openSnackbar, setError);
   };
 
   render() {
@@ -33,12 +33,15 @@ ProductForm.propTypes = {
   classes: PropTypes.shape().isRequired,
   setProductProp: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired
+  close: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setProductProp: (product, createProduct) => setProduct(product, createProduct)(dispatch)
+    setProductProp: (product, createProduct, openSnackbar, setError) =>
+      setProduct(product, createProduct, openSnackbar, setError)(dispatch)
   };
 };
 

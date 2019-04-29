@@ -62,6 +62,8 @@ class NavBar extends React.Component {
                 className={classes}
                 logOut={this.handleLogout}
                 createProduct={createProduct}
+                openSnackbar={openSnackbar}
+                setError={setError}
               />
             ) : (
               <LoginForm className={classes} openSnackbar={openSnackbar} setError={setError} />
