@@ -36,6 +36,18 @@ namespace Eshop.Controllers
             return Created("user", user);
         }
 
+        [HttpPost("{delete}")]
+        [Produces(typeof(NewUserDto))]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var user = await _userService.Delete(id);
+            if (!user)
+            {
+                throw new FailedToCreateUserException("Such user dosen`t exist");
+            }
+            return Ok(user);
+        }
+
         [HttpGet("{id}")]
         [Produces(typeof(UserDto))]
         public async Task<IActionResult> GetById(int id)
@@ -48,6 +60,16 @@ namespace Eshop.Controllers
             }
 
             return Ok(user);
+        }
+
+        [HttpGet]
+        [Produces(typeof(UserDto[]))]
+        public async Task<IActionResult> Get()
+        {
+            _logger.LogInformation("Getting all users");
+            var allUsers = await _userService.GetAll();
+
+            return Ok(allUsers);
         }
 
         [HttpPost("{login}")]

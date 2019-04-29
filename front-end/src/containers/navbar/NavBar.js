@@ -12,6 +12,7 @@ import Styles from './Styles';
 import { LoginForm, UserOptions } from '../../components/login';
 import { logoutUser } from '../../actions/authentication';
 import { CategoriesList } from '../../components/categoriesList';
+import { UserList } from '../../components/deleteUsers';
 import Search from '../../components/search/Search';
 import { snackbarMessages } from '../../utils/constants';
 
@@ -39,6 +40,7 @@ class NavBar extends React.Component {
       <BrowserRouter>
         <AppBar position="static">
           <Toolbar>
+            <UserList setError={setError} />
             <CategoriesList
               filterByCategory={filterByCategory}
               currentCategory={currentCategory}
