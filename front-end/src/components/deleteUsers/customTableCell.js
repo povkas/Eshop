@@ -3,7 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: '#1E90FF',
+    backgroundColor: '#7733ff',
     color: theme.palette.common.white
   },
   body: {

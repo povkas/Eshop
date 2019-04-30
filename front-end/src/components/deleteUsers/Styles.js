@@ -6,14 +6,14 @@ const modalStyles = theme => ({
     padding: theme.spacing.unit * 4,
     outline: 'none',
     height: '60vh',
-    width: '40vw',
-    overflow: 'scroll',
+    width: '60vw',
+    overflowY: 'scroll',
     top: `${20}%`,
-    left: `${35}%`
+    left: `${20}%`
   },
   root: {
     width: '100%',
-    searching: 'false'
+    marginTop: '2vh'
   },
   row: {
     '&:nth-of-type(odd)': {
@@ -21,7 +21,18 @@ const modalStyles = theme => ({
     }
   },
   button: {
-    backgroundColor: '#6495ED'
+    backgroundColor: '#808080'
+  },
+  emptyArray: {
+    paddingTop: 20,
+    paddingBottom: 3,
+    textAlign: 'center'
+  },
+  borderTopLeftRadius: {
+    borderTopLeftRadius: '17px'
+  },
+  borderTopRightRadius: {
+    borderTopRightRadius: '17px'
   }
 });
 
