@@ -35,7 +35,7 @@ class UserList extends React.Component {
       .getAllUsers()
       .then(res => {
         this.setState({ users: res });
-        this.filtering(0);
+        this.filtering();
       })
       .catch(err => {
         setError(err);
@@ -58,8 +58,7 @@ class UserList extends React.Component {
   };
 
   textFieldHandleChange = event => {
-    this.setState({ query: event.target.value });
-    this.filtering(1);
+    this.setState({ query: event.target.value }, () => this.filtering());
   };
 
   handleOpen = () => {
@@ -70,10 +69,10 @@ class UserList extends React.Component {
     this.setState({ openModal: false });
   };
 
-  filtering = i => {
+  filtering = () => {
     const { users, query, columnToQuery } = this.state;
     let data = [];
-    if (query.length !== i) {
+    if (query.length !== 0) {
       data = users.filter(x => x[columnToQuery].includes(query));
     } else {
       data = users;
