@@ -36,11 +36,11 @@ namespace Eshop.Controllers
             return Created("user", user);
         }
 
-        [HttpPost("{delete}")]
+        [HttpDelete("{email}")]
         [Produces(typeof(NewUserDto))]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(string email)
         {
-            var user = await _userService.Delete(id);
+            var user = await _userService.Delete(email);
             if (!user)
             {
                 throw new FailedToCreateUserException("Such user dosen`t exist");

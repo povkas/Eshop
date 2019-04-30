@@ -13,7 +13,7 @@ namespace Eshop.Services.Interfaces
 
         Task<bool> CheckUserExistence(NewUserDto user);
 
-        Task<bool> Delete(int id);
+        Task<bool> Delete(string id);
 
         Task<ICollection<UserDto>> GetAll();
 

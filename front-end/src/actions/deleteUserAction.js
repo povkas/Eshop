@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { deleteUser } from '../utils/constants/api';
+import { allUsers } from '../utils/constants/api';
 
-export const deleteUsers = id => {
-  return axios.post(deleteUser, id);
+export const deleteUsers = email => {
+  return axios.delete(allUsers + email);
 };
