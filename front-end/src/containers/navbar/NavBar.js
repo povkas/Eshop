@@ -15,8 +15,22 @@ import { CategoriesList } from '../../components/categoriesList';
 import { UserList } from '../../components/deleteUsers';
 import Search from '../../components/search/Search';
 import { snackbarMessages } from '../../utils/constants';
+import { RegistrationForm } from '../../components/registration';
 
 class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isOpenRegistrationModal: false };
+  }
+
+  handleRegistrationOpen = () => {
+    this.setState({ isOpenRegistrationModal: true });
+  };
+
+  handleRegistrationClose = () => {
+    this.setState({ isOpenRegistrationModal: false });
+  };
+
   handleLogout = e => {
     e.preventDefault();
     const { logoutUserProp, openSnackbar } = this.props;
@@ -25,6 +39,7 @@ class NavBar extends React.Component {
   };
 
   render() {
+    const { isOpenRegistrationModal } = this.state;
     const {
       classes,
       auth,
@@ -59,8 +74,20 @@ class NavBar extends React.Component {
             {auth.isAuthenticated ? (
               <UserOptions className={classes} logOut={this.handleLogout} />
             ) : (
-              <LoginForm className={classes} openSnackbar={openSnackbar} setError={setError} />
+              <LoginForm
+                className={classes}
+                openRegistration={this.handleRegistrationOpen}
+                openSnackbar={openSnackbar}
+                setError={setError}
+              />
             )}
+            <RegistrationForm
+              closeRegistration={this.handleRegistrationClose}
+              openRegistration={this.handleRegistrationOpen}
+              openSnackbar={openSnackbar}
+              isOpenRegistrationModal={isOpenRegistrationModal}
+              setError={setError}
+            />
             <IconButton className={classes.menuButton}>
               <ShoppingCart />
             </IconButton>
