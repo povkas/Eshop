@@ -21,8 +21,7 @@ class UserList extends React.Component {
       filteredUsers: [],
       users: [],
       openModal: false,
-      query: '',
-      columnToQuery: 'email'
+      query: ''
     };
   }
 
@@ -48,10 +47,6 @@ class UserList extends React.Component {
   };
 
   handleChange = event => {
-    this.setState({ columnToQuery: event.target.value });
-  };
-
-  textFieldHandleChange = event => {
     this.setState({ query: event.target.value }, () => this.filtering());
   };
 
@@ -64,10 +59,11 @@ class UserList extends React.Component {
   };
 
   filtering = () => {
-    const { users, query, columnToQuery } = this.state;
+    const { users, query } = this.state;
+    const email = 'email';
     let data = [];
     if (query.length !== 0) {
-      data = users.filter(x => x[columnToQuery].includes(query));
+      data = users.filter(x => x[email].includes(query));
     } else {
       data = users;
     }
@@ -89,34 +85,29 @@ class UserList extends React.Component {
               label="Search by email"
               value={query}
               onChange={e => {
-                this.textFieldHandleChange(e);
+                this.handleChange(e);
               }}
             />
-
             <Table className={classes.root}>
               <TableHead>
                 <TableRow>
-                  <CustomTableCell className={classes.borderTopLeftRadius} align="left">
-                    Name
-                  </CustomTableCell>
-                  <CustomTableCell align="left">Surname</CustomTableCell>
-                  <CustomTableCell align="left">Email</CustomTableCell>
-                  <CustomTableCell align="left">Role</CustomTableCell>
-                  <CustomTableCell className={classes.borderTopRightRadius} align="center" />
+                  <CustomTableCell className={classes.borderTopLeftRadius}>Name</CustomTableCell>
+                  <CustomTableCell>Surname</CustomTableCell>
+                  <CustomTableCell>Email</CustomTableCell>
+                  <CustomTableCell>Role</CustomTableCell>
+                  <CustomTableCell className={classes.borderTopRightRadius} />
                 </TableRow>
               </TableHead>
               <TableBody>
                 {filteredUsers.map(user => (
                   <TableRow className={classes.row}>
                     <CustomTableCell>{user.name}</CustomTableCell>
-                    <CustomTableCell align="left">{user.surname}</CustomTableCell>
-                    <CustomTableCell align="left">{user.email}</CustomTableCell>
-                    <CustomTableCell align="left">
-                      {user.isAdmin ? 'Admin' : 'User'}
-                    </CustomTableCell>
-                    <CustomTableCell align="left">
+                    <CustomTableCell>{user.surname}</CustomTableCell>
+                    <CustomTableCell>{user.email}</CustomTableCell>
+                    <CustomTableCell>{user.isAdmin ? 'Admin' : 'User'}</CustomTableCell>
+                    <CustomTableCell>
                       <IconButton
-                        align="left"
+                        disabled={user.isAdmin}
                         className={classes.button}
                         onClick={() => this.deleteUser(user.email)}
                       >

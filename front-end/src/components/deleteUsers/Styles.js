@@ -21,7 +21,8 @@ const modalStyles = theme => ({
     }
   },
   button: {
-    backgroundColor: '#808080'
+    backgroundColor: '#808080',
+    align: 'left'
   },
   emptyArray: {
     paddingTop: 20,
