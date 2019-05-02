@@ -73,6 +73,7 @@ class NavBar extends React.Component {
             />
             {auth.isAuthenticated ? (
               <UserOptions
+                IsAdmin={auth.user.IsAdmin === 'True'}
                 className={classes}
                 logOut={this.handleLogout}
                 openSnackbar={openSnackbar}
