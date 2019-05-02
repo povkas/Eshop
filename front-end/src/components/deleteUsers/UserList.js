@@ -20,7 +20,6 @@ class UserList extends React.Component {
     this.state = {
       filteredUsers: [],
       users: [],
-      openModal: false,
       query: ''
     };
   }
@@ -50,14 +49,6 @@ class UserList extends React.Component {
     this.setState({ query: event.target.value }, () => this.filtering());
   };
 
-  handleOpen = () => {
-    this.setState({ openModal: true });
-  };
-
-  handleClose = () => {
-    this.setState({ openModal: false });
-  };
-
   filtering = () => {
     const { users, query } = this.state;
     const email = 'email';
@@ -72,13 +63,13 @@ class UserList extends React.Component {
   };
 
   render() {
-    const { openModal, filteredUsers, query } = this.state;
-    const { classes } = this.props;
+    const { filteredUsers, query } = this.state;
+    const { classes, open, closeModal, openModal } = this.props;
 
     return (
       <div>
-        <Button onClick={this.handleOpen}>Labas</Button>
-        <Modal open={openModal} onClose={this.handleClose}>
+        <Button onClick={openModal}>Labas</Button>
+        <Modal open={open} onClose={closeModal}>
           <div className={classes.paper}>
             <TextField
               name="search"
@@ -130,6 +121,9 @@ class UserList extends React.Component {
 
 UserList.propTypes = {
   setError: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
   classes: PropTypes.shape().isRequired
 };
 

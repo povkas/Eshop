@@ -72,7 +72,12 @@ class NavBar extends React.Component {
               productHandler={productHandler}
             />
             {auth.isAuthenticated ? (
-              <UserOptions className={classes} logOut={this.handleLogout} />
+              <UserOptions
+                className={classes}
+                logOut={this.handleLogout}
+                openSnackbar={openSnackbar}
+                setError={setError}
+              />
             ) : (
               <LoginForm
                 className={classes}
