@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Styles from './Styles';
 
+const pages = [6, 12, 24, 48];
+
 function Sort(props) {
   const { numberOfProducts, sortCriteria, changeSort, changeNumberOfProducts, classes } = props;
   return (
@@ -14,10 +16,11 @@ function Sort(props) {
         Products per page:
       </Typography>
       <Select value={numberOfProducts} onChange={changeNumberOfProducts} className={classes.select}>
-        <MenuItem value={6}>6</MenuItem>
-        <MenuItem value={12}>12</MenuItem>
-        <MenuItem value={24}>24</MenuItem>
-        <MenuItem value={48}>48</MenuItem>
+        {pages.map(a => (
+          <MenuItem value={a} key={a}>
+            {a}
+          </MenuItem>
+        ))}
       </Select>
       <Typography variant="subheading" className={classes.sortText}>
         Sort by:
