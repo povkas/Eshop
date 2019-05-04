@@ -8,7 +8,7 @@ const styles = () => ({
     backgroundColor: color,
     width: '50vw',
     minWidth: '270px',
-    minHeight: '90vh',
+    minHeight: 350,
     margin: '2vh',
     padding: '2vh'
   }
