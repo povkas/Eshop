@@ -51,6 +51,8 @@ class NavBar extends React.Component {
       filterByCategory,
       setError
     } = this.props;
+
+    console.log(auth.user.IsAdmin);
     return (
       <BrowserRouter>
         <AppBar position="static">

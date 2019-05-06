@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -64,11 +63,10 @@ class UserList extends React.Component {
 
   render() {
     const { filteredUsers, query } = this.state;
-    const { classes, open, closeModal, openModal } = this.props;
+    const { classes, open, closeModal } = this.props;
 
     return (
       <div>
-        <Button onClick={openModal}>Labas</Button>
         <Modal open={open} onClose={closeModal}>
           <div className={classes.paper}>
             <TextField
@@ -123,7 +121,6 @@ UserList.propTypes = {
   setError: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
   classes: PropTypes.shape().isRequired
 };
 

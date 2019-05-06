@@ -35,6 +35,7 @@ class UserOptions extends React.Component {
   render() {
     const { openMenu, openUsersList } = this.state;
     const { className, logOut, IsAdmin, openSnackbar, setError } = this.props;
+    // console.log(IsAdmin);
 
     return (
       <div>
@@ -52,8 +53,8 @@ class UserOptions extends React.Component {
           open={Boolean(openMenu)}
           onClose={this.closeMenu}
         >
-          <MenuItem onClick={e => logOut(e)}>Logout</MenuItem>
           {IsAdmin ? <MenuItem onClick={this.openUsersModal}>Delete Users</MenuItem> : null}
+          <MenuItem onClick={e => logOut(e)}>Logout</MenuItem>
         </Menu>
         {IsAdmin ? (
           <UserList
