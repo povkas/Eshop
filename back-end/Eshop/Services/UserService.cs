@@ -71,17 +71,17 @@ namespace Eshop.Services
             return true;
         }
 
-        public async Task<bool> CheckIfUserExists(LoginRequestDto userLogin)
+        public async Task<string> CheckIfUserExists(LoginRequestDto userLogin)
         {
             var users = await _repository.GetAll();
             foreach (User user in users)
             {
                 if (userLogin.Email == user.Email && VerifyPassword(user.Password, userLogin.Password))
                 {
-                    return true;
+                    return user.IsAdmin.ToString();
                 }
             }
-            return false;
+            return null;
         }
 
         public string HashPassword(string password)

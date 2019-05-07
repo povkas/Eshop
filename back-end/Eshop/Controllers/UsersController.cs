@@ -76,12 +76,14 @@ namespace Eshop.Controllers
         [Produces(typeof(JsonWebToken))]
         public async Task<ActionResult> CreateJwtToken([FromBody] LoginRequestDto user)
         {
-            if (!await _userService.CheckIfUserExists(user))
+            string userRole = await _userService.CheckIfUserExists(user);
+            if (userRole == null)
             {
                 throw new InvalidCredentialsException("Incorrect email or password");
             }
 
-            return Created("jwt", TokenManager.GenerateToken(user.Email));
+            return Created("jwt", TokenManager.GenerateToken(user.Email, userRole));
         }
+
     }
 }
