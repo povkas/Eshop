@@ -55,7 +55,7 @@ class NavBar extends React.Component {
     console.log(auth.user.IsAdmin);
     return (
       <BrowserRouter>
-        <AppBar position="static">
+        <AppBar position="sticky">
           <Toolbar>
             <UserList setError={setError} />
             <CategoriesList

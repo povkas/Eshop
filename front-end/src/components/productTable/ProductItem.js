@@ -18,10 +18,8 @@ function ProductItem(props) {
           className={classes.image}
         />
         <Divider />
-        <Typography variant="subtitle1">
-          {product.title.length > 23
-            ? product.title.replace(/^(.{23}[^\s]*).*/, '$1')
-            : product.title}
+        <Typography variant="subtitle1" className={classes.title}>
+          {product.title}
         </Typography>
         <Typography variant="subtitle1">{`${Number(product.price).toFixed(2)}€`}</Typography>
       </Paper>
