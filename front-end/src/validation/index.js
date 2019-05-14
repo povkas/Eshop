@@ -8,3 +8,5 @@ export {
   addresssValidation,
   cityValidation
 } from './registration';
+
+export { validateEmail, validatePassword } from './login';
