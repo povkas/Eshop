@@ -4,26 +4,26 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Divider, Typography, Grid } from '@material-ui/core';
 import Styles, { getModalStyle } from './Styles';
 import QuantitySelect from './QuantitySelect';
+// import { snackbarMessages } from '../../utils/constants';
 
 class ProductModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // eslint-disable-next-line react/no-unused-state
       quantity: 1
     };
   }
 
   getQuantity = quantity => {
-    // eslint-disable-next-line react/no-unused-state
     this.setState({ quantity });
   };
 
   render() {
-    const { classes, openModal, handleClose, product } = this.props;
+    const { classes, handleClose, product, addToCart } = this.props;
+    const { quantity } = this.state;
 
     return (
-      <Modal open={openModal} onClose={handleClose}>
+      <Modal open={Object.entries(product).length !== 0} onClose={handleClose}>
         <div style={getModalStyle()} className={classes.paper}>
           <Grid container direction="row" justify="space-evenly" alignItems="center">
             <img
@@ -38,7 +38,13 @@ class ProductModal extends React.Component {
               <Typography variant="h5">Cost: {product.price}€</Typography>
             </Grid>
             <Grid item>
-              <Button variant="outlined" onClick={this.handleToCart}>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  addToCart({ ...product, selectedQuantity: quantity });
+                  handleClose();
+                }}
+              >
                 <Typography variant="h6">Add to cart</Typography>
               </Button>
             </Grid>
@@ -65,8 +71,8 @@ ProductModal.propTypes = {
     price: PropTypes.number,
     quantity: PropTypes.number
   }).isRequired,
-  openModal: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired
+  handleClose: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(ProductModal);

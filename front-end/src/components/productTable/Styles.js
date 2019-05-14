@@ -1,6 +1,7 @@
 import grey from '@material-ui/core/colors/grey';
 
-const color = grey[100];
+const lighterGrey = grey[100];
+const darkerGrey = grey[200];
 
 const styles = theme => ({
   paper: {
@@ -20,7 +21,7 @@ const styles = theme => ({
     width: '255px'
   },
   expansion: {
-    backgroundColor: color,
+    backgroundColor: lighterGrey,
     width: 'inherit'
   },
   textField: {
@@ -40,7 +41,57 @@ const styles = theme => ({
     width: '250px'
   },
   emptyMessage: {
-    margin: '50px'
+    margin: '50px',
+    textAlign: 'center'
+  },
+  sortDiv: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '12px',
+    alignItems: 'center'
+  },
+  sortText: {
+    marginRight: '12px'
+  },
+  loadingSpinner: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  title: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
+  },
+  divider: {
+    width: 'inherit',
+    margin: 12
+  },
+  pageButtonPaper: {
+    width: 25,
+    height: 25,
+    textAlign: 'center',
+    margin: 5,
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
+  pageButtonPaperDisabled: {
+    width: 25,
+    height: 25,
+    textAlign: 'center',
+    margin: 5,
+    backgroundColor: darkerGrey,
+    '&:hover': {
+      cursor: 'default'
+    }
+  },
+  pages: {
+    justifyContent: 'center',
+    width: 'inherit'
+  },
+  select: {
+    marginRight: 12
   }
 });
 

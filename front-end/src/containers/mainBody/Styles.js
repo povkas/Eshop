@@ -7,7 +7,8 @@ const styles = () => ({
     flexGrow: 1,
     backgroundColor: color,
     width: '50vw',
-    minHeight: '90vh',
+    minWidth: '270px',
+    minHeight: 350,
     margin: '2vh',
     padding: '2vh'
   }

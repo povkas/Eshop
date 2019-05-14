@@ -20,6 +20,7 @@ class QuantitySelect extends React.Component {
   componentDidMount() {
     const { quantity } = this.props;
     const { quantitySelected } = this.state;
+    // this.setState({ quantitySelected: selectedQuantity });
     if (quantitySelected === 1) this.setState({ decrDisable: true });
     if (quantitySelected === quantity)
       this.setState({ incrDisable: true, inputDisable: true, helperText: 'Last one!' });
