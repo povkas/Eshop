@@ -9,7 +9,7 @@ namespace Eshop.Services.Interfaces
     {
         Task<UserDto> GetById(int id);
 
-        Task<NewUserDto> CreateUser(NewUserDto user);
+        Task<UserDto> CreateUser(NewUserDto user);
 
         Task<bool> CheckUserExistence(NewUserDto user);
 
