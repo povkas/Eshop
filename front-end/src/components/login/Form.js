@@ -64,7 +64,6 @@ class Form extends Component {
           name="email"
           label="Email"
           value={email}
-          required
           error={notEmpty(emailError)}
           onChange={this.handleChange}
           onBlur={e => this.validate(e, validateEmail)}
@@ -76,7 +75,6 @@ class Form extends Component {
           label="Password"
           type={labelNames.password}
           value={password}
-          required
           error={notEmpty(passwordError)}
           onChange={this.handleChange}
           onBlur={e => this.validate(e, validatePassword)}
