@@ -135,7 +135,6 @@ class Form extends Component {
             label="Name"
             type={labelNames.name}
             value={name}
-            required
             error={notEmpty(nameError)}
             onChange={this.handleChange}
             onBlur={e => this.validate(e, nameValidation)}
@@ -148,7 +147,6 @@ class Form extends Component {
             label="Surname"
             type={labelNames.surname}
             value={surname}
-            required
             error={notEmpty(surnameError)}
             onChange={this.handleChange}
             onBlur={e => this.validate(e, surnameValidation)}
@@ -161,7 +159,6 @@ class Form extends Component {
             label="Email"
             type={labelNames.email}
             value={email}
-            required
             error={notEmpty(emailError)}
             onChange={this.handleChange}
             onBlur={e => this.validate(e, emailValidation)}
@@ -174,7 +171,6 @@ class Form extends Component {
             label="Password"
             type={labelNames.password}
             value={password}
-            required
             error={notEmpty(passwordError)}
             onChange={this.handleChange}
             onBlur={e => this.validate(e, passwordValidation)}
@@ -187,7 +183,6 @@ class Form extends Component {
             label="ConfirmPassword"
             type={labelNames.password}
             value={confirmPassword}
-            required
             error={notEmpty(confirmPasswordError)}
             onChange={this.handleChange}
             onBlur={e => this.confirmPasswordValidate(e, confirmPasswordValidation)}
@@ -200,7 +195,6 @@ class Form extends Component {
             label="Country"
             type={labelNames.country}
             value={country}
-            required
             error={notEmpty(countryError)}
             onBlur={e => this.validate(e, countryValidation)}
             onChange={this.handleChange}
@@ -213,7 +207,6 @@ class Form extends Component {
             label="City"
             type={labelNames.city}
             value={city}
-            required
             error={notEmpty(cityError)}
             onBlur={e => this.validate(e, cityValidation)}
             onChange={this.handleChange}
@@ -226,7 +219,6 @@ class Form extends Component {
             label="Address"
             type={labelNames.address}
             value={address}
-            required
             error={notEmpty(addressError)}
             onBlur={e => this.validate(e, addresssValidation)}
             onChange={this.handleChange}
@@ -234,7 +226,7 @@ class Form extends Component {
             margin="normal"
           />
           <div />
-          <Button variant="outlined" type="submit">
+          <Button className={classes.button} variant="outlined" type="submit">
             Sign up
           </Button>
         </form>

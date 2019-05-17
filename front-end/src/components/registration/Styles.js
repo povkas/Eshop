@@ -15,6 +15,9 @@ const styles = theme => ({
     height: '6.5vh',
     marginTop: '1.9vh',
     marginBot: '1.9vh'
+  },
+  button: {
+    marginTop: '2vh'
   }
 });
 
