@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Link from '@material-ui/core/Link';
 import Person from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authentication';
 import Form from './Form';
@@ -15,7 +13,8 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openModal: false
+      openModal: false,
+      hover: false
     };
   }
 
@@ -27,6 +26,14 @@ class LoginForm extends React.Component {
     this.setState({ openModal: false });
   };
 
+  hoverOn = () => {
+    this.setState({ hover: true });
+  };
+
+  hoverOff = () => {
+    this.setState({ hover: false });
+  };
+
   handleLogin = user => {
     const { loginUserProp, setError, openSnackbar } = this.props;
     loginUserProp(user, openSnackbar, setError);
@@ -34,7 +41,7 @@ class LoginForm extends React.Component {
 
   render() {
     const { classes, className, openRegistration } = this.props;
-    const { openModal } = this.state;
+    const { openModal, hover } = this.state;
     const register = "Don't have an account?";
 
     return (
@@ -45,19 +52,18 @@ class LoginForm extends React.Component {
         <Modal open={openModal} onClose={this.handleClose}>
           <div className={classes.paper}>
             <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
-            <Button
-              uppercase="false"
-              className={classes.button}
+            <div
+              role="button"
               onClick={() => {
                 this.handleClose();
                 openRegistration();
               }}
+              className={hover ? classes.button2 : classes.button1}
+              onMouseEnter={this.hoverOn}
+              onMouseLeave={this.hoverOff}
             >
               {register}
-            </Button>
-            <Link className={classes.color} href=" ">
-              Forgot password?
-            </Link>
+            </div>
           </div>
         </Modal>
       </div>

@@ -60,7 +60,6 @@ class Form extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <TextField
-          autoFocus
           name="email"
           label="Email"
           value={email}

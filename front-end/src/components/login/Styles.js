@@ -10,12 +10,20 @@ const modalStyles = theme => ({
     top: `${6}%`,
     left: `${75}%`
   },
-  button: {
+  button1: {
     fontSize: 14,
     color: '#551A8B',
-    marginLeft: '-24px',
     width: '10vw',
+    textDecoration: 'underline',
     textTransform: 'none'
+  },
+  button2: {
+    fontSize: 14,
+    color: '#551A8B',
+    width: '10vw',
+    textDecoration: 'underline',
+    textTransform: 'none',
+    fontWeight: 'bold'
   },
   color: {
     fontSize: 14,
