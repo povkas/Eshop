@@ -10,14 +10,16 @@ namespace Eshop.Models
     {
         private static string Secret = "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ==";
 
-        public static string GenerateToken(string email)
+        public static string GenerateToken(string email, string IsAdmin)
         {
             byte[] key = Convert.FromBase64String(Secret);
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
             SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                      new Claim(ClaimTypes.Name, email)}),
+                      new Claim(ClaimTypes.Name, email),
+                      new Claim("IsAdmin", IsAdmin)
+                }),
                 Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(securityKey,
                 SecurityAlgorithms.HmacSha256Signature)
