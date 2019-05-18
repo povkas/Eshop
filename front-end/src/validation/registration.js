@@ -9,6 +9,8 @@ export const nameValidation = name => {
     if (name.length > 30 || hasNumber(name)) {
       return errorMessages.nameError;
     }
+  } else {
+    return errorMessages.isEmptyName;
   }
   return '';
 };
@@ -18,6 +20,8 @@ export const emailValidation = email => {
     if (email.indexOf('@') === -1 || email.indexOf('.') === -1 || email.length > 128) {
       return errorMessages.emailError;
     }
+  } else {
+    return errorMessages.isEmptyEmail;
   }
   return '';
 };
@@ -27,6 +31,8 @@ export const surnameValidation = surname => {
     if (surname.length > 30 || hasNumber(surname)) {
       return errorMessages.surnameError;
     }
+  } else {
+    return errorMessages.isEmptySurname;
   }
   return '';
 };
@@ -36,6 +42,8 @@ export const countryValidation = country => {
     if (country.length > 30 || hasNumber(country)) {
       return errorMessages.countryError;
     }
+  } else {
+    return errorMessages.isEmptyCountry;
   }
   return '';
 };
@@ -45,6 +53,8 @@ export const cityValidation = city => {
     if (city.length > 30 || hasNumber(city)) {
       return errorMessages.cityError;
     }
+  } else {
+    return errorMessages.isEmptyCity;
   }
   return '';
 };
@@ -53,6 +63,8 @@ export const passwordValidation = password => {
     if (password.length < 8 || password.length > 255) {
       return errorMessages.password;
     }
+  } else {
+    return errorMessages.isEmptyPassword;
   }
   return '';
 };
@@ -62,15 +74,19 @@ export const confirmPasswordValidation = (password, confirmPassword) => {
     if (confirmPassword !== password) {
       return errorMessages.confirmPasswordError;
     }
+  } else {
+    return errorMessages.isEmptyConfirmPassword;
   }
   return '';
 };
 
-export const addresssValidation = adress => {
+export const addressValidation = adress => {
   if (adress.length !== 0) {
     if (adress.length > 30) {
-      return errorMessages.adressError;
+      return errorMessages.addressError;
     }
+  } else {
+    return errorMessages.isEmptyAddress;
   }
   return '';
 };
