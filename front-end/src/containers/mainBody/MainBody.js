@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ProductModal from '../../components/productModal/ProductModal';
 import ProductTable from '../../components/productTable/ProductTable';
 import { getProducts } from '../../actions/productActions';
-import { Filter, Sort } from '../../components/productTable';
+import { Filter, Sort } from '../../components/productFilter';
 import Styles from './Styles';
 import { NavBar } from '../navbar';
 import { checkIfDateWithinPeriod } from '../../utils/dateFunctions';
@@ -184,7 +184,7 @@ class MainBody extends React.Component {
     } = this.state;
 
     return (
-      <div>
+      <div id="mainBody">
         <NavBar
           filterByCategory={this.filterByCategory}
           currentCategory={selectedCategory}
