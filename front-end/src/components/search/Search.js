@@ -82,9 +82,10 @@ class Search extends React.Component {
           placeholder="Search for products"
         />
         {hasFocus ? (
-          <Paper className={classes.suggestionList} square>
+          <Paper id="suggestionList" className={classes.suggestionList} square>
             {suggestions.slice(0, 5).map(suggestion => (
               <div
+                id="suggestion"
                 key={suggestion.id}
                 className={classes.suggestion}
                 onClick={() => this.handleSuggestionClick(suggestion)}
@@ -94,12 +95,19 @@ class Search extends React.Component {
               </div>
             ))}
             {suggestions.length > 5 ? (
-              <div className={classes.showAll} onClick={() => this.showAllProducts()} role="button">
+              <div
+                id="suggestionShowAll"
+                className={classes.showAll}
+                onClick={() => this.showAllProducts()}
+                role="button"
+              >
                 Show all
               </div>
             ) : null}
             {searchValue.length > 2 && suggestions.length === 0 ? (
-              <div className={classes.emptySuggestions}>There are no matching products</div>
+              <div id="suggestionNoMatches" className={classes.emptySuggestions}>
+                There are no matching products
+              </div>
             ) : null}
           </Paper>
         ) : null}

@@ -4,7 +4,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Styles from './Styles';
+import Styles from '../productTable/Styles';
 
 const pages = [6, 12, 24, 48];
 
