@@ -36,6 +36,18 @@ namespace Eshop.Controllers
             return Created("user", user);
         }
 
+        [HttpDelete("{email}")]
+        [Produces(typeof(NewUserDto))]
+        public async Task<ActionResult> Delete(string email)
+        {
+            var user = await _userService.Delete(email);
+            if (!user)
+            {
+                throw new FailedToCreateUserException("Such user dosen`t exist");
+            }
+            return Ok(user);
+        }
+
         [HttpGet("{id}")]
         [Produces(typeof(UserDto))]
         public async Task<IActionResult> GetById(int id)
@@ -50,6 +62,16 @@ namespace Eshop.Controllers
             return Ok(user);
         }
 
+        [HttpGet]
+        [Produces(typeof(UserDto[]))]
+        public async Task<IActionResult> Get()
+        {
+            _logger.LogInformation("Getting all users");
+            var allUsers = await _userService.GetAll();
+
+            return Ok(allUsers);
+        }
+
         [HttpPost("{login}")]
         [Produces(typeof(JsonWebToken))]
         public async Task<ActionResult> CreateJwtToken([FromBody] LoginRequestDto user)
@@ -62,5 +84,6 @@ namespace Eshop.Controllers
 
             return Created("jwt", TokenManager.GenerateToken(user.Email, userRole));
         }
+
     }
 }

@@ -5,13 +5,15 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Person from '@material-ui/icons/Person';
 import { ProductForm } from '../productForm';
+import { UserList } from '../deleteUsers';
 
 class UserOptions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       openMenu: null,
-      openProductForm: false
+      openProductForm: false,
+      openUsersList: false
     };
   }
 
@@ -28,12 +30,21 @@ class UserOptions extends React.Component {
     this.setState({ openProductForm: true });
   };
 
-  closeModal = () => {
+  closeFormModal = () => {
     this.setState({ openProductForm: false });
   };
 
+  openUsersModal = () => {
+    this.closeMenu();
+    this.setState({ openUsersList: true });
+  };
+
+  closeModal = () => {
+    this.setState({ openUsersList: false });
+  };
+
   render() {
-    const { openMenu, openProductForm } = this.state;
+    const { openMenu, openProductForm, openUsersList } = this.state;
     const { className, logOut, IsAdmin, createProduct, openSnackbar, setError } = this.props;
 
     return (
@@ -52,13 +63,23 @@ class UserOptions extends React.Component {
           open={Boolean(openMenu)}
           onClose={this.closeMenu}
         >
+          {IsAdmin ? <MenuItem onClick={this.openUsersModal}>Delete Users</MenuItem> : null}
           {IsAdmin ? <MenuItem onClick={this.openProductForm}>Add Product</MenuItem> : null}
           <MenuItem onClick={e => logOut(e)}>Logout</MenuItem>
         </Menu>
         {IsAdmin ? (
+          <UserList
+            open={openUsersList}
+            closeModal={this.closeModal}
+            openModal={this.openUsersModal}
+            openSnackbar={openSnackbar}
+            setError={setError}
+          />
+        ) : null}
+        {IsAdmin ? (
           <ProductForm
             open={openProductForm}
-            close={this.closeModal}
+            close={this.closeFormModal}
             createProduct={createProduct}
             openSnackbar={openSnackbar}
             setError={setError}

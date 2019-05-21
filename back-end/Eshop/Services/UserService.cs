@@ -46,16 +46,18 @@ namespace Eshop.Services
             return allUsers;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(string email)
         {
-            var item = await _repository.GetById(id);
-            if (item == null)
+            var allUsers = await _repository.GetAll();
+            foreach (User user in allUsers)
             {
-                return false;
+                if (user.Email == email)
+                {
+                    await _repository.Delete(user);
+                    return true;
+                }            
             }
-
-            var deleted = await _repository.Delete(item);
-            return deleted;
+            return false;
         }
 
         public async Task<bool> CheckUserExistence(NewUserDto newItem)
@@ -68,7 +70,6 @@ namespace Eshop.Services
             }
             return true;
         }
-
 
         public async Task<string> CheckIfUserExists(LoginRequestDto userLogin)
         {

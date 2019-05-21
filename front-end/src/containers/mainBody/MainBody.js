@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ProductModal from '../../components/productModal/ProductModal';
 import ProductTable from '../../components/productTable/ProductTable';
 import { getProducts } from '../../actions/productActions';
-import { Filter, Sort } from '../../components/productTable';
+import { Filter, Sort } from '../../components/productFilter';
 import Styles from './Styles';
 import { NavBar } from '../navbar';
 import { checkIfDateWithinPeriod } from '../../utils/dateFunctions';
@@ -29,7 +29,8 @@ class MainBody extends React.Component {
       selectedCategory: '',
       sortCriteria: 'nameDescending',
       productsLoading: false,
-      snackbarContents: {}
+      snackbarContents: {},
+      numberOfProducts: 12
     };
 
     this._isMounted = false;
@@ -115,6 +116,10 @@ class MainBody extends React.Component {
     }
   };
 
+  changeNumberOfProducts = e => {
+    this.setState({ numberOfProducts: e.target.value });
+  };
+
   changeSort = e => {
     this.setState({ sortCriteria: e.target.value }, () => this.sortShownProducts());
   };
@@ -191,11 +196,12 @@ class MainBody extends React.Component {
       selectedCategory,
       snackbarContents,
       allProducts,
-      productsLoading
+      productsLoading,
+      numberOfProducts
     } = this.state;
 
     return (
-      <div>
+      <div id="mainBody">
         <NavBar
           filterByCategory={this.filterByCategory}
           currentCategory={selectedCategory}
@@ -218,7 +224,12 @@ class MainBody extends React.Component {
                 changePrice={this.changePrice}
                 upperPriceLimitHelper={upperPriceLimitHelper}
               />
-              <Sort sortCriteria={sortCriteria} changeSort={this.changeSort} />
+              <Sort
+                sortCriteria={sortCriteria}
+                changeSort={this.changeSort}
+                numberOfProducts={numberOfProducts}
+                changeNumberOfProducts={this.changeNumberOfProducts}
+              />
               <BrowserRouter>
                 <Route
                   path="/"
@@ -228,6 +239,7 @@ class MainBody extends React.Component {
                       productHandler={this.changeProduct}
                       products={filteredProducts}
                       productsLoading={productsLoading}
+                      numberOfProducts={numberOfProducts}
                     />
                   )}
                 />
