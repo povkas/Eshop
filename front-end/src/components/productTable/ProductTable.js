@@ -69,37 +69,41 @@ class ProductTable extends React.Component {
     }
 
     return (
-      <Grid container justify="space-evenly" alignItems="center">
-        {products
-          .slice((currentPage - 1) * numberOfProducts, currentPage * numberOfProducts)
-          .map(product => (
-            <ProductItem
-              product={product}
-              key={product.id}
-              selectProduct={() => productHandler(product)}
-            />
-          ))}
-        <Divider className={classes.divider} />
-        <Grid container justify="center" alignItems="center">
-          <Paper
-            className={currentPage > 1 ? classes.pageButtonPaper : classes.pageButtonPaperDisabled}
-            onClick={this.previousPage}
-          >
-            {'<'}
-          </Paper>
-          {this.createButtons()}
-          <Paper
-            className={
-              currentPage < Math.ceil(products.length / numberOfProducts)
-                ? classes.pageButtonPaper
-                : classes.pageButtonPaperDisabled
-            }
-            onClick={this.nextPage}
-          >
-            {'>'}
-          </Paper>
+      <div id="productTable">
+        <Grid container justify="space-evenly" alignItems="center">
+          {products
+            .slice((currentPage - 1) * numberOfProducts, currentPage * numberOfProducts)
+            .map(product => (
+              <ProductItem
+                product={product}
+                key={product.id}
+                selectProduct={() => productHandler(product)}
+              />
+            ))}
+          <Divider className={classes.divider} />
+          <Grid container justify="center" alignItems="center">
+            <Paper
+              className={
+                currentPage > 1 ? classes.pageButtonPaper : classes.pageButtonPaperDisabled
+              }
+              onClick={this.previousPage}
+            >
+              {'<'}
+            </Paper>
+            {this.createButtons()}
+            <Paper
+              className={
+                currentPage < Math.ceil(products.length / numberOfProducts)
+                  ? classes.pageButtonPaper
+                  : classes.pageButtonPaperDisabled
+              }
+              onClick={this.nextPage}
+            >
+              {'>'}
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     );
   }
 }

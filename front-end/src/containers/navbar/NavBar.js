@@ -50,9 +50,10 @@ class NavBar extends React.Component {
       filterByCategory,
       setError
     } = this.props;
+
     return (
       <BrowserRouter>
-        <AppBar position="sticky">
+        <AppBar position="static">
           <Toolbar>
             <CategoriesList
               filterByCategory={filterByCategory}
@@ -70,7 +71,13 @@ class NavBar extends React.Component {
               productHandler={productHandler}
             />
             {auth.isAuthenticated ? (
-              <UserOptions className={classes} logOut={this.handleLogout} />
+              <UserOptions
+                IsAdmin={auth.user.IsAdmin === 'True'}
+                className={classes}
+                logOut={this.handleLogout}
+                openSnackbar={openSnackbar}
+                setError={setError}
+              />
             ) : (
               <LoginForm
                 className={classes}
