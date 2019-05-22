@@ -18,7 +18,8 @@ class Form extends Component {
       email: '',
       password: '',
       emailError: '',
-      passwordError: ''
+      passwordError: '',
+      disable: true
     };
     this.state = this.initialstate;
   }
@@ -34,24 +35,38 @@ class Form extends Component {
     if (error !== '') {
       this.setState({ [`${e.target.name}Error`]: '' });
     }
+    this.buttonDisable();
+  };
+
+  buttonDisable = () => {
+    const { email, password, emailError, passwordError } = this.state;
+    if (
+      !notEmpty(emailError) &&
+      !notEmpty(passwordError) &&
+      notEmpty(email) &&
+      notEmpty(password)
+    ) {
+      this.setState({ disable: false });
+    } else {
+      this.setState({ disable: true });
+    }
   };
 
   handleSubmit = e => {
     e.preventDefault();
     const { onSubmit, passClose } = this.props;
-    const { email, password, emailError, passwordError } = this.state;
+    const { email, password } = this.state;
+
     const userData = {
       email,
       password
     };
-    if (!notEmpty(emailError) && !notEmpty(passwordError)) {
-      onSubmit(userData);
-      passClose();
-    }
+    onSubmit(userData);
+    passClose();
   };
 
   render() {
-    const { email, password, emailError, passwordError } = this.state;
+    const { email, password, emailError, passwordError, disable } = this.state;
 
     const labelNames = {
       password: 'password'
@@ -80,7 +95,7 @@ class Form extends Component {
           helperText={passwordError}
           margin="normal"
         />
-        <Button variant="outlined" type="submit">
+        <Button disabled={disable} variant="outlined" type="submit">
           Log in
         </Button>
       </form>

@@ -51,7 +51,10 @@ class LoginForm extends React.Component {
         </IconButton>
         <Modal open={openModal} onClose={this.handleClose}>
           <div className={classes.paper}>
-            <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
+            <div className={classes.signUp}>Sign Up</div>
+            <div className={classes.layout}>
+              <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
+            </div>
             <div
               role="button"
               onClick={() => {

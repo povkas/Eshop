@@ -8,9 +8,13 @@ const modalStyles = theme => ({
     height: '80vh%',
     width: '10vw',
     top: `${6}%`,
-    left: `${75}%`
+    left: `${80}%`
+  },
+  button: {
+    marginTop: '1vh'
   },
   button1: {
+    marginTop: '1vh',
     fontSize: 14,
     color: '#551A8B',
     width: '10vw',
@@ -18,6 +22,7 @@ const modalStyles = theme => ({
     textTransform: 'none'
   },
   button2: {
+    marginTop: '1vh',
     fontSize: 14,
     color: '#551A8B',
     width: '10vw',
@@ -28,6 +33,24 @@ const modalStyles = theme => ({
   color: {
     fontSize: 14,
     color: '#551A8B'
+  },
+  signUp: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3f51b5',
+    textAlign: 'center',
+    marginTop: '0vh',
+    marginBot: '0vh'
+  },
+  layout: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3f51b5'
+  },
+  textFields: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#3f51b5'
   }
 });
 

@@ -5,10 +5,10 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none',
-    height: '88vh',
-    width: '13vw',
-    top: `${0}%`,
-    left: `${75}%`
+    height: '80vh%',
+    width: '12vw',
+    top: `${6}%`,
+    left: `${80}%`
   },
   textFields: {
     width: '12vw',
@@ -17,7 +17,14 @@ const styles = theme => ({
     marginBot: '1.9vh'
   },
   button: {
-    marginTop: '3vh'
+    marginTop: '2vh',
+    marginBot: '1vh'
+  },
+  registration: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3f51b5',
+    textAlign: 'center'
   }
 });
 

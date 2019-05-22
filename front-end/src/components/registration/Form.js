@@ -42,7 +42,8 @@ class Form extends Component {
       confirmPasswordError: '',
       countryError: '',
       cityError: '',
-      addressError: ''
+      addressError: '',
+      disable: true
     };
   }
 
@@ -57,6 +58,49 @@ class Form extends Component {
     });
   };
 
+  buttonDisable = () => {
+    const {
+      name,
+      surname,
+      email,
+      password,
+      confirmPassword,
+      country,
+      city,
+      address,
+      nameError,
+      surnameError,
+      emailError,
+      passwordError,
+      confirmPasswordError,
+      countryError,
+      cityError,
+      addressError
+    } = this.state;
+    if (
+      !notEmpty(emailError) &&
+      !notEmpty(passwordError) &&
+      !notEmpty(nameError) &&
+      !notEmpty(surnameError) &&
+      !notEmpty(confirmPasswordError) &&
+      !notEmpty(countryError) &&
+      !notEmpty(cityError) &&
+      !notEmpty(addressError) &&
+      notEmpty(name) &&
+      notEmpty(surname) &&
+      notEmpty(confirmPassword) &&
+      notEmpty(country) &&
+      notEmpty(city) &&
+      notEmpty(address) &&
+      notEmpty(email) &&
+      notEmpty(password)
+    ) {
+      this.setState({ disable: false });
+    } else {
+      this.setState({ disable: true });
+    }
+  };
+
   handleChange = (e, error) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -64,6 +108,7 @@ class Form extends Component {
     if (error !== '') {
       this.setState({ [`${e.target.name}Error`]: '' });
     }
+    this.buttonDisable();
   };
 
   handleSubmit = e => {
@@ -109,9 +154,9 @@ class Form extends Component {
       confirmPasswordError,
       countryError,
       cityError,
-      addressError
+      addressError,
+      disable
     } = this.state;
-
     const { classes } = this.props;
 
     const labelNames = {
@@ -126,8 +171,7 @@ class Form extends Component {
     };
 
     return (
-      <div>
-        REGISTRATION
+      <div className={classes.registration}>
         <form onSubmit={this.handleSubmit}>
           <TextField
             className={classes.textFields}
@@ -180,7 +224,7 @@ class Form extends Component {
           <TextField
             className={classes.textFields}
             name={labelNames.confirmPassword}
-            label="ConfirmPassword"
+            label="Confirm Password"
             type={labelNames.password}
             value={confirmPassword}
             error={notEmpty(confirmPasswordError)}
@@ -226,7 +270,7 @@ class Form extends Component {
             margin="normal"
           />
           <div />
-          <Button className={classes.button} variant="outlined" type="submit">
+          <Button disabled={disable} variant="outlined" type="submit">
             Sign up
           </Button>
         </form>
@@ -238,8 +282,8 @@ class Form extends Component {
 Form.propTypes = {
   passClose: PropTypes.func.isRequired,
   openSnackbar: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 export default Form;
