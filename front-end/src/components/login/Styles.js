@@ -22,6 +22,7 @@ const modalStyles = theme => ({
     textTransform: 'none'
   },
   button2: {
+    cursor: 'pointer',
     marginTop: '1vh',
     fontSize: 14,
     color: '#551A8B',
