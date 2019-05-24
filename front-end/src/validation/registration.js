@@ -6,7 +6,10 @@ function hasNumber(myString) {
 
 export const nameValidation = name => {
   if (name.length !== 0) {
-    if (name.length > 30 || hasNumber(name)) {
+    if (name.length > 30) {
+      return errorMessages.nameErrorLong;
+    }
+    if (hasNumber(name)) {
       return errorMessages.nameError;
     }
   } else {
@@ -28,7 +31,10 @@ export const emailValidation = email => {
 
 export const surnameValidation = surname => {
   if (surname.length !== 0) {
-    if (surname.length > 30 || hasNumber(surname)) {
+    if (surname.length > 30) {
+      return errorMessages.surnameErrorLong;
+    }
+    if (hasNumber(surname)) {
       return errorMessages.surnameError;
     }
   } else {
@@ -39,7 +45,10 @@ export const surnameValidation = surname => {
 
 export const countryValidation = country => {
   if (country.length !== 0) {
-    if (country.length > 30 || hasNumber(country)) {
+    if (country.length > 30) {
+      return errorMessages.countryErrorLong;
+    }
+    if (hasNumber(country)) {
       return errorMessages.countryError;
     }
   } else {
@@ -50,7 +59,10 @@ export const countryValidation = country => {
 
 export const cityValidation = city => {
   if (city.length !== 0) {
-    if (city.length > 30 || hasNumber(city)) {
+    if (city.length > 30) {
+      return errorMessages.cityErrorLong;
+    }
+    if (hasNumber(city)) {
       return errorMessages.cityError;
     }
   } else {

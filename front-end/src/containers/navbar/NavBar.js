@@ -70,6 +70,7 @@ class NavBar extends React.Component {
               handleSearch={handleSearch}
               productHandler={productHandler}
             />
+            <div>{auth.user.unique_name}</div>
             {auth.isAuthenticated ? (
               <UserOptions
                 IsAdmin={auth.user.IsAdmin === 'True'}
@@ -80,6 +81,7 @@ class NavBar extends React.Component {
               />
             ) : (
               <LoginForm
+                IsAdmin={auth.user.IsAdmin === 'True'}
                 className={classes}
                 openRegistration={this.handleRegistrationOpen}
                 openSnackbar={openSnackbar}

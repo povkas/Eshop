@@ -7,7 +7,7 @@ const modalStyles = theme => ({
     outline: 'none',
     height: '80vh%',
     width: '10vw',
-    top: `${6}%`,
+    top: `${9}%`,
     left: `${80}%`
   },
   button: {
@@ -45,7 +45,6 @@ const modalStyles = theme => ({
   },
   layout: {
     fontSize: 18,
-    fontWeight: 'bold',
     color: '#3f51b5'
   },
   textFields: {

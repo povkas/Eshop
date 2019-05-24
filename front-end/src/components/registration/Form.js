@@ -59,33 +59,8 @@ class Form extends Component {
   };
 
   buttonDisable = () => {
-    const {
-      name,
-      surname,
-      email,
-      password,
-      confirmPassword,
-      country,
-      city,
-      address,
-      nameError,
-      surnameError,
-      emailError,
-      passwordError,
-      confirmPasswordError,
-      countryError,
-      cityError,
-      addressError
-    } = this.state;
+    const { name, surname, email, password, confirmPassword, country, city, address } = this.state;
     if (
-      !notEmpty(emailError) &&
-      !notEmpty(passwordError) &&
-      !notEmpty(nameError) &&
-      !notEmpty(surnameError) &&
-      !notEmpty(confirmPasswordError) &&
-      !notEmpty(countryError) &&
-      !notEmpty(cityError) &&
-      !notEmpty(addressError) &&
       notEmpty(name) &&
       notEmpty(surname) &&
       notEmpty(confirmPassword) &&
@@ -102,18 +77,31 @@ class Form extends Component {
   };
 
   handleChange = (e, error) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
     if (error !== '') {
       this.setState({ [`${e.target.name}Error`]: '' });
     }
-    this.buttonDisable();
+    this.setState({ [e.target.name]: e.target.value }, () => this.buttonDisable());
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { name, surname, country, city, email, password, address } = this.state;
+    const {
+      name,
+      surname,
+      country,
+      city,
+      email,
+      password,
+      address,
+      nameError,
+      surnameError,
+      emailError,
+      passwordError,
+      confirmPasswordError,
+      countryError,
+      cityError,
+      addressError
+    } = this.state;
     const { passClose, openSnackbar, setError } = this.props;
 
     const data = {
@@ -125,16 +113,26 @@ class Form extends Component {
       email,
       password
     };
-
-    axios
-      .post(addUser, data)
-      .then(() => {
-        openSnackbar({ message: snackbarMessages.registrationSuccess, variant: 'success' });
-        passClose();
-      })
-      .catch(err => {
-        setError(err);
-      });
+    if (
+      !notEmpty(emailError) &&
+      !notEmpty(passwordError) &&
+      !notEmpty(nameError) &&
+      !notEmpty(surnameError) &&
+      !notEmpty(confirmPasswordError) &&
+      !notEmpty(countryError) &&
+      !notEmpty(cityError) &&
+      !notEmpty(addressError)
+    ) {
+      axios
+        .post(addUser, data)
+        .then(() => {
+          openSnackbar({ message: snackbarMessages.registrationSuccess, variant: 'success' });
+          passClose();
+        })
+        .catch(err => {
+          setError(err);
+        });
+    }
   };
 
   render() {
@@ -171,7 +169,7 @@ class Form extends Component {
     };
 
     return (
-      <div className={classes.registration}>
+      <div className={classes.layout}>
         <form onSubmit={this.handleSubmit}>
           <TextField
             className={classes.textFields}
@@ -270,9 +268,11 @@ class Form extends Component {
             margin="normal"
           />
           <div />
-          <Button disabled={disable} variant="outlined" type="submit">
-            Sign up
-          </Button>
+          <div className={classes.button}>
+            <Button className={classes.button} disabled={disable} variant="outlined" type="submit">
+              Sign up
+            </Button>
+          </div>
         </form>
       </div>
     );

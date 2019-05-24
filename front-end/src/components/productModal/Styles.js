@@ -2,6 +2,7 @@ const styles = theme => ({
   paper: {
     position: 'absolute',
     width: '30vw',
+    marginLeft: '2vw',
     minHeight: '50vh',
     maxHeight: '82vh',
     margin: '2vh',
