@@ -20,6 +20,7 @@ module.exports = {
     document: 'writeable',
     window: 'writeable',
     localStorage: true,
-    FileReader: 'FileReader'
+    FileReader: 'FileReader',
+    btoa: 'btoa'
   }
 };

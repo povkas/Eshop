@@ -153,22 +153,20 @@ class Form extends Component {
     const { title, price, description, quantity, category, photo } = this.state;
 
     const created = Date.now().toString();
+    const productData = { title, description, price, quantity, category, created };
 
     const reader = new FileReader();
-    reader.readAsArrayBuffer(photo);
-    reader.onloadend = () => {
-      const typedArray = new Uint8Array(reader.result);
-      const image = [...typedArray];
-      const productData = {
-        title,
-        description,
-        price,
-        quantity,
-        category,
-        created,
-        image
-      };
+    try {
+      reader.readAsArrayBuffer(photo);
+    } catch {
+      if (!this.validateForm()) {
+        onSubmit(productData);
+        passClose();
+      }
+    }
 
+    reader.onload = () => {
+      productData.image = Array.from(new Uint8Array(reader.result));
       if (!this.validateForm()) {
         onSubmit(productData);
         passClose();

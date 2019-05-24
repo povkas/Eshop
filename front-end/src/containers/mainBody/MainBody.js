@@ -125,9 +125,21 @@ class MainBody extends React.Component {
   };
 
   createProduct = product => {
+    const prod = {
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      quantity: product.quantity,
+      category: product.category,
+      created: product.created
+    };
+
+    if (product.image !== undefined)
+      prod.image = btoa(product.image.map(item => String.fromCharCode(item)).join(''));
+
     this.setState(
       previousState => ({
-        allProducts: [...previousState.allProducts, product]
+        allProducts: [...previousState.allProducts, prod]
       }),
       () => this.filterSort()
     );
