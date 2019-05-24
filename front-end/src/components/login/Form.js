@@ -56,7 +56,6 @@ class Form extends Component {
     e.preventDefault();
     const { onSubmit, passClose } = this.props;
     const { email, password } = this.state;
-
     const userData = {
       email,
       password
