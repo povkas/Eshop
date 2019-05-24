@@ -58,6 +58,7 @@ class UserOptions extends React.Component {
           <Person />
         </IconButton>
         <Menu
+          className={className.menuPosition}
           id="simple-menu"
           anchorEl={openMenu}
           open={Boolean(openMenu)}

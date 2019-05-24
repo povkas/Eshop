@@ -12,6 +12,9 @@ const theme = () => ({
   },
   grow: {
     flexGrow: 1
+  },
+  menuPosition: {
+    marginTop: '30px'
   }
 });
 

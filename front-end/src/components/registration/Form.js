@@ -7,7 +7,7 @@ import { snackbarMessages } from '../../utils/constants';
 import { addUser } from '../../utils/constants/api';
 import {
   emailValidation,
-  addresssValidation,
+  addressValidation,
   countryValidation,
   nameValidation,
   surnameValidation,
@@ -42,7 +42,8 @@ class Form extends Component {
       confirmPasswordError: '',
       countryError: '',
       cityError: '',
-      addressError: ''
+      addressError: '',
+      disable: true
     };
   }
 
@@ -57,6 +58,49 @@ class Form extends Component {
     });
   };
 
+  buttonDisable = () => {
+    const {
+      name,
+      surname,
+      email,
+      password,
+      confirmPassword,
+      country,
+      city,
+      address,
+      nameError,
+      surnameError,
+      emailError,
+      passwordError,
+      confirmPasswordError,
+      countryError,
+      cityError,
+      addressError
+    } = this.state;
+    if (
+      !notEmpty(emailError) &&
+      !notEmpty(passwordError) &&
+      !notEmpty(nameError) &&
+      !notEmpty(surnameError) &&
+      !notEmpty(confirmPasswordError) &&
+      !notEmpty(countryError) &&
+      !notEmpty(cityError) &&
+      !notEmpty(addressError) &&
+      notEmpty(name) &&
+      notEmpty(surname) &&
+      notEmpty(confirmPassword) &&
+      notEmpty(country) &&
+      notEmpty(city) &&
+      notEmpty(address) &&
+      notEmpty(email) &&
+      notEmpty(password)
+    ) {
+      this.setState({ disable: false });
+    } else {
+      this.setState({ disable: true });
+    }
+  };
+
   handleChange = (e, error) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -64,6 +108,7 @@ class Form extends Component {
     if (error !== '') {
       this.setState({ [`${e.target.name}Error`]: '' });
     }
+    this.buttonDisable();
   };
 
   handleSubmit = e => {
@@ -109,9 +154,9 @@ class Form extends Component {
       confirmPasswordError,
       countryError,
       cityError,
-      addressError
+      addressError,
+      disable
     } = this.state;
-
     const { classes } = this.props;
 
     const labelNames = {
@@ -126,8 +171,7 @@ class Form extends Component {
     };
 
     return (
-      <div>
-        REGISTRATION
+      <div className={classes.registration}>
         <form onSubmit={this.handleSubmit}>
           <TextField
             className={classes.textFields}
@@ -135,7 +179,6 @@ class Form extends Component {
             label="Name"
             type={labelNames.name}
             value={name}
-            required
             error={notEmpty(nameError)}
             onChange={this.handleChange}
             onBlur={e => this.validate(e, nameValidation)}
@@ -148,7 +191,6 @@ class Form extends Component {
             label="Surname"
             type={labelNames.surname}
             value={surname}
-            required
             error={notEmpty(surnameError)}
             onChange={this.handleChange}
             onBlur={e => this.validate(e, surnameValidation)}
@@ -161,7 +203,6 @@ class Form extends Component {
             label="Email"
             type={labelNames.email}
             value={email}
-            required
             error={notEmpty(emailError)}
             onChange={this.handleChange}
             onBlur={e => this.validate(e, emailValidation)}
@@ -174,7 +215,6 @@ class Form extends Component {
             label="Password"
             type={labelNames.password}
             value={password}
-            required
             error={notEmpty(passwordError)}
             onChange={this.handleChange}
             onBlur={e => this.validate(e, passwordValidation)}
@@ -184,10 +224,9 @@ class Form extends Component {
           <TextField
             className={classes.textFields}
             name={labelNames.confirmPassword}
-            label="ConfirmPassword"
+            label="Confirm Password"
             type={labelNames.password}
             value={confirmPassword}
-            required
             error={notEmpty(confirmPasswordError)}
             onChange={this.handleChange}
             onBlur={e => this.confirmPasswordValidate(e, confirmPasswordValidation)}
@@ -200,7 +239,6 @@ class Form extends Component {
             label="Country"
             type={labelNames.country}
             value={country}
-            required
             error={notEmpty(countryError)}
             onBlur={e => this.validate(e, countryValidation)}
             onChange={this.handleChange}
@@ -213,7 +251,6 @@ class Form extends Component {
             label="City"
             type={labelNames.city}
             value={city}
-            required
             error={notEmpty(cityError)}
             onBlur={e => this.validate(e, cityValidation)}
             onChange={this.handleChange}
@@ -226,15 +263,14 @@ class Form extends Component {
             label="Address"
             type={labelNames.address}
             value={address}
-            required
             error={notEmpty(addressError)}
-            onBlur={e => this.validate(e, addresssValidation)}
+            onBlur={e => this.validate(e, addressValidation)}
             onChange={this.handleChange}
             helperText={addressError}
             margin="normal"
           />
           <div />
-          <Button variant="outlined" type="submit">
+          <Button disabled={disable} variant="outlined" type="submit">
             Sign up
           </Button>
         </form>
@@ -246,8 +282,8 @@ class Form extends Component {
 Form.propTypes = {
   passClose: PropTypes.func.isRequired,
   openSnackbar: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
-  classes: PropTypes.shape().isRequired
+  classes: PropTypes.shape().isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 export default Form;
