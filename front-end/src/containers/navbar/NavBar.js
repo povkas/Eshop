@@ -16,7 +16,6 @@ import Search from '../../components/search/Search';
 import { snackbarMessages } from '../../utils/constants';
 import { CartModal } from '../../components/shoppingCart';
 import { RegistrationForm } from '../../components/registration';
-// import { ProductModal } from '../../components/productModal';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -64,7 +63,8 @@ class NavBar extends React.Component {
       removeFromCart,
       turnOffLeftArrow,
       turnOffRightArrow,
-      changeQuantity
+      changeQuantity,
+      openPaymentDetailsModal
     } = this.props;
     return (
       <BrowserRouter>
@@ -121,6 +121,7 @@ class NavBar extends React.Component {
               turnOffLeftArrow={turnOffLeftArrow}
               turnOffRightArrow={turnOffRightArrow}
               changeQuantity={changeQuantity}
+              openCheckout={openPaymentDetailsModal}
             />
           </Toolbar>
         </AppBar>
@@ -145,7 +146,8 @@ NavBar.propTypes = {
   turnOffLeftArrow: PropTypes.func.isRequired,
   RemoveAllProducts: PropTypes.func.isRequired,
   turnOffRightArrow: PropTypes.func.isRequired,
-  changeQuantity: PropTypes.func.isRequired
+  changeQuantity: PropTypes.func.isRequired,
+  openPaymentDetailsModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

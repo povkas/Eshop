@@ -14,11 +14,13 @@ import { checkIfDateWithinPeriod } from '../../utils/dateFunctions';
 import { compareByCriteria } from '../../utils/sortFunctions';
 import { SnackbarContainer } from '../../components/snackbar';
 import { snackbarMessages } from '../../utils/constants';
+import { PaymentModal } from '../../components/paymentModal';
 
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isPaymentModalOpen: false,
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
@@ -111,6 +113,14 @@ class MainBody extends React.Component {
     });
 
     this.setState({ cartProducts: newCartProducts });
+  };
+
+  handlePaymentModalClose = () => {
+    this.setState({ isPaymentModalOpen: false });
+  };
+
+  handlePaymentModalOpen = () => {
+    this.setState({ isPaymentModalOpen: true });
   };
 
   handleModalClose = () => {
@@ -270,7 +280,8 @@ class MainBody extends React.Component {
       snackbarContents,
       allProducts,
       productsLoading,
-      numberOfProducts
+      numberOfProducts,
+      isPaymentModalOpen
     } = this.state;
 
     return (
@@ -283,6 +294,7 @@ class MainBody extends React.Component {
           handleSearch={this.handleSearch}
           productHandler={this.changeProduct}
           openSnackbar={this.openSnackbar}
+          openPaymentDetailsModal={this.handlePaymentModalOpen}
           cartProducts={cartProducts}
           removeFromCart={product => this.removeFromCart(product)}
           RemoveAllProducts={this.RemoveAllProducts}
@@ -296,6 +308,11 @@ class MainBody extends React.Component {
           handleClose={this.handleModalClose}
           addToCart={this.addToCart}
           openSnackbar={this.openSnackbar}
+        />
+        <PaymentModal
+          isOpen={isPaymentModalOpen}
+          handleClose={this.handlePaymentModalClose}
+          products={cartProducts}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item>

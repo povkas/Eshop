@@ -5,5 +5,6 @@ export const snackbarMessages = {
   removeFromCartSuccess: 'Product was succesfully removed from cart',
   loginError: 'Incorrect email or password!',
   logoutSuccess: 'Logout successful!',
-  addToCartError: 'There are not any products left in store'
+  addToCartError: 'There are not any products left in store',
+  checkoutSuccess: 'CheckOut was successful'
 };

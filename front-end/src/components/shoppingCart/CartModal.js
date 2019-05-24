@@ -64,6 +64,12 @@ class CartModal extends React.Component {
     }
   };
 
+  handleCheckoutOpen() {
+    const { openCheckout, onClick: closeModal } = this.props;
+    closeModal();
+    openCheckout();
+  }
+
   totalPrice() {
     let total = 0;
     const { cartProducts } = this.props;
@@ -111,7 +117,7 @@ class CartModal extends React.Component {
               <ShoppingCart className={classes.ShoppingCart} color="primary" />
             </Grid>
             <Grid>
-              <div> Total price: {this.totalPrice()} €</div>
+              <div> Total price: {this.totalPrice()}€</div>
             </Grid>
             <Grid container spacing={40}>
               <Grid item xs={12}>
@@ -143,7 +149,7 @@ class CartModal extends React.Component {
               >
                 <Button
                   className={classes.button1}
-                  onClick={this.handleClick}
+                  onClick={() => this.handleCheckoutOpen()}
                   float="left"
                   radiostyle={{ paddingRight: 5 }}
                 >
@@ -183,7 +189,8 @@ CartModal.propTypes = {
   turnOffLeftArrow: PropTypes.func.isRequired,
   turnOffRightArrow: PropTypes.func.isRequired,
   openSnackbar: PropTypes.func.isRequired,
-  changeQuantity: PropTypes.func.isRequired
+  changeQuantity: PropTypes.func.isRequired,
+  openCheckout: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(CartModal);
