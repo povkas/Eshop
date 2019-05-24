@@ -12,7 +12,7 @@ class Form extends Component {
       price: '',
       description: '',
       quantity: '',
-      image: {},
+      photo: {},
       category: '',
       titleErrorText: ' ',
       priceErrorText: ' ',
@@ -143,29 +143,37 @@ class Form extends Component {
     return isError;
   };
 
+  changeImage = e => {
+    this.setState({ photo: e.target.files[0] });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const { onSubmit, passClose } = this.props;
-    const { title, price, description, quantity, category } = this.state;
+    const { title, price, description, quantity, category, photo } = this.state;
 
     const created = Date.now().toString();
-    const id = 2547;
 
-    const productData = {
-      title,
-      description,
-      price,
-      quantity,
-      category,
-      created,
-      id
-      // image
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(photo);
+    reader.onloadend = () => {
+      const typedArray = new Uint8Array(reader.result);
+      const image = [...typedArray];
+      const productData = {
+        title,
+        description,
+        price,
+        quantity,
+        category,
+        created,
+        image
+      };
+
+      if (!this.validateForm()) {
+        onSubmit(productData);
+        passClose();
+      }
     };
-
-    if (!this.validateForm()) {
-      onSubmit(productData);
-      passClose();
-    }
   };
 
   render() {
@@ -234,6 +242,9 @@ class Form extends Component {
           errorMessage={categoryErrorText}
           resetMessage={this.resetErrorMessage}
         />
+        <br />
+        <input type="file" accept="image/*" onChange={this.changeImage} />
+        <br />
         <br />
         <Button variant="outlined" type="submit">
           Create Product
