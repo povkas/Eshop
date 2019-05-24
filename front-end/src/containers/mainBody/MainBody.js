@@ -27,6 +27,7 @@ class MainBody extends React.Component {
       date: '',
       upperPriceLimitHelper: '',
       selectedCategory: '',
+      cartProducts: [],
       sortCriteria: 'nameDescending',
       productsLoading: false,
       snackbarContents: {},
@@ -34,8 +35,11 @@ class MainBody extends React.Component {
     };
 
     this._isMounted = false;
-
+    this.turnOffLeftArrow = this.turnOffLeftArrow.bind(this);
+    this.turnOffRightArrow = this.turnOffRightArrow.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +76,41 @@ class MainBody extends React.Component {
         selectedProduct: product
       });
     }
+  };
+
+  RemoveAllProducts = () => {
+    this.setState({ cartProducts: [] });
+  };
+
+  changeQuantity = (id, type) => {
+    const { cartProducts } = this.state;
+    const oldProduct = cartProducts[id];
+    let newProduct = null;
+    switch (type) {
+      case 'Increment':
+        newProduct = {
+          ...oldProduct,
+          selectedQuantity: oldProduct.selectedQuantity + 1
+        };
+        break;
+      case 'Decrement':
+        newProduct = {
+          ...oldProduct,
+          selectedQuantity: oldProduct.selectedQuantity - 1
+        };
+        break;
+      default:
+        newProduct = oldProduct;
+        return;
+    }
+    const newCartProducts = cartProducts.map(p => {
+      if (p === oldProduct) {
+        return newProduct;
+      }
+      return p;
+    });
+
+    this.setState({ cartProducts: newCartProducts });
   };
 
   handleModalClose = () => {
@@ -123,6 +162,56 @@ class MainBody extends React.Component {
   changeSort = e => {
     this.setState({ sortCriteria: e.target.value }, () => this.sortShownProducts());
   };
+
+  removeFromCart(removeProduct) {
+    this.setState(prevState => ({
+      cartProducts: prevState.cartProducts.filter(item => item !== removeProduct)
+    }));
+  }
+
+  addToCart(product) {
+    const { cartProducts } = this.state;
+    let updated = false;
+
+    const updatedCartProducts = (cartProducts || []).map(cp => {
+      if (cp.id === product.id) {
+        updated = true;
+        if (product.selectedQuantity + cp.selectedQuantity <= cp.quantity) {
+          this.openSnackbar({ message: snackbarMessages.addToCartSuccess, variant: 'success' });
+          return {
+            ...cp,
+            selectedQuantity: cp.selectedQuantity + product.selectedQuantity
+          };
+        }
+        this.openSnackbar({ message: snackbarMessages.addToCartError, variant: 'error' });
+        // console.log('error');
+      }
+      return cp;
+    });
+    this.setState({ cartProducts: updatedCartProducts });
+
+    if (!updated) {
+      this.setState({ cartProducts: [...cartProducts, product] });
+      this.openSnackbar({ message: snackbarMessages.addToCartSuccess, variant: 'success' });
+    }
+  }
+
+  turnOffRightArrow(id) {
+    const { cartProducts } = this.state;
+    const product = cartProducts.find(a => a.id === id);
+    if (product.quantity > product.selectedQuantity) {
+      return false;
+    }
+    return true;
+  }
+
+  turnOffLeftArrow(id) {
+    const { cartProducts } = this.state;
+    if (cartProducts.find(a => a.id === id).selectedQuantity <= 1) {
+      return true;
+    }
+    return false;
+  }
 
   filterShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory, date } = this.state;
@@ -177,6 +266,7 @@ class MainBody extends React.Component {
       upperPriceLimitHelper,
       sortCriteria,
       selectedCategory,
+      cartProducts,
       snackbarContents,
       allProducts,
       productsLoading,
@@ -193,8 +283,20 @@ class MainBody extends React.Component {
           handleSearch={this.handleSearch}
           productHandler={this.changeProduct}
           openSnackbar={this.openSnackbar}
+          cartProducts={cartProducts}
+          removeFromCart={product => this.removeFromCart(product)}
+          RemoveAllProducts={this.RemoveAllProducts}
+          turnOffLeftArrow={this.turnOffLeftArrow}
+          turnOffRightArrow={this.turnOffRightArrow}
+          changeQuantity={this.changeQuantity}
+          closeCartModal={this.closeCartModal}
         />
-        <ProductModal product={selectedProduct} handleClose={this.handleModalClose} />
+        <ProductModal
+          product={selectedProduct}
+          handleClose={this.handleModalClose}
+          addToCart={this.addToCart}
+          openSnackbar={this.openSnackbar}
+        />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item>
             <Paper className={classes.paper} elevation={24}>
