@@ -11,6 +11,7 @@ function RegistrationForm(props) {
     <div>
       <Modal open={isOpenRegistrationModal} onClose={closeRegistration}>
         <div className={classes.paper}>
+          <div className={classes.registration}>Sign Up</div>
           <Form
             classes={classes}
             setError={setError}

@@ -35,7 +35,6 @@ class UserOptions extends React.Component {
   render() {
     const { openMenu, openUsersList } = this.state;
     const { className, logOut, IsAdmin, openSnackbar, setError } = this.props;
-    // console.log(IsAdmin);
 
     return (
       <div>
@@ -48,6 +47,7 @@ class UserOptions extends React.Component {
           <Person />
         </IconButton>
         <Menu
+          className={className.menuPosition}
           id="simple-menu"
           anchorEl={openMenu}
           open={Boolean(openMenu)}
