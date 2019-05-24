@@ -8,29 +8,36 @@ import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import RemoveIcon from '@material-ui/icons/Clear';
 import { snackbarMessages } from '../../utils/constants';
-// import Styles from './Styles';
+import Styles from './Styles';
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  container: {
-    ...theme.absoluteFillObject,
-    alignSelf: 'flex-end',
-    marginTop: -5,
-    position: 'absolute'
-  },
-  paper: {
-    padding: theme.spacing.unit,
-    margin: 'auto',
-    maxWidth: '500%',
-    marginRight: '2px'
-  },
-  image: {
-    width: 115,
-    height: 115
-  }
-});
+// const styles = theme => ({
+//   root: {
+//     flexGrow: 1
+//   },
+//   container: {
+//     ...theme.absoluteFillObject,
+//     alignSelf: 'flex-end',
+//     marginTop: -5,
+//     position: 'absolute'
+//   },
+//   paper: {
+//     padding: theme.spacing.unit,
+//     margin: 'auto',
+//     maxWidth: '500%',
+//     marginRight: '2px'
+//   },
+//   textAlign: {
+//     flexDirection: 'row',
+//     flex: 1,
+//     maxWidth: '172px',
+//     whiteSpace: 'pre-wrap',
+//     flexWrap: 'wrap'
+//   },
+//   image: {
+//     width: 115,
+//     height: 115
+//   }
+// });
 
 class CartItem extends React.Component {
   constructor(props) {
@@ -70,7 +77,7 @@ class CartItem extends React.Component {
     } = this.props;
     return (
       <div className={classes.root}>
-        <Paper className={classes.paper} elevation={0}>
+        <Paper className={classes.paper2} elevation={0}>
           <Grid container spacing={16}>
             <Grid item>
               <ButtonBase className={classes.image}>
@@ -149,4 +156,4 @@ CartItem.propTypes = {
   handleCloseIfEmpty: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(CartItem);
+export default withStyles(Styles)(CartItem);

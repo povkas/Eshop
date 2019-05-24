@@ -137,36 +137,34 @@ class CartModal extends React.Component {
               <Grid
                 container
                 direction="row"
-                justify="space-between"
+                justify="space-evenly"
                 alignitems="flex-end"
                 margin="3px"
               >
-                <div>
-                  <Button
-                    className={classes.button1}
-                    onClick={this.handleClick}
-                    float="left"
-                    radiostyle={{ paddingRight: 5 }}
-                  >
-                    CheckOut
-                  </Button>
-                  <Button
-                    className={classes.removeButton}
-                    onClick={this.handleClickOpen}
-                    radiostyle={{ paddingRight: 5 }}
-                  >
-                    Remove All
-                  </Button>
-                  <AlertDialog
-                    closeModal={onClick}
-                    openAlertdialog={openAlertdialog}
-                    onClick={this.handleCloseAlertDialog}
-                    handleCloseAlertDialog={this.handleCloseAlertDialog}
-                    RemoveAllProducts={RemoveAllProducts}
-                    openSnackbar={openSnackbar}
-                  />
-                </div>
+                <Button
+                  className={classes.button1}
+                  onClick={this.handleClick}
+                  float="left"
+                  radiostyle={{ paddingRight: 5 }}
+                >
+                  CheckOut
+                </Button>
+                <Button
+                  className={classes.removeButton}
+                  onClick={this.handleClickOpen}
+                  radiostyle={{ paddingRight: 5 }}
+                >
+                  Remove All
+                </Button>
               </Grid>
+              <AlertDialog
+                closeModal={onClick}
+                openAlertdialog={openAlertdialog}
+                onClick={this.handleCloseAlertDialog}
+                handleCloseAlertDialog={this.handleCloseAlertDialog}
+                RemoveAllProducts={RemoveAllProducts}
+                openSnackbar={openSnackbar}
+              />
             </Grid>
           </div>
         </Modal>

@@ -39,7 +39,7 @@ const styles = theme => ({
   button1: {
     borderRadius: '20px',
     float: 'right',
-    width: 100,
+    width: 110,
     margnRight: '10px',
     variant: 'contained',
     background: '#5d7ee2',
@@ -64,7 +64,7 @@ const styles = theme => ({
     width: 110,
     variant: 'outlined',
     color: '#000000',
-    background: '#f4b4b4',
+    background: '#f44336',
     '&:hover': {
       cursor: 'pointer',
       background: '#fb0101'
@@ -100,8 +100,8 @@ const styles = theme => ({
     position: 'absolute'
   },
   image: {
-    width: 100,
-    height: 100
+    width: 115,
+    height: 115
   },
   img: {
     margin: 'auto',
@@ -112,7 +112,7 @@ const styles = theme => ({
   textAlign: {
     flexDirection: 'row',
     flex: 1,
-    maxWidth: '172px',
+    width: '172px',
     whiteSpace: 'pre-wrap',
     flexWrap: 'wrap'
   },
@@ -127,6 +127,18 @@ const styles = theme => ({
   },
   alertFont: {
     color: '#c7d5ed'
+  },
+  paper2: {
+    padding: theme.spacing.unit,
+    margin: 'auto',
+    maxWidth: '500%',
+    marginRight: '2px'
+  },
+  container2: {
+    ...theme.absoluteFillObject,
+    alignSelf: 'flex-end',
+    marginTop: -5,
+    position: 'absolute'
   }
 });
 
