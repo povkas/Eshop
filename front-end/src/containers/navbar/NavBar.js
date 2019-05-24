@@ -14,12 +14,14 @@ import { logoutUser } from '../../actions/authentication';
 import { CategoriesList } from '../../components/categoriesList';
 import Search from '../../components/search/Search';
 import { snackbarMessages } from '../../utils/constants';
+import { CartModal } from '../../components/shoppingCart';
 import { RegistrationForm } from '../../components/registration';
+// import { ProductModal } from '../../components/productModal';
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isOpenRegistrationModal: false };
+    this.state = { isOpenRegistrationModal: false, openModal: false };
   }
 
   handleRegistrationOpen = () => {
@@ -37,8 +39,16 @@ class NavBar extends React.Component {
     openSnackbar({ message: snackbarMessages.logoutSuccess, variant: 'neutral' });
   };
 
+  handleClick = () => {
+    this.setState({ openModal: true });
+  };
+
+  handleClose = () => {
+    this.setState({ openModal: false });
+  };
+
   render() {
-    const { isOpenRegistrationModal } = this.state;
+    const { isOpenRegistrationModal, openModal } = this.state;
     const {
       classes,
       auth,
@@ -48,12 +58,17 @@ class NavBar extends React.Component {
       handleSearch,
       productHandler,
       filterByCategory,
-      setError
+      setError,
+      cartProducts,
+      RemoveAllProducts,
+      removeFromCart,
+      turnOffLeftArrow,
+      turnOffRightArrow,
+      changeQuantity
     } = this.props;
-
     return (
       <BrowserRouter>
-        <AppBar position="static">
+        <AppBar position="sticky">
           <Toolbar>
             <CategoriesList
               filterByCategory={filterByCategory}
@@ -95,9 +110,20 @@ class NavBar extends React.Component {
               isOpenRegistrationModal={isOpenRegistrationModal}
               setError={setError}
             />
-            <IconButton className={classes.menuButton}>
+            <IconButton className={classes.menuButton} onClick={this.handleClick}>
               <ShoppingCart />
             </IconButton>
+            <CartModal
+              onClick={this.handleClose}
+              open={openModal}
+              openSnackbar={openSnackbar}
+              cartProducts={cartProducts}
+              removeFromCart={removeFromCart}
+              RemoveAllProducts={RemoveAllProducts}
+              turnOffLeftArrow={turnOffLeftArrow}
+              turnOffRightArrow={turnOffRightArrow}
+              changeQuantity={changeQuantity}
+            />
           </Toolbar>
         </AppBar>
       </BrowserRouter>
@@ -115,7 +141,13 @@ NavBar.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   auth: PropTypes.shape().isRequired,
   logoutUserProp: PropTypes.func.isRequired,
-  openSnackbar: PropTypes.func.isRequired
+  openSnackbar: PropTypes.func.isRequired,
+  cartProducts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  removeFromCart: PropTypes.func.isRequired,
+  turnOffLeftArrow: PropTypes.func.isRequired,
+  RemoveAllProducts: PropTypes.func.isRequired,
+  turnOffRightArrow: PropTypes.func.isRequired,
+  changeQuantity: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
