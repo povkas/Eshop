@@ -89,7 +89,7 @@ class UserList extends React.Component {
               </TableHead>
               <TableBody>
                 {filteredUsers.map(user => (
-                  <TableRow className={classes.row}>
+                  <TableRow key={user.email} className={classes.row}>
                     <CustomTableCell>{user.name}</CustomTableCell>
                     <CustomTableCell>{user.surname}</CustomTableCell>
                     <CustomTableCell>{user.email}</CustomTableCell>
