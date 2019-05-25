@@ -12,11 +12,13 @@ function ProductItem(props) {
   return (
     <Grid item>
       <Paper className={classes.paper} component="div" onClick={selectProduct}>
-        <img
-          src={`data:image/png;base64,${product.image}`}
-          alt={product.title}
-          className={classes.image}
-        />
+        {product.image !== undefined ? (
+          <img
+            src={`data:image/png;base64,${product.image}`}
+            alt={product.title}
+            className={classes.image}
+          />
+        ) : null}
         <Divider />
         <Typography variant="subtitle1" className={classes.title}>
           {product.title}

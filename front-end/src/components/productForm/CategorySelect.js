@@ -9,6 +9,10 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Styles from './Styles';
 import * as categoriesAction from '../../actions/categoriesAction';
 
+function notEmpty(myString) {
+  return myString !== '';
+}
+
 class CategorySelect extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +53,10 @@ class CategorySelect extends React.Component {
     const { isSelectOpened, categories, category } = this.state;
 
     return (
-      <FormControl className={classes.formControl} error={errorMessage !== ' ' && category === ''}>
+      <FormControl
+        className={classes.formControl}
+        error={notEmpty(errorMessage) && !notEmpty(category)}
+      >
         <InputLabel>Select category</InputLabel>
         <Select
           open={isSelectOpened}

@@ -3,6 +3,17 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CategorySelect from './CategorySelect';
+import {
+  titleValidation,
+  priceValidation,
+  descriptionValidation,
+  quantityValidation,
+  categoryValidation
+} from '../../validation';
+
+function notEmpty(myString) {
+  return myString !== '';
+}
 
 class Form extends Component {
   constructor(props) {
@@ -14,133 +25,69 @@ class Form extends Component {
       quantity: '',
       photo: {},
       category: '',
-      titleErrorText: ' ',
-      priceErrorText: ' ',
-      descriptionErrorText: ' ',
-      quantityErrorText: ' ',
-      categoryErrorText: ' '
+      titleError: '',
+      priceError: '',
+      descriptionError: '',
+      quantityError: '',
+      categoryError: '',
+      disable: true
     };
     this.state = this.initialstate;
   }
+
+  validate = (e, method) => {
+    this.setState({ [`${e.target.name}Error`]: method(e.target.value) });
+  };
 
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
+    this.setState({ [`${e.target.name}Error`]: '' }, () => this.buttonDisable());
   };
 
-  validateTitle = () => {
-    const { title } = this.state;
+  buttonDisable = () => {
+    const {
+      title,
+      price,
+      description,
+      quantity,
+      category,
+      titleError,
+      priceError,
+      descriptionError,
+      quantityError,
+      categoryError
+    } = this.state;
 
-    let titleErrorText = ' ';
-    let isError = false;
-
-    if (title.length === 0) {
-      isError = true;
-      titleErrorText = 'Title is required!';
-    }
-
-    this.setState({ titleErrorText });
-
-    return isError;
-  };
-
-  validateDescription = () => {
-    const { description } = this.state;
-
-    let descriptionErrorText = ' ';
-    let isError = false;
-
-    if (description.length === 0) {
-      isError = true;
-      descriptionErrorText = 'Description is required!';
-    }
-
-    this.setState({ descriptionErrorText });
-
-    return isError;
-  };
-
-  validatePrice = () => {
-    const priceRegex = /^[1-9]\d{0,3}(\.\d{1,4})?$/;
-
-    const { price } = this.state;
-    let priceErrorText = ' ';
-    let isError = false;
-
-    if (price.length !== 0) {
-      if (!priceRegex.test(price)) {
-        isError = true;
-        priceErrorText = 'Number is not valid!';
-      }
+    if (
+      !notEmpty(titleError) &&
+      !notEmpty(priceError) &&
+      !notEmpty(descriptionError) &&
+      !notEmpty(quantityError) &&
+      !notEmpty(categoryError) &&
+      notEmpty(title) &&
+      notEmpty(price) &&
+      notEmpty(description) &&
+      notEmpty(quantity) &&
+      notEmpty(category)
+    ) {
+      this.setState({ disable: false });
     } else {
-      isError = true;
-      priceErrorText = 'Price is required!';
+      this.setState({ disable: true });
     }
-
-    this.setState({ priceErrorText });
-
-    return isError;
-  };
-
-  validateQuantity = () => {
-    const quantityRegex = /^[1-9]\d{0,3}$/;
-
-    const { quantity } = this.state;
-    let quantityErrorText = ' ';
-    let isError = false;
-
-    if (quantity.length !== 0) {
-      if (!quantityRegex.test(quantity)) {
-        isError = true;
-        quantityErrorText = 'Number is not valid!';
-      }
-    } else {
-      isError = true;
-      quantityErrorText = 'Quantity is required!';
-    }
-
-    this.setState({ quantityErrorText });
-
-    return isError;
   };
 
   getCategory = category => {
-    this.setState({ category });
+    this.setState({ category }, () => this.buttonDisable());
   };
 
-  validateCategorySelection = category => {
-    let categoryErrorText = ' ';
-    let isError = false;
-
-    if (category === '' || category === undefined) {
-      isError = true;
-      categoryErrorText = 'Category is required!';
-    }
-
-    this.setState({ categoryErrorText });
-
-    return isError;
+  validateCategory = category => {
+    this.setState({ categoryError: categoryValidation(category) });
   };
 
   resetErrorMessage = () => {
-    this.setState({ categoryErrorText: ' ' });
-  };
-
-  validateForm = () => {
-    let isError = false;
-    const { category } = this.state;
-
-    if (
-      this.validateTitle() ||
-      this.validateDescription() ||
-      this.validatePrice() ||
-      this.validateQuantity() ||
-      this.validateCategorySelection(category)
-    )
-      isError = true;
-
-    return isError;
+    this.setState({ categoryError: '' });
   };
 
   changeImage = e => {
@@ -153,24 +100,23 @@ class Form extends Component {
     const { title, price, description, quantity, category, photo } = this.state;
 
     const created = Date.now().toString();
-    const productData = { title, description, price, quantity, category, created };
+    const productData = { title, description, category, created };
+    productData.id = Date.now();
+    productData.price = parseFloat(price);
+    productData.quantity = parseInt(quantity);
 
     const reader = new FileReader();
     try {
       reader.readAsArrayBuffer(photo);
     } catch {
-      if (!this.validateForm()) {
-        onSubmit(productData);
-        passClose();
-      }
+      onSubmit(productData);
+      passClose();
     }
 
     reader.onload = () => {
       productData.image = Array.from(new Uint8Array(reader.result));
-      if (!this.validateForm()) {
-        onSubmit(productData);
-        passClose();
-      }
+      onSubmit(productData);
+      passClose();
     };
   };
 
@@ -180,11 +126,12 @@ class Form extends Component {
       price,
       description,
       quantity,
-      titleErrorText,
-      priceErrorText,
-      descriptionErrorText,
-      quantityErrorText,
-      categoryErrorText
+      titleError,
+      priceError,
+      descriptionError,
+      quantityError,
+      categoryError,
+      disable
     } = this.state;
 
     return (
@@ -195,9 +142,9 @@ class Form extends Component {
           label="Title"
           value={title}
           onChange={this.handleChange}
-          error={titleErrorText !== ' '}
-          helperText={titleErrorText}
-          onBlur={this.validateTitle}
+          error={notEmpty(titleError)}
+          helperText={titleError}
+          onBlur={e => this.validate(e, titleValidation)}
           margin="normal"
         />
         <br />
@@ -206,9 +153,9 @@ class Form extends Component {
           label="Price (€)"
           value={price}
           onChange={this.handleChange}
-          error={priceErrorText !== ' '}
-          helperText={priceErrorText}
-          onBlur={this.validatePrice}
+          error={notEmpty(priceError)}
+          helperText={priceError}
+          onBlur={e => this.validate(e, priceValidation)}
           margin="normal"
         />
         <br />
@@ -217,9 +164,9 @@ class Form extends Component {
           label="Description"
           value={description}
           onChange={this.handleChange}
-          error={descriptionErrorText !== ' '}
-          helperText={descriptionErrorText}
-          onBlur={this.validateDescription}
+          error={notEmpty(descriptionError)}
+          helperText={descriptionError}
+          onBlur={e => this.validate(e, descriptionValidation)}
           margin="normal"
         />
         <br />
@@ -228,23 +175,23 @@ class Form extends Component {
           label="Quantity"
           value={quantity}
           onChange={this.handleChange}
-          error={quantityErrorText !== ' '}
-          helperText={quantityErrorText}
-          onBlur={this.validateQuantity}
+          error={notEmpty(quantityError)}
+          helperText={quantityError}
+          onBlur={e => this.validate(e, quantityValidation)}
           margin="normal"
         />
         <br />
         <CategorySelect
           getCategory={this.getCategory}
-          validate={this.validateCategorySelection}
-          errorMessage={categoryErrorText}
+          validate={this.validateCategory}
+          errorMessage={categoryError}
           resetMessage={this.resetErrorMessage}
         />
         <br />
         <input type="file" accept="image/*" onChange={this.changeImage} />
         <br />
         <br />
-        <Button variant="outlined" type="submit">
+        <Button disabled={disable} variant="outlined" type="submit">
           Create Product
         </Button>
       </form>

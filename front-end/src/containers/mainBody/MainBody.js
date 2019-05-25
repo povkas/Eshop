@@ -164,14 +164,7 @@ class MainBody extends React.Component {
   };
 
   createProduct = product => {
-    const prod = {
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      quantity: product.quantity,
-      category: product.category,
-      created: product.created
-    };
+    const prod = product;
 
     if (product.image !== undefined)
       prod.image = btoa(product.image.map(item => String.fromCharCode(item)).join(''));

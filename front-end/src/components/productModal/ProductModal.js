@@ -26,11 +26,13 @@ class ProductModal extends React.Component {
       <Modal open={Object.entries(product).length !== 0} onClose={handleClose}>
         <div style={getModalStyle()} className={classes.paper}>
           <Grid container direction="row" justify="space-evenly" alignItems="center">
-            <img
-              src={`data:image/png;base64,${product.image}`}
-              alt={product.title}
-              className={classes.image}
-            />
+            {product.image !== undefined ? (
+              <img
+                src={`data:image/png;base64,${product.image}`}
+                alt={product.title}
+                className={classes.image}
+              />
+            ) : null}
           </Grid>
           <Divider className={classes.divider} />
           <Grid container direction="row" alignItems="center" justify="space-between">
