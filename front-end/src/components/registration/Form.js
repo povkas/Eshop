@@ -76,10 +76,8 @@ class Form extends Component {
     }
   };
 
-  handleChange = (e, error) => {
-    if (error !== '') {
-      this.setState({ [`${e.target.name}Error`]: '' });
-    }
+  handleChange = e => {
+    this.setState({ [`${e.target.name}Error`]: '' });
     this.setState({ [e.target.name]: e.target.value }, () => this.buttonDisable());
   };
 
