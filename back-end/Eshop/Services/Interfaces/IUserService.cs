@@ -1,5 +1,4 @@
-﻿using Eshop.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Eshop.DTOs.Users;
 

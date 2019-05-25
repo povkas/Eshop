@@ -1,9 +1,9 @@
-﻿using Eshop.Models;
+﻿using CryptoHelper;
+using Eshop.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CryptoHelper;
 
 namespace Eshop.Data
 {
@@ -77,7 +77,6 @@ namespace Eshop.Data
             {
                 fs.Read(footballData, 0, footballData.Length);
             }
-
 
             FileInfo fileInfo6 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(),
                 "wwwroot", "Images", "angel.jpg"));
@@ -409,7 +408,6 @@ namespace Eshop.Data
                     Category = "Books",
                     Image = wakingData
                 }
-
             };
 
             products.ForEach(t => context.Products.Add(t));
