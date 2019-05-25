@@ -10,35 +10,6 @@ import RemoveIcon from '@material-ui/icons/Clear';
 import { snackbarMessages } from '../../utils/constants';
 import Styles from './Styles';
 
-// const styles = theme => ({
-//   root: {
-//     flexGrow: 1
-//   },
-//   container: {
-//     ...theme.absoluteFillObject,
-//     alignSelf: 'flex-end',
-//     marginTop: -5,
-//     position: 'absolute'
-//   },
-//   paper: {
-//     padding: theme.spacing.unit,
-//     margin: 'auto',
-//     maxWidth: '500%',
-//     marginRight: '2px'
-//   },
-//   textAlign: {
-//     flexDirection: 'row',
-//     flex: 1,
-//     maxWidth: '172px',
-//     whiteSpace: 'pre-wrap',
-//     flexWrap: 'wrap'
-//   },
-//   image: {
-//     width: 115,
-//     height: 115
-//   }
-// });
-
 class CartItem extends React.Component {
   constructor(props) {
     super(props);

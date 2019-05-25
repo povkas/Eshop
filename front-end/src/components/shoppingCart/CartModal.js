@@ -10,6 +10,8 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import CartItem from './CartItem';
 import Styles from './Styles';
 import AlertDialog from './AlertDialog';
+import { snackbarMessages } from '../../utils/constants';
+import store from '../../utils/redux/store';
 
 function modalPlace() {
   const top = 0;
@@ -65,7 +67,14 @@ class CartModal extends React.Component {
   };
 
   handleCheckoutOpen() {
-    const { openCheckout, onClick: closeModal } = this.props;
+    const { openCheckout, onClick: closeModal, openSnackbar } = this.props;
+    if (typeof store.getState().auth.user.unique_name === 'undefined') {
+      openSnackbar({
+        message: snackbarMessages.checkoutWarning,
+        variant: 'error'
+      });
+      return;
+    }
     closeModal();
     openCheckout();
   }

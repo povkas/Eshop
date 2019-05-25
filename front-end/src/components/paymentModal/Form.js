@@ -1,30 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 import { InputLabel } from '@material-ui/core';
 import { validateCard } from '../../actions/cardActions';
-
-function notEmpty(myString) {
-  if (myString !== '') {
-    return true;
-  }
-  return false;
-}
+import Styles from './Styles';
 
 class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: '',
-      expirationDate: '',
-      securityCode: '',
-      numberErrorText: '',
-      expirationDateErrorText: '',
-      securityCodeErrorText: '',
-      error: '',
-      disable: true
+      error: ''
     };
 
     this.setError = this.setError.bind(this);
@@ -34,43 +22,9 @@ class Form extends Component {
     this.setState({ error: err });
   }
 
-  handleChange = (e, error) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-    if (error !== '') {
-      this.setState({ [`${e.target.name}Error`]: ' ' });
-    }
-    this.buttonDisable();
-  };
-
-  buttonDisable = () => {
-    const {
-      number,
-      expirationDate,
-      securityCode,
-      numberErrorText,
-      expirationDateErrorText,
-      securityCodeErrorText
-    } = this.state;
-    if (
-      !notEmpty(numberErrorText) &&
-      !notEmpty(expirationDateErrorText) &&
-      !notEmpty(securityCodeErrorText) &&
-      notEmpty(number) &&
-      notEmpty(expirationDate) &&
-      notEmpty(securityCode)
-    ) {
-      this.setState({ disable: false });
-    } else {
-      this.setState({ disable: true });
-    }
-  };
-
   handleSubmit = e => {
     e.preventDefault();
-    const { onSubmit } = this.props;
-    const { number, expirationDate, securityCode } = this.state;
+    const { onSubmit, number, expirationDate, securityCode } = this.props;
     const creditCard = {
       Number: number,
       ExpirationDate: expirationDate,
@@ -81,23 +35,24 @@ class Form extends Component {
 
   render() {
     const {
+      classes,
       number,
       expirationDate,
       securityCode,
       numberErrorText,
       expirationDateErrorText,
       securityCodeErrorText,
-      disable,
-      error
-    } = this.state;
-
-    const { submitted } = this.props;
+      handleChange,
+      submitted,
+      disable
+    } = this.props;
+    const { error } = this.state;
 
     return (
       <div>
         {!submitted ? (
           <form onSubmit={this.handleSubmit}>
-            <h3>Credit card details</h3>
+            <div className={classes.title}>Credit card details </div>
             <div>
               <TextField
                 required
@@ -105,11 +60,11 @@ class Form extends Component {
                 name="number"
                 label="Number"
                 value={number}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 error={numberErrorText !== ''}
                 helperText={numberErrorText}
                 onBlur={this.validateNumber}
-                margin="normal"
+                margin="dense"
               />
             </div>
             <div>
@@ -119,11 +74,11 @@ class Form extends Component {
                 name="expirationDate"
                 label="Expiration date"
                 value={expirationDate}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 error={expirationDateErrorText !== ''}
                 helperText={expirationDateErrorText}
                 // onBlur={this.validateExpirationDate}
-                margin="normal"
+                margin="dense"
               />
             </div>
             <div>
@@ -133,26 +88,32 @@ class Form extends Component {
                 placeholder="***"
                 name="securityCode"
                 value={securityCode}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 error={securityCodeErrorText !== ''}
                 helperText={securityCodeErrorText}
                 // onBlur={this.validateSecurityCode}
-                margin="normal"
+                margin="dense"
               />
             </div>
             <div>
-              <Button disabled={disable} type="submit" variant="outlined">
+              <Button
+                disabled={disable}
+                type="submit"
+                variant="outlined"
+                className={classes.validationButton}
+              >
                 Provide details
               </Button>
               <div>
-                <FormLabel>{error}</FormLabel>
+                <FormLabel className={classes.purchaseError}>{error}</FormLabel>
               </div>
             </div>
           </form>
         ) : (
           <div>
+            <div className={classes.title}>Credit card details </div>
             <div>
-              <InputLabel>Number: {number}</InputLabel>
+              <InputLabel>Number: {number} </InputLabel>
             </div>
             <div>
               <InputLabel>Expiration date: {expirationDate}</InputLabel>
@@ -168,8 +129,17 @@ class Form extends Component {
 }
 
 Form.propTypes = {
+  classes: PropTypes.PropTypes.shape().isRequired,
   onSubmit: PropTypes.func.isRequired,
-  submitted: PropTypes.bool.isRequired
+  submitted: PropTypes.bool.isRequired,
+  number: PropTypes.string.isRequired,
+  expirationDate: PropTypes.string.isRequired,
+  securityCode: PropTypes.string.isRequired,
+  numberErrorText: PropTypes.string.isRequired,
+  expirationDateErrorText: PropTypes.string.isRequired,
+  securityCodeErrorText: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  disable: PropTypes.bool.isRequired
 };
 
-export default Form;
+export default withStyles(Styles)(Form);

@@ -6,5 +6,6 @@ export const snackbarMessages = {
   loginError: 'Incorrect email or password!',
   logoutSuccess: 'Logout successful!',
   addToCartError: 'There are not any products left in store',
-  checkoutSuccess: 'CheckOut was successful'
+  checkoutSuccess: 'CheckOut was successful',
+  checkoutWarning: 'You need to be logged in to checkout.'
 };

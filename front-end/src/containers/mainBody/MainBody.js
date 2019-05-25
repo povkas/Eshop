@@ -42,14 +42,17 @@ class MainBody extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.rerender = this.rerender.bind(this);
   }
 
   componentDidMount() {
     this.setState({ productsLoading: true }, () => {
       getProducts()
         .then(res => {
-          this.setState({ allProducts: res, filteredProducts: res, productsLoading: false }, () =>
-            this.sortShownProducts()
+          const productArray = this.checkAllPorducts(res);
+          this.setState(
+            { allProducts: productArray, filteredProducts: productArray, productsLoading: false },
+            () => this.sortShownProducts()
           );
         })
         .catch(err => {
@@ -173,10 +176,32 @@ class MainBody extends React.Component {
     this.setState({ sortCriteria: e.target.value }, () => this.sortShownProducts());
   };
 
+  checkAllPorducts = productArray => {
+    const array = [];
+    productArray.forEach(product => (product.quantity > 0 ? array.push(product) : null));
+    return array;
+  };
+
   removeFromCart(removeProduct) {
     this.setState(prevState => ({
       cartProducts: prevState.cartProducts.filter(item => item !== removeProduct)
     }));
+  }
+
+  rerender() {
+    this.setState({ productsLoading: true }, () => {
+      getProducts()
+        .then(res => {
+          const productArray = this.checkAllPorducts(res);
+          this.setState(
+            { allProducts: productArray, filteredProducts: productArray, productsLoading: false },
+            () => this.sortShownProducts()
+          );
+        })
+        .catch(err => {
+          this.setError(err);
+        });
+    });
   }
 
   addToCart(product) {
@@ -194,7 +219,6 @@ class MainBody extends React.Component {
           };
         }
         this.openSnackbar({ message: snackbarMessages.addToCartError, variant: 'error' });
-        // console.log('error');
       }
       return cp;
     });
@@ -313,6 +337,8 @@ class MainBody extends React.Component {
           isOpen={isPaymentModalOpen}
           handleClose={this.handlePaymentModalClose}
           products={cartProducts}
+          RemoveAllProducts={this.RemoveAllProducts}
+          rerender={this.rerender}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item>
