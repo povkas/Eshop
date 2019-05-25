@@ -30,7 +30,7 @@ namespace Eshop.Configurations
 
             CreateMap<CreditCard, CreditCardDto>(MemberList.Destination);
             CreateMap<PatchCreditCardDto, CreditCard>(MemberList.Source);
-            CreateMap<CreditCard, PatchCreditCardDto > (MemberList.Destination);
+            CreateMap<CreditCard, PatchCreditCardDto>(MemberList.Destination);
         }
     }
 }

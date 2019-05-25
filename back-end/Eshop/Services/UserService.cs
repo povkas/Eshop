@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using CryptoHelper;
 using Eshop.Data.Repositories;
+using Eshop.DTOs.Users;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Eshop.DTOs.Users;
-using CryptoHelper;
 
 namespace Eshop.Services
 {
@@ -55,7 +55,7 @@ namespace Eshop.Services
                 {
                     await _repository.Delete(user);
                     return true;
-                }            
+                }
             }
             return false;
         }
@@ -93,5 +93,5 @@ namespace Eshop.Services
         {
             return Crypto.VerifyHashedPassword(hash, password);
         }
-}
+    }
 }

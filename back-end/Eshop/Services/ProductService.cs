@@ -5,10 +5,10 @@ using Eshop.Models;
 using EShop.DTOs.Products;
 using EShop.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace EShop.Services
 {
@@ -35,7 +35,7 @@ namespace EShop.Services
         public async Task<ICollection<ProductDto>> GetAll()
         {
             var products = await _repository.GetAll();
-            var productsDto = _mapper.Map<ProductDto[]>(products);
+            var productsDto = _mapper.Map<ICollection<ProductDto>>(products);
             return productsDto;
         }
 

@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Eshop.Models;
+﻿using Eshop.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Eshop.Data.Repositories
 {

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Eshop.DTOs.Users;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Eshop.DTOs.Users;
 
 namespace Eshop.Services.Interfaces
 {

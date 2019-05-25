@@ -1,12 +1,11 @@
-using System.Security.Authentication;
 using Eshop.DTOs.Users;
+using Eshop.ExceptionHandling;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Eshop.ExceptionHandling;
 using Microsoft.IdentityModel.JsonWebTokens;
+using System.Threading.Tasks;
 
 namespace Eshop.Controllers
 {
@@ -56,7 +55,7 @@ namespace Eshop.Controllers
             var user = await _userService.GetById(id);
             if (user == null)
             {
-                throw new NotFoundCustomException("User with id "+ id +" was not found");
+                throw new NotFoundCustomException("User with id " + id + " was not found");
             }
 
             return Ok(user);
@@ -84,6 +83,5 @@ namespace Eshop.Controllers
 
             return Created("jwt", TokenManager.GenerateToken(user.Email, userRole));
         }
-
     }
 }
