@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,9 +12,7 @@ import { Button, Modal, Paper, Grid } from '@material-ui/core';
 import Styles, { getModalStyle } from './Styles';
 import Form from './Form';
 import { purchase } from '../../actions/cardActions';
-import { validateInfo } from '../../actions/usersAction';
 import { patchProducts } from '../../actions/productActions';
-import store from '../../utils/redux/store';
 
 function notEmpty(myString) {
   if (myString !== '') {
@@ -45,7 +44,6 @@ class PaymentModal extends React.Component {
       numberErrorText: '',
       expirationDateErrorText: '',
       securityCodeErrorText: '',
-      detailInfo: '',
       submitted: false,
       disable: true,
       purchaseError: ''
@@ -56,10 +54,6 @@ class PaymentModal extends React.Component {
     this.onClose = this.onClose.bind(this);
     this.close = this.close.bind(this);
     this.changeProducts = this.changeProducts.bind(this);
-  }
-
-  componentDidMount() {
-    this.handleInfo();
   }
 
   onClose() {
@@ -99,7 +93,8 @@ class PaymentModal extends React.Component {
       !notEmpty(securityCodeErrorText) &&
       notEmpty(number) &&
       notEmpty(expirationDate) &&
-      notEmpty(securityCode)
+      notEmpty(securityCode) &&
+      securityCode !== 3
     ) {
       this.setState({ disable: false });
     } else {
@@ -133,15 +128,8 @@ class PaymentModal extends React.Component {
 
   handleCheckout() {
     const { number } = this.state;
-
     this.setState({ purchaseError: '' }, () =>
       purchase(number, this.sum(), this.setError, this.changeProducts)
-    );
-  }
-
-  handleInfo() {
-    validateInfo(store.getState().auth.user.unique_name).then(result =>
-      this.setState({ detailInfo: result })
     );
   }
 
@@ -155,7 +143,7 @@ class PaymentModal extends React.Component {
   }
 
   render() {
-    const { classes, isOpen, products, handleClose } = this.props;
+    const { classes, isOpen, products, handleClose, auth } = this.props;
     const {
       number,
       expirationDate,
@@ -165,7 +153,6 @@ class PaymentModal extends React.Component {
       securityCodeErrorText,
       submitted,
       disable,
-      detailInfo,
       purchaseError
     } = this.state;
     return (
@@ -189,7 +176,7 @@ class PaymentModal extends React.Component {
                 />
               </Paper>
               <h4>Shipping to</h4>
-              <p> {detailInfo}</p>
+              <p> {`${auth.user.address}, ${auth.user.city}, ${auth.user.country}`}</p>
             </div>
             <div>
               <Paper className={classes.tablePaper} justify="space-evenly">
@@ -237,7 +224,7 @@ class PaymentModal extends React.Component {
               >
                 Proceed with the payment
               </Button>
-              <div>{purchaseError}</div>
+              <div className={classes.errorMessage}>{purchaseError}</div>
             </div>
           </Grid>
         </Paper>
@@ -250,9 +237,14 @@ PaymentModal.propTypes = {
   classes: PropTypes.shape().isRequired,
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  auth: PropTypes.shape().isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   rerender: PropTypes.func.isRequired,
   RemoveAllProducts: PropTypes.func.isRequired
 };
 
-export default withStyles(Styles)(PaymentModal);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(withStyles(Styles)(PaymentModal));

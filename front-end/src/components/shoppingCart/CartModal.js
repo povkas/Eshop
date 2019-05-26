@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '@material-ui/core';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
@@ -11,7 +12,6 @@ import CartItem from './CartItem';
 import Styles from './Styles';
 import AlertDialog from './AlertDialog';
 import { snackbarMessages } from '../../utils/constants';
-import store from '../../utils/redux/store';
 
 function modalPlace() {
   const top = 0;
@@ -67,8 +67,8 @@ class CartModal extends React.Component {
   };
 
   handleCheckoutOpen() {
-    const { openCheckout, onClick: closeModal, openSnackbar } = this.props;
-    if (typeof store.getState().auth.user.unique_name === 'undefined') {
+    const { openCheckout, onClick: closeModal, openSnackbar, auth } = this.props;
+    if (auth.isAuthenticated === false) {
       openSnackbar({
         message: snackbarMessages.checkoutWarning,
         variant: 'error'
@@ -194,6 +194,7 @@ CartModal.propTypes = {
   onClick: PropTypes.func.isRequired,
   cartProducts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   removeFromCart: PropTypes.func.isRequired,
+  auth: PropTypes.shape().isRequired,
   RemoveAllProducts: PropTypes.func.isRequired,
   turnOffLeftArrow: PropTypes.func.isRequired,
   turnOffRightArrow: PropTypes.func.isRequired,
@@ -202,4 +203,8 @@ CartModal.propTypes = {
   openCheckout: PropTypes.func.isRequired
 };
 
-export default withStyles(Styles)(CartModal);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(withStyles(Styles)(CartModal));

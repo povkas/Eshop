@@ -77,7 +77,6 @@ class Form extends Component {
                 onChange={handleChange}
                 error={expirationDateErrorText !== ''}
                 helperText={expirationDateErrorText}
-                // onBlur={this.validateExpirationDate}
                 margin="dense"
               />
             </div>
@@ -91,7 +90,6 @@ class Form extends Component {
                 onChange={handleChange}
                 error={securityCodeErrorText !== ''}
                 helperText={securityCodeErrorText}
-                // onBlur={this.validateSecurityCode}
                 margin="dense"
               />
             </div>

@@ -8,12 +8,11 @@ export const deleteUsers = email => {
 export const getAllUsers = () => {
   return axios.get(allUsers).then(res => res.data);
 };
+
 export const validateInfo = email => {
   return axios
-    .get(`${allUsers}/${email}`)
-    .then(user => {
-      return `${user.data.Address}, ${user.data.Country}`;
-    })
+    .get(`${allUsers}${email}`)
+    .then(res => res.data)
     .catch(err => {
       return err.response.data.Message;
     });

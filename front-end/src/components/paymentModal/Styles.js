@@ -85,6 +85,9 @@ const styles = theme => ({
     borderRight: '1px solid black',
     borderLeft: '1px solid black',
     borderTop: '1px solid black'
+  },
+  errorMessage: {
+    color: '#ff0000'
   }
 });
 
