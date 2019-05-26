@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Divider, Typography, Grid } from '@material-ui/core';
-import Styles, { getModalStyle } from './Styles';
+import Styles from './Styles';
 import QuantitySelect from './QuantitySelect';
-// import { snackbarMessages } from '../../utils/constants';
 
 class ProductModal extends React.Component {
   constructor(props) {
@@ -24,7 +23,7 @@ class ProductModal extends React.Component {
 
     return (
       <Modal open={Object.entries(product).length !== 0} onClose={handleClose}>
-        <div style={getModalStyle()} className={classes.paper}>
+        <div className={classes.paper}>
           <Grid container direction="row" justify="space-evenly" alignItems="center">
             {product.image !== undefined ? (
               <img

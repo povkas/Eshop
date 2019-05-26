@@ -1,7 +1,7 @@
 const Styles = theme => ({
   paper: {
-    position: 'absolute',
     width: '24vw',
+    minWidth: '530px',
     minHeight: '50vh',
     maxHeight: '82vh',
     margin: '2vh',
@@ -9,19 +9,33 @@ const Styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none',
-    top: `${18}%`,
-    left: `${34}%`
+    marginTop: '20vh',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   formControl: {
     margin: 'normal',
-    minWidth: 192
+    width: '190px',
+    marginBottom: '1.1vh'
   },
   image: {
     height: '245px',
-    width: '255px'
+    width: '255px',
+    marginBottom: '1.9vh'
+  },
+  noImage: {
+    paddingTop: '105px',
+    height: '140px',
+    width: '255px',
+    fontFamily: 'Arial',
+    textAlign: 'center',
+    borderStyle: 'solid',
+    borderWidth: '2px',
+    marginBottom: '1.9vh'
   },
   textFields: {
     height: '6.5vh',
+    width: '190px',
     marginTop: '1.9vh',
     marginBot: '1.9vh'
   },

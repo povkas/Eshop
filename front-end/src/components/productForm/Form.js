@@ -94,6 +94,10 @@ class Form extends Component {
     this.setState({ categoryError: '' });
   };
 
+  uploadClick = () => {
+    document.getElementById('uploadImageInput').click();
+  };
+
   changeImage = e => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -148,8 +152,8 @@ class Form extends Component {
     const { classes } = this.props;
 
     return (
-      <Grid container direction="row" justify="flex-start" alignItems="flex-start">
-        <Grid item xs={12} sm={6}>
+      <Grid container>
+        <Grid item sm>
           <form onSubmit={this.handleSubmit} className={classes.typeface}>
             <TextField
               className={classes.textFields}
@@ -163,7 +167,6 @@ class Form extends Component {
               onBlur={e => this.validate(e, titleValidation)}
               margin="normal"
             />
-            <br />
             <TextField
               className={classes.textFields}
               name="price"
@@ -175,7 +178,6 @@ class Form extends Component {
               onBlur={e => this.validate(e, priceValidation)}
               margin="normal"
             />
-            <br />
             <TextField
               className={classes.textFields}
               name="description"
@@ -187,7 +189,6 @@ class Form extends Component {
               onBlur={e => this.validate(e, descriptionValidation)}
               margin="normal"
             />
-            <br />
             <TextField
               className={classes.textFields}
               name="quantity"
@@ -199,24 +200,33 @@ class Form extends Component {
               onBlur={e => this.validate(e, quantityValidation)}
               margin="normal"
             />
-            <br />
             <CategorySelect
               getCategory={this.getCategory}
               validate={this.validateCategory}
               errorMessage={categoryError}
               resetMessage={this.resetErrorMessage}
             />
-            <br />
-            <input type="file" accept="image/*" onChange={this.changeImage} />
-            <br />
-            <br />
             <Button disabled={disable} variant="outlined" type="submit">
               Create Product
             </Button>
           </form>
         </Grid>
-        <Grid item>
-          {imagePreviewUrl ? <img src={imagePreviewUrl} alt="" className={classes.image} /> : null}
+        <Grid item sm>
+          {imagePreviewUrl ? (
+            <img src={imagePreviewUrl} alt="" className={classes.image} />
+          ) : (
+            <div className={classes.noImage}>Select an Image for preview</div>
+          )}
+          <Button variant="outlined" onClick={this.uploadClick}>
+            {imagePreviewUrl ? 'Change Image' : 'Upload Image'}
+          </Button>
+          <input
+            id="uploadImageInput"
+            hidden="hidden"
+            type="file"
+            accept="image/*"
+            onChange={this.changeImage}
+          />
         </Grid>
       </Grid>
     );
