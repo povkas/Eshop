@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Eshop.DTOs.Users;
 using CryptoHelper;
+using System.Linq;
 
 namespace Eshop.Services
 {
@@ -44,6 +45,14 @@ namespace Eshop.Services
             var users = await _repository.GetAll();
             var allUsers = _mapper.Map<UserDto[]>(users);
             return allUsers;
+        }
+
+        public async Task<UserDto> GetByEmail(string email)
+        {
+            var users = await _repository.GetAll();
+            var filteredUser = users.Where(user => user.Email == email).First();
+            var mapUser = _mapper.Map<UserDto>(filteredUser);
+            return mapUser;
         }
 
         public async Task<bool> Delete(string email)
