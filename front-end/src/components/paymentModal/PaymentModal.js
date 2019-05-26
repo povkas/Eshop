@@ -11,7 +11,9 @@ import { Button, Modal, Paper, Grid } from '@material-ui/core';
 import Styles, { getModalStyle } from './Styles';
 import Form from './Form';
 import { purchase } from '../../actions/cardActions';
+import { validateInfo } from '../../actions/usersAction';
 import { patchProducts } from '../../actions/productActions';
+import store from '../../utils/redux/store';
 
 function notEmpty(myString) {
   if (myString !== '') {
@@ -19,6 +21,19 @@ function notEmpty(myString) {
   }
   return false;
 }
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: '#0a4487',
+    color: theme.palette.common.white
+  },
+  body: {
+    fontSize: 14,
+    borderCollapse: 'collapse',
+    border: '1px',
+    borderColor: '#000000'
+  }
+}))(TableCell);
 
 class PaymentModal extends React.Component {
   constructor(props) {
@@ -30,6 +45,7 @@ class PaymentModal extends React.Component {
       numberErrorText: '',
       expirationDateErrorText: '',
       securityCodeErrorText: '',
+      detailInfo: '',
       submitted: false,
       disable: true,
       purchaseError: ''
@@ -40,6 +56,10 @@ class PaymentModal extends React.Component {
     this.onClose = this.onClose.bind(this);
     this.close = this.close.bind(this);
     this.changeProducts = this.changeProducts.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleInfo();
   }
 
   onClose() {
@@ -119,6 +139,12 @@ class PaymentModal extends React.Component {
     );
   }
 
+  handleInfo() {
+    validateInfo(store.getState().auth.user.unique_name).then(result =>
+      this.setState({ detailInfo: result })
+    );
+  }
+
   sum() {
     const { products } = this.props;
     let sum = 0;
@@ -139,6 +165,7 @@ class PaymentModal extends React.Component {
       securityCodeErrorText,
       submitted,
       disable,
+      detailInfo,
       purchaseError
     } = this.state;
     return (
@@ -162,20 +189,22 @@ class PaymentModal extends React.Component {
                 />
               </Paper>
               <h4>Shipping to</h4>
-              <p> Address, City</p>
+              <p> {detailInfo}</p>
             </div>
             <div>
               <Paper className={classes.tablePaper} justify="space-evenly">
                 <Table className={classes.table}>
                   <Scrollbars className={classes.table}>
                     <TableHead>
-                      <TableCell>Product</TableCell>
-                      <TableCell align="right">Price</TableCell>
+                      <StyledTableCell className={classes.tableHeader}>Product</StyledTableCell>
+                      <StyledTableCell className={classes.priceCollum} align="right">
+                        Price
+                      </StyledTableCell>
                     </TableHead>
                     <TableBody>
                       {products.map(product => (
                         <TableRow key={product.id}>
-                          <TableCell>
+                          <TableCell className={classes.productRows}>
                             <span
                               style={{
                                 whiteSpace: 'normal',
@@ -188,7 +217,7 @@ class PaymentModal extends React.Component {
                               {product.title}
                             </span>
                           </TableCell>
-                          <TableCell align="right">
+                          <TableCell align="right" className={classes.priceRows}>
                             {product.selectedQuantity === 1
                               ? `${product.price}`
                               : `${product.selectedQuantity} * ${product.price}€`}

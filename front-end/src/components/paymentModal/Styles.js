@@ -39,7 +39,11 @@ const styles = theme => ({
     marginBottom: 10
   },
   validationButton: {
-    marginTop: 10
+    marginTop: 10,
+    '&:hover': {
+      cursor: 'pointer',
+      background: '#0a4487'
+    }
   },
   textAlign: {
     tableLayout: 'fixed',
@@ -55,8 +59,32 @@ const styles = theme => ({
     height: 200
   },
   tablePaper: {
-    width: 350,
-    padding: 24
+    width: 330,
+    padding: 5
+  },
+  tableHeader: {
+    padding: '4px 94px 5px 24px',
+    textAlign: 'left',
+    borderBottom: '1px solid black',
+    borderTop: '1px solid black',
+    borderLeft: '1px solid black'
+  },
+  productRows: {
+    borderBottom: '1px solid black',
+    borderLeft: '1px solid black'
+  },
+  priceRows: {
+    textAlign: 'left',
+    borderBottom: '1px solid black',
+    borderRight: '1px solid black',
+    borderLeft: '1px solid black',
+    borderTop: '1px solid black'
+  },
+  priceCollum: {
+    borderBottom: '1px solid black',
+    borderRight: '1px solid black',
+    borderLeft: '1px solid black',
+    borderTop: '1px solid black'
   }
 });
 
