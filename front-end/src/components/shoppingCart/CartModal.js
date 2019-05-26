@@ -37,6 +37,7 @@ function emptyModalPlace() {
 class CartModal extends React.Component {
   constructor(props) {
     super(props);
+    console.log('veikia');
     this.state = {
       openAlertdialog: false
     };
