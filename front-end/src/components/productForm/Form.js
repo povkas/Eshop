@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import CategorySelect from './CategorySelect';
 import {
   titleValidation,
@@ -10,6 +12,7 @@ import {
   quantityValidation,
   categoryValidation
 } from '../../validation';
+import Styles from './Styles';
 
 function notEmpty(myString) {
   return myString !== '';
@@ -24,6 +27,7 @@ class Form extends Component {
       description: '',
       quantity: '',
       photo: {},
+      imagePreviewUrl: '',
       category: '',
       titleError: '',
       priceError: '',
@@ -91,7 +95,14 @@ class Form extends Component {
   };
 
   changeImage = e => {
-    this.setState({ photo: e.target.files[0] });
+    e.preventDefault();
+    const file = e.target.files[0];
+    const readerForPreview = new FileReader();
+
+    readerForPreview.onload = () => {
+      this.setState({ photo: file, imagePreviewUrl: readerForPreview.result });
+    };
+    readerForPreview.readAsDataURL(file);
   };
 
   handleSubmit = e => {
@@ -131,77 +142,91 @@ class Form extends Component {
       descriptionError,
       quantityError,
       categoryError,
-      disable
+      disable,
+      imagePreviewUrl
     } = this.state;
+    const { classes } = this.props;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <TextField
-          autoFocus
-          name="title"
-          label="Title"
-          value={title}
-          onChange={this.handleChange}
-          error={notEmpty(titleError)}
-          helperText={titleError}
-          onBlur={e => this.validate(e, titleValidation)}
-          margin="normal"
-        />
-        <br />
-        <TextField
-          name="price"
-          label="Price (€)"
-          value={price}
-          onChange={this.handleChange}
-          error={notEmpty(priceError)}
-          helperText={priceError}
-          onBlur={e => this.validate(e, priceValidation)}
-          margin="normal"
-        />
-        <br />
-        <TextField
-          name="description"
-          label="Description"
-          value={description}
-          onChange={this.handleChange}
-          error={notEmpty(descriptionError)}
-          helperText={descriptionError}
-          onBlur={e => this.validate(e, descriptionValidation)}
-          margin="normal"
-        />
-        <br />
-        <TextField
-          name="quantity"
-          label="Quantity"
-          value={quantity}
-          onChange={this.handleChange}
-          error={notEmpty(quantityError)}
-          helperText={quantityError}
-          onBlur={e => this.validate(e, quantityValidation)}
-          margin="normal"
-        />
-        <br />
-        <CategorySelect
-          getCategory={this.getCategory}
-          validate={this.validateCategory}
-          errorMessage={categoryError}
-          resetMessage={this.resetErrorMessage}
-        />
-        <br />
-        <input type="file" accept="image/*" onChange={this.changeImage} />
-        <br />
-        <br />
-        <Button disabled={disable} variant="outlined" type="submit">
-          Create Product
-        </Button>
-      </form>
+      <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+        <Grid item xs={12} sm={6}>
+          <form onSubmit={this.handleSubmit} className={classes.typeface}>
+            <TextField
+              className={classes.textFields}
+              autoFocus
+              name="title"
+              label="Title"
+              value={title}
+              onChange={this.handleChange}
+              error={notEmpty(titleError)}
+              helperText={titleError}
+              onBlur={e => this.validate(e, titleValidation)}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              className={classes.textFields}
+              name="price"
+              label="Price (€)"
+              value={price}
+              onChange={this.handleChange}
+              error={notEmpty(priceError)}
+              helperText={priceError}
+              onBlur={e => this.validate(e, priceValidation)}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              className={classes.textFields}
+              name="description"
+              label="Description"
+              value={description}
+              onChange={this.handleChange}
+              error={notEmpty(descriptionError)}
+              helperText={descriptionError}
+              onBlur={e => this.validate(e, descriptionValidation)}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              className={classes.textFields}
+              name="quantity"
+              label="Quantity"
+              value={quantity}
+              onChange={this.handleChange}
+              error={notEmpty(quantityError)}
+              helperText={quantityError}
+              onBlur={e => this.validate(e, quantityValidation)}
+              margin="normal"
+            />
+            <br />
+            <CategorySelect
+              getCategory={this.getCategory}
+              validate={this.validateCategory}
+              errorMessage={categoryError}
+              resetMessage={this.resetErrorMessage}
+            />
+            <br />
+            <input type="file" accept="image/*" onChange={this.changeImage} />
+            <br />
+            <br />
+            <Button disabled={disable} variant="outlined" type="submit">
+              Create Product
+            </Button>
+          </form>
+        </Grid>
+        <Grid item>
+          {imagePreviewUrl ? <img src={imagePreviewUrl} alt="" className={classes.image} /> : null}
+        </Grid>
+      </Grid>
     );
   }
 }
 
 Form.propTypes = {
   passClose: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  classes: PropTypes.shape().isRequired
 };
 
-export default Form;
+export default withStyles(Styles)(Form);

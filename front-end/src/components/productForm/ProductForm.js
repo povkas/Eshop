@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { connect } from 'react-redux';
 import Form from './Form';
-import Styles, { getModalStyle } from './Styles';
+import Styles from './Styles';
 import { setProduct } from '../../actions/productActions';
 
 class ProductForm extends React.Component {
@@ -18,7 +18,7 @@ class ProductForm extends React.Component {
 
     return (
       <Modal open={open} onClose={close}>
-        <div style={getModalStyle()} className={classes.paper}>
+        <div className={classes.paper}>
           <Form passClose={close} onSubmit={this.createProduct} />
         </div>
       </Modal>
