@@ -23,16 +23,6 @@ function modalPlace() {
     transform: `translate(-${top}%, -${left}%)`
   };
 }
-function emptyModalPlace() {
-  const top = 8.25;
-  const left = 0;
-
-  return {
-    top: `${top}%`,
-    right: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
 
 class CartModal extends React.Component {
   constructor(props) {
@@ -103,18 +93,6 @@ class CartModal extends React.Component {
       changeQuantity
     } = this.props;
     const { openAlertdialog } = this.state;
-    const productCount = cartProducts.length;
-    if (productCount === 0) {
-      return (
-        <div>
-          <Modal open={open} onClose={onClick}>
-            <div style={emptyModalPlace()} className={classes.paper1}>
-              <h3> Your cart is empty </h3>
-            </div>
-          </Modal>
-        </div>
-      );
-    }
     return (
       <div>
         <Modal open={open} onClose={onClick}>

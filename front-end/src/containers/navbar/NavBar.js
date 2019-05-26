@@ -39,6 +39,11 @@ class NavBar extends React.Component {
   };
 
   handleClick = () => {
+    const { cartProducts, openSnackbar } = this.props;
+    if (cartProducts.length === 0) {
+      openSnackbar({ message: snackbarMessages.emptyCart, variant: 'error' });
+      return;
+    }
     this.setState({ openModal: true });
   };
 

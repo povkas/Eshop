@@ -116,13 +116,26 @@ const styles = theme => ({
     whiteSpace: 'pre-wrap',
     flexWrap: 'wrap'
   },
-  alertDialogButtons: {
+  alertDialogButtonAgree: {
     size: 'small',
     variant: 'outlined',
     color: '#000000',
     '&:hover': {
       cursor: 'pointer',
       background: '#4271f4'
+    }
+  },
+  alertDialogButtons: {
+    width: 'inherit',
+    justifyContent: 'space-evenly'
+  },
+  alertDialogButtonDisagree: {
+    size: 'small',
+    variant: 'outlined',
+    color: '#000000',
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.palette.error.dark
     }
   },
   alertFont: {

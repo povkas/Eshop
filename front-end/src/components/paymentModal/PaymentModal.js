@@ -13,6 +13,7 @@ import Styles, { getModalStyle } from './Styles';
 import Form from './Form';
 import { purchase } from '../../actions/cardActions';
 import { patchProducts } from '../../actions/productActions';
+import { snackbarMessages } from '../../utils/constants';
 
 function notEmpty(myString) {
   if (myString !== '') {
@@ -69,13 +70,13 @@ class PaymentModal extends React.Component {
   }
 
   handleChange = (e, error) => {
+    if (e.target.name === 'securityCode' && e.target.value.length > 3) return;
     this.setState({
       [e.target.name]: e.target.value
     });
     if (error !== '') {
-      this.setState({ [`${e.target.name}Error`]: ' ' });
+      this.setState({ [`${e.target.name}Error`]: ' ' }, () => this.buttonDisable());
     }
-    this.buttonDisable();
   };
 
   buttonDisable = () => {
@@ -94,7 +95,7 @@ class PaymentModal extends React.Component {
       notEmpty(number) &&
       notEmpty(expirationDate) &&
       notEmpty(securityCode) &&
-      securityCode !== 3
+      securityCode.length === 3
     ) {
       this.setState({ disable: false });
     } else {
@@ -103,9 +104,10 @@ class PaymentModal extends React.Component {
   };
 
   close() {
-    const { handleClose, RemoveAllProducts, rerender } = this.props;
+    const { handleClose, RemoveAllProducts, rerender, openSnackbar } = this.props;
     RemoveAllProducts();
     rerender();
+    openSnackbar({ message: snackbarMessages.purchaseSuccessful, variant: 'success' });
     handleClose();
     this.onClose();
   }
@@ -240,7 +242,8 @@ PaymentModal.propTypes = {
   auth: PropTypes.shape().isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   rerender: PropTypes.func.isRequired,
-  RemoveAllProducts: PropTypes.func.isRequired
+  RemoveAllProducts: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

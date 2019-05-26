@@ -339,6 +339,7 @@ class MainBody extends React.Component {
           products={cartProducts}
           RemoveAllProducts={this.RemoveAllProducts}
           rerender={this.rerender}
+          openSnackbar={this.openSnackbar}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item>
