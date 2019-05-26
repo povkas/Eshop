@@ -23,16 +23,6 @@ const Styles = theme => ({
     width: '255px',
     marginBottom: '1.9vh'
   },
-  noImage: {
-    paddingTop: '105px',
-    height: '140px',
-    width: '255px',
-    fontFamily: 'Arial',
-    textAlign: 'center',
-    borderStyle: 'solid',
-    borderWidth: '2px',
-    marginBottom: '1.9vh'
-  },
   textFields: {
     height: '6.5vh',
     width: '190px',

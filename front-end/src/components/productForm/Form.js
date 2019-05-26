@@ -13,6 +13,7 @@ import {
   categoryValidation
 } from '../../validation';
 import Styles from './Styles';
+import { defaultImage } from '../../utils/constants';
 
 function notEmpty(myString) {
   return myString !== '';
@@ -215,7 +216,7 @@ class Form extends Component {
           {imagePreviewUrl ? (
             <img src={imagePreviewUrl} alt="" className={classes.image} />
           ) : (
-            <div className={classes.noImage}>Select an Image for preview</div>
+            <img src={defaultImage} alt="" className={classes.image} />
           )}
           <Button variant="outlined" onClick={this.uploadClick}>
             {imagePreviewUrl ? 'Change Image' : 'Upload Image'}

@@ -1,16 +1,12 @@
 import errorMessages from '../utils/constants/productCreationErrors';
 
-function hasNumber(myString) {
-  return /\d/.test(myString);
-}
-
 function notEmpty(myString) {
   return myString !== '';
 }
 
 export const titleValidation = title => {
   if (title.length !== 0) {
-    if (title.length > 30 || hasNumber(title)) {
+    if (title.length > 30) {
       return errorMessages.titleError;
     }
   } else {

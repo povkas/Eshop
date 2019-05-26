@@ -204,7 +204,6 @@ class MainBody extends React.Component {
           };
         }
         this.openSnackbar({ message: snackbarMessages.addToCartError, variant: 'error' });
-        // console.log('error');
       }
       return cp;
     });
