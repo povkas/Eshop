@@ -85,7 +85,7 @@ class NavBar extends React.Component {
               handleSearch={handleSearch}
               productHandler={productHandler}
             />
-            <div>{auth.user.unique_name}</div>
+            <div className={classes.username}>{auth.user.unique_name}</div>
             {auth.isAuthenticated ? (
               <UserOptions
                 IsAdmin={auth.user.IsAdmin === 'True'}
