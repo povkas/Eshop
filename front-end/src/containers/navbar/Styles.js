@@ -14,7 +14,7 @@ const theme = () => ({
     flexGrow: 1
   },
   username: {
-    width: '150px'
+    width: '100px'
   },
   menuPosition: {
     marginTop: '30px'

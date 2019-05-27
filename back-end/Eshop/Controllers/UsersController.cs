@@ -27,6 +27,7 @@ namespace Eshop.Controllers
         [Produces(typeof(NewUserDto))]
         public async Task<ActionResult> Create([FromBody] NewUserDto newUser)
         {
+
             if (!await _userService.CheckUserExistence(newUser))
             {
                 throw new FailedToCreateUserException("This email is already taken");
@@ -56,7 +57,7 @@ namespace Eshop.Controllers
             var user = await _userService.GetById(id);
             if (user == null)
             {
-                throw new NotFoundCustomException("User with id "+ id +" was not found");
+                throw new NotFoundCustomException("User with id " + id + " was not found");
             }
 
             return Ok(user);
@@ -70,6 +71,20 @@ namespace Eshop.Controllers
             var allUsers = await _userService.GetAll();
 
             return Ok(allUsers);
+        }
+
+        [HttpGet("{email}")]
+        [Produces(typeof(UserDto))]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            _logger.LogInformation("Getting user's {ID}", email);
+            var user = await _userService.GetByEmail(email);
+            if (user == null)
+            {
+                throw new NotFoundCustomException("User with email " + email + " was not found");
+            }
+
+            return Ok(user);
         }
 
         [HttpPost("{login}")]

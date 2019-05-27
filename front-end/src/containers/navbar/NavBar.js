@@ -16,7 +16,6 @@ import Search from '../../components/search/Search';
 import { snackbarMessages } from '../../utils/constants';
 import { CartModal } from '../../components/shoppingCart';
 import { RegistrationForm } from '../../components/registration';
-// import { ProductModal } from '../../components/productModal';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -40,6 +39,11 @@ class NavBar extends React.Component {
   };
 
   handleClick = () => {
+    const { cartProducts, openSnackbar } = this.props;
+    if (cartProducts.length === 0) {
+      openSnackbar({ message: snackbarMessages.emptyCart, variant: 'error' });
+      return;
+    }
     this.setState({ openModal: true });
   };
 
@@ -64,7 +68,8 @@ class NavBar extends React.Component {
       removeFromCart,
       turnOffLeftArrow,
       turnOffRightArrow,
-      changeQuantity
+      changeQuantity,
+      openPaymentDetailsModal
     } = this.props;
     return (
       <BrowserRouter>
@@ -85,10 +90,16 @@ class NavBar extends React.Component {
               handleSearch={handleSearch}
               productHandler={productHandler}
             />
-            <div className={classes.username}>{auth.user.unique_name}</div>
+
+            {auth.isAuthenticated ? (
+              <div className={classes.username}>Hey, {auth.user.name}!</div>
+            ) : (
+              <div className={classes.username} />
+            )}
+
             {auth.isAuthenticated ? (
               <UserOptions
-                IsAdmin={auth.user.IsAdmin === 'True'}
+                IsAdmin={auth.user.isAdmin}
                 className={classes}
                 logOut={this.handleLogout}
                 openSnackbar={openSnackbar}
@@ -96,7 +107,7 @@ class NavBar extends React.Component {
               />
             ) : (
               <LoginForm
-                IsAdmin={auth.user.IsAdmin === 'True'}
+                IsAdmin={auth.user.isAdmin}
                 className={classes}
                 openRegistration={this.handleRegistrationOpen}
                 openSnackbar={openSnackbar}
@@ -123,6 +134,7 @@ class NavBar extends React.Component {
               turnOffLeftArrow={turnOffLeftArrow}
               turnOffRightArrow={turnOffRightArrow}
               changeQuantity={changeQuantity}
+              openCheckout={openPaymentDetailsModal}
             />
           </Toolbar>
         </AppBar>
@@ -147,7 +159,8 @@ NavBar.propTypes = {
   turnOffLeftArrow: PropTypes.func.isRequired,
   RemoveAllProducts: PropTypes.func.isRequired,
   turnOffRightArrow: PropTypes.func.isRequired,
-  changeQuantity: PropTypes.func.isRequired
+  changeQuantity: PropTypes.func.isRequired,
+  openPaymentDetailsModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
