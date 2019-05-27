@@ -31,6 +31,10 @@ const modalStyles = theme => ({
   borderTopLeftRadius: {
     borderTopLeftRadius: '17px'
   },
+  removeButton: {
+    top: `${1}%`,
+    marginLeft: '57vw'
+  },
   borderTopRightRadius: {
     borderTopRightRadius: '17px'
   }
