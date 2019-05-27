@@ -63,6 +63,7 @@ class NavBar extends React.Component {
       productHandler,
       filterByCategory,
       setError,
+      createProduct,
       cartProducts,
       RemoveAllProducts,
       removeFromCart,
@@ -102,6 +103,7 @@ class NavBar extends React.Component {
                 IsAdmin={auth.user.isAdmin}
                 className={classes}
                 logOut={this.handleLogout}
+                createProduct={createProduct}
                 openSnackbar={openSnackbar}
                 setError={setError}
               />
@@ -144,6 +146,7 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
+  createProduct: PropTypes.func.isRequired,
   classes: PropTypes.shape().isRequired,
   filterByCategory: PropTypes.func.isRequired,
   currentCategory: PropTypes.string.isRequired,

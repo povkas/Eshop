@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Person from '@material-ui/icons/Person';
+import { ProductForm } from '../productForm';
 import { UserList } from '../deleteUsers';
 
 class UserOptions extends React.Component {
@@ -11,6 +12,7 @@ class UserOptions extends React.Component {
     super(props);
     this.state = {
       openMenu: null,
+      openProductForm: false,
       openUsersList: false
     };
   }
@@ -23,6 +25,15 @@ class UserOptions extends React.Component {
     this.setState({ openMenu: null });
   };
 
+  openProductForm = () => {
+    this.closeMenu();
+    this.setState({ openProductForm: true });
+  };
+
+  closeFormModal = () => {
+    this.setState({ openProductForm: false });
+  };
+
   openUsersModal = () => {
     this.closeMenu();
     this.setState({ openUsersList: true });
@@ -33,8 +44,8 @@ class UserOptions extends React.Component {
   };
 
   render() {
-    const { openMenu, openUsersList } = this.state;
-    const { className, logOut, IsAdmin, openSnackbar, setError } = this.props;
+    const { openMenu, openProductForm, openUsersList } = this.state;
+    const { className, logOut, IsAdmin, createProduct, openSnackbar, setError } = this.props;
 
     return (
       <div>
@@ -54,6 +65,7 @@ class UserOptions extends React.Component {
           onClose={this.closeMenu}
         >
           {IsAdmin ? <MenuItem onClick={this.openUsersModal}>Users Table</MenuItem> : null}
+          {IsAdmin ? <MenuItem onClick={this.openProductForm}>Add Product</MenuItem> : null}
           <MenuItem onClick={e => logOut(e)}>Logout</MenuItem>
         </Menu>
         {IsAdmin ? (
@@ -65,12 +77,22 @@ class UserOptions extends React.Component {
             setError={setError}
           />
         ) : null}
+        {IsAdmin ? (
+          <ProductForm
+            open={openProductForm}
+            close={this.closeFormModal}
+            createProduct={createProduct}
+            openSnackbar={openSnackbar}
+            setError={setError}
+          />
+        ) : null}
       </div>
     );
   }
 }
 
 UserOptions.propTypes = {
+  createProduct: PropTypes.func.isRequired,
   className: PropTypes.shape().isRequired,
   logOut: PropTypes.func.isRequired,
   IsAdmin: PropTypes.bool.isRequired,

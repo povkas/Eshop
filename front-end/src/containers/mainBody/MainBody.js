@@ -1,4 +1,5 @@
 import React from 'react';
+import '@babel/polyfill';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
@@ -182,6 +183,25 @@ class MainBody extends React.Component {
     return array;
   };
 
+  createProduct = product => {
+    const prod = product;
+
+    if (product.image !== undefined)
+      prod.image = btoa(product.image.map(item => String.fromCharCode(item)).join(''));
+
+    this.setState(
+      previousState => ({
+        allProducts: [...previousState.allProducts, prod]
+      }),
+      () => this.filterSort()
+    );
+  };
+
+  async filterSort() {
+    await this.filterShownProducts();
+    this.sortShownProducts();
+  }
+
   removeFromCart(removeProduct) {
     this.setState(prevState => ({
       cartProducts: prevState.cartProducts.filter(item => item !== removeProduct)
@@ -249,6 +269,7 @@ class MainBody extends React.Component {
 
   filterShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory, date } = this.state;
+
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
@@ -274,9 +295,11 @@ class MainBody extends React.Component {
         product => product.price >= lowerPriceLimitFloat
       );
     }
+
     qualifyingProducts = qualifyingProducts.filter(product =>
       checkIfDateWithinPeriod(product.created, date)
     );
+
     this.setState({ filteredProducts: qualifyingProducts });
   }
 
@@ -318,6 +341,7 @@ class MainBody extends React.Component {
           handleSearch={this.handleSearch}
           productHandler={this.changeProduct}
           openSnackbar={this.openSnackbar}
+          createProduct={this.createProduct}
           openPaymentDetailsModal={this.handlePaymentModalOpen}
           cartProducts={cartProducts}
           removeFromCart={product => this.removeFromCart(product)}

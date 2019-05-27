@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import RemoveIcon from '@material-ui/icons/Clear';
-import { snackbarMessages } from '../../utils/constants';
+import { snackbarMessages, defaultImage } from '../../utils/constants';
 import Styles from './Styles';
 
 class CartItem extends React.Component {
@@ -52,11 +52,15 @@ class CartItem extends React.Component {
           <Grid container spacing={16}>
             <Grid item>
               <ButtonBase className={classes.image}>
-                <img
-                  src={`data:image/png;base64,${cartProduct.image}`}
-                  className={classes.image}
-                  alt="complex"
-                />
+                {cartProduct.image !== undefined ? (
+                  <img
+                    src={`data:image/png;base64,${cartProduct.image}`}
+                    className={classes.image}
+                    alt="complex"
+                  />
+                ) : (
+                  <img src={defaultImage} className={classes.image} alt="complex" />
+                )}
               </ButtonBase>
             </Grid>
             <div className="item-desc">

@@ -12,7 +12,8 @@ namespace EShop.DTOs.Products
         public decimal Price { get; set; }
         [Required]
         public int Quantity { get; set; }
-        public byte[] Image { get; set; }
+        [Required]
         public string Category { get; set; }
+        public byte[] Image { get; set; }
     }
 }
