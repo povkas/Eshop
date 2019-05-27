@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 import { getUser, snackbarMessages } from '../utils/constants';
 import { SET_CURRENT_USER, LOGOUT } from './types';
 import setAuthToken from '../components/login/setAuthToken';
+import { validateInfo } from './usersAction';
 
 export const setCurrentUser = decoded => {
   return {
@@ -17,7 +18,9 @@ export const loginUser = (user, openSnackbar, setError) => dispatch => {
     .then(res => {
       localStorage.setItem('jwtToken', res.data);
       setAuthToken(res.data);
-      dispatch(setCurrentUser(jwtDecode(res.data)));
+      validateInfo(jwtDecode(res.data).unique_name).then(userData => {
+        dispatch(setCurrentUser(userData));
+      });
       openSnackbar({
         message: snackbarMessages.loginSuccess,
         variant: 'success'

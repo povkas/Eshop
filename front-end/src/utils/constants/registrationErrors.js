@@ -1,4 +1,4 @@
-const errorMesages = {
+const errorMessages = {
   password: ' Password must contain at least 8 symbols',
   nameError: 'Name must contain less then 30 symbols and cant contain any numbers',
   emailError: 'Requires valid email',
@@ -17,4 +17,4 @@ const errorMesages = {
   isEmptyonfirmPassword: 'Confirm password is required'
 };
 
-export default errorMesages;
+export default errorMessages;

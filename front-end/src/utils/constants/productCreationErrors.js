@@ -1,4 +1,4 @@
-const errorMesages = {
+const errorMessages = {
   titleError: 'Title must contain less then 30 symbols and cant contain any numbers',
   descriptionError: 'Description must contain less then 300 symbols',
   quantityError: 'Number is not valid!',
@@ -10,4 +10,4 @@ const errorMesages = {
   isEmptyCategory: 'Category is required'
 };
 
-export default errorMesages;
+export default errorMessages;

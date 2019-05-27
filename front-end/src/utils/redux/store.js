@@ -1,5 +1,6 @@
 import { createStore } from 'redux';
-import rootReducer from '../../reducers';
+// eslint-disable-next-line import/no-unresolved
+import rootReducer from '../../Reducers';
 
 const store = createStore(rootReducer);
 

@@ -35,3 +35,10 @@ export const setProduct = (product, createProduct, openSnackbar, setError) => di
       setError(err);
     });
 };
+
+export const patchProducts = (id, quantity, setError, close) => {
+  axios
+    .patch(`${products}/${id}`, [{ value: quantity, path: '/quantity', op: 'replace' }])
+    .then(() => close())
+    .catch(err => setError(err.response.data.Message));
+};
