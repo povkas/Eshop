@@ -7,7 +7,7 @@ const styles = theme => ({
     outline: 'none',
     height: '80vh%',
     width: '12vw',
-    top: `${6}%`,
+    top: `64px`,
     left: `${80}%`
   },
   textFields: {

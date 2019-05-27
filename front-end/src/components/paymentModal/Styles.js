@@ -56,35 +56,28 @@ const styles = theme => ({
     flexWrap: 'wrap'
   },
   table: {
-    height: 200
+    height: 233
   },
   tablePaper: {
-    width: 330,
-    padding: 5
+    width: 331,
+    padding: 25
   },
   tableHeader: {
     padding: '4px 94px 5px 24px',
     textAlign: 'left',
-    borderBottom: '1px solid black',
-    borderTop: '1px solid black',
-    borderLeft: '1px solid black'
+    border: 'none',
+    color: 'black'
   },
   productRows: {
-    borderBottom: '1px solid black',
-    borderLeft: '1px solid black'
+    border: 'none'
   },
   priceRows: {
     textAlign: 'left',
-    borderBottom: '1px solid black',
-    borderRight: '1px solid black',
-    borderLeft: '1px solid black',
-    borderTop: '1px solid black'
+    border: 'none'
   },
-  priceCollum: {
-    borderBottom: '1px solid black',
-    borderRight: '1px solid black',
-    borderLeft: '1px solid black',
-    borderTop: '1px solid black'
+  priceColumn: {
+    border: 'none',
+    color: 'black'
   },
   errorMessage: {
     color: '#ff0000'

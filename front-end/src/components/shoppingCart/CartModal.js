@@ -18,8 +18,8 @@ function modalPlace() {
   const left = 0;
 
   return {
-    top: `${top}%`,
-    right: `${left}%`,
+    top: '64px',
+    right: '17px',
     transform: `translate(-${top}%, -${left}%)`
   };
 }
@@ -103,9 +103,6 @@ class CartModal extends React.Component {
               </Typography>
               <ShoppingCart className={classes.ShoppingCart} color="primary" />
             </Grid>
-            <Grid>
-              <div> Total price: {this.totalPrice()}€</div>
-            </Grid>
             <Grid container spacing={40}>
               <Grid item xs={12}>
                 <Scrollbars style={{ width: 370, height: 300 }}>
@@ -126,6 +123,11 @@ class CartModal extends React.Component {
                     />
                   ))}
                 </Scrollbars>
+              </Grid>
+              <Grid container className={classes.totalPrice} justify="flex-end">
+                <div>
+                  <b>Total price: {this.totalPrice()}€</b>
+                </div>
               </Grid>
               <Grid
                 container

@@ -152,6 +152,10 @@ const styles = theme => ({
     alignSelf: 'flex-end',
     marginTop: -5,
     position: 'absolute'
+  },
+  totalPrice: {
+    width: 'inherit',
+    margin: 10
   }
 });
 

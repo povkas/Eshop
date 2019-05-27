@@ -22,19 +22,6 @@ function notEmpty(myString) {
   return false;
 }
 
-const StyledTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: '#0a4487',
-    color: theme.palette.common.white
-  },
-  body: {
-    fontSize: 14,
-    borderCollapse: 'collapse',
-    border: '1px',
-    borderColor: '#000000'
-  }
-}))(TableCell);
-
 class PaymentModal extends React.Component {
   constructor(props) {
     super(props);
@@ -185,10 +172,12 @@ class PaymentModal extends React.Component {
                 <Table className={classes.table}>
                   <Scrollbars className={classes.table}>
                     <TableHead>
-                      <StyledTableCell className={classes.tableHeader}>Product</StyledTableCell>
-                      <StyledTableCell className={classes.priceCollum} align="right">
-                        Price
-                      </StyledTableCell>
+                      <TableCell className={classes.tableHeader}>
+                        <b>Product</b>
+                      </TableCell>
+                      <TableCell className={classes.priceColumn} align="center">
+                        <b>Price</b>
+                      </TableCell>
                     </TableHead>
                     <TableBody>
                       {products.map(product => (
@@ -206,9 +195,9 @@ class PaymentModal extends React.Component {
                               {product.title}
                             </span>
                           </TableCell>
-                          <TableCell align="right" className={classes.priceRows}>
+                          <TableCell align="center" className={classes.priceRows}>
                             {product.selectedQuantity === 1
-                              ? `${product.price}`
+                              ? `${product.price}€`
                               : `${product.selectedQuantity} * ${product.price}€`}
                           </TableCell>
                         </TableRow>
@@ -216,7 +205,12 @@ class PaymentModal extends React.Component {
                     </TableBody>
                   </Scrollbars>
                 </Table>
-                <h3 align="right">Total: {this.sum().toFixed(2)}€</h3>
+                <h3
+                  align="right"
+                  style={{ paddingRight: '17px', marginTop: '5px', marginBottom: '0px' }}
+                >
+                  Total: {this.sum().toFixed(2)}€
+                </h3>
               </Paper>
               <Button
                 onClick={() => this.handleCheckout()}
