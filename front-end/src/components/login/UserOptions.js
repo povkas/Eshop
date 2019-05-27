@@ -64,7 +64,7 @@ class UserOptions extends React.Component {
           open={Boolean(openMenu)}
           onClose={this.closeMenu}
         >
-          {IsAdmin ? <MenuItem onClick={this.openUsersModal}>Delete Users</MenuItem> : null}
+          {IsAdmin ? <MenuItem onClick={this.openUsersModal}>Users Table</MenuItem> : null}
           {IsAdmin ? <MenuItem onClick={this.openProductForm}>Add Product</MenuItem> : null}
           <MenuItem onClick={e => logOut(e)}>Logout</MenuItem>
         </Menu>

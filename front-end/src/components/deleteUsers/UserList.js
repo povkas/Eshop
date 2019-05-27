@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from '@material-ui/core/Modal';
+import RemoveIcon from '@material-ui/icons/Clear';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -69,6 +70,9 @@ class UserList extends React.Component {
       <div>
         <Modal open={open} onClose={closeModal}>
           <div className={classes.paper}>
+            <IconButton className={classes.removeButton} onClick={closeModal}>
+              <RemoveIcon />
+            </IconButton>
             <TextField
               name="search"
               label="Search by email"
@@ -89,7 +93,7 @@ class UserList extends React.Component {
               </TableHead>
               <TableBody>
                 {filteredUsers.map(user => (
-                  <TableRow className={classes.row} key={user.id}>
+                  <TableRow key={user.email} className={classes.row}>
                     <CustomTableCell>{user.name}</CustomTableCell>
                     <CustomTableCell>{user.surname}</CustomTableCell>
                     <CustomTableCell>{user.email}</CustomTableCell>

@@ -3,7 +3,9 @@ const modalStyles = theme => ({
     position: 'absolute',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+    paddingRight: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing.unit * 4,
+    paddingTop: theme.spacing.unit * 1,
     outline: 'none',
     height: '60vh',
     width: '60vw',
@@ -30,6 +32,10 @@ const modalStyles = theme => ({
   },
   borderTopLeftRadius: {
     borderTopLeftRadius: '17px'
+  },
+  removeButton: {
+    top: `${1}%`,
+    marginLeft: '57vw'
   },
   borderTopRightRadius: {
     borderTopRightRadius: '17px'

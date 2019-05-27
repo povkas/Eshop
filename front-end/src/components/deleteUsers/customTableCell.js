@@ -4,11 +4,13 @@ import TableCell from '@material-ui/core/TableCell';
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: '#3f51b5',
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    width: '150px'
   },
   body: {
     fontSize: 14,
-    align: 'left'
+    align: 'left',
+    width: '150px'
   }
 }))(TableCell);
 

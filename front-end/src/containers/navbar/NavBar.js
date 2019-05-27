@@ -91,6 +91,13 @@ class NavBar extends React.Component {
               handleSearch={handleSearch}
               productHandler={productHandler}
             />
+
+            {auth.isAuthenticated ? (
+              <div className={classes.username}>Hey, {auth.user.name}!</div>
+            ) : (
+              <div className={classes.username} />
+            )}
+
             {auth.isAuthenticated ? (
               <UserOptions
                 IsAdmin={auth.user.isAdmin}
@@ -102,6 +109,7 @@ class NavBar extends React.Component {
               />
             ) : (
               <LoginForm
+                IsAdmin={auth.user.isAdmin}
                 className={classes}
                 openRegistration={this.handleRegistrationOpen}
                 openSnackbar={openSnackbar}
