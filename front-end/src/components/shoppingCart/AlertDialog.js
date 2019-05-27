@@ -25,41 +25,39 @@ class AlertDialog extends React.Component {
       closeModal
     } = this.props;
     return (
-      <div>
-        <Dialog
-          open={openAlertdialog}
-          onClose={() => onClick()}
-          className={(classes.AlertDialog, classes.alertFont)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">Are you are sure?</DialogTitle>
-          <DialogActions>
-            <Button
-              onClick={() => handleCloseAlertDialog()}
-              color="primary"
-              className={classes.alertDialogButtons}
-            >
-              Disagree
-            </Button>
-            <Button
-              onClick={() => {
-                RemoveAllProducts();
-                handleCloseAlertDialog();
-                closeModal();
-                openSnackbar({
-                  message: snackbarMessages.removeAllFromCartSuccess,
-                  variant: 'success'
-                });
-              }}
-              className={classes.alertDialogButtons}
-              autoFocus
-            >
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      <Dialog
+        open={openAlertdialog}
+        onClose={() => onClick()}
+        className={(classes.alertDialog, classes.alertFont)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Are you are sure?</DialogTitle>
+        <DialogActions className={classes.alertDialogButtons}>
+          <Button
+            onClick={() => handleCloseAlertDialog()}
+            color="primary"
+            className={classes.alertDialogButtonDisagree}
+          >
+            Disagree
+          </Button>
+          <Button
+            onClick={() => {
+              RemoveAllProducts();
+              handleCloseAlertDialog();
+              closeModal();
+              openSnackbar({
+                message: snackbarMessages.removeAllFromCartSuccess,
+                variant: 'success'
+              });
+            }}
+            className={classes.alertDialogButtonAgree}
+            autoFocus
+          >
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     );
   }
 }

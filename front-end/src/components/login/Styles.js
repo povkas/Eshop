@@ -7,7 +7,7 @@ const modalStyles = theme => ({
     outline: 'none',
     height: '80vh%',
     width: '10vw',
-    top: `${6}%`,
+    top: '64px',
     left: `${80}%`
   },
   button: {

@@ -20,14 +20,16 @@ namespace Eshop.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> CheckIfCreditCardExists([FromBody] CreditCardDto creditCard)
         {
+            _logger.LogInformation(creditCard.ExpirationDate);
+            _logger.LogInformation(creditCard.SecurityCode.ToString());
             _logger.LogInformation("Getting credit card by number {NUMBER}", creditCard.Number);
             var creditCardInDb = await _service.GetByNumber(creditCard.Number);
             _logger.LogInformation("Received credit card - {}", creditCard);
 
-            if (creditCardInDb == null || creditCard.ExpirationDate.Equals(creditCardInDb.ExpirationDate) || creditCard.SecurityCode != creditCardInDb.SecurityCode)
+            if (creditCardInDb == null || !creditCard.ExpirationDate.Equals(creditCardInDb.ExpirationDate) || creditCard.SecurityCode != creditCardInDb.SecurityCode)
             {
                 throw new IncorrectInputException("Incorrect credit card details");
             }

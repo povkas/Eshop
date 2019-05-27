@@ -31,7 +31,8 @@ const styles = theme => ({
   },
   shoppingCart: {
     size: 'medium',
-    color: 'primary'
+    color: 'primary',
+    marginRight: '5px'
   },
   alertDialog: {
     background: 'transparent'
@@ -116,13 +117,26 @@ const styles = theme => ({
     whiteSpace: 'pre-wrap',
     flexWrap: 'wrap'
   },
-  alertDialogButtons: {
+  alertDialogButtonAgree: {
     size: 'small',
     variant: 'outlined',
     color: '#000000',
     '&:hover': {
       cursor: 'pointer',
       background: '#4271f4'
+    }
+  },
+  alertDialogButtons: {
+    width: 'inherit',
+    justifyContent: 'space-evenly'
+  },
+  alertDialogButtonDisagree: {
+    size: 'small',
+    variant: 'outlined',
+    color: '#000000',
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.palette.error.dark
     }
   },
   alertFont: {
@@ -139,6 +153,10 @@ const styles = theme => ({
     alignSelf: 'flex-end',
     marginTop: -5,
     position: 'absolute'
+  },
+  totalPrice: {
+    width: 'inherit',
+    margin: 10
   }
 });
 
