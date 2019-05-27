@@ -3,7 +3,7 @@ const styles = theme => ({
     position: 'absolute',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing.unit * 3,
     outline: 'none',
     height: '80vh%',
     width: '12vw',
@@ -12,13 +12,16 @@ const styles = theme => ({
   },
   textFields: {
     width: '12vw',
-    height: '6.5vh',
-    marginTop: '1.9vh',
-    marginBot: '1.9vh'
+    height: '5vh',
+    marginTop: '3vh'
   },
   button: {
     marginTop: '2vh',
-    marginBot: '1vh'
+    textAlign: 'center'
+  },
+  layout: {
+    fontSize: 18,
+    color: '#3f51b5'
   },
   registration: {
     fontSize: 18,

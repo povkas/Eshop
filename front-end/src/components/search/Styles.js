@@ -5,9 +5,9 @@ import red from '@material-ui/core/colors/red';
 
 const theme = () => ({
   searchDiv: {
-    marginLeft: 20,
-    flexGrow: 1,
+    marginRight: '38vw',
     height: 25,
+    width: '10vw',
     justifyContent: 'center'
   },
   suggestion: {

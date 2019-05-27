@@ -45,7 +45,6 @@ const modalStyles = theme => ({
   },
   layout: {
     fontSize: 18,
-    fontWeight: 'bold',
     color: '#3f51b5'
   },
   textFields: {
