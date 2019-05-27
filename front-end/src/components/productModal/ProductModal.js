@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Divider, Typography, Grid } from '@material-ui/core';
 import Styles from './Styles';
 import QuantitySelect from './QuantitySelect';
+import { defaultImage } from '../../utils/constants';
 
 class ProductModal extends React.Component {
   constructor(props) {
@@ -31,7 +32,9 @@ class ProductModal extends React.Component {
                 alt={product.title}
                 className={classes.image}
               />
-            ) : null}
+            ) : (
+              <img src={defaultImage} alt="" className={classes.image} />
+            )}
           </Grid>
           <Divider className={classes.divider} />
           <Grid container direction="row" alignItems="center" justify="space-between">

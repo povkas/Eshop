@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Styles from './Styles';
+import { defaultImage } from '../../utils/constants';
 
 function ProductItem(props) {
   const { classes, product, selectProduct } = props;
@@ -18,7 +19,9 @@ function ProductItem(props) {
             alt={product.title}
             className={classes.image}
           />
-        ) : null}
+        ) : (
+          <img src={defaultImage} alt="" className={classes.image} />
+        )}
         <Divider />
         <Typography variant="subtitle1" className={classes.title}>
           {product.title}

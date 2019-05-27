@@ -19,9 +19,10 @@ const Styles = theme => ({
     marginBottom: '1.1vh'
   },
   image: {
-    height: '245px',
-    width: '255px',
-    marginBottom: '1.9vh'
+    height: '135px',
+    width: '140px',
+    marginTop: '1.9vh',
+    marginBottom: '1.2vh'
   },
   textFields: {
     height: '6.5vh',

@@ -212,7 +212,7 @@ class Form extends Component {
             </Button>
           </form>
         </Grid>
-        <Grid item sm>
+        <Grid item sm style={{ marginLeft: '4vw' }}>
           {imagePreviewUrl ? (
             <img src={imagePreviewUrl} alt="" className={classes.image} />
           ) : (
