@@ -31,7 +31,8 @@ const styles = theme => ({
   },
   shoppingCart: {
     size: 'medium',
-    color: 'primary'
+    color: 'primary',
+    marginRight: '5px'
   },
   alertDialog: {
     background: 'transparent'

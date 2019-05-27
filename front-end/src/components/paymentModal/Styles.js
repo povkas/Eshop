@@ -6,8 +6,15 @@ const styles = theme => ({
     margin: '2vh',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: '24px',
+    padding: '24px 0px 24px 0px',
     outline: 'none'
+  },
+  scrollbar: {
+    overflow: 'auto',
+    height: '200px'
+  },
+  tableWrapper: {
+    position: 'relative'
   },
   image: {
     height: '24vmin',
@@ -27,19 +34,21 @@ const styles = theme => ({
   creditCardDetails: {
     width: 240,
     height: 265,
-    padding: '24px'
+    padding: '24px',
+    justify: 'space-evenly'
   },
   purchaseError: {
     color: '#c94c4c',
     marginTop: 15
   },
   title: {
-    fontSize: '20px',
+    fontSize: '16px',
     fontWeight: 'bold',
     marginBottom: 10
   },
   validationButton: {
     marginTop: 10,
+    variant: 'outlined',
     '&:hover': {
       cursor: 'pointer',
       background: '#0a4487'
@@ -59,25 +68,64 @@ const styles = theme => ({
     height: 233
   },
   tablePaper: {
-    width: 331,
-    padding: 25
+    width: 355,
+    height: 300,
+    padding: '0px 25px 15px 25px',
+    justify: 'space-evenly'
   },
   tableHeader: {
-    padding: '4px 94px 5px 24px',
+    fontSize: '16px',
+    padding: '4px 3px 5px 24px',
     textAlign: 'left',
     border: 'none',
     color: 'black'
+  },
+  tableHead: {
+    paddingRight: '0px'
+  },
+  tableRow: {
+    paddingTop: '24px'
   },
   productRows: {
+    width: '150.6px',
+    overflow: 'hidden',
+    padding: '4px 0px 5px 24px',
+    fontSize: '16px',
     border: 'none'
   },
+  paymentTitle: {
+    marginLeft: '75px'
+  },
   priceRows: {
+    padding: '4px 0px 4px 0px',
+    width: '100px',
+    fontSize: '16px',
     textAlign: 'left',
     border: 'none'
   },
+  columnRow: {
+    width: '300px'
+  },
   priceColumn: {
+    padding: '4px 0px 4px 0px',
+    textAlign: 'left',
+    fontSize: '16px',
     border: 'none',
     color: 'black'
+  },
+  spanStyle: {
+    whiteSpace: 'normal',
+    overflow: 'hidden',
+    width: '150px',
+    margin: '0px 0px 0px 0px',
+    display: 'block',
+    textOverflow: 'ellipsis'
+  },
+  totalPriceTitle: {
+    textAlign: 'right',
+    paddingRight: '17px',
+    marginTop: '5px',
+    marginBottom: '0px'
   },
   errorMessage: {
     color: '#ff0000'

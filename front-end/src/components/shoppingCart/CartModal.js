@@ -99,9 +99,9 @@ class CartModal extends React.Component {
           <div style={modalPlace()} className={classes.paper}>
             <Grid className={classes.oneRow}>
               <Typography variant="h6" color="inherit" className={classes.grow}>
+                <ShoppingCart className={classes.shoppingCart} color="primary" />
                 BimBam
               </Typography>
-              <ShoppingCart className={classes.ShoppingCart} color="primary" />
             </Grid>
             <Grid container spacing={40}>
               <Grid item xs={12}>
@@ -124,7 +124,7 @@ class CartModal extends React.Component {
                   ))}
                 </Scrollbars>
               </Grid>
-              <Grid container className={classes.totalPrice} justify="flex-end">
+              <Grid container className={classes.totalPrice} justify="center">
                 <div>
                   <b>Total price: {this.totalPrice()}€</b>
                 </div>

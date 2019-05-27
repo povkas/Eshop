@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { Button, Modal, Paper, Grid } from '@material-ui/core';
+import { ClassSharp } from '@material-ui/icons';
 import Styles, { getModalStyle } from './Styles';
 import Form from './Form';
 import { purchase } from '../../actions/cardActions';
@@ -147,10 +146,10 @@ class PaymentModal extends React.Component {
     return (
       <Modal open={isOpen} onClose={handleClose}>
         <Paper style={getModalStyle()} className={classes.paper}>
-          <h2 style={{ marginLeft: '75px' }}>Payment</h2>
+          <h2 className={classes.paymentTitle}>Payment</h2>
           <Grid container justify="space-evenly">
             <div>
-              <Paper className={classes.creditCardDetails} justify="space-evenly">
+              <Paper className={classes.creditCardDetails}>
                 <Form
                   onSubmit={this.onSubmit}
                   submitted={submitted}
@@ -168,49 +167,40 @@ class PaymentModal extends React.Component {
               <p> {`${auth.user.address}, ${auth.user.city}, ${auth.user.country}`}</p>
             </div>
             <div>
-              <Paper className={classes.tablePaper} justify="space-evenly">
+              <Paper className={classes.tablePaper}>
                 <Table className={classes.table}>
-                  <Scrollbars className={classes.table}>
-                    <TableHead>
+                  <TableHead className={classes.tableHead}>
+                    <TableRow className={ClassSharp.tableRow}>
                       <TableCell className={classes.tableHeader}>
-                        <b>Product</b>
+                        <h4>Product</h4>
                       </TableCell>
-                      <TableCell className={classes.priceColumn} align="center">
-                        <b>Price</b>
+                      <TableCell className={classes.priceColumn}>
+                        <h4>Price</h4>
                       </TableCell>
-                    </TableHead>
-                    <TableBody>
-                      {products.map(product => (
-                        <TableRow key={product.id}>
-                          <TableCell className={classes.productRows}>
-                            <span
-                              style={{
-                                whiteSpace: 'normal',
-                                overflow: 'hidden',
-                                width: '150px',
-                                display: 'block',
-                                textOverflow: 'ellipsis'
-                              }}
-                            >
-                              {product.title}
-                            </span>
-                          </TableCell>
-                          <TableCell align="center" className={classes.priceRows}>
-                            {product.selectedQuantity === 1
-                              ? `${product.price}€`
-                              : `${product.selectedQuantity} * ${product.price}€`}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Scrollbars>
+                    </TableRow>
+                  </TableHead>
                 </Table>
-                <h3
-                  align="right"
-                  style={{ paddingRight: '17px', marginTop: '5px', marginBottom: '0px' }}
-                >
-                  Total: {this.sum().toFixed(2)}€
-                </h3>
+                <div className={classes.tableWrapper}>
+                  <div className={classes.scrollbar}>
+                    <Table>
+                      <TableHead>
+                        {products.map(product => (
+                          <TableRow key={product.id} className={classes.columnRow}>
+                            <TableCell alignLeft className={classes.productRows}>
+                              <span className={classes.spanStyle}>{product.title}</span>
+                            </TableCell>
+                            <TableCell alignLeft className={classes.priceRows}>
+                              {product.selectedQuantity === 1
+                                ? `${product.price}€`
+                                : `${product.selectedQuantity} * ${product.price}€`}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableHead>
+                    </Table>
+                  </div>
+                </div>
+                <h3 className={classes.totalPriceTitle}>Total: {this.sum().toFixed(2)}€</h3>
               </Paper>
               <Button
                 onClick={() => this.handleCheckout()}
