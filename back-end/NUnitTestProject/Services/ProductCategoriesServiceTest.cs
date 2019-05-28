@@ -1,5 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
+using Eshop.Configurations;
 using Eshop.Data.Repositories;
+using Eshop.DTOs.Products;
 using Eshop.DTOs.Users;
 using Eshop.Models;
 using Eshop.Services;
@@ -16,19 +20,35 @@ namespace NUnitTestProject.Services
         [SetUp]
         public void Setup()
         {
-            var productCategoriesMock = new Mock<IRepository<ProductCategory>>().Object;
+            var repositoryMock = new Mock<IRepository<ProductCategory>>();
             var mapperMock = new Mock<IMapper>();
 
-            mapperMock.Setup(m => m.Map<User, UserDto>(It.IsAny<User>())).Returns(new UserDto());
+            // mapperMock.Setup(m => m.Map<User, UserDto>(It.IsAny<User>())).Returns(new UserDto());
 
-            _service = new ProductCategoryService(productCategoriesMock, mapperMock.Object);
+            var objects = new List<ProductCategory>
+            {
+                new ProductCategory {Category = "Electronics"},
+                new ProductCategory {Category = "Sports"},
+                new ProductCategory {Category = "Fashion"},
+            };
+
+            repositoryMock.Setup(x => x.GetAll()).Returns(Task.FromResult((ICollection<ProductCategory>)objects));
+
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutoMapperConfiguration());
+            });
+            var mapper = config.CreateMapper();
+
+           _service = new ProductCategoryService(repositoryMock.Object, mapper);
         }
 
         [Test]
         public void Test()
         {
             var products = _service.GetAll();
-            Assert.AreEqual(products.Result.Count, 0);
+            Assert.AreEqual(products.Result.Count, 3);
         }
     }
 }
