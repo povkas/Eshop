@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '@material-ui/core';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
@@ -10,24 +11,15 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import CartItem from './CartItem';
 import Styles from './Styles';
 import AlertDialog from './AlertDialog';
+import { snackbarMessages } from '../../utils/constants';
 
 function modalPlace() {
   const top = 0;
   const left = 0;
 
   return {
-    top: `${top}%`,
-    right: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
-function emptyModalPlace() {
-  const top = 8.25;
-  const left = 0;
-
-  return {
-    top: `${top}%`,
-    right: `${left}%`,
+    top: '64px',
+    right: '17px',
     transform: `translate(-${top}%, -${left}%)`
   };
 }
@@ -64,6 +56,19 @@ class CartModal extends React.Component {
     }
   };
 
+  handleCheckoutOpen() {
+    const { openCheckout, onClick: closeModal, openSnackbar, auth } = this.props;
+    if (auth.isAuthenticated === false) {
+      openSnackbar({
+        message: snackbarMessages.checkoutWarning,
+        variant: 'error'
+      });
+      return;
+    }
+    closeModal();
+    openCheckout();
+  }
+
   totalPrice() {
     let total = 0;
     const { cartProducts } = this.props;
@@ -88,30 +93,15 @@ class CartModal extends React.Component {
       changeQuantity
     } = this.props;
     const { openAlertdialog } = this.state;
-    const productCount = cartProducts.length;
-    if (productCount === 0) {
-      return (
-        <div>
-          <Modal open={open} onClose={onClick}>
-            <div style={emptyModalPlace()} className={classes.paper1}>
-              <h3> Your cart is empty </h3>
-            </div>
-          </Modal>
-        </div>
-      );
-    }
     return (
       <div>
         <Modal open={open} onClose={onClick}>
           <div style={modalPlace()} className={classes.paper}>
             <Grid className={classes.oneRow}>
               <Typography variant="h6" color="inherit" className={classes.grow}>
+                <ShoppingCart className={classes.shoppingCart} color="primary" />
                 BimBam
               </Typography>
-              <ShoppingCart className={classes.ShoppingCart} color="primary" />
-            </Grid>
-            <Grid>
-              <div> Total price: {this.totalPrice()} €</div>
             </Grid>
             <Grid container spacing={40}>
               <Grid item xs={12}>
@@ -134,6 +124,11 @@ class CartModal extends React.Component {
                   ))}
                 </Scrollbars>
               </Grid>
+              <Grid container className={classes.totalPrice} justify="center">
+                <div>
+                  <b>Total price: {this.totalPrice()}€</b>
+                </div>
+              </Grid>
               <Grid
                 container
                 direction="row"
@@ -143,7 +138,7 @@ class CartModal extends React.Component {
               >
                 <Button
                   className={classes.button1}
-                  onClick={this.handleClick}
+                  onClick={() => this.handleCheckoutOpen()}
                   float="left"
                   radiostyle={{ paddingRight: 5 }}
                 >
@@ -179,11 +174,17 @@ CartModal.propTypes = {
   onClick: PropTypes.func.isRequired,
   cartProducts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   removeFromCart: PropTypes.func.isRequired,
+  auth: PropTypes.shape().isRequired,
   RemoveAllProducts: PropTypes.func.isRequired,
   turnOffLeftArrow: PropTypes.func.isRequired,
   turnOffRightArrow: PropTypes.func.isRequired,
   openSnackbar: PropTypes.func.isRequired,
-  changeQuantity: PropTypes.func.isRequired
+  changeQuantity: PropTypes.func.isRequired,
+  openCheckout: PropTypes.func.isRequired
 };
 
-export default withStyles(Styles)(CartModal);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(withStyles(Styles)(CartModal));

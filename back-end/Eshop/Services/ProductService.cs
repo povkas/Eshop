@@ -38,7 +38,7 @@ namespace EShop.Services
             var productsDto = _mapper.Map<ICollection<ProductDto>>(products);
             return productsDto;
         }
-
+        
         public async Task<ProductDto> Create(NewProductDto newItem)
         {
             if (newItem == null) throw new ArgumentNullException(nameof(newItem));
@@ -98,7 +98,7 @@ namespace EShop.Services
             var deleted = await _repository.Delete(item);
             return deleted;
         }
-
+        
         private Product CreateProductPoco(NewProductDto newItem)
         {
             var product = _mapper.Map<Product>(newItem);

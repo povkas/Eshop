@@ -26,6 +26,7 @@ namespace Eshop.Controllers
         [Produces(typeof(NewUserDto))]
         public async Task<ActionResult> Create([FromBody] NewUserDto newUser)
         {
+
             if (!await _userService.CheckUserExistence(newUser))
             {
                 throw new FailedToCreateUserException("This email is already taken");
@@ -71,11 +72,25 @@ namespace Eshop.Controllers
             return Ok(allUsers);
         }
 
+        [HttpGet("{email}")]
+        [Produces(typeof(UserDto))]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            _logger.LogInformation("Getting user's {ID}", email);
+            var user = await _userService.GetByEmail(email);
+            if (user == null)
+            {
+                throw new NotFoundCustomException("User with email " + email + " was not found");
+            }
+
+            return Ok(user);
+        }
+
         [HttpPost("{login}")]
         [Produces(typeof(JsonWebToken))]
         public async Task<ActionResult> CreateJwtToken([FromBody] LoginRequestDto user)
         {
-            string userRole = await _userService.CheckIfUserExists(user);
+            string userRole = await _userService.CheckCredentials(user);
             if (userRole == null)
             {
                 throw new InvalidCredentialsException("Incorrect email or password");

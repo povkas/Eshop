@@ -1,4 +1,5 @@
 import React from 'react';
+import '@babel/polyfill';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
@@ -14,11 +15,13 @@ import { checkIfDateWithinPeriod } from '../../utils/dateFunctions';
 import { compareByCriteria } from '../../utils/sortFunctions';
 import { SnackbarContainer } from '../../components/snackbar';
 import { snackbarMessages } from '../../utils/constants';
+import { PaymentModal } from '../../components/paymentModal';
 
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isPaymentModalOpen: false,
       selectedProduct: {},
       allProducts: [],
       filteredProducts: [],
@@ -40,14 +43,17 @@ class MainBody extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.rerender = this.rerender.bind(this);
   }
 
   componentDidMount() {
     this.setState({ productsLoading: true }, () => {
       getProducts()
         .then(res => {
-          this.setState({ allProducts: res, filteredProducts: res, productsLoading: false }, () =>
-            this.sortShownProducts()
+          const productArray = this.checkAllPorducts(res);
+          this.setState(
+            { allProducts: productArray, filteredProducts: productArray, productsLoading: false },
+            () => this.sortShownProducts()
           );
         })
         .catch(err => {
@@ -113,6 +119,14 @@ class MainBody extends React.Component {
     this.setState({ cartProducts: newCartProducts });
   };
 
+  handlePaymentModalClose = () => {
+    this.setState({ isPaymentModalOpen: false });
+  };
+
+  handlePaymentModalOpen = () => {
+    this.setState({ isPaymentModalOpen: true });
+  };
+
   handleModalClose = () => {
     this.setState({ selectedProduct: {} });
   };
@@ -163,10 +177,51 @@ class MainBody extends React.Component {
     this.setState({ sortCriteria: e.target.value }, () => this.sortShownProducts());
   };
 
+  checkAllPorducts = productArray => {
+    const array = [];
+    productArray.forEach(product => (product.quantity > 0 ? array.push(product) : null));
+    return array;
+  };
+
+  createProduct = product => {
+    const prod = product;
+
+    if (product.image !== undefined)
+      prod.image = btoa(product.image.map(item => String.fromCharCode(item)).join(''));
+
+    this.setState(
+      previousState => ({
+        allProducts: [...previousState.allProducts, prod]
+      }),
+      () => this.filterSort()
+    );
+  };
+
+  async filterSort() {
+    await this.filterShownProducts();
+    this.sortShownProducts();
+  }
+
   removeFromCart(removeProduct) {
     this.setState(prevState => ({
       cartProducts: prevState.cartProducts.filter(item => item !== removeProduct)
     }));
+  }
+
+  rerender() {
+    this.setState({ productsLoading: true }, () => {
+      getProducts()
+        .then(res => {
+          const productArray = this.checkAllPorducts(res);
+          this.setState(
+            { allProducts: productArray, filteredProducts: productArray, productsLoading: false },
+            () => this.sortShownProducts()
+          );
+        })
+        .catch(err => {
+          this.setError(err);
+        });
+    });
   }
 
   addToCart(product) {
@@ -184,7 +239,6 @@ class MainBody extends React.Component {
           };
         }
         this.openSnackbar({ message: snackbarMessages.addToCartError, variant: 'error' });
-        // console.log('error');
       }
       return cp;
     });
@@ -215,6 +269,7 @@ class MainBody extends React.Component {
 
   filterShownProducts() {
     const { upperPriceLimit, lowerPriceLimit, allProducts, selectedCategory, date } = this.state;
+
     const upperPriceLimitFloat = parseFloat(upperPriceLimit);
     const lowerPriceLimitFloat = parseFloat(lowerPriceLimit);
 
@@ -240,9 +295,11 @@ class MainBody extends React.Component {
         product => product.price >= lowerPriceLimitFloat
       );
     }
+
     qualifyingProducts = qualifyingProducts.filter(product =>
       checkIfDateWithinPeriod(product.created, date)
     );
+
     this.setState({ filteredProducts: qualifyingProducts });
   }
 
@@ -270,7 +327,8 @@ class MainBody extends React.Component {
       snackbarContents,
       allProducts,
       productsLoading,
-      numberOfProducts
+      numberOfProducts,
+      isPaymentModalOpen
     } = this.state;
 
     return (
@@ -283,6 +341,8 @@ class MainBody extends React.Component {
           handleSearch={this.handleSearch}
           productHandler={this.changeProduct}
           openSnackbar={this.openSnackbar}
+          createProduct={this.createProduct}
+          openPaymentDetailsModal={this.handlePaymentModalOpen}
           cartProducts={cartProducts}
           removeFromCart={product => this.removeFromCart(product)}
           RemoveAllProducts={this.RemoveAllProducts}
@@ -295,6 +355,14 @@ class MainBody extends React.Component {
           product={selectedProduct}
           handleClose={this.handleModalClose}
           addToCart={this.addToCart}
+          openSnackbar={this.openSnackbar}
+        />
+        <PaymentModal
+          isOpen={isPaymentModalOpen}
+          handleClose={this.handlePaymentModalClose}
+          products={cartProducts}
+          RemoveAllProducts={this.RemoveAllProducts}
+          rerender={this.rerender}
           openSnackbar={this.openSnackbar}
         />
         <Grid container direction="row" justify="space-evenly" alignItems="center">

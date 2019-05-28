@@ -28,40 +28,32 @@ class Form extends Component {
     this.setState({ [`${e.target.name}Error`]: method(e.target.value) });
   };
 
-  handleChange = (e, error) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-    if (error !== '') {
-      this.setState({ [`${e.target.name}Error`]: '' });
-    }
-    this.buttonDisable();
-  };
-
   buttonDisable = () => {
-    const { email, password, emailError, passwordError } = this.state;
-    if (
-      !notEmpty(emailError) &&
-      !notEmpty(passwordError) &&
-      notEmpty(email) &&
-      notEmpty(password)
-    ) {
+    const { email, password } = this.state;
+    if (notEmpty(email) && notEmpty(password)) {
       this.setState({ disable: false });
     } else {
       this.setState({ disable: true });
     }
   };
 
+  handleChange = e => {
+    this.setState({ [`${e.target.name}Error`]: '' });
+    this.setState({ [e.target.name]: e.target.value }, () => this.buttonDisable());
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const { onSubmit, passClose } = this.props;
-    const { email, password } = this.state;
+    const { email, password, passwordError, emailError } = this.state;
     const userData = {
       email,
       password
     };
-    onSubmit(userData);
-    passClose();
+    if (!notEmpty(emailError) && !notEmpty(passwordError)) {
+      onSubmit(userData);
+      passClose();
+    }
   };
 
   render() {

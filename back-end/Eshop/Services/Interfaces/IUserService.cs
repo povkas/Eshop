@@ -15,6 +15,8 @@ namespace Eshop.Services.Interfaces
         Task<bool> Delete(string id);
 
         Task<ICollection<UserDto>> GetAll();
+        
+        Task<UserDto> GetByEmail(string email);
 
         Task<string> CheckCredentials(LoginRequestDto user);
     }

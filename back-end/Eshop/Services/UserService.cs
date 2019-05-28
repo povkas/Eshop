@@ -4,13 +4,13 @@ using Eshop.Data.Repositories;
 using Eshop.DTOs.Users;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Eshop.Services
 {
-    public class UserService : Controller, IUserService
+    public class UserService : IUserService
     {
         private readonly IRepository<User> _repository;
         private readonly IMapper _mapper;
@@ -46,6 +46,14 @@ namespace Eshop.Services
             return allUsers;
         }
 
+        public async Task<UserDto> GetByEmail(string email)
+        {
+            var users = await _repository.GetAll();
+            var filteredUser = users.Where(user => user.Email == email).First();
+            var mapUser = _mapper.Map<UserDto>(filteredUser);
+            return mapUser;
+        }
+
         public async Task<bool> Delete(string email)
         {
             var allUsers = await _repository.GetAll();
@@ -71,7 +79,7 @@ namespace Eshop.Services
             return true;
         }
 
-        public async Task<string> CheckIfUserExists(LoginRequestDto userLogin)
+        public async Task<string> CheckCredentials(LoginRequestDto userLogin)
         {
             var users = await _repository.GetAll();
             foreach (User user in users)

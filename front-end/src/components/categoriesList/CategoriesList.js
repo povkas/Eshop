@@ -60,7 +60,7 @@ class CategoriesList extends React.Component {
             onKeyDown={this.toggleDrawer('left', false)}
           >
             <div className={classes.drawerHeader}>
-              <IconButton onClick={this.handleDrawerClose}>
+              <IconButton>
                 {classes.direction === 'ltr' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
               </IconButton>
             </div>
