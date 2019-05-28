@@ -8,9 +8,9 @@ namespace Eshop.Services.Interfaces
     {
         Task<UserDto> GetById(int id);
 
-        Task<UserDto> CreateUser(NewUserDto user);
+        Task<UserDto> Create(NewUserDto user);
 
-        Task<bool> CheckUserExistence(NewUserDto user);
+        Task<bool> CheckIfUserUnique(NewUserDto user);
 
         Task<bool> Delete(string id);
 
@@ -18,6 +18,6 @@ namespace Eshop.Services.Interfaces
         
         Task<UserDto> GetByEmail(string email);
 
-        Task<string> CheckCredentials(LoginRequestDto user);
+        Task<string> CheckIfUserAdmin(LoginRequestDto user);
     }
 }

@@ -27,12 +27,12 @@ namespace Eshop.Controllers
         public async Task<ActionResult> Create([FromBody] NewUserDto newUser)
         {
 
-            if (!await _userService.CheckUserExistence(newUser))
+            if (!await _userService.CheckIfUserUnique(newUser))
             {
                 throw new FailedToCreateUserException("This email is already taken");
             }
 
-            var user = await _userService.CreateUser(newUser);
+            var user = await _userService.Create(newUser);
             return Created("user", user);
         }
 
@@ -90,7 +90,7 @@ namespace Eshop.Controllers
         [Produces(typeof(JsonWebToken))]
         public async Task<ActionResult> CreateJwtToken([FromBody] LoginRequestDto user)
         {
-            string userRole = await _userService.CheckCredentials(user);
+            string userRole = await _userService.CheckIfUserAdmin(user);
             if (userRole == null)
             {
                 throw new InvalidCredentialsException("Incorrect email or password");

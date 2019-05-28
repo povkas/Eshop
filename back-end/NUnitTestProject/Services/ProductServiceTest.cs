@@ -116,12 +116,13 @@ namespace NUnitTestProject.Services
             repositoryMock.Setup(x => x.GetAll()).Returns(Task.FromResult((ICollection<Product>)objects));
             repositoryMock.Setup(x => x.GetById(0)).Returns(Task.FromResult(objects.ElementAt(0)));
             repositoryMock.Setup(x => x.Delete(objects.ElementAt(0))).Returns(Task.FromResult(true));
+        
 
             _service = new ProductService(repositoryMock.Object, mapper, loggerMock.Object);
         }
 
         [Test]
-        public void GettingAllProductsTest()
+        public void GetAllProductsTest()
         {
             var products = _service.GetAll();
             Assert.AreEqual(products.Result.Count, 3);
@@ -142,13 +143,20 @@ namespace NUnitTestProject.Services
         }
 
         [Test]
-        public void ProductCreateExceptionTest()
+        public void ProductCreateTest()
         {
-            NewProductDto product = null;
-            Console.WriteLine(_service.Create(product));
-            Assert.Throws<ArgumentNullException>(() => _service.Create(product));
+            var product = new NewProductDto()
+            {
+                Title = "Shovel",
+                Description = "Firm stainless steel frame",
+                Price = 15.99M,
+                Quantity = 1,
+                Category = "Gardening",
+                Image = null
+            };
+
+            var productDto = _service.Create(product);
+            Assert.AreEqual(productDto.Result.Title, "Shovel");
         }
-
-
     }
 }

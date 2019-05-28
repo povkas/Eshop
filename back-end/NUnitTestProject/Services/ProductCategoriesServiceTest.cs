@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Eshop.Configurations;
 using Eshop.Data.Repositories;
-using Eshop.DTOs.Products;
-using Eshop.DTOs.Users;
 using Eshop.Models;
 using Eshop.Services;
 using Eshop.Services.Interfaces;

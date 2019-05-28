@@ -7,6 +7,7 @@ using AutoMapper;
 using Eshop.Configurations;
 using Eshop.Data.Repositories;
 using Eshop.DTOs.CreditCards;
+using Eshop.ExceptionHandling;
 using Eshop.Models;
 using Eshop.Services;
 using Eshop.Services.Interfaces;
@@ -56,22 +57,33 @@ namespace NUnitTestProject.Services
             };
 
 
-            repositoryMock.Setup(x => x.GetByNumber("7777-6666-5555-4444")).Returns(Task.FromResult(objects.ElementAt(0)));
+            repositoryMock.Setup(x => x.GetByNumber("7777-6666-5555-4444"))
+                .Returns(Task.FromResult(objects.ElementAt(0)));
+            repositoryMock.Setup(x => x.Update(objects.ElementAt(0))).Returns(Task.FromResult(true));
 
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperConfiguration());
-            });
+            var config = new MapperConfiguration(cfg => { cfg.AddProfile(new AutoMapperConfiguration()); });
             var mapper = config.CreateMapper();
 
             _service = new CreditCardService(repositoryMock.Object, mapper, loggerMock.Object);
         }
 
         [Test]
-        public void Test()
+        public void GetCreditCardByNumberTest()
         {
             var products = _service.GetByNumber("7777-6666-5555-4444");
             Assert.AreEqual(products.Result.Number, "7777-6666-5555-4444");
+        }
+
+        [Test]
+        public void CreditCardPartialUpdateTest()
+        {
+            var patch = new PatchCreditCardDto()
+            {
+                Balance = 100
+            };
+            var res = _service.PartialUpdate("7777-6666-5555-4444", patch);
+
+            Assert.IsTrue(res.Result);
         }
     }
 }

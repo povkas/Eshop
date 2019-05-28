@@ -28,7 +28,7 @@ namespace Eshop.Services
             return productDto;
         }
 
-        public async Task<UserDto> CreateUser(NewUserDto newItem)
+        public async Task<UserDto> Create(NewUserDto newItem)
         {
             var user = _mapper.Map<User>(newItem);
             user.IsAdmin = false;
@@ -68,7 +68,7 @@ namespace Eshop.Services
             return false;
         }
 
-        public async Task<bool> CheckUserExistence(NewUserDto newItem)
+        public async Task<bool> CheckIfUserUnique(NewUserDto newItem)
         {
             var allUsers = await _repository.GetAll();
             foreach (User user in allUsers)
@@ -79,7 +79,7 @@ namespace Eshop.Services
             return true;
         }
 
-        public async Task<string> CheckCredentials(LoginRequestDto userLogin)
+        public async Task<string> CheckIfUserAdmin(LoginRequestDto userLogin)
         {
             var users = await _repository.GetAll();
             foreach (User user in users)
