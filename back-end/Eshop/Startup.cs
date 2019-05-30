@@ -1,4 +1,3 @@
-using System.Net;
 using Eshop.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 
 namespace Eshop
 {
@@ -39,15 +39,15 @@ namespace Eshop
             }
 
             app.UseMiddleware<CustomExceptionMiddleware>()
-                .UseCors(builder => 
-                    builder.WithOrigins("http://localhost:3000")
-                        .AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials())
-                        .UseHttpsRedirection()
-                        .UseMvc()
-                        .Run(_notFoundHandler);
+                    .UseCors(builder =>
+                     builder.WithOrigins("http://localhost:3000")
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials())
+                    .UseHttpsRedirection()
+                    .UseMvc()
+                    .Run(_notFoundHandler);
             app.InitializeDatabase();
         }
 

@@ -5,10 +5,10 @@ using Eshop.Models;
 using EShop.DTOs.Products;
 using EShop.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace EShop.Services
 {
@@ -35,10 +35,10 @@ namespace EShop.Services
         public async Task<ICollection<ProductDto>> GetAll()
         {
             var products = await _repository.GetAll();
-            var productsDto = _mapper.Map<ProductDto[]>(products);
+            var productsDto = _mapper.Map<ICollection<ProductDto>>(products);
             return productsDto;
         }
-
+        
         public async Task<ProductDto> Create(NewProductDto newItem)
         {
             if (newItem == null) throw new ArgumentNullException(nameof(newItem));
@@ -98,7 +98,7 @@ namespace EShop.Services
             var deleted = await _repository.Delete(item);
             return deleted;
         }
-
+        
         private Product CreateProductPoco(NewProductDto newItem)
         {
             var product = _mapper.Map<Product>(newItem);

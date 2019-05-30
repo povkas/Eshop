@@ -1,12 +1,12 @@
 import { SET_CURRENT_USER, LOGOUT } from '../actions/types';
-import isEmpty from '../validation/is-empty';
+import isEmpty from '../utils/validation/is-empty';
 
 const initialState = {
   isAuthenticated: false,
   user: {}
 };
 
-export default function(state = initialState, action) {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {
@@ -19,4 +19,6 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default authReducer;

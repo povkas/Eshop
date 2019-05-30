@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
+using CryptoHelper;
 using Eshop.Data.Repositories;
+using Eshop.DTOs.Users;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Eshop.DTOs.Users;
-using CryptoHelper;
+using System.Linq;
 
 namespace Eshop.Services
 {
-    public class UserService : Controller, IUserService
+    public class UserService : IUserService
     {
         private readonly IRepository<User> _repository;
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace Eshop.Services
             return productDto;
         }
 
-        public async Task<UserDto> CreateUser(NewUserDto newItem)
+        public async Task<UserDto> Create(NewUserDto newItem)
         {
             var user = _mapper.Map<User>(newItem);
             user.IsAdmin = false;
@@ -46,19 +46,29 @@ namespace Eshop.Services
             return allUsers;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<UserDto> GetByEmail(string email)
         {
-            var item = await _repository.GetById(id);
-            if (item == null)
-            {
-                return false;
-            }
-
-            var deleted = await _repository.Delete(item);
-            return deleted;
+            var users = await _repository.GetAll();
+            var filteredUser = users.Where(user => user.Email == email).First();
+            var mapUser = _mapper.Map<UserDto>(filteredUser);
+            return mapUser;
         }
 
-        public async Task<bool> CheckUserExistence(NewUserDto newItem)
+        public async Task<bool> Delete(string email)
+        {
+            var allUsers = await _repository.GetAll();
+            foreach (User user in allUsers)
+            {
+                if (user.Email == email)
+                {
+                    await _repository.Delete(user);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> CheckIfUserUnique(NewUserDto newItem)
         {
             var allUsers = await _repository.GetAll();
             foreach (User user in allUsers)
@@ -69,17 +79,17 @@ namespace Eshop.Services
             return true;
         }
 
-        public async Task<bool> CheckIfUserExists(LoginRequestDto userLogin)
+        public async Task<string> CheckIfUserAdmin(LoginRequestDto userLogin)
         {
             var users = await _repository.GetAll();
             foreach (User user in users)
             {
                 if (userLogin.Email == user.Email && VerifyPassword(user.Password, userLogin.Password))
                 {
-                    return true;
+                    return user.IsAdmin.ToString();
                 }
             }
-            return false;
+            return null;
         }
 
         public string HashPassword(string password)
@@ -91,5 +101,5 @@ namespace Eshop.Services
         {
             return Crypto.VerifyHashedPassword(hash, password);
         }
-}
+    }
 }

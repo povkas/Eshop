@@ -2,34 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Divider, Typography, Grid } from '@material-ui/core';
-import Styles, { getModalStyle } from './Styles';
+import Styles from './Styles';
 import QuantitySelect from './QuantitySelect';
+import { defaultImage } from '../../utils/constants';
 
 class ProductModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // eslint-disable-next-line react/no-unused-state
       quantity: 1
     };
   }
 
   getQuantity = quantity => {
-    // eslint-disable-next-line react/no-unused-state
     this.setState({ quantity });
   };
 
   render() {
-    const { classes, handleClose, product } = this.props;
+    const { classes, handleClose, product, addToCart } = this.props;
+    const { quantity } = this.state;
+
     return (
       <Modal open={Object.entries(product).length !== 0} onClose={handleClose}>
-        <div style={getModalStyle()} className={classes.paper}>
+        <div className={classes.paper}>
           <Grid container direction="row" justify="space-evenly" alignItems="center">
-            <img
-              src={`data:image/png;base64,${product.image}`}
-              alt={product.title}
-              className={classes.image}
-            />
+            {product.image !== undefined ? (
+              <img
+                src={`data:image/png;base64,${product.image}`}
+                alt={product.title}
+                className={classes.image}
+              />
+            ) : (
+              <img src={defaultImage} alt="" className={classes.image} />
+            )}
           </Grid>
           <Divider className={classes.divider} />
           <Grid container direction="row" alignItems="center" justify="space-between">
@@ -37,7 +42,13 @@ class ProductModal extends React.Component {
               <Typography variant="h5">Cost: {product.price}€</Typography>
             </Grid>
             <Grid item>
-              <Button variant="outlined" onClick={this.handleToCart}>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  addToCart({ ...product, selectedQuantity: quantity });
+                  handleClose();
+                }}
+              >
                 <Typography variant="h6">Add to cart</Typography>
               </Button>
             </Grid>
@@ -64,7 +75,8 @@ ProductModal.propTypes = {
     price: PropTypes.number,
     quantity: PropTypes.number
   }).isRequired,
-  handleClose: PropTypes.func.isRequired
+  handleClose: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired
 };
 
 export default withStyles(Styles)(ProductModal);

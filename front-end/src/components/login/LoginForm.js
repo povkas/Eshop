@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Link from '@material-ui/core/Link';
 import Person from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
 import { connect } from 'react-redux';
@@ -14,7 +13,8 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openModal: false
+      openModal: false,
+      hover: false
     };
   }
 
@@ -26,15 +26,23 @@ class LoginForm extends React.Component {
     this.setState({ openModal: false });
   };
 
+  hoverOn = () => {
+    this.setState({ hover: true });
+  };
+
+  hoverOff = () => {
+    this.setState({ hover: false });
+  };
+
   handleLogin = user => {
     const { loginUserProp, setError, openSnackbar } = this.props;
     loginUserProp(user, openSnackbar, setError);
   };
 
   render() {
-    const { classes, className } = this.props;
-    const { openModal } = this.state;
-    const register = "Don't have an account? Click to register";
+    const { classes, className, openRegistration } = this.props;
+    const { openModal, hover } = this.state;
+    const register = "Don't have an account?";
 
     return (
       <div>
@@ -43,10 +51,22 @@ class LoginForm extends React.Component {
         </IconButton>
         <Modal open={openModal} onClose={this.handleClose}>
           <div className={classes.paper}>
-            <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
-            <Link href=" ">{register}</Link>
-            <br />
-            <Link href=" ">Forgot password?</Link>
+            <div className={classes.signUp}>Sign In</div>
+            <div className={classes.layout}>
+              <Form passClose={this.handleClose} onSubmit={this.handleLogin} />
+            </div>
+            <div
+              role="button"
+              onClick={() => {
+                this.handleClose();
+                openRegistration();
+              }}
+              className={hover ? classes.button2 : classes.button1}
+              onMouseEnter={this.hoverOn}
+              onMouseLeave={this.hoverOff}
+            >
+              {register}
+            </div>
           </div>
         </Modal>
       </div>
@@ -58,8 +78,9 @@ LoginForm.propTypes = {
   classes: PropTypes.shape().isRequired,
   className: PropTypes.shape().isRequired,
   loginUserProp: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
-  openSnackbar: PropTypes.func.isRequired
+  openSnackbar: PropTypes.func.isRequired,
+  openRegistration: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

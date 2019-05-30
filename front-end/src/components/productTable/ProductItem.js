@@ -6,22 +6,25 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Styles from './Styles';
+import { defaultImage } from '../../utils/constants';
 
 function ProductItem(props) {
   const { classes, product, selectProduct } = props;
   return (
     <Grid item>
       <Paper className={classes.paper} component="div" onClick={selectProduct}>
-        <img
-          src={`data:image/png;base64,${product.image}`}
-          alt={product.title}
-          className={classes.image}
-        />
+        {product.image !== undefined ? (
+          <img
+            src={`data:image/png;base64,${product.image}`}
+            alt={product.title}
+            className={classes.image}
+          />
+        ) : (
+          <img src={defaultImage} alt="" className={classes.image} />
+        )}
         <Divider />
-        <Typography variant="subtitle1">
-          {product.title.length > 23
-            ? product.title.replace(/^(.{23}[^\s]*).*/, '$1')
-            : product.title}
+        <Typography variant="subtitle1" className={classes.title}>
+          {product.title}
         </Typography>
         <Typography variant="subtitle1">{`${Number(product.price).toFixed(2)}€`}</Typography>
       </Paper>

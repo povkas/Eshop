@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import styles from './Styles';
+import styles from '../productTable/Styles';
 
 function Filter(props) {
   const {

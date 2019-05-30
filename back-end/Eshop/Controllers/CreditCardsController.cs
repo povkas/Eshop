@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Eshop.DTOs.CreditCards;
@@ -22,16 +22,14 @@ namespace Eshop.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> CheckIfCreditCardExists([FromBody] CreditCardDto creditCard)
         {
+            _logger.LogInformation(creditCard.ExpirationDate);
+            _logger.LogInformation(creditCard.SecurityCode.ToString());
             _logger.LogInformation("Getting credit card by number {NUMBER}", creditCard.Number);
             var creditCardInDb = await _service.GetByNumber(creditCard.Number);
             _logger.LogInformation("Received credit card - {}", creditCard.ToString());
-
-            var wwwrootDir = new DirectoryInfo(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"../wwwroot/Images/onePlus7.jpg")));
-            _logger.LogInformation(wwwrootDir.ToString());
-            _logger.LogInformation(wwwrootDir.Exists.ToString());
 
             if (creditCardInDb == null || !creditCard.ExpirationDate.Equals(creditCardInDb.ExpirationDate) || creditCard.SecurityCode != creditCardInDb.SecurityCode)
             {

@@ -1,9 +1,9 @@
-﻿using Eshop.Models;
+﻿using CryptoHelper;
+using Eshop.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CryptoHelper;
 
 namespace Eshop.Data
 {
@@ -41,13 +41,7 @@ namespace Eshop.Data
             var wwwrootDir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(),
                 "wwwroot", "Images", "onePlus7.jpg"));
             if (wwwrootDir.Exists)
-            {
-
-
-               
-
-                Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
-
+            { 
                 FileInfo fileInfo1 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(),
                     "wwwroot", "Images", "onePlus7.jpg"));
                 byte[] onePlusData = new byte[fileInfo1.Length];

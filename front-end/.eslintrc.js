@@ -19,6 +19,8 @@ module.exports = {
     fetch: 'writeable',
     document: 'writeable',
     window: 'writeable',
-    localStorage: true
+    localStorage: true,
+    FileReader: 'FileReader',
+    btoa: 'btoa'
   }
 };
