@@ -27,9 +27,6 @@ namespace NUnitTestProject.Services
         {
             var repositoryMock = new Mock<ICreditCardsRepository>();
             var loggerMock = new Mock<ILogger<CreditCardService>>();
-            var mapperMock = new Mock<IMapper>();
-
-            // mapperMock.Setup(m => m.Map<User, UserDto>(It.IsAny<User>())).Returns(new UserDto());
 
             var objects = new List<CreditCard>
             {
