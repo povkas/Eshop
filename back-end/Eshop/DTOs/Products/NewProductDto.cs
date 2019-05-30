@@ -6,12 +6,16 @@ namespace EShop.DTOs.Products
     {
         [Required]
         public string Title { get; set; }
+
         [Required]
         public string Description { get; set; }
+
         [Required]
         public decimal Price { get; set; }
+
         [Required]
         public int Quantity { get; set; }
+
         [Required]
         public string Category { get; set; }
         public byte[] Image { get; set; }

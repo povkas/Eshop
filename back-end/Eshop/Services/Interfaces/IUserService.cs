@@ -1,7 +1,6 @@
-﻿using Eshop.Models;
+﻿using Eshop.DTOs.Users;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Eshop.DTOs.Users;
 
 namespace Eshop.Services.Interfaces
 {
@@ -9,9 +8,9 @@ namespace Eshop.Services.Interfaces
     {
         Task<UserDto> GetById(int id);
 
-        Task<UserDto> CreateUser(NewUserDto user);
+        Task<UserDto> Create(NewUserDto user);
 
-        Task<bool> CheckUserExistence(NewUserDto user);
+        Task<bool> CheckIfUserUnique(NewUserDto user);
 
         Task<bool> Delete(string id);
 
@@ -19,6 +18,6 @@ namespace Eshop.Services.Interfaces
         
         Task<UserDto> GetByEmail(string email);
 
-        Task<string> CheckIfUserExists(LoginRequestDto user);
+        Task<string> CheckIfUserAdmin(LoginRequestDto user);
     }
 }

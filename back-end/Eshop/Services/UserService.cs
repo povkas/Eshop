@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
+using CryptoHelper;
 using Eshop.Data.Repositories;
+using Eshop.DTOs.Users;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Eshop.DTOs.Users;
-using CryptoHelper;
 using System.Linq;
 
 namespace Eshop.Services
 {
-    public class UserService : Controller, IUserService
+    public class UserService : IUserService
     {
         private readonly IRepository<User> _repository;
         private readonly IMapper _mapper;
@@ -29,7 +28,7 @@ namespace Eshop.Services
             return productDto;
         }
 
-        public async Task<UserDto> CreateUser(NewUserDto newItem)
+        public async Task<UserDto> Create(NewUserDto newItem)
         {
             var user = _mapper.Map<User>(newItem);
             user.IsAdmin = false;
@@ -64,12 +63,12 @@ namespace Eshop.Services
                 {
                     await _repository.Delete(user);
                     return true;
-                }            
+                }
             }
             return false;
         }
 
-        public async Task<bool> CheckUserExistence(NewUserDto newItem)
+        public async Task<bool> CheckIfUserUnique(NewUserDto newItem)
         {
             var allUsers = await _repository.GetAll();
             foreach (User user in allUsers)
@@ -80,7 +79,7 @@ namespace Eshop.Services
             return true;
         }
 
-        public async Task<string> CheckIfUserExists(LoginRequestDto userLogin)
+        public async Task<string> CheckIfUserAdmin(LoginRequestDto userLogin)
         {
             var users = await _repository.GetAll();
             foreach (User user in users)
@@ -102,5 +101,5 @@ namespace Eshop.Services
         {
             return Crypto.VerifyHashedPassword(hash, password);
         }
-}
+    }
 }

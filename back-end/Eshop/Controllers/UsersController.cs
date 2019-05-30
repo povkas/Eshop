@@ -1,12 +1,11 @@
-using System.Security.Authentication;
 using Eshop.DTOs.Users;
+using Eshop.ExceptionHandling;
 using Eshop.Models;
 using Eshop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Eshop.ExceptionHandling;
 using Microsoft.IdentityModel.JsonWebTokens;
+using System.Threading.Tasks;
 
 namespace Eshop.Controllers
 {
@@ -28,12 +27,12 @@ namespace Eshop.Controllers
         public async Task<ActionResult> Create([FromBody] NewUserDto newUser)
         {
 
-            if (!await _userService.CheckUserExistence(newUser))
+            if (!await _userService.CheckIfUserUnique(newUser))
             {
                 throw new FailedToCreateUserException("This email is already taken");
             }
 
-            var user = await _userService.CreateUser(newUser);
+            var user = await _userService.Create(newUser);
             return Created("user", user);
         }
 
@@ -91,7 +90,7 @@ namespace Eshop.Controllers
         [Produces(typeof(JsonWebToken))]
         public async Task<ActionResult> CreateJwtToken([FromBody] LoginRequestDto user)
         {
-            string userRole = await _userService.CheckIfUserExists(user);
+            string userRole = await _userService.CheckIfUserAdmin(user);
             if (userRole == null)
             {
                 throw new InvalidCredentialsException("Incorrect email or password");
@@ -99,6 +98,5 @@ namespace Eshop.Controllers
 
             return Created("jwt", TokenManager.GenerateToken(user.Email, userRole));
         }
-
     }
 }

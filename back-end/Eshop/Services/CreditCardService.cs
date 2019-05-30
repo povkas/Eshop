@@ -1,12 +1,11 @@
-﻿using System;
-
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Eshop.Data.Repositories;
 using Eshop.DTOs.CreditCards;
 using Eshop.ExceptionHandling;
 using Eshop.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Eshop.Services
 {
@@ -22,7 +21,6 @@ namespace Eshop.Services
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
-
         }
 
         public async Task<CreditCardDto> GetByNumber(string number)
